@@ -1,0 +1,9 @@
+name: wiwa-web-app
+services:
+  - build_command: yarn build
+    environment_slug: node-js
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: janobono/wiwa-web-app
+    name: wiwa-web-app
