@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  pg:
+    image: postgres:15-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=app
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  smtp:
+    image: maildev/maildev:latest
+    ports:
+      - 8081:1080
+
+  wiwa-service:
+    image: sk.janobono.wiwa/wiwa-service:latest
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Bratislava
+      - DB_URL=jdbc:postgresql://pg:5432/app
+      - MAIL_HOST=smtp
+      - MAIL_PORT=1025
+      - WEB_URL=http://localhost
+      - INIT_DATA_PATH=./data
+    depends_on:
+      - pg
+      - smtp
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.wiwa-service.rule=PathPrefix(`/api`)
+      - traefik.http.routers.wiwa-service.entrypoints=web
+      - traefik.http.services.wiwa-service.loadbalancer.server.port=8080
+
+  wiwa-web-app:
+    image: sk.janobono.wiwa/wiwa-web-app:latest
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Bratislava
+    depends_on:
+      - wiwa-service
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.wiwa-web-app.rule=PathPrefix(`/`)
+      - traefik.http.routers.wiwa-web-app.entrypoints=web
+      - traefik.http.services.wiwa-web-app.loadbalancer.server.port=80
+
+  traefik:
+    image: traefik:v2.9
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--log.level=INFO"
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  pg-data:
