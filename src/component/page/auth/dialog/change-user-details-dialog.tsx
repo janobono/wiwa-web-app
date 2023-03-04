@@ -21,12 +21,12 @@ const ChangeUserDetailsDialog: React.FC<ChangeUserDetailsDialogProps> = (props) 
     const [titleBefore, setTitleBefore] = useState(authState?.user?.titleBefore ? authState.user?.titleBefore : '');
 
     const [firstName, setFirstName] = useState(authState?.user?.firstName ? authState.user?.firstName : '');
-    const [firstNameValid, setFirstNameValid] = useState(false);
+    const [firstNameValid, setFirstNameValid] = useState(true);
 
     const [midName, setMidName] = useState(authState?.user?.midName ? authState?.user?.midName : '');
 
     const [lastName, setLastName] = useState(authState?.user?.lastName ? authState?.user?.lastName : '');
-    const [lastNameValid, setLastNameValid] = useState(false);
+    const [lastNameValid, setLastNameValid] = useState(true);
 
     const [titleAfter, setTitleAfter] = useState(authState?.user?.titleAfter ? authState?.user?.titleAfter : '');
 
