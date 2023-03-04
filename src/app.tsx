@@ -29,11 +29,11 @@ const App: React.FC = () => {
     const uiState = useUiState();
 
     useEffect(() => {
-        document.title = uiState.title ? uiState.title : t(RESOURCE.TITLE)
-    }, [uiState.title]);
+        document.title = uiState?.title ? uiState.title : t(RESOURCE.TITLE)
+    }, [uiState?.title]);
 
     return (
-        actuatorState.up ?
+        actuatorState?.up ?
             <BrowserRouter>
                 <Layout>
                     <Routes>

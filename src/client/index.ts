@@ -1,6 +1,7 @@
 export * as actuatorClient from './actuator';
 export * as authClient from './auth';
 export * as captchaClient from './captcha';
+export * as configClient from './config';
 export * as uiClient from './ui';
 
 export const APP_IMAGES_PATH_PREFIX = '/api/ui/application-images/';

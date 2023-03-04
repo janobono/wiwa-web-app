@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
                                 </li>
                             </ul>
                         </nav>
-                        {uiState.companyInfo &&
+                        {uiState?.companyInfo &&
                             <nav className="col-span-2 md:col-span-4 lg:col-span-6">
                                 <h3 className="mb-5 text-base font-medium text-gray-700">
                                     {t(RESOURCE.COMPONENT.LAYOUT.FOOTER.CONTACT.TITLE)}

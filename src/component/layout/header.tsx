@@ -19,11 +19,11 @@ const Header: React.FC = () => {
                             title={t(RESOURCE.ACTION.HOME).toString()}
                             onClick={() => navigate('/')}
                             className="flex-none w-[100px] h-[100px] object-scale-down object-center hover:cursor-pointer"
-                            src={uiState.logoUrl ? uiState.logoUrl : '/logo192.png'}
+                            src={uiState?.logoUrl ? uiState.logoUrl : '/logo192.png'}
                             alt="Logo"
                         />
                         <div className="flex-grow font-bold text-xl md:text-3xl text-center">
-                            {uiState.title ? uiState.title : t(RESOURCE.TITLE)}
+                            {uiState?.title ? uiState.title : t(RESOURCE.TITLE)}
                         </div>
                     </div>
                 </div>

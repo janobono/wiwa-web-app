@@ -48,6 +48,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
     const firstRun = useRef(true);
     const [authenticationResponse, setAuthenticationResponse] = useState<authClient.AuthenticationResponse>();
     const [user, setUser] = useState<AuthUser>();
+    const [token, setToken] = useState<string>();
 
     useEffect(() => {
         if (firstRun.current) {
@@ -61,7 +62,11 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
             }, TIMEOUT);
         }
         refresh();
-    }, [configState.cookiesEnabled]);
+    }, [configState?.cookiesEnabled]);
+
+    useEffect(() => {
+        setToken(authenticationResponse?.token);
+    }, [authenticationResponse]);
 
     const confirm = async (confirmationRequest: authClient.ConfirmationRequest): Promise<WiwaError | undefined> => {
         const clientResponse = await authClient.confirm(confirmationRequest);
@@ -144,7 +149,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
         if (clientResponse.data) {
             const _authUser = decode<AuthUser>(clientResponse.data.token);
             if (_authUser) {
-                if (configState.cookiesEnabled) {
+                if (configState?.cookiesEnabled) {
                     localStorage.setItem(TOKEN, clientResponse.data.refreshToken);
                 }
                 setAuthenticationResponse(clientResponse.data);
@@ -159,7 +164,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
             value={
                 {
                     user,
-                    token: authenticationResponse?.token,
+                    token,
                     confirm,
                     changeEmail,
                     changePassword,

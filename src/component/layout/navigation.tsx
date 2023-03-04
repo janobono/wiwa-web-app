@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Home, LogIn, LogOut, Settings, User, UserPlus, Users } from 'react-feather';
 
@@ -11,7 +10,6 @@ import { FlagSk, FlagUs } from '../ui/icon';
 
 const Navigation: React.FC = () => {
     const {t} = useTranslation();
-    const navigate = useNavigate();
     const configState = useConfigState();
     const authState = useAuthState();
 
@@ -31,9 +29,9 @@ const Navigation: React.FC = () => {
                             <WiwaButton
                                 variant="light"
                                 title={t(RESOURCE.ACTION.SWITCH_LOCALE).toString()}
-                                onClick={() => configState.setLocale(configState.locale === LOCALE.EN ? LOCALE.SK : LOCALE.EN)}
+                                onClick={() => configState?.setLocale(configState.locale === LOCALE.EN ? LOCALE.SK : LOCALE.EN)}
                             >
-                                {configState.locale === LOCALE.EN
+                                {configState?.locale === LOCALE.EN
                                     ? <FlagSk/>
                                     : <FlagUs/>
                                 }
@@ -102,7 +100,7 @@ const CookiesConsent: React.FC = () => {
     const {t} = useTranslation();
     const configState = useConfigState();
 
-    if (configState.cookiesEnabled) {
+    if (configState?.cookiesEnabled) {
         return null;
     }
 
@@ -119,7 +117,7 @@ const CookiesConsent: React.FC = () => {
                     size="xs"
                     pill={true}
                     variant="light"
-                    onClick={() => configState.setCookiesEnabled(true)}
+                    onClick={() => configState?.setCookiesEnabled(true)}
                 >
                     {t(RESOURCE.COMPONENT.LAYOUT.NAVIGATION.COOKIES_CONSENT.ACTION)}
                 </WiwaButton>

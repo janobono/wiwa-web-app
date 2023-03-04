@@ -9,11 +9,11 @@ const AppState: React.FC<any> = ({children}) => {
     return (
         <ConfigStateProvider>
             <ActuatorStateProvider>
-                <UiStateProvider>
-                    <AuthStateProvider>
+                <AuthStateProvider>
+                    <UiStateProvider>
                         {children}
-                    </AuthStateProvider>
-                </UiStateProvider>
+                    </UiStateProvider>
+                </AuthStateProvider>
             </ActuatorStateProvider>
         </ConfigStateProvider>
     );

@@ -14,7 +14,7 @@ const ContactInfoPage: React.FC = () => {
             <div className="container p-5 m-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                        {uiState.companyInfo ?
+                        {uiState?.companyInfo ?
                             <iframe
                                 width="100%"
                                 height="280px"
@@ -24,17 +24,17 @@ const ContactInfoPage: React.FC = () => {
                             : <></>}
                     </div>
                     <div>
-                        <WiwaMarkdownRenderer className="prose p-5 text-xs" md={uiState.workingHours}/>
+                        <WiwaMarkdownRenderer className="prose p-5 text-xs" md={uiState?.workingHours}/>
                     </div>
                 </div>
             </div>
             <div className="container pb-5 px-5 m-auto text-center">
-                {uiState.companyInfo ? uiState.companyInfo.commercialRegisterInfo : ''}
+                {uiState?.companyInfo ? uiState.companyInfo.commercialRegisterInfo : ''}
             </div>
             <div className="container pb-5 px-5 m-auto">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-center justify-items-center">
                     <div className="flex gap-1">
-                        {uiState.companyInfo && uiState.companyInfo.businessId.length > 0 ?
+                        {uiState?.companyInfo && uiState.companyInfo.businessId.length > 0 ?
                             <><span>
                                     {t(RESOURCE.COMPONENT.PAGE.UI.CONTACT_INFO.BUSINESS_ID)}:
                                    </span>
@@ -43,7 +43,7 @@ const ContactInfoPage: React.FC = () => {
                             : <></>}
                     </div>
                     <div className="flex gap-1">
-                        {uiState.companyInfo && uiState.companyInfo.taxId.length > 0 ?
+                        {uiState?.companyInfo && uiState.companyInfo.taxId.length > 0 ?
                             <><span>
                                     {t(RESOURCE.COMPONENT.PAGE.UI.CONTACT_INFO.TAX_ID)}:
                                    </span>
@@ -52,7 +52,7 @@ const ContactInfoPage: React.FC = () => {
                             : <></>}
                     </div>
                     <div className="flex gap-1">
-                        {uiState.companyInfo && uiState.companyInfo.vatRegNo.length > 0 ?
+                        {uiState?.companyInfo && uiState.companyInfo.vatRegNo.length > 0 ?
                             <><span>
                                     {t(RESOURCE.COMPONENT.PAGE.UI.CONTACT_INFO.VAT_REG_NO)}:
                                    </span>

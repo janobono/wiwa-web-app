@@ -9,6 +9,7 @@
     "change-email": "Zmeniť email",
     "change-user-details": "Zmeniť používateľský profil",
     "config": "Konfigurácia",
+    "edit": "Upraviť",
     "home": "Domovská stránka",
     "ok": "Potvrdiť",
     "resend": "Preposlať",
@@ -212,11 +213,25 @@
         }
       },
       "config": {
+        "dialog": {
+          "change-logo": {
+            "title": "Zmeniť logo",
+            "form": {
+              "logo": {
+                "label": "Obrázok Loga",
+                "validation-message1": "Vyžaduje sa obrázok loga",
+                "validation-message2": "Musí to byť obrázok vo formáte JPG alebo PNG"
+              }
+            },
+            "error": "Nepodarilo sa zmeniť logo."
+          }
+        },
         "application-images": {
           "title": "Aplikačné obrázky"
         },
         "ui": {
-          "title": "Základné nastavenia"
+          "title": "Základné nastavenia",
+          "logo": "Logo"
         }
       },
       "ui": {
@@ -224,6 +239,11 @@
           "business-id": "IČO",
           "tax-id": "DIČ",
           "vat-reg-no": "IČ DPH"
+        }
+      },
+      "users": {
+        "users": {
+          "title": "Používatelia"
         }
       }
     },

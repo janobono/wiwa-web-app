@@ -8,7 +8,7 @@ export interface ActuatorState {
     up: boolean
 }
 
-const actuatorStateContext = createContext<ActuatorState>({up: false});
+const actuatorStateContext = createContext<ActuatorState | undefined>(undefined);
 
 const ActuatorStateProvider: React.FC<any> = ({children}) => {
     const firstRun = useRef(true);

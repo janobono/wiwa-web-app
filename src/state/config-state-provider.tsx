@@ -11,15 +11,7 @@ export interface ConfigState {
     setLocale: (locale: string) => void
 }
 
-const configStateContext = createContext<ConfigState>({
-    cookiesEnabled: false,
-    setCookiesEnabled: (cookiesEnabled: boolean) => {
-    },
-    locales: [LOCALE.EN, LOCALE.SK],
-    locale: getLocale(),
-    setLocale: (locale: string) => {
-    }
-});
+const configStateContext = createContext<ConfigState | undefined>(undefined);
 
 const ConfigStateProvider: React.FC<any> = ({children}) => {
     const [cookiesEnabled, setCookiesEnabled] = useState(localStorage.getItem(COOKIES_ENABLED_ITEM) === 'true');

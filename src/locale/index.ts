@@ -22,6 +22,7 @@ export const RESOURCE = {
         CHANGE_EMAIL: 'action.change-email',
         CHANGE_USER_DETAILS: 'action.change-user-details',
         CONFIG: 'action.config',
+        EDIT: 'action.edit',
         HOME: 'action.home',
         OK: 'action.ok',
         RESEND: 'action.resend',
@@ -229,11 +230,25 @@ export const RESOURCE = {
                 }
             },
             CONFIG: {
+                DIALOG: {
+                    CHANGE_LOGO: {
+                        TITLE: 'component.page.config.dialog.change-logo.title',
+                        FORM: {
+                            LOGO: {
+                                LABEL: 'component.page.config.dialog.change-logo.form.logo.label',
+                                VALIDATION_MESSAGE1: 'component.page.config.dialog.change-logo.form.logo.validation-message1',
+                                VALIDATION_MESSAGE2: 'component.page.config.dialog.change-logo.form.logo.validation-message2'
+                            }
+                        },
+                        ERROR: 'component.page.config.dialog.change-logo.error'
+                    }
+                },
                 APPLICATION_IMAGES: {
                     TITLE: 'component.page.config.application-images.title'
                 },
                 UI: {
-                    TITLE: 'component.page.config.ui.title'
+                    TITLE: 'component.page.config.ui.title',
+                    LOGO: 'component.page.config.ui.logo'
                 }
             },
             UI: {
@@ -241,6 +256,11 @@ export const RESOURCE = {
                     BUSINESS_ID: 'component.page.ui.contact-info.business-id',
                     TAX_ID: 'component.page.ui.contact-info.tax-id',
                     VAT_REG_NO: 'component.page.ui.contact-info.vat-reg-no'
+                }
+            },
+            USERS: {
+                USERS: {
+                    TITLE: 'component.page.users.users.title'
                 }
             }
         },

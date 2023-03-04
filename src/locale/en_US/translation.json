@@ -9,6 +9,7 @@
     "change-email": "Change email",
     "change-user-details": "Change user details",
     "config": "Configuration",
+    "edit": "Edit",
     "home": "Home page",
     "ok": "OK",
     "resend": "Resend",
@@ -212,11 +213,25 @@
         }
       },
       "config": {
+        "dialog": {
+          "change-logo": {
+            "title": "Change logo",
+            "form": {
+              "logo": {
+                "label": "Logo picture",
+                "validation-message1": "Logo picture is required",
+                "validation-message2": "Has to be JPG or PNG image"
+              }
+            },
+            "error": "Logo could not be changed."
+          }
+        },
         "application-images": {
           "title": "Application images"
         },
         "ui": {
-          "title": "Base settings"
+          "title": "Base settings",
+          "logo": "Logo"
         }
       },
       "ui": {
@@ -224,6 +239,11 @@
           "business-id": "BUSINESS ID",
           "tax-id": "TAX ID",
           "vat-reg-no": "VAT REGISTRATION NUMBER"
+        }
+      },
+      "users": {
+        "users": {
+          "title": "Users"
         }
       }
     },
