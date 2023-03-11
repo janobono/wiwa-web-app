@@ -14,7 +14,8 @@ export interface UiState {
     gdprInfo: string | undefined,
     workingHours: string | undefined,
     changeLogo: (logo: File) => Promise<WiwaError | undefined>,
-    changeTitle: (title: configClient.TitleData) => Promise<WiwaError | undefined>
+    changeTitle: (title: configClient.LocaleData<string>) => Promise<WiwaError | undefined>,
+    changeWelcomeText: (welcomeText: configClient.LocaleData<string>) => Promise<WiwaError | undefined>
 }
 
 const uiStateContext = createContext<UiState | undefined>(undefined);
@@ -75,7 +76,7 @@ const UiStateProvider: React.FC<any> = ({children}) => {
         }
     }
 
-    const changeTitle = async (title: configClient.TitleData): Promise<WiwaError | undefined> => {
+    const changeTitle = async (title: configClient.LocaleData<string>): Promise<WiwaError | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
@@ -87,6 +88,22 @@ const UiStateProvider: React.FC<any> = ({children}) => {
         } finally {
             if (actuatorState?.up && configState?.locale) {
                 uiClient.getTitle(configState.locale).then(value => setTitle(value.data));
+            }
+        }
+    }
+
+    const changeWelcomeText = async (welcomeText: configClient.LocaleData<string>): Promise<WiwaError | undefined> => {
+        const token = authState?.token;
+        if (!token) {
+            return undefined;
+        }
+        setTitle(undefined);
+        try {
+            const clientResponse = await configClient.postWelcomeText(welcomeText, token);
+            return clientResponse.error;
+        } finally {
+            if (actuatorState?.up && configState?.locale) {
+                uiClient.getWelcomeText(configState.locale).then(value => setWelcomeText(value.data));
             }
         }
     }
@@ -104,7 +121,8 @@ const UiStateProvider: React.FC<any> = ({children}) => {
                     gdprInfo,
                     workingHours,
                     changeLogo,
-                    changeTitle
+                    changeTitle,
+                    changeWelcomeText
                 }
             }
         >{children}

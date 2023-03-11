@@ -14,6 +14,7 @@ export { default as WiwaNewPassword } from './wiwa-new-password';
 export { default as WiwaSpinner } from './wiwa-spinner';
 export { default as WiwaTable } from './wiwa-table';
 export { default as WiwaTabs } from './wiwa-tabs';
+export { default as WiwaTextArea } from './wiwa-textarea';
 
 export interface ValidationResult {
     valid: boolean,

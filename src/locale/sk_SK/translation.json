@@ -228,6 +228,10 @@
           "change-title": {
             "title": "Zmeniť názov",
             "error": "Nepodarilo sa zmeniť názov."
+          },
+          "change-welcome-text": {
+            "title": "Zmeniť uvítací text",
+            "error": "Nepodarilo sa zmeniť uvítací text."
           }
         },
         "application-images": {

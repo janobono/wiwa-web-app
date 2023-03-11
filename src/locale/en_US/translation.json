@@ -228,6 +228,10 @@
           "change-title": {
             "title": "Change title",
             "error": "Title could not be changed."
+          },
+          "change-welcome-text": {
+            "title": "Change welcome text",
+            "error": "Welcome text could not be changed."
           }
         },
         "application-images": {

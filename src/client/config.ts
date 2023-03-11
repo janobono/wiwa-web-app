@@ -2,14 +2,15 @@ import { ClientResponse, createAuthorization, postData, toWiwaError } from './in
 
 const PATH_LOGO = '/api/config/logo';
 const PATH_TITLE = '/api/config/title';
+const PATH_WELCOME_TEXT = '/api/config/welcome-text';
 
-export interface TitleData {
-    items: TitleDataItem[]
+export interface LocaleData<T> {
+    items: LocaleDataItem<T>[]
 }
 
-export interface TitleDataItem {
+export interface LocaleDataItem<T> {
     language: string,
-    data: string
+    data: T
 }
 
 export const postLogo = async (logo: File, token: string): Promise<ClientResponse<void>> => {
@@ -33,6 +34,10 @@ export const postLogo = async (logo: File, token: string): Promise<ClientRespons
     return {data: undefined, error};
 }
 
-export const postTitle = async (data: TitleData, token: string): Promise<ClientResponse<TitleData>> => {
-    return postData<TitleData>(PATH_TITLE, data, token);
+export const postTitle = async (data: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
+    return postData<LocaleData<string>>(PATH_TITLE, data, token);
+}
+
+export const postWelcomeText = async (welcomeText: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
+    return postData<LocaleData<string>>(PATH_WELCOME_TEXT, welcomeText, token);
 }

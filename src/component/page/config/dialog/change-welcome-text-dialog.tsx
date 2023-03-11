@@ -6,30 +6,30 @@ import { configClient, uiClient } from '../../../../client';
 import { useUiState } from '../../../../state';
 import { getLanguages, LOCALE, RESOURCE, toLocale } from '../../../../locale';
 
-import { WiwaButton, WiwaInput, WiwaSpinner } from '../../../ui';
+import { WiwaButton, WiwaSpinner, WiwaTextArea } from '../../../ui';
 import { FlagSk, FlagUs } from '../../../ui/icon';
 
-interface ChangeTitleDialogProps {
+interface ChangeWelcomeTextDialogProps {
     showDialog: boolean
     setShowDialog: (showDialog: boolean) => void
 }
 
-const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
+const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) => {
     const {t} = useTranslation();
 
     const uiState = useUiState();
 
     const languages = getLanguages();
 
-    const [titleData, setTitleData] = useState<configClient.LocaleData<string>>({items: []});
+    const [welcomeTextData, setWelcomeTextData] = useState<configClient.LocaleData<string>>({items: []});
     const [isFormValid, setFormValid] = useState(false);
     const [isSubmitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
     useEffect(() => {
-        languages.map(language => uiClient.getTitle(toLocale(language)).then(
+        languages.map(language => uiClient.getWelcomeText(toLocale(language)).then(
                 data => {
-                    setTitleData((prevState) => {
+                    setWelcomeTextData((prevState) => {
                         const nextItems = [...prevState.items.filter(item => item.language !== language),
                             {language, data: data.data ? data.data : ''}
                         ];
@@ -41,22 +41,22 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log(titleData.items);
-        const validArray: boolean[] = titleData.items.map(item => item.data.trim().length > 0);
+        console.log(welcomeTextData.items);
+        const validArray: boolean[] = welcomeTextData.items.map(item => item.data.trim().length > 0);
         setFormValid(
             validArray.length > 1
             && validArray.reduce((previousValue, currentValue) => previousValue && currentValue)
         );
-    }, [titleData.items])
+    }, [welcomeTextData.items])
 
     const handleSubmit = async () => {
         setSubmitting(true);
         setError(undefined);
         try {
             if (isFormValid) {
-                const wiwaError = await uiState?.changeTitle(titleData);
+                const wiwaError = await uiState?.changeWelcomeText(welcomeTextData);
                 if (wiwaError) {
-                    setError(t(RESOURCE.COMPONENT.PAGE.CONFIG.DIALOG.CHANGE_TITLE.ERROR).toString());
+                    setError(t(RESOURCE.COMPONENT.PAGE.CONFIG.DIALOG.CHANGE_WELCOME_TEXT.ERROR).toString());
                 } else {
                     props.setShowDialog(false);
                 }
@@ -95,7 +95,7 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
                             <Dialog.Panel
                                 className="w-full max-w-md transform overflow-hidden bg-white p-5 text-left align-middle shadow-xl transition-all">
                                 <div className="text-lg md:text-xl font-bold text-center mb-5">
-                                    {t(RESOURCE.COMPONENT.PAGE.CONFIG.DIALOG.CHANGE_TITLE.TITLE)}
+                                    {t(RESOURCE.COMPONENT.PAGE.CONFIG.DIALOG.CHANGE_WELCOME_TEXT.TITLE)}
                                 </div>
                                 <form
                                     onSubmit={(event => {
@@ -105,10 +105,10 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
 
                                     {languages.map((language, index) =>
                                         <div className="mb-5" key={index}>
-                                            <TitleEditor
+                                            <WelcomeTextEditor
                                                 language={language}
-                                                titleData={titleData}
-                                                setTitleData={setTitleData}
+                                                titleData={welcomeTextData}
+                                                setTitleData={setWelcomeTextData}
                                             />
                                         </div>
                                     )}
@@ -137,15 +137,15 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
     );
 }
 
-export default ChangeTitleDialog;
+export default ChangeWelcomeTextDialog;
 
-interface TitleEditorProps extends PropsWithChildren {
+interface WelcomeTextEditorProps extends PropsWithChildren {
     language: string,
     titleData: configClient.LocaleData<string>,
     setTitleData: React.Dispatch<React.SetStateAction<configClient.LocaleData<string>>>
 }
 
-const TitleEditor: React.FC<TitleEditorProps> = (props) => {
+const WelcomeTextEditor: React.FC<WelcomeTextEditorProps> = (props) => {
     const [value, setValue] = useState('');
 
     useEffect(() => {
@@ -168,9 +168,9 @@ const TitleEditor: React.FC<TitleEditorProps> = (props) => {
     return (
         <div className="flex flex-row gap-2 items-center">
             {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
-            <WiwaInput
+            <WiwaTextArea
                 className="w-full p-0.5"
-                type="text"
+                rows={10}
                 id={props.language}
                 name={props.language}
                 value={value}

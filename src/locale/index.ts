@@ -260,6 +260,10 @@ export const RESOURCE = {
                     CHANGE_TITLE: {
                         TITLE: 'component.page.config.dialog.change-title.title',
                         ERROR: 'component.page.config.dialog.change-title.error'
+                    },
+                    CHANGE_WELCOME_TEXT: {
+                        TITLE: 'component.page.config.dialog.change-welcome-text.title',
+                        ERROR: 'component.page.config.dialog.change-welcome-text.error'
                     }
                 },
                 APPLICATION_IMAGES: {
