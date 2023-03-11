@@ -224,6 +224,10 @@
               }
             },
             "error": "Nepodarilo sa zmeniť logo."
+          },
+          "change-title": {
+            "title": "Zmeniť názov",
+            "error": "Nepodarilo sa zmeniť názov."
           }
         },
         "application-images": {

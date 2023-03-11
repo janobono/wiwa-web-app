@@ -224,6 +224,10 @@
               }
             },
             "error": "Logo could not be changed."
+          },
+          "change-title": {
+            "title": "Change title",
+            "error": "Title could not be changed."
           }
         },
         "application-images": {

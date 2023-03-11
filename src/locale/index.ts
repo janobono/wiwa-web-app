@@ -11,6 +11,21 @@ export const LOCALE = {
     SK: 'sk_SK'
 };
 
+export const toLocale = (language: string) => {
+    if (language === 'sk') {
+        return LOCALE.SK;
+    }
+    return LOCALE.EN;
+}
+
+export const toLanguage = (locale: string) => {
+    return locale.split('_')[0];
+}
+
+export const getLanguages = (): string[] => {
+    return Object.values(LOCALE).map(value => toLanguage(value));
+}
+
 export const RESOURCE = {
     CONNECTING: 'connecting',
     TITLE: 'title',
@@ -241,6 +256,10 @@ export const RESOURCE = {
                             }
                         },
                         ERROR: 'component.page.config.dialog.change-logo.error'
+                    },
+                    CHANGE_TITLE: {
+                        TITLE: 'component.page.config.dialog.change-title.title',
+                        ERROR: 'component.page.config.dialog.change-title.error'
                     }
                 },
                 APPLICATION_IMAGES: {

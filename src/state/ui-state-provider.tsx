@@ -14,6 +14,7 @@ export interface UiState {
     gdprInfo: string | undefined,
     workingHours: string | undefined,
     changeLogo: (logo: File) => Promise<WiwaError | undefined>,
+    changeTitle: (title: configClient.TitleData) => Promise<WiwaError | undefined>
 }
 
 const uiStateContext = createContext<UiState | undefined>(undefined);
@@ -74,6 +75,22 @@ const UiStateProvider: React.FC<any> = ({children}) => {
         }
     }
 
+    const changeTitle = async (title: configClient.TitleData): Promise<WiwaError | undefined> => {
+        const token = authState?.token;
+        if (!token) {
+            return undefined;
+        }
+        setTitle(undefined);
+        try {
+            const clientResponse = await configClient.postTitle(title, token);
+            return clientResponse.error;
+        } finally {
+            if (actuatorState?.up && configState?.locale) {
+                uiClient.getTitle(configState.locale).then(value => setTitle(value.data));
+            }
+        }
+    }
+
     return (
         <uiStateContext.Provider
             value={
@@ -86,7 +103,8 @@ const UiStateProvider: React.FC<any> = ({children}) => {
                     cookiesInfo,
                     gdprInfo,
                     workingHours,
-                    changeLogo
+                    changeLogo,
+                    changeTitle
                 }
             }
         >{children}
