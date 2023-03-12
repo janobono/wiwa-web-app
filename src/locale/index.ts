@@ -246,6 +246,22 @@ export const RESOURCE = {
             },
             CONFIG: {
                 DIALOG: {
+                    CHANGE_APPLICATION_INFO: {
+                        TITLE: 'component.page.config.dialog.change-application-info.title',
+                        ERROR: 'component.page.config.dialog.change-application-info.error'
+                    },
+                    CHANGE_COMPANY_INFO:{
+                        TITLE: 'component.page.config.dialog.change-company-info.title',
+                        ERROR: 'component.page.config.dialog.change-company-info.error'
+                    },
+                    CHANGE_COOKIES_INFO: {
+                        TITLE: 'component.page.config.dialog.change-cookies-info.title',
+                        ERROR: 'component.page.config.dialog.change-cookies-info.error'
+                    },
+                    CHANGE_GDPR_INFO: {
+                        TITLE: 'component.page.config.dialog.change-gdpr-info.title',
+                        ERROR: 'component.page.config.dialog.change-gdpr-info.error'
+                    },
                     CHANGE_LOGO: {
                         TITLE: 'component.page.config.dialog.change-logo.title',
                         FORM: {
@@ -264,14 +280,30 @@ export const RESOURCE = {
                     CHANGE_WELCOME_TEXT: {
                         TITLE: 'component.page.config.dialog.change-welcome-text.title',
                         ERROR: 'component.page.config.dialog.change-welcome-text.error'
+                    },
+                    CHANGE_WORKING_HOURS: {
+                        TITLE: 'component.page.config.dialog.change-working-hours.title',
+                        ERROR: 'component.page.config.dialog.change-working-hours.error'
                     }
                 },
                 APPLICATION_IMAGES: {
                     TITLE: 'component.page.config.application-images.title'
                 },
+                COMPANY_INFO: {
+                    TITLE: 'component.page.config.company-info.title'
+                },
+                COOKIES_INFO: {
+                    TITLE: 'component.page.config.cookies-info.title'
+                },
+                GDPR_INFO: {
+                    TITLE: 'component.page.config.gdpr-info.title'
+                },
                 UI: {
                     TITLE: 'component.page.config.ui.title',
                     LOGO: 'component.page.config.ui.logo'
+                },
+                WORKING_HOURS: {
+                    TITLE: 'component.page.config.working-hours.title'
                 }
             },
             UI: {

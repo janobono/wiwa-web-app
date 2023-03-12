@@ -1,61 +1,46 @@
-import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Dialog, Transition } from '@headlessui/react';
 
-import { LocaleData, uiClient } from '../../../../client';
-import { useUiState } from '../../../../state';
-import { getLanguages, LOCALE, RESOURCE, toLocale } from '../../../../locale';
+import { LocaleData, WiwaError } from '../../../../client';
+import { LOCALE, RESOURCE, toLocale } from '../../../../locale';
 
-import { WiwaButton, WiwaSpinner, WiwaTextArea } from '../../../ui';
+import { WiwaButton, WiwaMarkdownRenderer, WiwaSpinner, WiwaTextArea } from '../../../ui';
 import { FlagSk, FlagUs } from '../../../ui/icon';
 
-interface ChangeWelcomeTextDialogProps {
+interface ChangeMarkdownDialogProps {
+    title: string,
+    errorMessage: string,
+    initialData: LocaleData<string>,
+    saveData: (data: LocaleData<string>) => Promise<WiwaError | undefined> | undefined,
     showDialog: boolean
     setShowDialog: (showDialog: boolean) => void
 }
 
-const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) => {
+const ChangeMarkdownDialog: React.FC<ChangeMarkdownDialogProps> = (props) => {
     const {t} = useTranslation();
 
-    const uiState = useUiState();
-
-    const languages = getLanguages();
-
-    const [welcomeTextData, setWelcomeTextData] = useState<LocaleData<string>>({items: []});
+    const [markdownData, setMarkdownData] = useState<LocaleData<string>>(props.initialData);
     const [isFormValid, setFormValid] = useState(false);
     const [isSubmitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
     useEffect(() => {
-        languages.map(language => uiClient.getWelcomeText(toLocale(language)).then(
-                data => {
-                    setWelcomeTextData((prevState) => {
-                        const nextItems = [...prevState.items.filter(item => item.language !== language),
-                            {language, data: data.data ? data.data : ''}
-                        ];
-                        return {items: nextItems};
-                    });
-                }
-            )
-        );
-    }, []);
-
-    useEffect(() => {
-        const validArray: boolean[] = welcomeTextData.items.map(item => item.data.trim().length > 0);
+        const validArray: boolean[] = markdownData.items.map(item => item.data.trim().length > 0);
         setFormValid(
             validArray.length > 1
             && validArray.reduce((previousValue, currentValue) => previousValue && currentValue)
         );
-    }, [welcomeTextData.items])
+    }, [markdownData.items])
 
     const handleSubmit = async () => {
         setSubmitting(true);
         setError(undefined);
         try {
             if (isFormValid) {
-                const wiwaError = await uiState?.changeWelcomeText(welcomeTextData);
+                const wiwaError = await props.saveData(markdownData);
                 if (wiwaError) {
-                    setError(t(RESOURCE.COMPONENT.PAGE.CONFIG.DIALOG.CHANGE_WELCOME_TEXT.ERROR).toString());
+                    setError(props.errorMessage);
                 } else {
                     props.setShowDialog(false);
                 }
@@ -92,22 +77,20 @@ const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) 
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel
-                                className="w-full max-w-md transform overflow-hidden bg-white p-5 text-left align-middle shadow-xl transition-all">
-                                <div className="text-lg md:text-xl font-bold text-center mb-5">
-                                    {t(RESOURCE.COMPONENT.PAGE.CONFIG.DIALOG.CHANGE_WELCOME_TEXT.TITLE)}
-                                </div>
+                                className="w-full transform overflow-hidden bg-white p-5 text-left align-middle shadow-xl transition-all">
+                                <div className="text-lg md:text-xl font-bold text-center mb-5">{props.title}</div>
                                 <form
                                     onSubmit={(event => {
                                         event.preventDefault();
                                         handleSubmit();
                                     })}>
 
-                                    {languages.map((language, index) =>
+                                    {props.initialData.items.map((dataItem, index) =>
                                         <div className="mb-5" key={index}>
-                                            <WelcomeTextEditor
-                                                language={language}
-                                                titleData={welcomeTextData}
-                                                setTitleData={setWelcomeTextData}
+                                            <LocaleDataEditor
+                                                language={dataItem.language}
+                                                markdownData={markdownData}
+                                                setMarkdownData={setMarkdownData}
                                             />
                                         </div>
                                     )}
@@ -136,26 +119,26 @@ const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) 
     );
 }
 
-export default ChangeWelcomeTextDialog;
+export default ChangeMarkdownDialog;
 
-interface WelcomeTextEditorProps extends PropsWithChildren {
+interface LocaleDataEditorProps extends PropsWithChildren {
     language: string,
-    titleData: LocaleData<string>,
-    setTitleData: React.Dispatch<React.SetStateAction<LocaleData<string>>>
+    markdownData: LocaleData<string>,
+    setMarkdownData: React.Dispatch<React.SetStateAction<LocaleData<string>>>
 }
 
-const WelcomeTextEditor: React.FC<WelcomeTextEditorProps> = (props) => {
+const LocaleDataEditor: React.FC<LocaleDataEditorProps> = (props) => {
     const [value, setValue] = useState('');
 
     useEffect(() => {
-        const item = props.titleData?.items.find(item => item.language === props.language);
+        const item = props.markdownData?.items.find(item => item.language === props.language);
         if (item) {
             setValue(item.data);
         }
-    }, [props.titleData]);
+    }, []);
 
     useEffect(() => {
-        props.setTitleData((prevState) => {
+        props.setMarkdownData((prevState) => {
                 const nextItems = [...prevState.items.filter(item => item.language !== props.language),
                     {language: props.language, data: value}
                 ];
@@ -165,16 +148,21 @@ const WelcomeTextEditor: React.FC<WelcomeTextEditorProps> = (props) => {
     }, [value]);
 
     return (
-        <div className="flex flex-row gap-2 items-center">
-            {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
-            <WiwaTextArea
-                className="w-full p-0.5"
-                rows={10}
-                id={props.language}
-                name={props.language}
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            />
-        </div>
+        <>
+            <div className="flex flex-row mb-5">
+                {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
+            </div>
+            <div className="grid grid-cols-2 gap-5 mb-5">
+                <WiwaTextArea
+                    className="w-full p-0.5"
+                    rows={20}
+                    id={props.language}
+                    name={props.language}
+                    value={value}
+                    onChange={event => setValue(event.target.value)}
+                />
+                <WiwaMarkdownRenderer className="prose container p-5 mx-auto" md={value}/>
+            </div>
+        </>
     );
 }

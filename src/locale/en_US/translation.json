@@ -214,6 +214,22 @@
       },
       "config": {
         "dialog": {
+          "change-application-info": {
+            "title": "Change application info",
+            "error": "Application info could not be changed."
+          },
+          "change-company-info": {
+            "title": "Change company info",
+            "error": "Company info could not be changed."
+          },
+          "change-cookies-info": {
+            "title": "Change cookies info",
+            "error": "Cookies info could not be changed."
+          },
+          "change-gdpr-info": {
+            "title": "Change gdpr info",
+            "error": "Gdpr info could not be changed."
+          },
           "change-logo": {
             "title": "Change logo",
             "form": {
@@ -232,14 +248,30 @@
           "change-welcome-text": {
             "title": "Change welcome text",
             "error": "Welcome text could not be changed."
+          },
+          "change-working-hours": {
+            "title": "Change working hours",
+            "error": "Working hours text could not be changed."
           }
         },
         "application-images": {
           "title": "Application images"
         },
+        "company-info": {
+          "title": "Contact info"
+        },
+        "cookies-info": {
+          "title": "Cookies info"
+        },
+        "gdpr-info": {
+          "title": "Gdpr info"
+        },
         "ui": {
           "title": "Base settings",
           "logo": "Logo"
+        },
+        "working-hours": {
+          "title": "Working hours"
         }
       },
       "ui": {

@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { configClient, uiClient } from '../../../../client';
+import { LocaleData, uiClient } from '../../../../client';
 import { useUiState } from '../../../../state';
 import { getLanguages, LOCALE, RESOURCE, toLocale } from '../../../../locale';
 
@@ -21,7 +21,7 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
 
     const languages = getLanguages();
 
-    const [titleData, setTitleData] = useState<configClient.LocaleData<string>>({items: []});
+    const [titleData, setTitleData] = useState<LocaleData<string>>({items: []});
     const [isFormValid, setFormValid] = useState(false);
     const [isSubmitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
@@ -41,7 +41,6 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log(titleData.items);
         const validArray: boolean[] = titleData.items.map(item => item.data.trim().length > 0);
         setFormValid(
             validArray.length > 1
@@ -141,8 +140,8 @@ export default ChangeTitleDialog;
 
 interface TitleEditorProps extends PropsWithChildren {
     language: string,
-    titleData: configClient.LocaleData<string>,
-    setTitleData: React.Dispatch<React.SetStateAction<configClient.LocaleData<string>>>
+    titleData: LocaleData<string>,
+    setTitleData: React.Dispatch<React.SetStateAction<LocaleData<string>>>
 }
 
 const TitleEditor: React.FC<TitleEditorProps> = (props) => {

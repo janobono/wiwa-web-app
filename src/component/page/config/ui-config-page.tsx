@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useUiState } from '../../../state';
-import { WiwaButton } from '../../ui';
+import { WiwaButton, WiwaCard } from '../../ui';
 import { RESOURCE } from '../../../locale';
 import { Edit } from 'react-feather';
-import { ChangeLogoDialog, ChangeTitleDialog, ChangeWelcomeTextDialog } from './dialog';
+import { ChangeApplicationInfoDialog, ChangeLogoDialog, ChangeTitleDialog, ChangeWelcomeTextDialog } from './dialog';
 
 const UiConfigPage: React.FC = () => {
     const {t} = useTranslation();
@@ -13,6 +13,7 @@ const UiConfigPage: React.FC = () => {
     const [showLogoDialog, setShowLogoDialog] = useState(false);
     const [showTitleDialog, setShowTitleDialog] = useState(false);
     const [showWelcomeTextDialog, setShowWelcomeTextDialog] = useState(false);
+    const [showApplicationInfoDialog, setShowApplicationInfoDialog] = useState(false);
 
     return (
         <>
@@ -63,6 +64,28 @@ const UiConfigPage: React.FC = () => {
                         </WiwaButton>
                     </div>
                 </div>
+
+                <div className="container pb-5 mx-auto">
+                    <div className="flex flex-row flex-grow border items-center justify-center gap-5 p-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                            {uiState?.applicationInfo ?
+                                uiState.applicationInfo.items.map((item, index) => {
+                                    return <WiwaCard key={index}
+                                                     image={item.imageFileName}
+                                                     title={item.title}
+                                                     text={item.text}/>
+                                })
+                                : <></>}
+                        </div>
+
+                        <WiwaButton
+                            title={t(RESOURCE.ACTION.EDIT).toString()}
+                            onClick={() => setShowApplicationInfoDialog(true)}
+                        >
+                            <Edit size="18"/>
+                        </WiwaButton>
+                    </div>
+                </div>
             </div>
 
 
@@ -74,6 +97,10 @@ const UiConfigPage: React.FC = () => {
             }
             {showWelcomeTextDialog &&
                 <ChangeWelcomeTextDialog showDialog={showWelcomeTextDialog} setShowDialog={setShowWelcomeTextDialog}/>
+            }
+            {showApplicationInfoDialog &&
+                <ChangeApplicationInfoDialog showDialog={showApplicationInfoDialog}
+                                             setShowDialog={setShowApplicationInfoDialog}/>
             }
         </>
     );

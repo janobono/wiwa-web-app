@@ -1,4 +1,12 @@
-import { APP_IMAGES_PATH_PREFIX, ClientResponse, createQueryParams, getData, getText } from './index';
+import {
+    APP_IMAGES_PATH_PREFIX,
+    ApplicationInfo,
+    ClientResponse,
+    CompanyInfo,
+    createQueryParams,
+    getData,
+    getText
+} from './index';
 
 const PATH_LOGO = '/api/ui/logo';
 const PATH_TITLE = '/api/ui/title';
@@ -8,31 +16,6 @@ const PATH_COMPANY_INFO = '/api/ui/company-info';
 const PATH_COOKIES_INFO = '/api/ui/cookies-info';
 const PATH_GDPR_INFO = '/api/ui/gdpr-info';
 const PATH_WORKING_HOURS = '/api/ui/working-hours';
-
-export interface ApplicationInfo {
-    items: ApplicationInfoItem[]
-}
-
-export interface ApplicationInfoItem {
-    title: string,
-    text: string,
-    imageFileName: string
-}
-
-export interface CompanyInfo {
-    name: string,
-    street: string,
-    city: string,
-    zipCode: string,
-    state: string,
-    phone: string,
-    mail: string,
-    businessId: string,
-    taxId: string,
-    vatRegNo: string,
-    commercialRegisterInfo: string,
-    mapUrl: string
-}
 
 export const getLogoUrl = async (): Promise<ClientResponse<string>> => {
     return {data: PATH_LOGO, error: undefined}

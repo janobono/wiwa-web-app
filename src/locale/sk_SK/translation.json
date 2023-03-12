@@ -214,6 +214,22 @@
       },
       "config": {
         "dialog": {
+          "change-application-info": {
+            "title": "Zmeniť informácie o aplikácii",
+            "error": "Nepodarilo sa zmeniť informácie o aplikácii."
+          },
+          "change-company-info": {
+            "title": "Zmeniť kontaktné informácie",
+            "error": "Nepodarilo sa zmeniť kontaktné informácie."
+          },
+          "change-cookies-info": {
+            "title": "Zmeniť cookies informácie",
+            "error": "Nepodarilo sa zmeniť cookies informácie."
+          },
+          "change-gdpr-info": {
+            "title": "Zmeniť gdpr informácie",
+            "error": "Nepodarilo sa zmeniť gdpr informácie."
+          },
           "change-logo": {
             "title": "Zmeniť logo",
             "form": {
@@ -232,14 +248,30 @@
           "change-welcome-text": {
             "title": "Zmeniť uvítací text",
             "error": "Nepodarilo sa zmeniť uvítací text."
+          },
+          "change-working-hours": {
+            "title": "Zmeniť otváracie hodiny",
+            "error": "Nepodarilo sa zmeniť otváracie hodiny."
           }
         },
         "application-images": {
           "title": "Aplikačné obrázky"
         },
+        "company-info": {
+          "title": "Kontaktné informácie"
+        },
+        "cookies-info": {
+          "title": "Cookies informácie"
+        },
+        "gdpr-info": {
+          "title": "Gdpr informácie"
+        },
         "ui": {
           "title": "Základné nastavenia",
           "logo": "Logo"
+        },
+        "working-hours": {
+          "title": "Otváracie hodiny"
         }
       },
       "ui": {

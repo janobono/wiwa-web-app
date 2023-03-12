@@ -16,7 +16,15 @@ import { Layout } from './component/layout';
 
 import { HomePage, NotFoundPage } from './component/page';
 import { ConfirmPage, ResetPasswordPage, SignInPage, SignUpPage, UserAccountPage } from './component/page/auth';
-import { ApplicationImagesConfigPage, ConfigPage, UiConfigPage } from './component/page/config';
+import {
+    ApplicationImagesConfigPage,
+    CompanyInfoConfigPage,
+    ConfigPage,
+    CookiesInfoConfigPage,
+    GdprInfoConfigPage,
+    UiConfigPage,
+    WorkingHoursConfigPage
+} from './component/page/config';
 import { ContactInfoPage, CookiesInfoPage, GdprInfoPage } from './component/page/ui';
 import { UsersPage } from './component/page/users';
 
@@ -53,8 +61,12 @@ const App: React.FC = () => {
                         {hasManagerAuthority(authState?.user) &&
                             <>
                                 <Route path="/config" element={<ConfigPage/>}>
-                                    <Route path="ui" element={<UiConfigPage/>}/>
                                     <Route path="application-images" element={<ApplicationImagesConfigPage/>}/>
+                                    <Route path="ui" element={<UiConfigPage/>}/>
+                                    <Route path="company-info" element={<CompanyInfoConfigPage/>}/>
+                                    <Route path="cookies-info" element={<CookiesInfoConfigPage/>}/>
+                                    <Route path="gdpr-info" element={<GdprInfoConfigPage/>}/>
+                                    <Route path="working-hours" element={<WorkingHoursConfigPage/>}/>
                                 </Route>
                                 <Route path="/users" element={<UsersPage/>}/>
                             </>

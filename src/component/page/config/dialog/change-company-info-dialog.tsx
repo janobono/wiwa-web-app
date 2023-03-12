@@ -1,61 +1,61 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { LocaleData, uiClient } from '../../../../client';
+import { ApplicationInfo, LocaleData } from '../../../../client';
 import { useUiState } from '../../../../state';
-import { getLanguages, LOCALE, RESOURCE, toLocale } from '../../../../locale';
+import { getLanguages, RESOURCE } from '../../../../locale';
 
-import { WiwaButton, WiwaSpinner, WiwaTextArea } from '../../../ui';
-import { FlagSk, FlagUs } from '../../../ui/icon';
+import { WiwaButton, WiwaSpinner } from '../../../ui';
 
-interface ChangeWelcomeTextDialogProps {
+interface ChangeCompanyInfoDialogProps {
     showDialog: boolean
     setShowDialog: (showDialog: boolean) => void
 }
 
-const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) => {
+const ChangeCompanyInfoDialog: React.FC<ChangeCompanyInfoDialogProps> = (props) => {
     const {t} = useTranslation();
 
     const uiState = useUiState();
 
     const languages = getLanguages();
 
-    const [welcomeTextData, setWelcomeTextData] = useState<LocaleData<string>>({items: []});
+    const [applicationInfoData, setApplicationInfoData] = useState<LocaleData<ApplicationInfo>>({items: []});
     const [isFormValid, setFormValid] = useState(false);
     const [isSubmitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
     useEffect(() => {
-        languages.map(language => uiClient.getWelcomeText(toLocale(language)).then(
-                data => {
-                    setWelcomeTextData((prevState) => {
-                        const nextItems = [...prevState.items.filter(item => item.language !== language),
-                            {language, data: data.data ? data.data : ''}
-                        ];
-                        return {items: nextItems};
-                    });
-                }
-            )
-        );
+        // languages.map(language => uiClient.getApplicationInfo(toLocale(language)).then(
+        //         data => {
+        //             setApplicationInfoData((prevState) => {
+        //                 const nextItems = [...prevState.items.filter(item => item.language !== language),
+        //                     {language, data: data.data ? data.data : ''}
+        //                 ];
+        //                 return {items: nextItems};
+        //             });
+        //         }
+        //     )
+        // );
     }, []);
 
     useEffect(() => {
-        const validArray: boolean[] = welcomeTextData.items.map(item => item.data.trim().length > 0);
-        setFormValid(
-            validArray.length > 1
-            && validArray.reduce((previousValue, currentValue) => previousValue && currentValue)
-        );
-    }, [welcomeTextData.items])
+        // const validArray: boolean[] = applicationInfoData.items.map(item => item.data.trim().length > 0);
+        // setFormValid(
+        //     validArray.length > 1
+        //     && validArray.reduce((previousValue, currentValue) => previousValue && currentValue)
+        // );
+        setFormValid(false);
+    }, [applicationInfoData.items])
 
     const handleSubmit = async () => {
         setSubmitting(true);
         setError(undefined);
         try {
             if (isFormValid) {
-                const wiwaError = await uiState?.changeWelcomeText(welcomeTextData);
+                const wiwaError = await uiState?.changeApplicationInfo(applicationInfoData);
                 if (wiwaError) {
-                    setError(t(RESOURCE.COMPONENT.PAGE.CONFIG.DIALOG.CHANGE_WELCOME_TEXT.ERROR).toString());
+                    setError(t(RESOURCE.COMPONENT.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.ERROR).toString());
                 } else {
                     props.setShowDialog(false);
                 }
@@ -94,7 +94,7 @@ const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) 
                             <Dialog.Panel
                                 className="w-full max-w-md transform overflow-hidden bg-white p-5 text-left align-middle shadow-xl transition-all">
                                 <div className="text-lg md:text-xl font-bold text-center mb-5">
-                                    {t(RESOURCE.COMPONENT.PAGE.CONFIG.DIALOG.CHANGE_WELCOME_TEXT.TITLE)}
+                                    {t(RESOURCE.COMPONENT.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.TITLE)}
                                 </div>
                                 <form
                                     onSubmit={(event => {
@@ -104,11 +104,6 @@ const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) 
 
                                     {languages.map((language, index) =>
                                         <div className="mb-5" key={index}>
-                                            <WelcomeTextEditor
-                                                language={language}
-                                                titleData={welcomeTextData}
-                                                setTitleData={setWelcomeTextData}
-                                            />
                                         </div>
                                     )}
 
@@ -136,45 +131,4 @@ const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) 
     );
 }
 
-export default ChangeWelcomeTextDialog;
-
-interface WelcomeTextEditorProps extends PropsWithChildren {
-    language: string,
-    titleData: LocaleData<string>,
-    setTitleData: React.Dispatch<React.SetStateAction<LocaleData<string>>>
-}
-
-const WelcomeTextEditor: React.FC<WelcomeTextEditorProps> = (props) => {
-    const [value, setValue] = useState('');
-
-    useEffect(() => {
-        const item = props.titleData?.items.find(item => item.language === props.language);
-        if (item) {
-            setValue(item.data);
-        }
-    }, [props.titleData]);
-
-    useEffect(() => {
-        props.setTitleData((prevState) => {
-                const nextItems = [...prevState.items.filter(item => item.language !== props.language),
-                    {language: props.language, data: value}
-                ];
-                return {items: nextItems};
-            }
-        );
-    }, [value]);
-
-    return (
-        <div className="flex flex-row gap-2 items-center">
-            {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
-            <WiwaTextArea
-                className="w-full p-0.5"
-                rows={10}
-                id={props.language}
-                name={props.language}
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            />
-        </div>
-    );
-}
+export default ChangeCompanyInfoDialog;

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { configClient, uiClient, WiwaError } from '../client';
+import { ApplicationInfo, CompanyInfo, configClient, LocaleData, uiClient, WiwaError } from '../client';
 import { useActuatorState } from './actuator-state-provider';
 import { useConfigState } from './config-state-provider';
 import { useAuthState } from './auth-state-provider';
@@ -8,14 +8,18 @@ export interface UiState {
     logoUrl: string | undefined,
     title: string | undefined,
     welcomeText: string | undefined,
-    applicationInfo: uiClient.ApplicationInfo | undefined,
-    companyInfo: uiClient.CompanyInfo | undefined,
+    applicationInfo: ApplicationInfo | undefined,
+    companyInfo: CompanyInfo | undefined,
     cookiesInfo: string | undefined,
     gdprInfo: string | undefined,
     workingHours: string | undefined,
     changeLogo: (logo: File) => Promise<WiwaError | undefined>,
-    changeTitle: (title: configClient.LocaleData<string>) => Promise<WiwaError | undefined>,
-    changeWelcomeText: (welcomeText: configClient.LocaleData<string>) => Promise<WiwaError | undefined>
+    changeTitle: (title: LocaleData<string>) => Promise<WiwaError | undefined>,
+    changeWelcomeText: (welcomeText: LocaleData<string>) => Promise<WiwaError | undefined>,
+    changeApplicationInfo: (applicationInfo: LocaleData<ApplicationInfo>) => Promise<WiwaError | undefined>,
+    changeCookiesInfo: (cookiesInfo: LocaleData<string>) => Promise<WiwaError | undefined>,
+    changeGdprInfo: (workingHours: LocaleData<string>) => Promise<WiwaError | undefined>,
+    changeWorkingHours: (workingHours: LocaleData<string>) => Promise<WiwaError | undefined>
 }
 
 const uiStateContext = createContext<UiState | undefined>(undefined);
@@ -28,8 +32,8 @@ const UiStateProvider: React.FC<any> = ({children}) => {
     const [logoUrl, setLogoUrl] = useState<string>();
     const [title, setTitle] = useState<string>();
     const [welcomeText, setWelcomeText] = useState<string>();
-    const [applicationInfo, setApplicationInfo] = useState<uiClient.ApplicationInfo>();
-    const [companyInfo, setCompanyInfo] = useState<uiClient.CompanyInfo>();
+    const [applicationInfo, setApplicationInfo] = useState<ApplicationInfo>();
+    const [companyInfo, setCompanyInfo] = useState<CompanyInfo>();
     const [cookiesInfo, setCookiesInfo] = useState<string>();
     const [gdprInfo, setGdprInfo] = useState<string>();
     const [workingHours, setWorkingHours] = useState<string>();
@@ -76,7 +80,7 @@ const UiStateProvider: React.FC<any> = ({children}) => {
         }
     }
 
-    const changeTitle = async (title: configClient.LocaleData<string>): Promise<WiwaError | undefined> => {
+    const changeTitle = async (title: LocaleData<string>): Promise<WiwaError | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
@@ -92,18 +96,82 @@ const UiStateProvider: React.FC<any> = ({children}) => {
         }
     }
 
-    const changeWelcomeText = async (welcomeText: configClient.LocaleData<string>): Promise<WiwaError | undefined> => {
+    const changeWelcomeText = async (welcomeText: LocaleData<string>): Promise<WiwaError | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
-        setTitle(undefined);
+        setWelcomeText(undefined);
         try {
             const clientResponse = await configClient.postWelcomeText(welcomeText, token);
             return clientResponse.error;
         } finally {
             if (actuatorState?.up && configState?.locale) {
                 uiClient.getWelcomeText(configState.locale).then(value => setWelcomeText(value.data));
+            }
+        }
+    }
+
+    const changeApplicationInfo = async (applicationInfo: LocaleData<ApplicationInfo>): Promise<WiwaError | undefined> => {
+        const token = authState?.token;
+        if (!token) {
+            return undefined;
+        }
+        setApplicationInfo(undefined);
+        try {
+            const clientResponse = await configClient.postApplicationInfo(applicationInfo, token);
+            return clientResponse.error;
+        } finally {
+            if (actuatorState?.up && configState?.locale) {
+                uiClient.getApplicationInfo(configState.locale).then(value => setApplicationInfo(value.data));
+            }
+        }
+    }
+
+    const changeCookiesInfo = async (cookiesInfo: LocaleData<string>): Promise<WiwaError | undefined> => {
+        const token = authState?.token;
+        if (!token) {
+            return undefined;
+        }
+        setCookiesInfo(undefined);
+        try {
+            const clientResponse = await configClient.postCookiesInfo(cookiesInfo, token);
+            return clientResponse.error;
+        } finally {
+            if (actuatorState?.up && configState?.locale) {
+                uiClient.getCookiesInfo(configState.locale).then(value => setCookiesInfo(value.data));
+            }
+        }
+    }
+
+    const changeGdprInfo = async (gdprInfo: LocaleData<string>): Promise<WiwaError | undefined> => {
+        const token = authState?.token;
+        if (!token) {
+            return undefined;
+        }
+        setGdprInfo(undefined);
+        try {
+            const clientResponse = await configClient.postGdprInfo(gdprInfo, token);
+            return clientResponse.error;
+        } finally {
+            if (actuatorState?.up && configState?.locale) {
+                uiClient.getGdprInfo(configState.locale).then(value => setGdprInfo(value.data));
+            }
+        }
+    }
+
+    const changeWorkingHours = async (workingHours: LocaleData<string>): Promise<WiwaError | undefined> => {
+        const token = authState?.token;
+        if (!token) {
+            return undefined;
+        }
+        setWorkingHours(undefined);
+        try {
+            const clientResponse = await configClient.postWorkingHours(workingHours, token);
+            return clientResponse.error;
+        } finally {
+            if (actuatorState?.up && configState?.locale) {
+                uiClient.getWorkingHours(configState.locale).then(value => setWorkingHours(value.data));
             }
         }
     }
@@ -122,7 +190,11 @@ const UiStateProvider: React.FC<any> = ({children}) => {
                     workingHours,
                     changeLogo,
                     changeTitle,
-                    changeWelcomeText
+                    changeWelcomeText,
+                    changeApplicationInfo,
+                    changeCookiesInfo,
+                    changeGdprInfo,
+                    changeWorkingHours
                 }
             }
         >{children}
