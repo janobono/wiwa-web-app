@@ -32,51 +32,51 @@ const CompanyInfoConfigPage: React.FC = () => {
                                 {uiState?.companyInfo &&
                                     <>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">name</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.NAME)}</span>
                                             <span>{uiState.companyInfo.name}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">street</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.STREET)}</span>
                                             <span>{uiState.companyInfo.street}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">city</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.CITY)}</span>
                                             <span>{uiState.companyInfo.city}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">zipCode</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.ZIP_CODE)}</span>
                                             <span>{uiState.companyInfo.zipCode}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">state</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.STATE)}</span>
                                             <span>{uiState.companyInfo.state}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">phone</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.PHONE)}</span>
                                             <span>{uiState.companyInfo.phone}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">mail</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.MAIL)}</span>
                                             <span>{uiState.companyInfo.mail}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">businessId</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.BUSINESS_ID)}</span>
                                             <span>{uiState.companyInfo.businessId}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">taxId</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.TAX_ID)}</span>
                                             <span>{uiState.companyInfo.taxId}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">vatRegNo</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.VAT_REG_NO)}</span>
                                             <span>{uiState.companyInfo.vatRegNo}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            <span className="font-bold">commercialRegisterInfo</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.COMMERCIAL_REGISTER_INFO)}</span>
                                             <span>{uiState.companyInfo.commercialRegisterInfo}</span>
                                         </div>
                                         <div className="mb-2 grid grid-cols-1 gap-5">
-                                            <span className="font-bold">mapUrl</span>
+                                            <span className="font-bold">{t(RESOURCE.COMPONENT.PAGE.CONFIG.COMPANY_INFO.MAP_URL)}</span>
                                             <div>
                                                 {uiState?.companyInfo ?
                                                     <iframe

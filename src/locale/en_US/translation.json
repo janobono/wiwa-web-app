@@ -258,7 +258,19 @@
           "title": "Application images"
         },
         "company-info": {
-          "title": "Contact info"
+          "title": "Contact info",
+          "name": "Name",
+          "street": "Street",
+          "city": "City",
+          "zip-code": "Zip code",
+          "state": "State",
+          "phone": "Phone",
+          "mail": "Email",
+          "business-id": "Business Id",
+          "tax-id": "Tax Id",
+          "vat-reg-no": "Vat registration number",
+          "commercial-register-info": "Commercial register info",
+          "map-url": "Map"
         },
         "cookies-info": {
           "title": "Cookies info"

@@ -258,7 +258,19 @@
           "title": "Aplikačné obrázky"
         },
         "company-info": {
-          "title": "Kontaktné informácie"
+          "title": "Kontaktné informácie",
+          "name": "Názov",
+          "street": "Ulica",
+          "city": "Mesto",
+          "zip-code": "PSČ",
+          "state": "Štát",
+          "phone": "Telefón",
+          "mail": "Email",
+          "business-id": "IČO",
+          "tax-id": "DIČ",
+          "vat-reg-no": "IČ DPH",
+          "commercial-register-info": "Daňová registračná informácia",
+          "map-url": "Mapa"
         },
         "cookies-info": {
           "title": "Cookies informácie"

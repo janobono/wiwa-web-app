@@ -17,6 +17,7 @@ export interface UiState {
     changeTitle: (title: LocaleData<string>) => Promise<WiwaError | undefined>,
     changeWelcomeText: (welcomeText: LocaleData<string>) => Promise<WiwaError | undefined>,
     changeApplicationInfo: (applicationInfo: LocaleData<ApplicationInfo>) => Promise<WiwaError | undefined>,
+    changeCompanyInfo: (companyInfo: LocaleData<CompanyInfo>) => Promise<WiwaError | undefined>,
     changeCookiesInfo: (cookiesInfo: LocaleData<string>) => Promise<WiwaError | undefined>,
     changeGdprInfo: (workingHours: LocaleData<string>) => Promise<WiwaError | undefined>,
     changeWorkingHours: (workingHours: LocaleData<string>) => Promise<WiwaError | undefined>
@@ -128,6 +129,22 @@ const UiStateProvider: React.FC<any> = ({children}) => {
         }
     }
 
+    const changeCompanyInfo = async (companyInfo: LocaleData<CompanyInfo>): Promise<WiwaError | undefined> => {
+        const token = authState?.token;
+        if (!token) {
+            return undefined;
+        }
+        setCompanyInfo(undefined);
+        try {
+            const clientResponse = await configClient.postCompanyInfo(companyInfo, token);
+            return clientResponse.error;
+        } finally {
+            if (actuatorState?.up && configState?.locale) {
+                uiClient.getCompanyInfo(configState.locale).then(value => setCompanyInfo(value.data));
+            }
+        }
+    }
+
     const changeCookiesInfo = async (cookiesInfo: LocaleData<string>): Promise<WiwaError | undefined> => {
         const token = authState?.token;
         if (!token) {
@@ -192,6 +209,7 @@ const UiStateProvider: React.FC<any> = ({children}) => {
                     changeTitle,
                     changeWelcomeText,
                     changeApplicationInfo,
+                    changeCompanyInfo,
                     changeCookiesInfo,
                     changeGdprInfo,
                     changeWorkingHours

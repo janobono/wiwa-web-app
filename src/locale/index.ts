@@ -250,7 +250,7 @@ export const RESOURCE = {
                         TITLE: 'component.page.config.dialog.change-application-info.title',
                         ERROR: 'component.page.config.dialog.change-application-info.error'
                     },
-                    CHANGE_COMPANY_INFO:{
+                    CHANGE_COMPANY_INFO: {
                         TITLE: 'component.page.config.dialog.change-company-info.title',
                         ERROR: 'component.page.config.dialog.change-company-info.error'
                     },
@@ -290,7 +290,19 @@ export const RESOURCE = {
                     TITLE: 'component.page.config.application-images.title'
                 },
                 COMPANY_INFO: {
-                    TITLE: 'component.page.config.company-info.title'
+                    TITLE: 'component.page.config.company-info.title',
+                    NAME: 'component.page.config.company-info.name',
+                    STREET: 'component.page.config.company-info.street',
+                    CITY: 'component.page.config.company-info.city',
+                    ZIP_CODE: 'component.page.config.company-info.zip-code',
+                    STATE: 'component.page.config.company-info.state',
+                    PHONE: 'component.page.config.company-info.phone',
+                    MAIL: 'component.page.config.company-info.mail',
+                    BUSINESS_ID: 'component.page.config.company-info.business-id',
+                    TAX_ID: 'component.page.config.company-info.tax-id',
+                    VAT_REG_NO: 'component.page.config.company-info.vat-reg-no',
+                    COMMERCIAL_REGISTER_INFO: 'component.page.config.company-info.commercial-register-info',
+                    MAP_URL: 'component.page.config.company-info.map-url'
                 },
                 COOKIES_INFO: {
                     TITLE: 'component.page.config.cookies-info.title'
