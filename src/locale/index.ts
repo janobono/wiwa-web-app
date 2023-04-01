@@ -27,47 +27,81 @@ export const getLanguages = (): string[] => {
 }
 
 export const RESOURCE = {
-    CONNECTING: 'connecting',
-    TITLE: 'title',
-    PAGE_NOT_FOUND: 'page-not-found',
-    UNKNOWN_ERROR: 'unknown-error',
-    ACTION: {
-        CANCEL: 'action.cancel',
-        CHANGE_PASSWORD: 'action.change-password',
-        CHANGE_EMAIL: 'action.change-email',
-        CHANGE_USER_DETAILS: 'action.change-user-details',
-        CONFIG: 'action.config',
-        EDIT: 'action.edit',
-        HOME: 'action.home',
-        OK: 'action.ok',
-        RESEND: 'action.resend',
-        SAVE: 'action.save',
-        SWITCH_LOCALE: 'action.switch-locale',
-        SIGN_IN: 'action.sign-in',
-        SIGN_OUT: 'action.sign-out',
-        SIGN_UP: 'action.sign-up',
-        USER_ACCOUNT: 'action.user-account',
-        USERS: 'action.users',
-        YES: 'action.yes'
-    },
-    COMPONENT: {
-        LAYOUT: {
-            FOOTER: {
-                LINKS: {
-                    TITLE: 'component.layout.footer.links.title',
-                    CONTACT_INFO: 'component.layout.footer.links.contact-info',
-                    COOKIES_INFO: 'component.layout.footer.links.cookies-info',
-                    GDPR_INFO: 'component.layout.footer.links.gdpr-info'
+        CONNECTING: 'connecting',
+        TITLE: 'title',
+        PAGE_NOT_FOUND: 'page-not-found',
+        UNKNOWN_ERROR: 'unknown-error',
+        ACTION: {
+            ADD: 'action.add',
+            CANCEL: 'action.cancel',
+            CREATE: 'action.create',
+            CHANGE_PASSWORD: 'action.change-password',
+            CHANGE_EMAIL: 'action.change-email',
+            CHANGE_USER_DETAILS: 'action.change-user-details',
+            CONFIG: 'action.config',
+            DELETE: 'action.delete',
+            EDIT: 'action.edit',
+            FIRST: 'action.first',
+            HOME: 'action.home',
+            LAST: 'action.last',
+            NEW: 'action.new',
+            NEXT: 'action.next',
+            OK: 'action.ok',
+            PREVIOUS: 'action.previous',
+            RESEND: 'action.resend',
+            SAVE: 'action.save',
+            SWITCH_LOCALE: 'action.switch-locale',
+            SIGN_IN: 'action.sign-in',
+            SIGN_OUT: 'action.sign-out',
+            SIGN_UP: 'action.sign-up',
+            USER_ACCOUNT: 'action.user-account',
+            USERS: 'action.users',
+            YES: 'action.yes'
+        },
+        ERROR: {
+            GDPR: 'error.gdpr',
+            INVALID_CAPTCHA: 'error.invalid-captcha',
+            INVALID_CREDENTIALS: 'error.invalid-credentials',
+            USER_EMAIL_IS_USED: 'error.user-email-is-used',
+            USER_IS_DISABLED: 'error.user-is-disabled',
+            USER_NOT_FOUND: 'error.user-not-found',
+            USER_USERNAME_IS_USED: 'error.user-username-is-used'
+        },
+        COMPONENT: {
+            LAYOUT: {
+                FOOTER: {
+                    LINKS: {
+                        TITLE: 'component.layout.footer.links.title',
+                        CONTACT_INFO: 'component.layout.footer.links.contact-info',
+                        COOKIES_INFO: 'component.layout.footer.links.cookies-info',
+                        GDPR_INFO: 'component.layout.footer.links.gdpr-info'
+                    },
+                    CONTACT: {
+                        TITLE: 'component.layout.footer.contact.title'
+                    }
                 },
-                CONTACT: {
-                    TITLE: 'component.layout.footer.contact.title'
+                NAVIGATION: {
+                    COOKIES_CONSENT: {
+                        TEXT: 'component.layout.navigation.cookies-consent.text',
+                        LINK: 'component.layout.navigation.cookies-consent.link',
+                        ACTION: 'component.layout.navigation.cookies-consent.action'
+                    }
                 }
             },
-            NAVIGATION: {
-                COOKIES_CONSENT: {
-                    TEXT: 'component.layout.navigation.cookies-consent.text',
-                    LINK: 'component.layout.navigation.cookies-consent.link',
-                    ACTION: 'component.layout.navigation.cookies-consent.action'
+            UI: {
+                WIWA_CAPTCHA: {
+                    LABEL: 'component.ui.wiwa-captcha.label',
+                    PLACEHOLDER: 'component.ui.wiwa-captcha.placeholder',
+                    VALIDATION_MESSAGE: 'component.ui.wiwa-captcha.validation-message',
+                    ERROR: 'component.ui.wiwa-captcha.error'
+                },
+                WIWA_NEW_PASSWORD: {
+                    LABEL: 'component.ui.wiwa-new-password.label',
+                    PLACEHOLDER1: 'component.ui.wiwa-new-password.placeholder1',
+                    PLACEHOLDER2: 'component.ui.wiwa-new-password.placeholder2',
+                    VALIDATION_MESSAGE1: 'component.ui.wiwa-new-password.validation-message1',
+                    VALIDATION_MESSAGE2: 'component.ui.wiwa-new-password.validation-message2',
+                    VALIDATION_MESSAGE3: 'component.ui.wiwa-new-password.validation-message3'
                 }
             }
         },
@@ -75,289 +109,275 @@ export const RESOURCE = {
             AUTH: {
                 DIALOG: {
                     CHANGE_EMAIL: {
-                        TITLE: 'component.page.auth.dialog.change-email.title',
+                        TITLE: 'page.auth.dialog.change-email.title',
                         FORM: {
                             EMAIL: {
-                                LABEL: 'component.page.auth.dialog.change-email.form.email.label',
-                                PLACEHOLDER: 'component.page.auth.dialog.change-email.form.email.placeholder',
-                                VALIDATION_MESSAGE_1: 'component.page.auth.dialog.change-email.form.email.validation-message-1',
-                                VALIDATION_MESSAGE_2: 'component.page.auth.dialog.change-email.form.email.validation-message-2'
+                                LABEL: 'page.auth.dialog.change-email.form.email.label',
+                                PLACEHOLDER: 'page.auth.dialog.change-email.form.email.placeholder',
+                                VALIDATION_MESSAGE_1: 'page.auth.dialog.change-email.form.email.validation-message-1',
+                                VALIDATION_MESSAGE_2: 'page.auth.dialog.change-email.form.email.validation-message-2'
                             },
                             PASSWORD: {
-                                LABEL: 'component.page.auth.dialog.change-email.form.password.label',
-                                PLACEHOLDER: 'component.page.auth.dialog.change-email.form.password.placeholder',
-                                VALIDATION_MESSAGE: 'component.page.auth.dialog.change-email.form.password.validation-message'
+                                LABEL: 'page.auth.dialog.change-email.form.password.label',
+                                PLACEHOLDER: 'page.auth.dialog.change-email.form.password.placeholder',
+                                VALIDATION_MESSAGE: 'page.auth.dialog.change-email.form.password.validation-message'
                             }
                         },
-                        MESSAGE: 'component.page.auth.dialog.change-email.message',
-                        ERROR: 'component.page.auth.dialog.change-email.error'
+                        MESSAGE: 'page.auth.dialog.change-email.message',
+                        ERROR: 'page.auth.dialog.change-email.error'
                     },
                     CHANGE_PASSWORD: {
-                        TITLE: 'component.page.auth.dialog.change-password.title',
+                        TITLE: 'page.auth.dialog.change-password.title',
                         FORM: {
                             ACTUAL_PASSWORD: {
-                                LABEL: 'component.page.auth.dialog.change-password.form.actual-password.label',
-                                PLACEHOLDER: 'component.page.auth.dialog.change-password.form.actual-password.placeholder',
-                                VALIDATION_MESSAGE: 'component.page.auth.dialog.change-password.form.actual-password.validation-message'
+                                LABEL: 'page.auth.dialog.change-password.form.actual-password.label',
+                                PLACEHOLDER: 'page.auth.dialog.change-password.form.actual-password.placeholder',
+                                VALIDATION_MESSAGE: 'page.auth.dialog.change-password.form.actual-password.validation-message'
                             }
                         },
-                        MESSAGE: 'component.page.auth.dialog.change-password.message',
-                        ERROR: 'component.page.auth.dialog.change-password.error'
+                        MESSAGE: 'page.auth.dialog.change-password.message',
+                        ERROR: 'page.auth.dialog.change-password.error'
                     },
                     CHANGE_USER_DETAILS: {
-                        TITLE: 'component.page.auth.dialog.change-user-details.title',
+                        TITLE: 'page.auth.dialog.change-user-details.title',
                         FORM: {
                             TITLE_BEFORE: {
-                                LABEL: 'component.page.auth.dialog.change-user-details.form.title-before.label',
-                                PLACEHOLDER: 'component.page.auth.dialog.change-user-details.form.title-before.placeholder',
-                                VALIDATION_MESSAGE: 'component.page.auth.dialog.change-user-details.form.title-before.validation-message'
+                                LABEL: 'page.auth.dialog.change-user-details.form.title-before.label',
+                                PLACEHOLDER: 'page.auth.dialog.change-user-details.form.title-before.placeholder',
+                                VALIDATION_MESSAGE: 'page.auth.dialog.change-user-details.form.title-before.validation-message'
                             },
                             TITLE_AFTER: {
-                                LABEL: 'component.page.auth.dialog.change-user-details.form.title-after.label',
-                                PLACEHOLDER: 'component.page.auth.dialog.change-user-details.form.title-after.placeholder',
-                                VALIDATION_MESSAGE: 'component.page.auth.dialog.change-user-details.form.title-after.validation-message'
+                                LABEL: 'page.auth.dialog.change-user-details.form.title-after.label',
+                                PLACEHOLDER: 'page.auth.dialog.change-user-details.form.title-after.placeholder',
+                                VALIDATION_MESSAGE: 'page.auth.dialog.change-user-details.form.title-after.validation-message'
                             },
                             FIRST_NAME: {
-                                LABEL: 'component.page.auth.dialog.change-user-details.form.first-name.label',
-                                PLACEHOLDER: 'component.page.auth.dialog.change-user-details.form.first-name.placeholder',
-                                VALIDATION_MESSAGE: 'component.page.auth.dialog.change-user-details.form.first-name.validation-message'
+                                LABEL: 'page.auth.dialog.change-user-details.form.first-name.label',
+                                PLACEHOLDER: 'page.auth.dialog.change-user-details.form.first-name.placeholder',
+                                VALIDATION_MESSAGE: 'page.auth.dialog.change-user-details.form.first-name.validation-message'
                             },
                             MID_NAME: {
-                                LABEL: 'component.page.auth.dialog.change-user-details.form.mid-name.label',
-                                PLACEHOLDER: 'component.page.auth.dialog.change-user-details.form.mid-name.placeholder'
+                                LABEL: 'page.auth.dialog.change-user-details.form.mid-name.label',
+                                PLACEHOLDER: 'page.auth.dialog.change-user-details.form.mid-name.placeholder'
                             },
                             LAST_NAME: {
-                                LABEL: 'component.page.auth.dialog.change-user-details.form.last-name.label',
-                                PLACEHOLDER: 'component.page.auth.dialog.change-user-details.form.last-name.placeholder',
-                                VALIDATION_MESSAGE: 'component.page.auth.dialog.change-user-details.form.last-name.validation-message'
+                                LABEL: 'page.auth.dialog.change-user-details.form.last-name.label',
+                                PLACEHOLDER: 'page.auth.dialog.change-user-details.form.last-name.placeholder',
+                                VALIDATION_MESSAGE: 'page.auth.dialog.change-user-details.form.last-name.validation-message'
                             },
                             GDPR: {
-                                LABEL: 'component.page.auth.dialog.change-user-details.form.gdpr.label',
-                                LINK: 'component.page.auth.dialog.change-user-details.form.gdpr.link',
-                                VALIDATION_MESSAGE: 'component.page.auth.dialog.change-user-details.form.gdpr.validation-message'
+                                LABEL: 'page.auth.dialog.change-user-details.form.gdpr.label',
+                                LINK: 'page.auth.dialog.change-user-details.form.gdpr.link',
+                                VALIDATION_MESSAGE: 'page.auth.dialog.change-user-details.form.gdpr.validation-message'
                             }
                         },
-                        MESSAGE: 'component.page.auth.dialog.change-user-details.message',
-                        ERROR: 'component.page.auth.dialog.change-user-details.error'
+                        MESSAGE: 'page.auth.dialog.change-user-details.message',
+                        ERROR: 'page.auth.dialog.change-user-details.error'
                     },
                     RESEND_CONFIRMATION: {
-                        TITLE: 'component.page.auth.dialog.resend-confirmation.title',
-                        MESSAGE: 'component.page.auth.dialog.resend-confirmation.message',
-                        ERROR: 'component.page.auth.dialog.resend-confirmation.error'
+                        TITLE: 'page.auth.dialog.resend-confirmation.title',
+                        MESSAGE: 'page.auth.dialog.resend-confirmation.message',
+                        ERROR: 'page.auth.dialog.resend-confirmation.error'
                     }
                 },
                 CONFIRM: {
-                    SUBMITTED_MESSAGE: 'component.page.auth.confirm.submitted-message',
-                    ERROR_MESSAGE: 'component.page.auth.confirm.error-message'
+                    SUBMITTED_MESSAGE: 'page.auth.confirm.submitted-message',
+                    ERROR_MESSAGE: 'page.auth.confirm.error-message'
                 },
                 RESET_PASSWORD: {
-                    SUBMITTED_MESSAGE: 'component.page.auth.reset-password.submitted-message',
-                    TITLE: 'component.page.auth.reset-password.title',
+                    SUBMITTED_MESSAGE: 'page.auth.reset-password.submitted-message',
+                    TITLE: 'page.auth.reset-password.title',
                     FORM: {
                         EMAIL: {
-                            LABEL: 'component.page.auth.reset-password.form.email.label',
-                            PLACEHOLDER: 'component.page.auth.reset-password.form.email.placeholder',
-                            VALIDATION_MESSAGE_1: 'component.page.auth.reset-password.form.email.validation-message-1',
-                            VALIDATION_MESSAGE_2: 'component.page.auth.reset-password.form.email.validation-message-2'
+                            LABEL: 'page.auth.reset-password.form.email.label',
+                            PLACEHOLDER: 'page.auth.reset-password.form.email.placeholder',
+                            VALIDATION_MESSAGE_1: 'page.auth.reset-password.form.email.validation-message-1',
+                            VALIDATION_MESSAGE_2: 'page.auth.reset-password.form.email.validation-message-2'
                         }
                     }
                 },
                 SIGN_IN: {
-                    TITLE: 'component.page.auth.sign-in.title',
-                    SUBTITLE: 'component.page.auth.sign-in.subtitle',
-                    SUBTITLE_LINK: 'component.page.auth.sign-in.subtitle-link',
+                    TITLE: 'page.auth.sign-in.title',
+                    SUBTITLE: 'page.auth.sign-in.subtitle',
+                    SUBTITLE_LINK: 'page.auth.sign-in.subtitle-link',
                     FORM: {
                         USERNAME: {
-                            LABEL: 'component.page.auth.sign-in.form.username.label',
-                            PLACEHOLDER: 'component.page.auth.sign-in.form.username.placeholder',
-                            VALIDATION_MESSAGE: 'component.page.auth.sign-in.form.username.validation-message'
+                            LABEL: 'page.auth.sign-in.form.username.label',
+                            PLACEHOLDER: 'page.auth.sign-in.form.username.placeholder',
+                            VALIDATION_MESSAGE: 'page.auth.sign-in.form.username.validation-message'
                         },
                         PASSWORD: {
-                            LABEL: 'component.page.auth.sign-in.form.password.label',
-                            PLACEHOLDER: 'component.page.auth.sign-in.form.password.placeholder',
-                            VALIDATION_MESSAGE: 'component.page.auth.sign-in.form.password.validation-message'
+                            LABEL: 'page.auth.sign-in.form.password.label',
+                            PLACEHOLDER: 'page.auth.sign-in.form.password.placeholder',
+                            VALIDATION_MESSAGE: 'page.auth.sign-in.form.password.validation-message'
                         },
-                        LINK: 'component.page.auth.sign-in.form.link',
-                        SUBMIT: 'component.page.auth.sign-in.form.submit',
+                        LINK: 'page.auth.sign-in.form.link',
+                        SUBMIT: 'page.auth.sign-in.form.submit',
                     }
                 },
                 SIGN_UP: {
-                    TITLE: 'component.page.auth.sign-up.title',
-                    SUBTITLE: 'component.page.auth.sign-up.subtitle',
-                    SUBTITLE_LINK: 'component.page.auth.sign-up.subtitle-link',
+                    TITLE: 'page.auth.sign-up.title',
+                    SUBTITLE: 'page.auth.sign-up.subtitle',
+                    SUBTITLE_LINK: 'page.auth.sign-up.subtitle-link',
                     FORM: {
                         USERNAME: {
-                            LABEL: 'component.page.auth.sign-up.form.username.label',
-                            PLACEHOLDER: 'component.page.auth.sign-up.form.username.placeholder',
-                            VALIDATION_MESSAGE: 'component.page.auth.sign-up.form.username.validation-message'
+                            LABEL: 'page.auth.sign-up.form.username.label',
+                            PLACEHOLDER: 'page.auth.sign-up.form.username.placeholder',
+                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.username.validation-message'
                         },
                         EMAIL: {
-                            LABEL: 'component.page.auth.sign-up.form.email.label',
-                            PLACEHOLDER: 'component.page.auth.sign-up.form.email.placeholder',
-                            VALIDATION_MESSAGE1: 'component.page.auth.sign-up.form.email.validation-message1',
-                            VALIDATION_MESSAGE2: 'component.page.auth.sign-up.form.email.validation-message2'
+                            LABEL: 'page.auth.sign-up.form.email.label',
+                            PLACEHOLDER: 'page.auth.sign-up.form.email.placeholder',
+                            VALIDATION_MESSAGE1: 'page.auth.sign-up.form.email.validation-message1',
+                            VALIDATION_MESSAGE2: 'page.auth.sign-up.form.email.validation-message2'
                         },
                         TITLE_BEFORE: {
-                            LABEL: 'component.page.auth.sign-up.form.title-before.label',
-                            PLACEHOLDER: 'component.page.auth.sign-up.form.title-before.placeholder',
-                            VALIDATION_MESSAGE: 'component.page.auth.sign-up.form.title-before.validation-message'
+                            LABEL: 'page.auth.sign-up.form.title-before.label',
+                            PLACEHOLDER: 'page.auth.sign-up.form.title-before.placeholder',
+                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.title-before.validation-message'
                         },
                         TITLE_AFTER: {
-                            LABEL: 'component.page.auth.sign-up.form.title-after.label',
-                            PLACEHOLDER: 'component.page.auth.sign-up.form.title-after.placeholder',
-                            VALIDATION_MESSAGE: 'component.page.auth.sign-up.form.title-after.validation-message'
+                            LABEL: 'page.auth.sign-up.form.title-after.label',
+                            PLACEHOLDER: 'page.auth.sign-up.form.title-after.placeholder',
+                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.title-after.validation-message'
                         },
                         FIRST_NAME: {
-                            LABEL: 'component.page.auth.sign-up.form.first-name.label',
-                            PLACEHOLDER: 'component.page.auth.sign-up.form.first-name.placeholder',
-                            VALIDATION_MESSAGE: 'component.page.auth.sign-up.form.first-name.validation-message'
+                            LABEL: 'page.auth.sign-up.form.first-name.label',
+                            PLACEHOLDER: 'page.auth.sign-up.form.first-name.placeholder',
+                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.first-name.validation-message'
                         },
                         MID_NAME: {
-                            LABEL: 'component.page.auth.sign-up.form.mid-name.label',
-                            PLACEHOLDER: 'component.page.auth.sign-up.form.mid-name.placeholder'
+                            LABEL: 'page.auth.sign-up.form.mid-name.label',
+                            PLACEHOLDER: 'page.auth.sign-up.form.mid-name.placeholder'
                         },
                         LAST_NAME: {
-                            LABEL: 'component.page.auth.sign-up.form.last-name.label',
-                            PLACEHOLDER: 'component.page.auth.sign-up.form.last-name.placeholder',
-                            VALIDATION_MESSAGE: 'component.page.auth.sign-up.form.last-name.validation-message'
+                            LABEL: 'page.auth.sign-up.form.last-name.label',
+                            PLACEHOLDER: 'page.auth.sign-up.form.last-name.placeholder',
+                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.last-name.validation-message'
                         },
                         GDPR: {
-                            LABEL: 'component.page.auth.sign-up.form.gdpr.label',
-                            LINK: 'component.page.auth.sign-up.form.gdpr.link',
-                            VALIDATION_MESSAGE: 'component.page.auth.sign-up.form.gdpr.validation-message'
+                            LABEL: 'page.auth.sign-up.form.gdpr.label',
+                            LINK: 'page.auth.sign-up.form.gdpr.link',
+                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.gdpr.validation-message'
                         },
-                        SUBMIT: 'component.page.auth.sign-up.form.submit'
+                        SUBMIT: 'page.auth.sign-up.form.submit'
                     }
                 },
                 USER_ACCOUNT: {
-                    TITLE: 'component.page.auth.user-account.title',
-                    USERNAME: 'component.page.auth.user-account.username',
-                    PASSWORD: 'component.page.auth.user-account.password',
-                    EMAIL: 'component.page.auth.user-account.email',
-                    TITLE_BEFORE: 'component.page.auth.user-account.title-before',
-                    FIRST_NAME: 'component.page.auth.user-account.first-name',
-                    MID_NAME: 'component.page.auth.user-account.mid-name',
-                    LAST_NAME: 'component.page.auth.user-account.last-name',
-                    TITLE_AFTER: 'component.page.auth.user-account.title-after',
-                    GDPR: 'component.page.auth.user-account.gdpr',
-                    CONFIRMATION_WARNING: 'component.page.auth.user-account.confirmation-warning',
-                    SEND_CONFIRMATION: 'component.page.auth.user-account.send-confirmation'
+                    TITLE: 'page.auth.user-account.title',
+                    USERNAME: 'page.auth.user-account.username',
+                    PASSWORD: 'page.auth.user-account.password',
+                    EMAIL: 'page.auth.user-account.email',
+                    TITLE_BEFORE: 'page.auth.user-account.title-before',
+                    FIRST_NAME: 'page.auth.user-account.first-name',
+                    MID_NAME: 'page.auth.user-account.mid-name',
+                    LAST_NAME: 'page.auth.user-account.last-name',
+                    TITLE_AFTER: 'page.auth.user-account.title-after',
+                    GDPR: 'page.auth.user-account.gdpr',
+                    CONFIRMATION_WARNING: 'page.auth.user-account.confirmation-warning',
+                    SEND_CONFIRMATION: 'page.auth.user-account.send-confirmation'
                 }
             },
             CONFIG: {
                 DIALOG: {
-                    CHANGE_APPLICATION_INFO: {
-                        TITLE: 'component.page.config.dialog.change-application-info.title',
-                        ERROR: 'component.page.config.dialog.change-application-info.error'
-                    },
-                    CHANGE_COMPANY_INFO: {
-                        TITLE: 'component.page.config.dialog.change-company-info.title',
-                        ERROR: 'component.page.config.dialog.change-company-info.error'
-                    },
-                    CHANGE_COOKIES_INFO: {
-                        TITLE: 'component.page.config.dialog.change-cookies-info.title',
-                        ERROR: 'component.page.config.dialog.change-cookies-info.error'
-                    },
-                    CHANGE_GDPR_INFO: {
-                        TITLE: 'component.page.config.dialog.change-gdpr-info.title',
-                        ERROR: 'component.page.config.dialog.change-gdpr-info.error'
-                    },
-                    CHANGE_LOGO: {
-                        TITLE: 'component.page.config.dialog.change-logo.title',
+                    ADD_APPLICATION_IMAGE: {
+                        TITLE: 'page.config.dialog.add-application-image.title',
                         FORM: {
-                            LOGO: {
-                                LABEL: 'component.page.config.dialog.change-logo.form.logo.label',
-                                VALIDATION_MESSAGE1: 'component.page.config.dialog.change-logo.form.logo.validation-message1',
-                                VALIDATION_MESSAGE2: 'component.page.config.dialog.change-logo.form.logo.validation-message2'
+                            APPLICATION_IMAGE: {
+                                LABEL: 'page.config.dialog.add-application-image.form.application-image.label',
+                                VALIDATION_MESSAGE1: 'page.config.dialog.add-application-image.form.application-image.validation-message1',
+                                VALIDATION_MESSAGE2: 'page.config.dialog.add-application-image.form.application-image.validation-message2'
                             }
                         },
-                        ERROR: 'component.page.config.dialog.change-logo.error'
+                        ERROR: 'page.config.dialog.add-application-image.error'
+                    },
+                    CHANGE_APPLICATION_INFO: {
+                        TITLE: 'page.config.dialog.change-application-info.title',
+                        ERROR: 'page.config.dialog.change-application-info.error'
+                    },
+                    CHANGE_COMPANY_INFO: {
+                        TITLE: 'page.config.dialog.change-company-info.title',
+                        ERROR: 'page.config.dialog.change-company-info.error'
+                    },
+                    CHANGE_COOKIES_INFO: {
+                        TITLE: 'page.config.dialog.change-cookies-info.title',
+                        ERROR: 'page.config.dialog.change-cookies-info.error'
+                    },
+                    CHANGE_GDPR_INFO: {
+                        TITLE: 'page.config.dialog.change-gdpr-info.title',
+                        ERROR: 'page.config.dialog.change-gdpr-info.error'
+                    },
+                    CHANGE_LOGO: {
+                        TITLE: 'page.config.dialog.change-logo.title',
+                        FORM: {
+                            LOGO: {
+                                LABEL: 'page.config.dialog.change-logo.form.logo.label',
+                                VALIDATION_MESSAGE1: 'page.config.dialog.change-logo.form.logo.validation-message1',
+                                VALIDATION_MESSAGE2: 'page.config.dialog.change-logo.form.logo.validation-message2'
+                            }
+                        },
+                        ERROR: 'page.config.dialog.change-logo.error'
                     },
                     CHANGE_TITLE: {
-                        TITLE: 'component.page.config.dialog.change-title.title',
-                        ERROR: 'component.page.config.dialog.change-title.error'
+                        TITLE: 'page.config.dialog.change-title.title',
+                        ERROR: 'page.config.dialog.change-title.error'
                     },
                     CHANGE_WELCOME_TEXT: {
-                        TITLE: 'component.page.config.dialog.change-welcome-text.title',
-                        ERROR: 'component.page.config.dialog.change-welcome-text.error'
+                        TITLE: 'page.config.dialog.change-welcome-text.title',
+                        ERROR: 'page.config.dialog.change-welcome-text.error'
                     },
                     CHANGE_WORKING_HOURS: {
-                        TITLE: 'component.page.config.dialog.change-working-hours.title',
-                        ERROR: 'component.page.config.dialog.change-working-hours.error'
+                        TITLE: 'page.config.dialog.change-working-hours.title',
+                        ERROR: 'page.config.dialog.change-working-hours.error'
                     }
                 },
                 APPLICATION_IMAGES: {
-                    TITLE: 'component.page.config.application-images.title'
+                    TITLE: 'page.config.application-images.title'
                 },
                 COMPANY_INFO: {
-                    TITLE: 'component.page.config.company-info.title',
-                    NAME: 'component.page.config.company-info.name',
-                    STREET: 'component.page.config.company-info.street',
-                    CITY: 'component.page.config.company-info.city',
-                    ZIP_CODE: 'component.page.config.company-info.zip-code',
-                    STATE: 'component.page.config.company-info.state',
-                    PHONE: 'component.page.config.company-info.phone',
-                    MAIL: 'component.page.config.company-info.mail',
-                    BUSINESS_ID: 'component.page.config.company-info.business-id',
-                    TAX_ID: 'component.page.config.company-info.tax-id',
-                    VAT_REG_NO: 'component.page.config.company-info.vat-reg-no',
-                    COMMERCIAL_REGISTER_INFO: 'component.page.config.company-info.commercial-register-info',
-                    MAP_URL: 'component.page.config.company-info.map-url'
+                    TITLE: 'page.config.company-info.title',
+                    NAME: 'page.config.company-info.name',
+                    STREET: 'page.config.company-info.street',
+                    CITY: 'page.config.company-info.city',
+                    ZIP_CODE: 'page.config.company-info.zip-code',
+                    STATE: 'page.config.company-info.state',
+                    PHONE: 'page.config.company-info.phone',
+                    MAIL: 'page.config.company-info.mail',
+                    BUSINESS_ID: 'page.config.company-info.business-id',
+                    TAX_ID: 'page.config.company-info.tax-id',
+                    VAT_REG_NO: 'page.config.company-info.vat-reg-no',
+                    COMMERCIAL_REGISTER_INFO: 'page.config.company-info.commercial-register-info',
+                    MAP_URL: 'page.config.company-info.map-url'
                 },
                 COOKIES_INFO: {
-                    TITLE: 'component.page.config.cookies-info.title'
+                    TITLE: 'page.config.cookies-info.title'
                 },
                 GDPR_INFO: {
-                    TITLE: 'component.page.config.gdpr-info.title'
+                    TITLE: 'page.config.gdpr-info.title'
                 },
                 UI: {
-                    TITLE: 'component.page.config.ui.title',
-                    LOGO: 'component.page.config.ui.logo'
+                    TITLE: 'page.config.ui.title',
+                    LOGO: 'page.config.ui.logo'
                 },
                 WORKING_HOURS: {
-                    TITLE: 'component.page.config.working-hours.title'
+                    TITLE: 'page.config.working-hours.title'
                 }
             },
             UI: {
                 CONTACT_INFO: {
-                    BUSINESS_ID: 'component.page.ui.contact-info.business-id',
-                    TAX_ID: 'component.page.ui.contact-info.tax-id',
-                    VAT_REG_NO: 'component.page.ui.contact-info.vat-reg-no'
+                    BUSINESS_ID: 'page.ui.contact-info.business-id',
+                    TAX_ID: 'page.ui.contact-info.tax-id',
+                    VAT_REG_NO: 'page.ui.contact-info.vat-reg-no'
                 }
             },
             USERS: {
                 USERS: {
-                    TITLE: 'component.page.users.users.title'
+                    TITLE: 'page.users.users.title'
                 }
             }
-        },
-        UI: {
-            WIWA_CAPTCHA: {
-                LABEL: 'component.ui.wiwa-captcha.label',
-                PLACEHOLDER: 'component.ui.wiwa-captcha.placeholder',
-                VALIDATION_MESSAGE: 'component.ui.wiwa-captcha.validation-message',
-                ERROR: 'component.ui.wiwa-captcha.error'
-            },
-            WIWA_NEW_PASSWORD: {
-                LABEL: 'component.ui.wiwa-new-password.label',
-                PLACEHOLDER1: 'component.ui.wiwa-new-password.placeholder1',
-                PLACEHOLDER2: 'component.ui.wiwa-new-password.placeholder2',
-                VALIDATION_MESSAGE1: 'component.ui.wiwa-new-password.validation-message1',
-                VALIDATION_MESSAGE2: 'component.ui.wiwa-new-password.validation-message2',
-                VALIDATION_MESSAGE3: 'component.ui.wiwa-new-password.validation-message3'
-            }
         }
-    },
-    ERROR: {
-        GDPR: 'error.gdpr',
-        INVALID_CAPTCHA: 'error.invalid-captcha',
-        INVALID_CREDENTIALS: 'error.invalid-credentials',
-        USER_EMAIL_IS_USED: 'error.user-email-is-used',
-        USER_IS_DISABLED: 'error.user-is-disabled',
-        USER_NOT_FOUND: 'error.user-not-found',
-        USER_USERNAME_IS_USED: 'error.user-username-is-used'
     }
-};
+;
 
 const resources = {
     en_US: {

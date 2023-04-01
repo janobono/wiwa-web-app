@@ -8,4 +8,4 @@ export interface HealthStatus {
 
 export const getHealthStatus = async (): Promise<ClientResponse<HealthStatus>> => {
     return getData<HealthStatus>(PATH_HEALTH);
-};
+}

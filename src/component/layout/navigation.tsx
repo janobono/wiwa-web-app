@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Home, LogIn, LogOut, Settings, User, UserPlus, Users } from 'react-feather';
 
@@ -9,6 +10,7 @@ import { WiwaButton, WiwaNavButton, WiwaNavLink } from '../ui';
 import { FlagSk, FlagUs } from '../ui/icon';
 
 const Navigation: React.FC = () => {
+    const navigate = useNavigate();
     const {t} = useTranslation();
     const configState = useConfigState();
     const authState = useAuthState();
@@ -65,7 +67,7 @@ const Navigation: React.FC = () => {
                                     <WiwaButton
                                         variant="light"
                                         title={t(RESOURCE.ACTION.SIGN_OUT).toString()}
-                                        onClick={() => authState?.signOut()}
+                                        onClick={() => authState?.signOut().then(() => navigate('/'))}
                                     >
                                         <LogOut size="24"/>
                                     </WiwaButton>

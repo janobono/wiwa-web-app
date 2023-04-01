@@ -4,14 +4,22 @@
   "page-not-found": "404 | Not found",
   "unknown-error": "An unknown error occurred. Please contact system administrator.",
   "action": {
+    "add": "Add",
     "cancel": "Cancel",
+    "create": "Create",
     "change-password": "Change password",
     "change-email": "Change email",
     "change-user-details": "Change user details",
     "config": "Configuration",
+    "delete": "Delete",
     "edit": "Edit",
+    "first": "First",
     "home": "Home page",
+    "last": "Last",
+    "new": "New",
+    "next": "Next",
     "ok": "OK",
+    "previous": "Previous",
     "resend": "Resend",
     "save": "Save",
     "switch-locale": "Switch locale to Slovak",
@@ -21,6 +29,15 @@
     "user-account": "User account",
     "users": "Users",
     "yes": "Yes"
+  },
+  "error": {
+    "gdpr": "GDPR consent required",
+    "invalid-captcha": "Invalid captcha",
+    "invalid-credentials": "Invalid credentials",
+    "user-is-disabled": "User is disabled",
+    "user-email-is-used": "Email is used",
+    "user-not-found": "User not found",
+    "user-username-is-used": "Username is used"
   },
   "component": {
     "layout": {
@@ -43,130 +60,60 @@
         }
       }
     },
-    "page": {
-      "auth": {
-        "dialog": {
-          "change-email": {
-            "title": "Change email",
-            "form": {
-              "email": {
-                "label": "Email",
-                "placeholder": "Enter email",
-                "validation-message-1": "Email is required",
-                "validation-message-2": "Invalid email"
-              },
-              "password": {
-                "label": "Password",
-                "placeholder": "Enter password",
-                "validation-message": "Password is required"
-              }
-            },
-            "message": "Your email has been changed.",
-            "error": "Your email could not be changed."
-          },
-          "change-password": {
-            "title": "Change password",
-            "form": {
-              "actual-password": {
-                "label": "Actual password",
-                "placeholder": "Enter actual password",
-                "validation-message": "Actual password is required"
-              }
-            },
-            "message": "Your password has been changed.",
-            "error": "Your password could not be changed."
-          },
-          "change-user-details": {
-            "title": "Change user details",
-            "message": "Your data has been changed.",
-            "form": {
-              "title-before": {
-                "label": "Title before",
-                "placeholder": "Enter title before"
-              },
-              "title-after": {
-                "label": "Title after",
-                "placeholder": "Enter title after"
-              },
-              "first-name": {
-                "label": "First name",
-                "placeholder": "Enter first name",
-                "validation-message": "First name is required"
-              },
-              "mid-name": {
-                "label": "Mid name",
-                "placeholder": "Enter mid name"
-              },
-              "last-name": {
-                "label": "Last name",
-                "placeholder": "Enter last name",
-                "validation-message": "Last name is required"
-              },
-              "gdpr": {
-                "label": "Agreement with",
-                "link": "GDPR",
-                "validation-message": "GDPR consent required"
-              }
-            },
-            "error": "Failed to change user."
-          },
-          "resend-confirmation": {
-            "title": "Resend activation email",
-            "message": "The activation message has been sent to your email.",
-            "error": "Failed to send activation message."
-          }
-        },
-        "confirm": {
-          "submitted-message": "Your request has been processed.",
-          "error-message": "Your request has not been processed."
-        },
-        "reset-password": {
-          "submitted-message": "We have sent an password activation link to your user email.",
-          "title": "Forgotten password",
+    "ui": {
+      "wiwa-captcha": {
+        "label": "Captcha",
+        "placeholder": "Enter captcha",
+        "validation-message": "Captcha is required",
+        "error": "Captcha loading error"
+      },
+      "wiwa-new-password": {
+        "label": "Password*",
+        "placeholder1": "Enter password",
+        "placeholder2": "Repeat password",
+        "validation-message1": "Password is required",
+        "validation-message2": "Confirmation is required",
+        "validation-message3": "Confirmation must match the password"
+      }
+    }
+  },
+  "page": {
+    "auth": {
+      "dialog": {
+        "change-email": {
+          "title": "Change email",
           "form": {
             "email": {
               "label": "Email",
               "placeholder": "Enter email",
               "validation-message-1": "Email is required",
               "validation-message-2": "Invalid email"
-            }
-          }
-        },
-        "sign-in": {
-          "title": "Sign in to your account",
-          "subtitle": "Or",
-          "subtitle-link": "sign up",
-          "form": {
-            "username": {
-              "label": "Username",
-              "placeholder": "Enter username",
-              "validation-message": "Username is required"
             },
             "password": {
               "label": "Password",
               "placeholder": "Enter password",
               "validation-message": "Password is required"
-            },
-            "link": "Forgotten password?",
-            "submit": "Sign in"
-          }
+            }
+          },
+          "message": "Your email has been changed.",
+          "error": "Your email could not be changed."
         },
-        "sign-up": {
-          "title": "Sign up with new account",
-          "subtitle": "Or",
-          "subtitle-link": "sign in",
+        "change-password": {
+          "title": "Change password",
           "form": {
-            "username": {
-              "label": "Username",
-              "placeholder": "Enter username",
-              "validation-message": "Username is required"
-            },
-            "email": {
-              "label": "Email",
-              "placeholder": "Enter email",
-              "validation-message1": "Email is required",
-              "validation-message2": "Invalid email format"
-            },
+            "actual-password": {
+              "label": "Actual password",
+              "placeholder": "Enter actual password",
+              "validation-message": "Actual password is required"
+            }
+          },
+          "message": "Your password has been changed.",
+          "error": "Your password could not be changed."
+        },
+        "change-user-details": {
+          "title": "Change user details",
+          "message": "Your data has been changed.",
+          "form": {
             "title-before": {
               "label": "Title before",
               "placeholder": "Enter title before"
@@ -193,136 +140,208 @@
               "label": "Agreement with",
               "link": "GDPR",
               "validation-message": "GDPR consent required"
-            },
-            "submit": "Sign up"
-          }
+            }
+          },
+          "error": "Failed to change user."
         },
-        "user-account": {
-          "title": "User account",
-          "username": "Username",
-          "password": "Password",
-          "email": "Email",
-          "title-before": "Title before",
-          "first-name": "First name",
-          "mid-name": "Mid name",
-          "last-name": "Last name",
-          "title-after": "Title after",
-          "gdpr": "Gdpr",
-          "confirmation-warning": "Your account isn't activated. Check your mail or sign out and sign in again.",
-          "send-confirmation": "Resend activation email"
+        "resend-confirmation": {
+          "title": "Resend activation email",
+          "message": "The activation message has been sent to your email.",
+          "error": "Failed to send activation message."
         }
       },
-      "config": {
-        "dialog": {
-          "change-application-info": {
-            "title": "Change application info",
-            "error": "Application info could not be changed."
-          },
-          "change-company-info": {
-            "title": "Change company info",
-            "error": "Company info could not be changed."
-          },
-          "change-cookies-info": {
-            "title": "Change cookies info",
-            "error": "Cookies info could not be changed."
-          },
-          "change-gdpr-info": {
-            "title": "Change gdpr info",
-            "error": "Gdpr info could not be changed."
-          },
-          "change-logo": {
-            "title": "Change logo",
-            "form": {
-              "logo": {
-                "label": "Logo picture",
-                "validation-message1": "Logo picture is required",
-                "validation-message2": "Has to be JPG or PNG image"
-              }
-            },
-            "error": "Logo could not be changed."
-          },
-          "change-title": {
-            "title": "Change title",
-            "error": "Title could not be changed."
-          },
-          "change-welcome-text": {
-            "title": "Change welcome text",
-            "error": "Welcome text could not be changed."
-          },
-          "change-working-hours": {
-            "title": "Change working hours",
-            "error": "Working hours text could not be changed."
+      "confirm": {
+        "submitted-message": "Your request has been processed.",
+        "error-message": "Your request has not been processed."
+      },
+      "reset-password": {
+        "submitted-message": "We have sent an password activation link to your user email.",
+        "title": "Forgotten password",
+        "form": {
+          "email": {
+            "label": "Email",
+            "placeholder": "Enter email",
+            "validation-message-1": "Email is required",
+            "validation-message-2": "Invalid email"
           }
-        },
-        "application-images": {
-          "title": "Application images"
-        },
-        "company-info": {
-          "title": "Contact info",
-          "name": "Name",
-          "street": "Street",
-          "city": "City",
-          "zip-code": "Zip code",
-          "state": "State",
-          "phone": "Phone",
-          "mail": "Email",
-          "business-id": "Business Id",
-          "tax-id": "Tax Id",
-          "vat-reg-no": "Vat registration number",
-          "commercial-register-info": "Commercial register info",
-          "map-url": "Map"
-        },
-        "cookies-info": {
-          "title": "Cookies info"
-        },
-        "gdpr-info": {
-          "title": "Gdpr info"
-        },
-        "ui": {
-          "title": "Base settings",
-          "logo": "Logo"
-        },
-        "working-hours": {
-          "title": "Working hours"
         }
+      },
+      "sign-in": {
+        "title": "Sign in to your account",
+        "subtitle": "Or",
+        "subtitle-link": "sign up",
+        "form": {
+          "username": {
+            "label": "Username",
+            "placeholder": "Enter username",
+            "validation-message": "Username is required"
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "Enter password",
+            "validation-message": "Password is required"
+          },
+          "link": "Forgotten password?",
+          "submit": "Sign in"
+        }
+      },
+      "sign-up": {
+        "title": "Sign up with new account",
+        "subtitle": "Or",
+        "subtitle-link": "sign in",
+        "form": {
+          "username": {
+            "label": "Username",
+            "placeholder": "Enter username",
+            "validation-message": "Username is required"
+          },
+          "email": {
+            "label": "Email",
+            "placeholder": "Enter email",
+            "validation-message1": "Email is required",
+            "validation-message2": "Invalid email format"
+          },
+          "title-before": {
+            "label": "Title before",
+            "placeholder": "Enter title before"
+          },
+          "title-after": {
+            "label": "Title after",
+            "placeholder": "Enter title after"
+          },
+          "first-name": {
+            "label": "First name",
+            "placeholder": "Enter first name",
+            "validation-message": "First name is required"
+          },
+          "mid-name": {
+            "label": "Mid name",
+            "placeholder": "Enter mid name"
+          },
+          "last-name": {
+            "label": "Last name",
+            "placeholder": "Enter last name",
+            "validation-message": "Last name is required"
+          },
+          "gdpr": {
+            "label": "Agreement with",
+            "link": "GDPR",
+            "validation-message": "GDPR consent required"
+          },
+          "submit": "Sign up"
+        }
+      },
+      "user-account": {
+        "title": "User account",
+        "username": "Username",
+        "password": "Password",
+        "email": "Email",
+        "title-before": "Title before",
+        "first-name": "First name",
+        "mid-name": "Mid name",
+        "last-name": "Last name",
+        "title-after": "Title after",
+        "gdpr": "Gdpr",
+        "confirmation-warning": "Your account isn't activated. Check your mail or sign out and sign in again.",
+        "send-confirmation": "Resend activation email"
+      }
+    },
+    "config": {
+      "dialog": {
+        "add-application-image": {
+          "title": "Add application image",
+          "form": {
+            "application-image": {
+              "label": "Application image",
+              "validation-message1": "Application image is required",
+              "validation-message2": "Has to be JPG or PNG image"
+            }
+          },
+          "error": "Application image could not be added."
+        },
+        "change-application-info": {
+          "title": "Change application info",
+          "error": "Application info could not be changed."
+        },
+        "change-company-info": {
+          "title": "Change company info",
+          "error": "Company info could not be changed."
+        },
+        "change-cookies-info": {
+          "title": "Change cookies info",
+          "error": "Cookies info could not be changed."
+        },
+        "change-gdpr-info": {
+          "title": "Change gdpr info",
+          "error": "Gdpr info could not be changed."
+        },
+        "change-logo": {
+          "title": "Change logo",
+          "form": {
+            "logo": {
+              "label": "Logo picture",
+              "validation-message1": "Logo picture is required",
+              "validation-message2": "Has to be JPG or PNG image"
+            }
+          },
+          "error": "Logo could not be changed."
+        },
+        "change-title": {
+          "title": "Change title",
+          "error": "Title could not be changed."
+        },
+        "change-welcome-text": {
+          "title": "Change welcome text",
+          "error": "Welcome text could not be changed."
+        },
+        "change-working-hours": {
+          "title": "Change working hours",
+          "error": "Working hours text could not be changed."
+        }
+      },
+      "application-images": {
+        "title": "Application images"
+      },
+      "company-info": {
+        "title": "Contact info",
+        "name": "Name",
+        "street": "Street",
+        "city": "City",
+        "zip-code": "Zip code",
+        "state": "State",
+        "phone": "Phone",
+        "mail": "Email",
+        "business-id": "Business Id",
+        "tax-id": "Tax Id",
+        "vat-reg-no": "Vat registration number",
+        "commercial-register-info": "Commercial register info",
+        "map-url": "Map"
+      },
+      "cookies-info": {
+        "title": "Cookies info"
+      },
+      "gdpr-info": {
+        "title": "Gdpr info"
       },
       "ui": {
-        "contact-info": {
-          "business-id": "BUSINESS ID",
-          "tax-id": "TAX ID",
-          "vat-reg-no": "VAT REGISTRATION NUMBER"
-        }
+        "title": "Base settings",
+        "logo": "Logo"
       },
-      "users": {
-        "users": {
-          "title": "Users"
-        }
+      "working-hours": {
+        "title": "Working hours"
       }
     },
     "ui": {
-      "wiwa-captcha": {
-        "label": "Captcha",
-        "placeholder": "Enter captcha",
-        "validation-message": "Captcha is required",
-        "error": "Captcha loading error"
-      },
-      "wiwa-new-password": {
-        "label": "Password*",
-        "placeholder1": "Enter password",
-        "placeholder2": "Repeat password",
-        "validation-message1": "Password is required",
-        "validation-message2": "Confirmation is required",
-        "validation-message3": "Confirmation must match the password"
+      "contact-info": {
+        "business-id": "BUSINESS ID",
+        "tax-id": "TAX ID",
+        "vat-reg-no": "VAT REGISTRATION NUMBER"
+      }
+    },
+    "users": {
+      "users": {
+        "title": "Users"
       }
     }
-  },
-  "error": {
-    "gdpr": "GDPR consent required",
-    "invalid-captcha": "Invalid captcha",
-    "invalid-credentials": "Invalid credentials",
-    "user-is-disabled": "User is disabled",
-    "user-email-is-used": "Email is used",
-    "user-not-found": "User not found",
-    "user-username-is-used": "Username is used"
   }
 }

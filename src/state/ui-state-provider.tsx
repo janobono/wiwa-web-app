@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ApplicationInfo, CompanyInfo, configClient, LocaleData, uiClient, WiwaError } from '../client';
+import { ApplicationInfo, ClientResponse, CompanyInfo, configClient, LocaleData, uiClient, WiwaError } from '../client';
 import { useActuatorState } from './actuator-state-provider';
 import { useConfigState } from './config-state-provider';
 import { useAuthState } from './auth-state-provider';
+import { ApplicationImage } from '../client/config';
 
 export interface UiState {
     logoUrl: string | undefined,
@@ -20,7 +21,9 @@ export interface UiState {
     changeCompanyInfo: (companyInfo: LocaleData<CompanyInfo>) => Promise<WiwaError | undefined>,
     changeCookiesInfo: (cookiesInfo: LocaleData<string>) => Promise<WiwaError | undefined>,
     changeGdprInfo: (workingHours: LocaleData<string>) => Promise<WiwaError | undefined>,
-    changeWorkingHours: (workingHours: LocaleData<string>) => Promise<WiwaError | undefined>
+    changeWorkingHours: (workingHours: LocaleData<string>) => Promise<WiwaError | undefined>,
+    addApplicationImage: (applicationImage: File) => Promise<ClientResponse<ApplicationImage> | undefined>,
+    getApplicationImages: () => Promise<ClientResponse<ApplicationImage[]> | undefined>
 }
 
 const uiStateContext = createContext<UiState | undefined>(undefined);
@@ -193,6 +196,26 @@ const UiStateProvider: React.FC<any> = ({children}) => {
         }
     }
 
+    const addApplicationImage = async (applicationImage: File): Promise<ClientResponse<ApplicationImage> | undefined> => {
+        const token = authState?.token;
+        if (!token) {
+            return undefined;
+        }
+        return await configClient.postApplicationImage(applicationImage, token);
+    }
+
+    const getApplicationImages = async (): Promise<ClientResponse<ApplicationImage[]> | undefined> => {
+        const token = authState?.token;
+        if (!token) {
+            return undefined;
+        }
+        const clientResponse = await configClient.getApplicationImages(token);
+        if (clientResponse.data) {
+            return {data: clientResponse.data.content, error: clientResponse.error}
+        }
+        return undefined;
+    }
+
     return (
         <uiStateContext.Provider
             value={
@@ -212,7 +235,9 @@ const UiStateProvider: React.FC<any> = ({children}) => {
                     changeCompanyInfo,
                     changeCookiesInfo,
                     changeGdprInfo,
-                    changeWorkingHours
+                    changeWorkingHours,
+                    addApplicationImage,
+                    getApplicationImages
                 }
             }
         >{children}

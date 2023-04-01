@@ -1,9 +1,13 @@
 import {
+    addPageQueryParams,
     ApplicationInfo,
     ClientResponse,
     CompanyInfo,
     createAuthorization,
+    getData,
     LocaleData,
+    Page,
+    PageQueryParams,
     postData,
     toWiwaError
 } from './index';
@@ -16,6 +20,12 @@ const PATH_COMPANY_INFO = '/api/config/company-info';
 const PATH_COOKIES_INFO = '/api/config/cookies-info';
 const PATH_GDPR_INFO = '/api/config/gdpr-info';
 const PATH_WORKING_HOURS = '/api/config/working-hours';
+const PATH_APPLICATION_IMAGES = '/api/config/application-images';
+
+export interface ApplicationImage {
+    fileName: string,
+    thumbnail: string
+}
 
 export const postLogo = async (logo: File, token: string): Promise<ClientResponse<void>> => {
     const authorization = createAuthorization(token);
@@ -64,4 +74,33 @@ export const postGdprInfo = async (gdprInfo: LocaleData<string>, token: string):
 
 export const postWorkingHours = async (workingHours: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
     return postData<LocaleData<string>>(PATH_WORKING_HOURS, workingHours, token);
+}
+
+export const getApplicationImages = async (token: string, pageQueryParams?: PageQueryParams): Promise<ClientResponse<Page<ApplicationImage>>> => {
+    const queryParams = new URLSearchParams();
+    addPageQueryParams(queryParams, pageQueryParams);
+    return getData(PATH_APPLICATION_IMAGES, queryParams, token);
+}
+
+export const postApplicationImage = async (file: File, token: string): Promise<ClientResponse<ApplicationImage>> => {
+    const authorization = createAuthorization(token);
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(PATH_APPLICATION_IMAGES, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            ...authorization
+        },
+    });
+
+    let resultData, error;
+    if (response.ok) {
+        resultData = await response.json() as ApplicationImage;
+    } else {
+        error = await toWiwaError(response);
+    }
+    return {data: resultData, error};
 }

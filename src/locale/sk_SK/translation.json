@@ -4,14 +4,22 @@
   "page-not-found": "404 | Nenájdené",
   "unknown-error": "Vyskytla sa neznáma chyba. Kontaktujte správcu systému.",
   "action": {
+    "add": "Pridať",
     "cancel": "Zrušiť",
+    "create": "Vytvoriť",
     "change-password": "Zmeniť heslo",
     "change-email": "Zmeniť email",
     "change-user-details": "Zmeniť používateľský profil",
     "config": "Konfigurácia",
+    "delete": "Zmazať",
     "edit": "Upraviť",
+    "first": "Na začiatok",
     "home": "Domovská stránka",
+    "last": "Na koniec",
+    "new": "Nové",
+    "next": "Nasledujúce",
     "ok": "Potvrdiť",
+    "previous": "Predchádzajúce",
     "resend": "Preposlať",
     "save": "Uložiť",
     "switch-locale": "Prepnúť lokalizáciu na Anglickú",
@@ -21,6 +29,15 @@
     "user-account": "Používateľský účet",
     "users": "Používateľia",
     "yes": "Áno"
+  },
+  "error": {
+    "gdpr": "Vyžaduje sa súhlas s GDPR",
+    "invalid-captcha": "Nesprávny kontrolný text",
+    "invalid-credentials": "Nesprávne prihlasovacie údaje",
+    "user-is-disabled": "Používateľ je zablokovaný",
+    "user-email-is-used": "Email sa už používa",
+    "user-not-found": "Používateľ nebol nájdený",
+    "user-username-is-used": "Používateľské meno sa už používa"
   },
   "component": {
     "layout": {
@@ -43,130 +60,60 @@
         }
       }
     },
-    "page": {
-      "auth": {
-        "dialog": {
-          "change-email": {
-            "title": "Zmeniť email",
-            "form": {
-              "email": {
-                "label": "Email",
-                "placeholder": "Zadajte email",
-                "validation-message-1": "Vyžaduje sa email",
-                "validation-message-2": "Neplatný email"
-              },
-              "password": {
-                "label": "Heslo",
-                "placeholder": "Zadajte heslo",
-                "validation-message": "Vyžaduje sa heslo"
-              }
-            },
-            "message": "Váš email bol zmenený.",
-            "error": "Nepodarilo sa zmeniť váš email."
-          },
-          "change-password": {
-            "title": "Zmeniť heslo",
-            "form": {
-              "actual-password": {
-                "label": "Aktuálne heslo",
-                "placeholder": "Zadajte aktuálne heslo",
-                "validation-message": "Vyžaduje sa aktuálne heslo"
-              }
-            },
-            "message": "Vaše heslo bolo zmenené.",
-            "error": "Nepodarilo sa zmeniť vaše heslo."
-          },
-          "change-user-details": {
-            "title": "Zmeniť používateľa",
-            "message": "Vaše údaje boli zmenené.",
-            "form": {
-              "title-before": {
-                "label": "Titul pred",
-                "placeholder": "Zadajte titul pred"
-              },
-              "title-after": {
-                "label": "Titul za",
-                "placeholder": "Zadajte titul za"
-              },
-              "first-name": {
-                "label": "Meno",
-                "placeholder": "Zadajte meno",
-                "validation-message": "Vyžaduje sa meno"
-              },
-              "mid-name": {
-                "label": "Stredné meno",
-                "placeholder": "Zadajte stredné meno"
-              },
-              "last-name": {
-                "label": "Priezvisko",
-                "placeholder": "Zadajte priezvisko",
-                "validation-message": "Vyžaduje sa priezvisko"
-              },
-              "gdpr": {
-                "label": "Súhlas s",
-                "link": "GDPR",
-                "validation-message": "Vyžaduje sa súhlas s GDPR"
-              }
-            },
-            "error": "Nepodarilo sa zmeniť používateľa."
-          },
-          "resend-confirmation": {
-            "title": "Preposlať aktivačný email",
-            "message": "Aktivačná správa bola odoslaná na Váš email.",
-            "error": "Nepodarilo sa odoslať aktivačnú správu."
-          }
-        },
-        "confirm": {
-          "submitted-message": "Vaša požiadavka bola spracovaná.",
-          "error-message": "Vaša požiadavka nebola spracovaná."
-        },
-        "reset-password": {
-          "submitted-message": "Na Váš používateľský email sme odoslali odkaz na aktiváciu hesla.",
-          "title": "Zabudnuté heslo",
+    "ui": {
+      "wiwa-captcha": {
+        "label": "Kontrolný text",
+        "placeholder": "Zadajte kontrolný text",
+        "validation-message": "Vyžaduje sa kontrolný text",
+        "error": "Nepodarilo sa načítať kontrolný text"
+      },
+      "wiwa-new-password": {
+        "label": "Heslo*",
+        "placeholder1": "Zadajte heslo",
+        "placeholder2": "Potvrďte heslo",
+        "validation-message1": "Vyžaduje sa heslo",
+        "validation-message2": "Vyžaduje sa potvrdenie hesla",
+        "validation-message3": "Potvrdenie hesla musí byť zhodné s heslom"
+      }
+    }
+  },
+  "page": {
+    "auth": {
+      "dialog": {
+        "change-email": {
+          "title": "Zmeniť email",
           "form": {
             "email": {
               "label": "Email",
               "placeholder": "Zadajte email",
               "validation-message-1": "Vyžaduje sa email",
               "validation-message-2": "Neplatný email"
-            }
-          }
-        },
-        "sign-in": {
-          "title": "Prihláste sa do svojho účtu",
-          "subtitle": "Alebo sa",
-          "subtitle-link": "zaregistrujte",
-          "form": {
-            "username": {
-              "label": "Používateľské meno",
-              "placeholder": "Zadajte používateľské meno",
-              "validation-message": "Vyžaduje sa používateľské meno"
             },
             "password": {
               "label": "Heslo",
               "placeholder": "Zadajte heslo",
               "validation-message": "Vyžaduje sa heslo"
-            },
-            "link": "Zabudnuté heslo?",
-            "submit": "Prihlásiť"
-          }
+            }
+          },
+          "message": "Váš email bol zmenený.",
+          "error": "Nepodarilo sa zmeniť váš email."
         },
-        "sign-up": {
-          "title": "Zaregistrujte si svoj účet",
-          "subtitle": "Alebo sa",
-          "subtitle-link": "prihláste",
+        "change-password": {
+          "title": "Zmeniť heslo",
           "form": {
-            "username": {
-              "label": "Používateľské meno",
-              "placeholder": "Zadajte používateľské meno",
-              "validation-message": "Vyžaduje sa používateľské meno"
-            },
-            "email": {
-              "label": "Email",
-              "placeholder": "Zadajte email",
-              "validation-message1": "Vyžaduje sa email",
-              "validation-message2": "Neplatný email"
-            },
+            "actual-password": {
+              "label": "Aktuálne heslo",
+              "placeholder": "Zadajte aktuálne heslo",
+              "validation-message": "Vyžaduje sa aktuálne heslo"
+            }
+          },
+          "message": "Vaše heslo bolo zmenené.",
+          "error": "Nepodarilo sa zmeniť vaše heslo."
+        },
+        "change-user-details": {
+          "title": "Zmeniť používateľa",
+          "message": "Vaše údaje boli zmenené.",
+          "form": {
             "title-before": {
               "label": "Titul pred",
               "placeholder": "Zadajte titul pred"
@@ -193,136 +140,208 @@
               "label": "Súhlas s",
               "link": "GDPR",
               "validation-message": "Vyžaduje sa súhlas s GDPR"
-            },
-            "submit": "Zaregistrovať sa"
-          }
+            }
+          },
+          "error": "Nepodarilo sa zmeniť používateľa."
         },
-        "user-account": {
-          "title": "Používateľský účet",
-          "username": "Používateľské meno",
-          "password": "Heslo",
-          "email": "Email",
-          "title-before": "Titul pred",
-          "first-name": "Meno",
-          "mid-name": "Stredné meno",
-          "last-name": "Priezvisko",
-          "title-after": "Titul za",
-          "gdpr": "Gdpr",
-          "confirmation-warning": "Váš účet nie je aktivovaný. Skontrolujte si mailovú schránku alebo sa odhláste a opätovne prihláste.",
-          "send-confirmation": "Preposlať aktivačný email"
+        "resend-confirmation": {
+          "title": "Preposlať aktivačný email",
+          "message": "Aktivačná správa bola odoslaná na Váš email.",
+          "error": "Nepodarilo sa odoslať aktivačnú správu."
         }
       },
-      "config": {
-        "dialog": {
-          "change-application-info": {
-            "title": "Zmeniť informácie o aplikácii",
-            "error": "Nepodarilo sa zmeniť informácie o aplikácii."
-          },
-          "change-company-info": {
-            "title": "Zmeniť kontaktné informácie",
-            "error": "Nepodarilo sa zmeniť kontaktné informácie."
-          },
-          "change-cookies-info": {
-            "title": "Zmeniť cookies informácie",
-            "error": "Nepodarilo sa zmeniť cookies informácie."
-          },
-          "change-gdpr-info": {
-            "title": "Zmeniť gdpr informácie",
-            "error": "Nepodarilo sa zmeniť gdpr informácie."
-          },
-          "change-logo": {
-            "title": "Zmeniť logo",
-            "form": {
-              "logo": {
-                "label": "Obrázok Loga",
-                "validation-message1": "Vyžaduje sa obrázok loga",
-                "validation-message2": "Musí to byť obrázok vo formáte JPG alebo PNG"
-              }
-            },
-            "error": "Nepodarilo sa zmeniť logo."
-          },
-          "change-title": {
-            "title": "Zmeniť názov",
-            "error": "Nepodarilo sa zmeniť názov."
-          },
-          "change-welcome-text": {
-            "title": "Zmeniť uvítací text",
-            "error": "Nepodarilo sa zmeniť uvítací text."
-          },
-          "change-working-hours": {
-            "title": "Zmeniť otváracie hodiny",
-            "error": "Nepodarilo sa zmeniť otváracie hodiny."
+      "confirm": {
+        "submitted-message": "Vaša požiadavka bola spracovaná.",
+        "error-message": "Vaša požiadavka nebola spracovaná."
+      },
+      "reset-password": {
+        "submitted-message": "Na Váš používateľský email sme odoslali odkaz na aktiváciu hesla.",
+        "title": "Zabudnuté heslo",
+        "form": {
+          "email": {
+            "label": "Email",
+            "placeholder": "Zadajte email",
+            "validation-message-1": "Vyžaduje sa email",
+            "validation-message-2": "Neplatný email"
           }
-        },
-        "application-images": {
-          "title": "Aplikačné obrázky"
-        },
-        "company-info": {
-          "title": "Kontaktné informácie",
-          "name": "Názov",
-          "street": "Ulica",
-          "city": "Mesto",
-          "zip-code": "PSČ",
-          "state": "Štát",
-          "phone": "Telefón",
-          "mail": "Email",
-          "business-id": "IČO",
-          "tax-id": "DIČ",
-          "vat-reg-no": "IČ DPH",
-          "commercial-register-info": "Daňová registračná informácia",
-          "map-url": "Mapa"
-        },
-        "cookies-info": {
-          "title": "Cookies informácie"
-        },
-        "gdpr-info": {
-          "title": "Gdpr informácie"
-        },
-        "ui": {
-          "title": "Základné nastavenia",
-          "logo": "Logo"
-        },
-        "working-hours": {
-          "title": "Otváracie hodiny"
         }
+      },
+      "sign-in": {
+        "title": "Prihláste sa do svojho účtu",
+        "subtitle": "Alebo sa",
+        "subtitle-link": "zaregistrujte",
+        "form": {
+          "username": {
+            "label": "Používateľské meno",
+            "placeholder": "Zadajte používateľské meno",
+            "validation-message": "Vyžaduje sa používateľské meno"
+          },
+          "password": {
+            "label": "Heslo",
+            "placeholder": "Zadajte heslo",
+            "validation-message": "Vyžaduje sa heslo"
+          },
+          "link": "Zabudnuté heslo?",
+          "submit": "Prihlásiť"
+        }
+      },
+      "sign-up": {
+        "title": "Zaregistrujte si svoj účet",
+        "subtitle": "Alebo sa",
+        "subtitle-link": "prihláste",
+        "form": {
+          "username": {
+            "label": "Používateľské meno",
+            "placeholder": "Zadajte používateľské meno",
+            "validation-message": "Vyžaduje sa používateľské meno"
+          },
+          "email": {
+            "label": "Email",
+            "placeholder": "Zadajte email",
+            "validation-message1": "Vyžaduje sa email",
+            "validation-message2": "Neplatný email"
+          },
+          "title-before": {
+            "label": "Titul pred",
+            "placeholder": "Zadajte titul pred"
+          },
+          "title-after": {
+            "label": "Titul za",
+            "placeholder": "Zadajte titul za"
+          },
+          "first-name": {
+            "label": "Meno",
+            "placeholder": "Zadajte meno",
+            "validation-message": "Vyžaduje sa meno"
+          },
+          "mid-name": {
+            "label": "Stredné meno",
+            "placeholder": "Zadajte stredné meno"
+          },
+          "last-name": {
+            "label": "Priezvisko",
+            "placeholder": "Zadajte priezvisko",
+            "validation-message": "Vyžaduje sa priezvisko"
+          },
+          "gdpr": {
+            "label": "Súhlas s",
+            "link": "GDPR",
+            "validation-message": "Vyžaduje sa súhlas s GDPR"
+          },
+          "submit": "Zaregistrovať sa"
+        }
+      },
+      "user-account": {
+        "title": "Používateľský účet",
+        "username": "Používateľské meno",
+        "password": "Heslo",
+        "email": "Email",
+        "title-before": "Titul pred",
+        "first-name": "Meno",
+        "mid-name": "Stredné meno",
+        "last-name": "Priezvisko",
+        "title-after": "Titul za",
+        "gdpr": "Gdpr",
+        "confirmation-warning": "Váš účet nie je aktivovaný. Skontrolujte si mailovú schránku alebo sa odhláste a opätovne prihláste.",
+        "send-confirmation": "Preposlať aktivačný email"
+      }
+    },
+    "config": {
+      "dialog": {
+        "add-application-image": {
+          "title": "Pridať aplikačný obrázok",
+          "form": {
+            "application-image": {
+              "label": "Aplikačný obrázok",
+              "validation-message1": "Vyžaduje sa applikačný obrázok",
+              "validation-message2": "Musí to byť obrázok vo formáte JPG alebo PNG"
+            }
+          },
+          "error": "Application image could not be added."
+        },
+        "change-application-info": {
+          "title": "Zmeniť informácie o aplikácii",
+          "error": "Nepodarilo sa zmeniť informácie o aplikácii."
+        },
+        "change-company-info": {
+          "title": "Zmeniť kontaktné informácie",
+          "error": "Nepodarilo sa zmeniť kontaktné informácie."
+        },
+        "change-cookies-info": {
+          "title": "Zmeniť cookies informácie",
+          "error": "Nepodarilo sa zmeniť cookies informácie."
+        },
+        "change-gdpr-info": {
+          "title": "Zmeniť gdpr informácie",
+          "error": "Nepodarilo sa zmeniť gdpr informácie."
+        },
+        "change-logo": {
+          "title": "Zmeniť logo",
+          "form": {
+            "logo": {
+              "label": "Obrázok Loga",
+              "validation-message1": "Vyžaduje sa obrázok loga",
+              "validation-message2": "Musí to byť obrázok vo formáte JPG alebo PNG"
+            }
+          },
+          "error": "Nepodarilo sa zmeniť logo."
+        },
+        "change-title": {
+          "title": "Zmeniť názov",
+          "error": "Nepodarilo sa zmeniť názov."
+        },
+        "change-welcome-text": {
+          "title": "Zmeniť uvítací text",
+          "error": "Nepodarilo sa zmeniť uvítací text."
+        },
+        "change-working-hours": {
+          "title": "Zmeniť otváracie hodiny",
+          "error": "Nepodarilo sa zmeniť otváracie hodiny."
+        }
+      },
+      "application-images": {
+        "title": "Aplikačné obrázky"
+      },
+      "company-info": {
+        "title": "Kontaktné informácie",
+        "name": "Názov",
+        "street": "Ulica",
+        "city": "Mesto",
+        "zip-code": "PSČ",
+        "state": "Štát",
+        "phone": "Telefón",
+        "mail": "Email",
+        "business-id": "IČO",
+        "tax-id": "DIČ",
+        "vat-reg-no": "IČ DPH",
+        "commercial-register-info": "Daňová registračná informácia",
+        "map-url": "Mapa"
+      },
+      "cookies-info": {
+        "title": "Cookies informácie"
+      },
+      "gdpr-info": {
+        "title": "Gdpr informácie"
       },
       "ui": {
-        "contact-info": {
-          "business-id": "IČO",
-          "tax-id": "DIČ",
-          "vat-reg-no": "IČ DPH"
-        }
+        "title": "Základné nastavenia",
+        "logo": "Logo"
       },
-      "users": {
-        "users": {
-          "title": "Používatelia"
-        }
+      "working-hours": {
+        "title": "Otváracie hodiny"
       }
     },
     "ui": {
-      "wiwa-captcha": {
-        "label": "Kontrolný text",
-        "placeholder": "Zadajte kontrolný text",
-        "validation-message": "Vyžaduje sa kontrolný text",
-        "error": "Nepodarilo sa načítať kontrolný text"
-      },
-      "wiwa-new-password": {
-        "label": "Heslo*",
-        "placeholder1": "Zadajte heslo",
-        "placeholder2": "Potvrďte heslo",
-        "validation-message1": "Vyžaduje sa heslo",
-        "validation-message2": "Vyžaduje sa potvrdenie hesla",
-        "validation-message3": "Potvrdenie hesla musí byť zhodné s heslom"
+      "contact-info": {
+        "business-id": "IČO",
+        "tax-id": "DIČ",
+        "vat-reg-no": "IČ DPH"
+      }
+    },
+    "users": {
+      "users": {
+        "title": "Používatelia"
       }
     }
-  },
-  "error": {
-    "gdpr": "Vyžaduje sa súhlas s GDPR",
-    "invalid-captcha": "Nesprávny kontrolný text",
-    "invalid-credentials": "Nesprávne prihlasovacie údaje",
-    "user-is-disabled": "Používateľ je zablokovaný",
-    "user-email-is-used": "Email sa už používa",
-    "user-not-found": "Používateľ nebol nájdený",
-    "user-username-is-used": "Používateľské meno sa už používa"
   }
 }

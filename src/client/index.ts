@@ -58,6 +58,25 @@ export const createQueryParams = (locale: string): URLSearchParams => {
     return queryParams;
 }
 
+export interface PageQueryParams {
+    page: number,
+    size: number,
+    sort?: {
+        field: string,
+        asc: boolean
+    }
+}
+
+export const addPageQueryParams = (queryParams: URLSearchParams, pageQueryParams?: PageQueryParams) => {
+    if (pageQueryParams) {
+        queryParams.set('page', `${pageQueryParams.page}`);
+        queryParams.set('size', `${pageQueryParams.size}`);
+        if (pageQueryParams.sort) {
+            queryParams.set('sort', `${pageQueryParams.sort.field},${pageQueryParams.sort.asc ? 'ASC' : 'DESC'}`);
+        }
+    }
+}
+
 export const createAuthorization = (token?: string): {} => {
     if (token) {
         return {
@@ -126,6 +145,22 @@ export const postData = async <T>(path: string, data: any, token?: string): Prom
     return {data: resultData, error};
 }
 
+export const deleteData = async (path: string, token?: string): Promise<WiwaError | undefined> => {
+    const authorization = createAuthorization(token);
+    const response = await fetch(path, {
+        method: 'DELETE',
+        headers: {
+            ...authorization
+        }
+    });
+
+    let error;
+    if (!response.ok) {
+        error = await toWiwaError(response);
+    }
+    return error;
+}
+
 export interface LocaleData<T> {
     items: LocaleDataItem<T>[]
 }
@@ -158,4 +193,16 @@ export interface CompanyInfo {
     vatRegNo: string,
     commercialRegisterInfo: string,
     mapUrl: string
+}
+
+export interface Page<T> {
+    totalPages: number,
+    totalElements: number,
+    size: number,
+    content: T[],
+    number: number,
+    last: boolean,
+    first: boolean,
+    numberOfElements: number,
+    empty: boolean
 }

@@ -37,7 +37,7 @@ export interface AuthState {
     signIn: (signInRequest: authClient.SignInRequest) => Promise<WiwaError | undefined>,
     signUp: (signUpRequest: authClient.SignUpRequest) => Promise<WiwaError | undefined>,
     refresh: () => Promise<WiwaError | undefined>,
-    signOut: () => void
+    signOut: () => Promise<void>
 }
 
 const authStateContext = createContext<AuthState | undefined>(undefined);
@@ -130,7 +130,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
         return await refreshToken(localStorage.getItem(TOKEN));
     }
 
-    const signOut = () => {
+    const signOut = async () => {
         localStorage.removeItem(TOKEN);
         setAuthenticationResponse(undefined);
         setUser(undefined);

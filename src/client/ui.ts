@@ -19,7 +19,7 @@ const PATH_WORKING_HOURS = '/api/ui/working-hours';
 
 export const getLogoUrl = async (): Promise<ClientResponse<string>> => {
     return {data: PATH_LOGO, error: undefined}
-};
+}
 
 export const getTitle = async (locale: string): Promise<ClientResponse<string>> => {
     return getText(PATH_TITLE, createQueryParams(locale));

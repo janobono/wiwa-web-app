@@ -14,8 +14,8 @@ import {
 
 import { Layout } from './component/layout';
 
-import { HomePage, NotFoundPage } from './component/page';
-import { ConfirmPage, ResetPasswordPage, SignInPage, SignUpPage, UserAccountPage } from './component/page/auth';
+import { HomePage, NotFoundPage } from './page';
+import { ConfirmPage, ResetPasswordPage, SignInPage, SignUpPage, UserAccountPage } from './page/auth';
 import {
     ApplicationImagesConfigPage,
     CompanyInfoConfigPage,
@@ -24,9 +24,9 @@ import {
     GdprInfoConfigPage,
     UiConfigPage,
     WorkingHoursConfigPage
-} from './component/page/config';
-import { ContactInfoPage, CookiesInfoPage, GdprInfoPage } from './component/page/ui';
-import { UsersPage } from './component/page/users';
+} from './page/config';
+import { ContactInfoPage, CookiesInfoPage, GdprInfoPage } from './page/ui';
+import { UsersPage } from './page/users';
 
 import { WiwaSpinner } from './component/ui';
 
