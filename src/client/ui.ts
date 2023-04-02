@@ -1,4 +1,4 @@
-import { APP_IMAGES_PATH_PREFIX, ClientResponse, createQueryParams, getData, getText } from './index';
+import { ClientResponse, createQueryParams, getData, getText } from './index';
 import { ApplicationInfo, CompanyInfo } from './model';
 
 const PATH_LOGO = '/api/ui/logo';
@@ -23,13 +23,7 @@ export const getWelcomeText = async (locale: string): Promise<ClientResponse<str
 }
 
 export const getApplicationInfo = async (locale: string): Promise<ClientResponse<ApplicationInfo>> => {
-    const result = await getData<ApplicationInfo>(PATH_APPLICATION_INFO, createQueryParams(locale));
-    if (result.data) {
-        result.data.items = result.data.items.map(item => {
-            return {...item, imageFileName: APP_IMAGES_PATH_PREFIX + item.imageFileName};
-        });
-    }
-    return result;
+    return getData<ApplicationInfo>(PATH_APPLICATION_INFO, createQueryParams(locale));
 }
 
 export const getCompanyInfo = async (locale: string): Promise<ClientResponse<CompanyInfo>> => {

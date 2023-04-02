@@ -1,21 +1,93 @@
-import React, { useState } from 'react';
-import { Edit } from 'react-feather';
+import React, { useEffect, useState } from 'react';
+import { Edit, FileMinus, FilePlus } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 
-import { RESOURCE } from '../../locale';
-import { useUiState } from '../../state';
+import { uiClient } from '../../client';
+import { ApplicationInfo, ApplicationInfoItem, LocaleData, LocaleDataItem } from '../../client/model';
+import { getLanguages, RESOURCE, toLanguage, toLocale } from '../../locale';
+import { useConfigState, useUiState } from '../../state';
 
-import { WiwaButton, WiwaCard } from '../../component/ui';
-import { ChangeApplicationInfoDialog, ChangeLogoDialog, ChangeTitleDialog, ChangeWelcomeTextDialog } from './dialog';
+import { WiwaButton } from '../../component/ui';
+import { ChangeLogoDialog, ChangeTitleDialog, ChangeWelcomeTextDialog, EditApplicationInfoItemDialog } from './dialog';
+import ApplicationInfoItemCard from '../../component/application-info/application-info-item-card';
+import { DialogAnswer, YesNoDialog } from '../../component/dialog';
 
 const UiConfigPage: React.FC = () => {
     const {t} = useTranslation();
+    const configState = useConfigState();
     const uiState = useUiState();
 
     const [showLogoDialog, setShowLogoDialog] = useState(false);
     const [showTitleDialog, setShowTitleDialog] = useState(false);
     const [showWelcomeTextDialog, setShowWelcomeTextDialog] = useState(false);
-    const [showApplicationInfoDialog, setShowApplicationInfoDialog] = useState(false);
+
+    const languages = getLanguages();
+    const [language, setLanguage] = useState<string>();
+    const [applicationInfoData, setApplicationInfoData] = useState<LocaleData<ApplicationInfo>>({items: []});
+    const [selectedApplicationInfoItemIndex, setSelectedApplicationInfoItemIndex] = useState<number>();
+    const [showAddApplicationInfoItem, setShowAddApplicationInfoItem] = useState(false);
+    const [showEditApplicationInfoItem, setShowEditApplicationInfoItem] = useState(false);
+    const [showDeleteApplicationInfoItem, setShowDeleteApplicationInfoItem] = useState(false);
+
+    useEffect(() => {
+        if (configState) {
+            setLanguage(toLanguage(configState.locale));
+        }
+    }, [configState?.locale]);
+
+    useEffect(() => {
+        languages.map(language => uiClient.getApplicationInfo(toLocale(language)).then(
+                data => {
+                    setApplicationInfoData((prevState) => {
+                        const nextItems = [...prevState.items.filter(item => item.language !== language)];
+                        const applicationInfo = data.data;
+                        if (applicationInfo) {
+                            nextItems.push({language, data: applicationInfo});
+                        }
+                        return {items: nextItems};
+                    });
+                }
+            )
+        );
+    }, []);
+
+    const onApplicationItemSelectHandler = (applicationInfoItem: ApplicationInfoItem) => {
+        if (language !== undefined) {
+            const index = applicationInfoData.items.find(value => value.language === language)?.data.items.findIndex(
+                item => item.title === applicationInfoItem.title
+                    && item.text === applicationInfoItem.text
+                    && item.imageFileName === applicationInfoItem.imageFileName
+            );
+            setSelectedApplicationInfoItemIndex(index);
+        }
+    }
+
+    const getApplicationInfoItems = (): LocaleDataItem<ApplicationInfoItem | undefined>[] => {
+        if (selectedApplicationInfoItemIndex === undefined) {
+            return [];
+        }
+        return languages.map(language => {
+            const applicationInfoItem = applicationInfoData.items.find(value => value.language === language)?.data.items[selectedApplicationInfoItemIndex];
+            return {
+                language,
+                data: applicationInfoItem
+            }
+        });
+    }
+
+    const addApplicationInfoItemHandler = (applicationInfoItems: LocaleDataItem<ApplicationInfoItem>[]) => {
+        // TODO
+    }
+
+    const editApplicationInfoItemHandler = (applicationInfoItems: LocaleDataItem<ApplicationInfoItem>[]) => {
+        // TODO
+    }
+
+    const deleteApplicationInfoItemHandler = (dialogAnswer: DialogAnswer) => {
+        if (dialogAnswer == DialogAnswer.YES && selectedApplicationInfoItemIndex !== undefined) {
+            // TODO
+        }
+    }
 
     return (
         <>
@@ -68,28 +140,50 @@ const UiConfigPage: React.FC = () => {
                 </div>
 
                 <div className="container pb-5 mx-auto">
-                    <div className="flex flex-row flex-grow border items-center justify-center gap-5 p-5">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                            {uiState?.applicationInfo ?
-                                uiState.applicationInfo.items.map((item, index) => {
-                                    return <WiwaCard key={index}
-                                                     image={item.imageFileName}
-                                                     title={item.title}
-                                                     text={item.text}/>
-                                })
-                                : <></>}
+                    <div className="flex flex-col flex-grow border items-center justify-center gap-5 p-5">
+                        <div className="flex flex-row gap-5">
+                            <WiwaButton
+                                title={t(RESOURCE.ACTION.ADD).toString()}
+                                onClick={() => setShowAddApplicationInfoItem(true)}
+                            >
+                                <FilePlus size="18"/>
+                            </WiwaButton>
+
+                            <WiwaButton
+                                disabled={selectedApplicationInfoItemIndex === undefined}
+                                title={t(RESOURCE.ACTION.EDIT).toString()}
+                                onClick={() => setShowEditApplicationInfoItem(true)}
+                            >
+                                <Edit size="18"/>
+                            </WiwaButton>
+
+                            <WiwaButton
+                                disabled={selectedApplicationInfoItemIndex === undefined}
+                                variant="error"
+                                title={t(RESOURCE.ACTION.REMOVE).toString()}
+                                onClick={() => setShowDeleteApplicationInfoItem(true)}
+                            >
+                                <FileMinus size="18"/>
+                            </WiwaButton>
                         </div>
 
-                        <WiwaButton
-                            title={t(RESOURCE.ACTION.EDIT).toString()}
-                            onClick={() => setShowApplicationInfoDialog(true)}
-                        >
-                            <Edit size="18"/>
-                        </WiwaButton>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                            {language !== undefined
+                                && applicationInfoData.items.find(value => value.language === language)?.data.items.map((item, index) => {
+                                        return <ApplicationInfoItemCard
+                                            key={index}
+                                            applicationInfoItem={item}
+                                            editMode={true}
+                                            selected={index === selectedApplicationInfoItemIndex}
+                                            onSelect={onApplicationItemSelectHandler}
+                                        />
+                                    }
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-
 
             {showLogoDialog &&
                 <ChangeLogoDialog
@@ -97,22 +191,45 @@ const UiConfigPage: React.FC = () => {
                     setShowDialog={setShowLogoDialog}
                 />
             }
+
             {showTitleDialog &&
                 <ChangeTitleDialog
                     showDialog={showTitleDialog}
                     setShowDialog={setShowTitleDialog}
                 />
             }
+
             {showWelcomeTextDialog &&
                 <ChangeWelcomeTextDialog
                     showDialog={showWelcomeTextDialog}
                     setShowDialog={setShowWelcomeTextDialog}
                 />
             }
-            {showApplicationInfoDialog &&
-                <ChangeApplicationInfoDialog
-                    showDialog={showApplicationInfoDialog}
-                    setShowDialog={setShowApplicationInfoDialog}
+
+            {showAddApplicationInfoItem &&
+                <EditApplicationInfoItemDialog
+                    showDialog={showAddApplicationInfoItem}
+                    setShowDialog={setShowAddApplicationInfoItem}
+                    onApplicationInfoItemsHandler={addApplicationInfoItemHandler}
+                />
+            }
+
+            {showEditApplicationInfoItem && selectedApplicationInfoItemIndex !== undefined &&
+                <EditApplicationInfoItemDialog
+                    showDialog={showEditApplicationInfoItem}
+                    setShowDialog={setShowEditApplicationInfoItem}
+                    applicationInfoItems={getApplicationInfoItems()}
+                    onApplicationInfoItemsHandler={editApplicationInfoItemHandler}
+                />
+            }
+
+            {showDeleteApplicationInfoItem && selectedApplicationInfoItemIndex !== undefined &&
+                <YesNoDialog
+                    showDialog={showDeleteApplicationInfoItem}
+                    setShowDialog={setShowDeleteApplicationInfoItem}
+                    title={t(RESOURCE.PAGE.CONFIG.UI.TITLE).toString()}
+                    question={t(RESOURCE.PAGE.CONFIG.UI.DELETE_APPLICATION_INFO_ITEM_CONFIRMATION_QUESTION).toString()}
+                    dialogAnswerHandler={deleteApplicationInfoItemHandler}
                 />
             }
         </>

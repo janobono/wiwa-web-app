@@ -8,14 +8,14 @@ import { useConfigState } from './config-state-provider';
 import { useAuthState } from './auth-state-provider';
 
 export interface UiState {
-    logoUrl: string | undefined,
-    title: string | undefined,
-    welcomeText: string | undefined,
-    applicationInfo: ApplicationInfo | undefined,
-    companyInfo: CompanyInfo | undefined,
-    cookiesInfo: string | undefined,
-    gdprInfo: string | undefined,
-    workingHours: string | undefined,
+    logoUrl?: string,
+    title?: string,
+    welcomeText?: string,
+    applicationInfo?: ApplicationInfo,
+    companyInfo?: CompanyInfo,
+    cookiesInfo?: string,
+    gdprInfo?: string,
+    workingHours?: string,
     changeLogo: (logo: File) => Promise<WiwaError | undefined>,
     changeTitle: (title: LocaleData<string>) => Promise<WiwaError | undefined>,
     changeWelcomeText: (welcomeText: LocaleData<string>) => Promise<WiwaError | undefined>,

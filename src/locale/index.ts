@@ -297,10 +297,6 @@ export const RESOURCE = {
                     APPLICATION_IMAGE_DETAILS: {
                         TITLE: 'page.config.dialog.application-image-details.title'
                     },
-                    CHANGE_APPLICATION_INFO: {
-                        TITLE: 'page.config.dialog.change-application-info.title',
-                        ERROR: 'page.config.dialog.change-application-info.error'
-                    },
                     CHANGE_COMPANY_INFO: {
                         TITLE: 'page.config.dialog.change-company-info.title',
                         ERROR: 'page.config.dialog.change-company-info.error'
@@ -335,6 +331,9 @@ export const RESOURCE = {
                     CHANGE_WORKING_HOURS: {
                         TITLE: 'page.config.dialog.change-working-hours.title',
                         ERROR: 'page.config.dialog.change-working-hours.error'
+                    },
+                    EDIT_APPLICATION_INFO_ITEM: {
+                        TITLE: 'page.config.dialog.edit-application-info-item.title'
                     }
                 },
                 APPLICATION_IMAGES: {
@@ -364,7 +363,8 @@ export const RESOURCE = {
                 },
                 UI: {
                     TITLE: 'page.config.ui.title',
-                    LOGO: 'page.config.ui.logo'
+                    LOGO: 'page.config.ui.logo',
+                    DELETE_APPLICATION_INFO_ITEM_CONFIRMATION_QUESTION: 'page.config.ui.delete-application-info-item-confirmation-question'
                 },
                 WORKING_HOURS: {
                     TITLE: 'page.config.working-hours.title'

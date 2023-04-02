@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { useUiState } from '../state';
-
-import { WiwaCard } from '../component/ui';
+import ApplicationInfoItemCard from '../component/application-info/application-info-item-card';
 
 const HomePage: React.FC = () => {
     const uiState = useUiState();
@@ -16,10 +15,7 @@ const HomePage: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {uiState?.applicationInfo ?
                         uiState.applicationInfo.items.map((item, index) => {
-                            return <WiwaCard key={index}
-                                             image={item.imageFileName}
-                                             title={item.title}
-                                             text={item.text}/>
+                            return <ApplicationInfoItemCard key={index} applicationInfoItem={item}/>
                         })
                         : <></>}
                 </div>

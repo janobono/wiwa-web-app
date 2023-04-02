@@ -265,10 +265,6 @@
         "application-image-details": {
           "title": "Application image"
         },
-        "change-application-info": {
-          "title": "Change application info",
-          "error": "Application info could not be changed."
-        },
         "change-company-info": {
           "title": "Change company info",
           "error": "Company info could not be changed."
@@ -332,7 +328,8 @@
       },
       "ui": {
         "title": "Base settings",
-        "logo": "Logo"
+        "logo": "Logo",
+        "delete-application-info-item-confirmation-question": "Do you really want to delete the application info item?"
       },
       "working-hours": {
         "title": "Working hours"

@@ -265,10 +265,6 @@
         "application-image-details": {
           "title": "Aplikačný obrázok"
         },
-        "change-application-info": {
-          "title": "Zmeniť informácie o aplikácii",
-          "error": "Nepodarilo sa zmeniť informácie o aplikácii."
-        },
         "change-company-info": {
           "title": "Zmeniť kontaktné informácie",
           "error": "Nepodarilo sa zmeniť kontaktné informácie."
@@ -332,7 +328,8 @@
       },
       "ui": {
         "title": "Základné nastavenia",
-        "logo": "Logo"
+        "logo": "Logo",
+        "delete-application-info-item-confirmation-question": "Naozaj si želáte odstrániť položku informácií o aplikácii?"
       },
       "working-hours": {
         "title": "Otváracie hodiny"

@@ -18,8 +18,8 @@ const ApplicationImagesConfigPage: React.FC = () => {
     const [selectedApplicationImage, setSelectedApplicationImage] = useState<ApplicationImage>();
     const [applicationImages, setApplicationImages] = useState<ApplicationImage[]>([]);
     const [showAddApplicationImageDialog, setShowAddApplicationImageDialog] = useState(false);
-    const [showYesNoDialog, setShowYesNoDialog] = useState(false);
     const [showApplicationImageDetailsDialog, setShowApplicationImageDetailsDialog] = useState(false);
+    const [showYesNoDialog, setShowYesNoDialog] = useState(false);
 
     useEffect(() => {
         uiState?.getApplicationImages().then(data => {
@@ -30,19 +30,19 @@ const ApplicationImagesConfigPage: React.FC = () => {
         })
     }, []);
 
+    const onApplicationImageAddHandler = (applicationImage: ApplicationImage) => {
+        const newApplicationImages = [...applicationImages];
+        newApplicationImages.unshift(applicationImage);
+        setApplicationImages(newApplicationImages);
+        setSelectedApplicationImage(applicationImage);
+    }
+
     const deleteApplicationImageAnswerHandler = (dialogAnswer: DialogAnswer) => {
         if (dialogAnswer === DialogAnswer.YES && selectedApplicationImage !== undefined) {
             uiState?.deleteApplicationImage(selectedApplicationImage.fileName);
             setApplicationImages(applicationImages.filter(value => value.fileName !== selectedApplicationImage.fileName));
             setSelectedApplicationImage(undefined);
         }
-    }
-
-    const onApplicationImageAddHandler = (applicationImage: ApplicationImage) => {
-        const newApplicationImages = [...applicationImages];
-        newApplicationImages.unshift(applicationImage);
-        setApplicationImages(newApplicationImages);
-        setSelectedApplicationImage(applicationImage);
     }
 
     return (
@@ -59,19 +59,19 @@ const ApplicationImagesConfigPage: React.FC = () => {
 
                         <WiwaButton
                             disabled={selectedApplicationImage === undefined}
+                            title={t(RESOURCE.ACTION.DETAIL).toString()}
+                            onClick={() => setShowApplicationImageDetailsDialog(true)}
+                        >
+                            <File size="18"/>
+                        </WiwaButton>
+
+                        <WiwaButton
+                            disabled={selectedApplicationImage === undefined}
                             variant="error"
                             title={t(RESOURCE.ACTION.REMOVE).toString()}
                             onClick={() => setShowYesNoDialog(true)}
                         >
                             <FileMinus size="18"/>
-                        </WiwaButton>
-
-                        <WiwaButton
-                            disabled={selectedApplicationImage === undefined}
-                            title={t(RESOURCE.ACTION.DETAIL).toString()}
-                            onClick={() => setShowApplicationImageDetailsDialog(true)}
-                        >
-                            <File size="18"/>
                         </WiwaButton>
                     </div>
                     <div className="w-full">
@@ -97,6 +97,14 @@ const ApplicationImagesConfigPage: React.FC = () => {
                 />
             }
 
+            {showApplicationImageDetailsDialog && selectedApplicationImage !== undefined &&
+                <ApplicationImageDetailsDialog
+                    showDialog={showApplicationImageDetailsDialog}
+                    setShowDialog={setShowApplicationImageDetailsDialog}
+                    applicationImage={selectedApplicationImage}
+                />
+            }
+
             {showYesNoDialog && selectedApplicationImage !== undefined &&
                 <YesNoDialog
                     showDialog={showYesNoDialog}
@@ -104,14 +112,6 @@ const ApplicationImagesConfigPage: React.FC = () => {
                     title={t(RESOURCE.PAGE.CONFIG.APPLICATION_IMAGES.TITLE).toString()}
                     question={t(RESOURCE.PAGE.CONFIG.APPLICATION_IMAGES.DELETE_CONFIRMATION_QUESTION).toString()}
                     dialogAnswerHandler={deleteApplicationImageAnswerHandler}
-                />
-            }
-
-            {showApplicationImageDetailsDialog && selectedApplicationImage !== undefined &&
-                <ApplicationImageDetailsDialog
-                    showDialog={showApplicationImageDetailsDialog}
-                    setShowDialog={setShowApplicationImageDetailsDialog}
-                    applicationImage={selectedApplicationImage}
                 />
             }
         </>

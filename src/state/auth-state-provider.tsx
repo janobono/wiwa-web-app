@@ -39,8 +39,8 @@ interface AuthUser extends JwtPayload {
 }
 
 export interface AuthState {
-    user: AuthUser | undefined,
-    token: string | undefined,
+    user?: AuthUser,
+    token?: string,
     confirm: (confirmationRequest: ConfirmationRequest) => Promise<WiwaError | undefined>,
     changeEmail: (changeEmailRequest: ChangeEmailRequest) => Promise<WiwaError | undefined>,
     changePassword: (changePasswordRequest: ChangePasswordRequest) => Promise<WiwaError | undefined>,
