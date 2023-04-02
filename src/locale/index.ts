@@ -40,14 +40,17 @@ export const RESOURCE = {
             CHANGE_USER_DETAILS: 'action.change-user-details',
             CONFIG: 'action.config',
             DELETE: 'action.delete',
+            DETAIL: 'action.detail',
             EDIT: 'action.edit',
             FIRST: 'action.first',
             HOME: 'action.home',
             LAST: 'action.last',
             NEW: 'action.new',
             NEXT: 'action.next',
+            NO: 'action.no',
             OK: 'action.ok',
             PREVIOUS: 'action.previous',
+            REMOVE: 'action.remove',
             RESEND: 'action.resend',
             SAVE: 'action.save',
             SWITCH_LOCALE: 'action.switch-locale',
@@ -291,6 +294,9 @@ export const RESOURCE = {
                         },
                         ERROR: 'page.config.dialog.add-application-image.error'
                     },
+                    APPLICATION_IMAGE_DETAILS: {
+                        TITLE: 'page.config.dialog.application-image-details.title'
+                    },
                     CHANGE_APPLICATION_INFO: {
                         TITLE: 'page.config.dialog.change-application-info.title',
                         ERROR: 'page.config.dialog.change-application-info.error'
@@ -332,7 +338,8 @@ export const RESOURCE = {
                     }
                 },
                 APPLICATION_IMAGES: {
-                    TITLE: 'page.config.application-images.title'
+                    TITLE: 'page.config.application-images.title',
+                    DELETE_CONFIRMATION_QUESTION: 'page.config.application-images.delete-confirmation-question'
                 },
                 COMPANY_INFO: {
                     TITLE: 'page.config.company-info.title',

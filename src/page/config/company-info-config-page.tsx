@@ -109,7 +109,10 @@ const CompanyInfoConfigPage: React.FC = () => {
             </div>
 
             {showCompanyInfoDialog &&
-                <ChangeCompanyInfoDialog showDialog={showCompanyInfoDialog} setShowDialog={setShowCompanyInfoDialog}/>
+                <ChangeCompanyInfoDialog
+                    showDialog={showCompanyInfoDialog}
+                    setShowDialog={setShowCompanyInfoDialog}
+                />
             }
         </>
     );

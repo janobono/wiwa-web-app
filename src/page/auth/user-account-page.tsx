@@ -106,18 +106,28 @@ const UserAccountPage: React.FC = () => {
                     }
                 </div>
                 {showEmailDialog &&
-                    <ChangeEmailDialog showDialog={showEmailDialog} setShowDialog={setShowEmailDialog}/>
+                    <ChangeEmailDialog
+                        showDialog={showEmailDialog}
+                        setShowDialog={setShowEmailDialog}
+                    />
                 }
                 {showPasswordDialog &&
-                    <ChangePasswordDialog showDialog={showPasswordDialog} setShowDialog={setShowPasswordDialog}/>
+                    <ChangePasswordDialog
+                        showDialog={showPasswordDialog}
+                        setShowDialog={setShowPasswordDialog}
+                    />
                 }
                 {showUserDetailsDialog &&
-                    <ChangeUserDetailsDialog showDialog={showUserDetailsDialog}
-                                             setShowDialog={setShowUserDetailsDialog}/>
+                    <ChangeUserDetailsDialog
+                        showDialog={showUserDetailsDialog}
+                        setShowDialog={setShowUserDetailsDialog}
+                    />
                 }
                 {showResendConfirmationDialog &&
-                    <ResendConfirmationDialog showDialog={showResendConfirmationDialog}
-                                              setShowDialog={setShowResendConfirmationDialog}/>
+                    <ResendConfirmationDialog
+                        showDialog={showResendConfirmationDialog}
+                        setShowDialog={setShowResendConfirmationDialog}
+                    />
                 }
             </div>
         </section>

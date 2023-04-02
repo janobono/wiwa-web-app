@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ApplicationInfo, ClientResponse, CompanyInfo, configClient, LocaleData, uiClient, WiwaError } from '../client';
+
+import { ClientResponse, configClient, uiClient, WiwaError } from '../client';
+import { ApplicationImage, ApplicationInfo, CompanyInfo, LocaleData } from '../client/model';
+
 import { useActuatorState } from './actuator-state-provider';
 import { useConfigState } from './config-state-provider';
 import { useAuthState } from './auth-state-provider';
-import { ApplicationImage } from '../client/config';
 
 export interface UiState {
     logoUrl: string | undefined,
@@ -24,6 +26,7 @@ export interface UiState {
     changeWorkingHours: (workingHours: LocaleData<string>) => Promise<WiwaError | undefined>,
     addApplicationImage: (applicationImage: File) => Promise<ClientResponse<ApplicationImage> | undefined>,
     getApplicationImages: () => Promise<ClientResponse<ApplicationImage[]> | undefined>
+    deleteApplicationImage: (fileName: string) => Promise<WiwaError | undefined>,
 }
 
 const uiStateContext = createContext<UiState | undefined>(undefined);
@@ -216,6 +219,14 @@ const UiStateProvider: React.FC<any> = ({children}) => {
         return undefined;
     }
 
+    const deleteApplicationImage = async (fileName: string): Promise<WiwaError | undefined> => {
+        const token = authState?.token;
+        if (!token) {
+            return undefined;
+        }
+        return configClient?.deleteApplicationImage(fileName, token);
+    }
+
     return (
         <uiStateContext.Provider
             value={
@@ -237,7 +248,8 @@ const UiStateProvider: React.FC<any> = ({children}) => {
                     changeGdprInfo,
                     changeWorkingHours,
                     addApplicationImage,
-                    getApplicationImages
+                    getApplicationImages,
+                    deleteApplicationImage
                 }
             }
         >{children}

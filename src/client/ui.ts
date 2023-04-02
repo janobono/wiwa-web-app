@@ -1,12 +1,5 @@
-import {
-    APP_IMAGES_PATH_PREFIX,
-    ApplicationInfo,
-    ClientResponse,
-    CompanyInfo,
-    createQueryParams,
-    getData,
-    getText
-} from './index';
+import { APP_IMAGES_PATH_PREFIX, ClientResponse, createQueryParams, getData, getText } from './index';
+import { ApplicationInfo, CompanyInfo } from './model';
 
 const PATH_LOGO = '/api/ui/logo';
 const PATH_TITLE = '/api/ui/title';

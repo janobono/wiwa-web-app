@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Edit } from 'react-feather';
 
-import { LocaleData, uiClient } from '../../client';
+import { uiClient } from '../../client';
+import { LocaleData } from '../../client/model';
+
 import { getLanguages, RESOURCE, toLocale } from '../../locale';
 import { useUiState } from '../../state';
 

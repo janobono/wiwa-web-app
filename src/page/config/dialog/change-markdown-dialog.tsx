@@ -2,7 +2,9 @@ import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dialog, Transition } from '@headlessui/react';
 
-import { LocaleData, WiwaError } from '../../../client';
+import { WiwaError } from '../../../client';
+import { LocaleData } from '../../../client/model';
+
 import { LOCALE, RESOURCE, toLocale } from '../../../locale';
 
 import { WiwaButton, WiwaMarkdownRenderer, WiwaSpinner, WiwaTextArea } from '../../../component/ui';

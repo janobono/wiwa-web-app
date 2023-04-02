@@ -1,48 +1,87 @@
 import React, { useEffect, useState } from 'react';
-import { Plus } from 'react-feather';
+import { File, FileMinus, FilePlus } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 
+import { ApplicationImage } from '../../client/model';
 import { RESOURCE } from '../../locale';
 import { useUiState } from '../../state';
 
+import { ApplicationImageCard } from '../../component/application-image';
 import { WiwaButton } from '../../component/ui';
-import { AddApplicationImageDialog } from './dialog';
-import { ApplicationImage } from '../../client/config';
+import { AddApplicationImageDialog, ApplicationImageDetailsDialog } from './dialog';
+import { DialogAnswer, YesNoDialog } from '../../component/dialog';
 
 const ApplicationImagesConfigPage: React.FC = () => {
     const {t} = useTranslation();
     const uiState = useUiState();
 
+    const [selectedApplicationImage, setSelectedApplicationImage] = useState<ApplicationImage>();
     const [applicationImages, setApplicationImages] = useState<ApplicationImage[]>([]);
     const [showAddApplicationImageDialog, setShowAddApplicationImageDialog] = useState(false);
+    const [showYesNoDialog, setShowYesNoDialog] = useState(false);
+    const [showApplicationImageDetailsDialog, setShowApplicationImageDetailsDialog] = useState(false);
 
     useEffect(() => {
-        if (!showAddApplicationImageDialog) {
-            uiState?.getApplicationImages().then(data => {
-                if (data?.data) {
-                    setApplicationImages(data.data);
-                }
-            })
+        uiState?.getApplicationImages().then(data => {
+            if (data?.data) {
+                setSelectedApplicationImage(undefined);
+                setApplicationImages(data.data);
+            }
+        })
+    }, []);
+
+    const deleteApplicationImageAnswerHandler = (dialogAnswer: DialogAnswer) => {
+        if (dialogAnswer === DialogAnswer.YES && selectedApplicationImage !== undefined) {
+            uiState?.deleteApplicationImage(selectedApplicationImage.fileName);
+            setApplicationImages(applicationImages.filter(value => value.fileName !== selectedApplicationImage.fileName));
+            setSelectedApplicationImage(undefined);
         }
-    }, [applicationImages, showAddApplicationImageDialog]);
+    }
+
+    const onApplicationImageAddHandler = (applicationImage: ApplicationImage) => {
+        const newApplicationImages = [...applicationImages];
+        newApplicationImages.unshift(applicationImage);
+        setApplicationImages(newApplicationImages);
+        setSelectedApplicationImage(applicationImage);
+    }
 
     return (
         <>
             <div className="w-full">
                 <div className="container py-5 mx-auto">
-                    <WiwaButton
-                        className="mb-5"
-                        title={t(RESOURCE.ACTION.ADD).toString()}
-                        onClick={() => setShowAddApplicationImageDialog(true)}
-                    >
-                        <Plus size="18"/>
-                    </WiwaButton>
+                    <div className="flex flex-row gap-5 mb-5">
+                        <WiwaButton
+                            title={t(RESOURCE.ACTION.ADD).toString()}
+                            onClick={() => setShowAddApplicationImageDialog(true)}
+                        >
+                            <FilePlus size="18"/>
+                        </WiwaButton>
+
+                        <WiwaButton
+                            disabled={selectedApplicationImage === undefined}
+                            variant="error"
+                            title={t(RESOURCE.ACTION.REMOVE).toString()}
+                            onClick={() => setShowYesNoDialog(true)}
+                        >
+                            <FileMinus size="18"/>
+                        </WiwaButton>
+
+                        <WiwaButton
+                            disabled={selectedApplicationImage === undefined}
+                            title={t(RESOURCE.ACTION.DETAIL).toString()}
+                            onClick={() => setShowApplicationImageDetailsDialog(true)}
+                        >
+                            <File size="18"/>
+                        </WiwaButton>
+                    </div>
                     <div className="w-full">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
                             {applicationImages.map(applicationImage =>
                                 <ApplicationImageCard
                                     key={applicationImage.fileName}
                                     applicationImage={applicationImage}
+                                    selected={selectedApplicationImage !== undefined && selectedApplicationImage.fileName === applicationImage.fileName}
+                                    onSelect={setSelectedApplicationImage}
                                 />
                             )}
                         </div>
@@ -51,39 +90,32 @@ const ApplicationImagesConfigPage: React.FC = () => {
             </div>
 
             {showAddApplicationImageDialog &&
-                <AddApplicationImageDialog showDialog={showAddApplicationImageDialog}
-                                           setShowDialog={setShowAddApplicationImageDialog}/>
+                <AddApplicationImageDialog
+                    showDialog={showAddApplicationImageDialog}
+                    setShowDialog={setShowAddApplicationImageDialog}
+                    onApplicationImageAddHandler={onApplicationImageAddHandler}
+                />
+            }
+
+            {showYesNoDialog && selectedApplicationImage !== undefined &&
+                <YesNoDialog
+                    showDialog={showYesNoDialog}
+                    setShowDialog={setShowYesNoDialog}
+                    title={t(RESOURCE.PAGE.CONFIG.APPLICATION_IMAGES.TITLE).toString()}
+                    question={t(RESOURCE.PAGE.CONFIG.APPLICATION_IMAGES.DELETE_CONFIRMATION_QUESTION).toString()}
+                    dialogAnswerHandler={deleteApplicationImageAnswerHandler}
+                />
+            }
+
+            {showApplicationImageDetailsDialog && selectedApplicationImage !== undefined &&
+                <ApplicationImageDetailsDialog
+                    showDialog={showApplicationImageDetailsDialog}
+                    setShowDialog={setShowApplicationImageDetailsDialog}
+                    applicationImage={selectedApplicationImage}
+                />
             }
         </>
     );
 }
 
 export default ApplicationImagesConfigPage;
-
-interface ApplicationImageCardProps {
-    applicationImage: ApplicationImage
-}
-
-const ApplicationImageCard: React.FC<ApplicationImageCardProps> = (props) => {
-    const {t} = useTranslation();
-    const uiState = useUiState();
-
-    return (
-        <div className="overflow-hidden rounded bg-white text-slate-500 shadow-md shadow-slate-200">
-            <figure>
-                <img
-                    src={props.applicationImage.thumbnail}
-                    alt={props.applicationImage.fileName}
-                    className="aspect-video w-full"
-                />
-            </figure>
-            <div className="p-5">
-                <header>
-                    <div className="text-sm font-bold text-center mb-5">
-                        {props.applicationImage.fileName}
-                    </div>
-                </header>
-            </div>
-        </div>
-    )
-}

@@ -6,13 +6,15 @@ import { RESOURCE } from '../../../locale';
 import { useUiState } from '../../../state';
 
 import { WiwaButton, WiwaFileInput, WiwaSpinner } from '../../../component/ui';
+import { ApplicationImage } from '../../../client/model';
 
-interface ChangeLogoDialogProps {
+interface AddApplicationImageDialogProps {
     showDialog: boolean
-    setShowDialog: (showDialog: boolean) => void
+    setShowDialog: (showDialog: boolean) => void,
+    onApplicationImageAddHandler: (applicationImage: ApplicationImage) => void
 }
 
-const AddApplicationImageDialog: React.FC<ChangeLogoDialogProps> = (props) => {
+const AddApplicationImageDialog: React.FC<AddApplicationImageDialogProps> = (props) => {
     const {t} = useTranslation();
 
     const uiState = useUiState();
@@ -38,10 +40,11 @@ const AddApplicationImageDialog: React.FC<ChangeLogoDialogProps> = (props) => {
         try {
             if (isFormValid() && applicationImage) {
                 const clientResponse = await uiState?.addApplicationImage(applicationImage);
-                if (!clientResponse || clientResponse?.error) {
+                if (!clientResponse || clientResponse?.error || clientResponse.data === undefined) {
                     setError(t(RESOURCE.PAGE.CONFIG.DIALOG.ADD_APPLICATION_IMAGE.ERROR).toString());
                 } else {
                     props.setShowDialog(false);
+                    props.onApplicationImageAddHandler(clientResponse.data);
                 }
             }
         } finally {

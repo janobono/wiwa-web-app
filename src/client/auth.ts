@@ -1,4 +1,16 @@
 import { ClientResponse, createAuthorization, postData, toWiwaError } from './index';
+import {
+    AuthenticationResponse,
+    ChangeEmailRequest,
+    ChangePasswordRequest,
+    ChangeUserDetailsRequest,
+    ConfirmationRequest,
+    RefreshToken,
+    ResendConfirmationRequest,
+    ResetPasswordRequest,
+    SignInRequest,
+    SignUpRequest
+} from './model';
 
 const PATH_CONFIRM = '/api/auth/confirm';
 const PATH_CHANGE_EMAIL = '/api/auth/change-email';
@@ -9,75 +21,6 @@ const PATH_RESET_PASSWORD = '/api/auth/reset-password';
 const PATH_SIGN_IN = '/api/auth/sign-in';
 const PATH_SIGN_UP = '/api/auth/sign-up';
 const PATH_REFRESH = '/api/auth/refresh';
-
-export interface AuthenticationResponse {
-    token: string,
-    type: string,
-    refreshToken: string
-}
-
-export interface ConfirmationRequest {
-    token: string
-}
-
-export interface ChangeEmailRequest {
-    email: string,
-    password: string,
-    captchaText: string,
-    captchaToken: string
-}
-
-export interface ChangePasswordRequest {
-    oldPassword: string,
-    newPassword: string,
-    captchaText: string,
-    captchaToken: string
-}
-
-export interface ChangeUserDetailsRequest {
-    titleBefore?: string,
-    firstName: string,
-    midName?: string,
-    lastName: string,
-    titleAfter?: string,
-    gdpr: boolean,
-    captchaText: string,
-    captchaToken: string
-}
-
-export interface ResendConfirmationRequest {
-    captchaText: string,
-    captchaToken: string
-}
-
-export interface ResetPasswordRequest {
-    email: string,
-    captchaText: string,
-    captchaToken: string
-}
-
-export interface SignInRequest {
-    username: string,
-    password: string
-}
-
-export interface SignUpRequest {
-    username: string,
-    password: string,
-    titleBefore?: string,
-    firstName: string,
-    midName?: string,
-    lastName: string,
-    titleAfter?: string,
-    email: string,
-    gdpr: boolean,
-    captchaText: string,
-    captchaToken: string
-}
-
-export interface RefreshToken {
-    token: string
-}
 
 export const confirm = async (confirmationRequest: ConfirmationRequest): Promise<ClientResponse<AuthenticationResponse>> => {
     return postData<AuthenticationResponse>(PATH_CONFIRM, confirmationRequest);

@@ -12,14 +12,17 @@
     "change-user-details": "Zmeniť používateľský profil",
     "config": "Konfigurácia",
     "delete": "Zmazať",
+    "detail": "Podrobnosti",
     "edit": "Upraviť",
     "first": "Na začiatok",
     "home": "Domovská stránka",
     "last": "Na koniec",
     "new": "Nové",
     "next": "Nasledujúce",
+    "no": "Nie",
     "ok": "Potvrdiť",
     "previous": "Predchádzajúce",
+    "remove": "Odstrániť",
     "resend": "Preposlať",
     "save": "Uložiť",
     "switch-locale": "Prepnúť lokalizáciu na Anglickú",
@@ -259,6 +262,9 @@
           },
           "error": "Application image could not be added."
         },
+        "application-image-details": {
+          "title": "Aplikačný obrázok"
+        },
         "change-application-info": {
           "title": "Zmeniť informácie o aplikácii",
           "error": "Nepodarilo sa zmeniť informácie o aplikácii."
@@ -281,7 +287,7 @@
             "logo": {
               "label": "Obrázok Loga",
               "validation-message1": "Vyžaduje sa obrázok loga",
-              "validation-message2": "Musí to byť obrázok vo formáte JPG alebo PNG"
+              "validation-message2": "Musí to byť obrázok vo formáte PNG"
             }
           },
           "error": "Nepodarilo sa zmeniť logo."
@@ -300,7 +306,8 @@
         }
       },
       "application-images": {
-        "title": "Aplikačné obrázky"
+        "title": "Aplikačné obrázky",
+        "delete-confirmation-question": "Naozaj si želáte odstrániť aplikačný obrázok?"
       },
       "company-info": {
         "title": "Kontaktné informácie",

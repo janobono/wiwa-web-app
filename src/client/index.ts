@@ -6,6 +6,12 @@ export * as uiClient from './ui';
 
 export const APP_IMAGES_PATH_PREFIX = '/api/ui/application-images/';
 
+export interface WiwaError {
+    code: WiwaErrorCode,
+    message: string,
+    timestamp: string
+}
+
 export enum WiwaErrorCode {
     UNKNOWN = 'UNKNOWN',
     NOT_FOUND = 'NOT_FOUND',
@@ -25,10 +31,9 @@ export enum WiwaErrorCode {
     USER_USERNAME_IS_USED = 'USER_USERNAME_IS_USED'
 }
 
-export interface WiwaError {
-    code: WiwaErrorCode,
-    message: string,
-    timestamp: string
+export interface ClientResponse<T> {
+    data: T | undefined,
+    error: WiwaError | undefined
 }
 
 export const toWiwaError = async (response: Response): Promise<WiwaError> => {
@@ -45,11 +50,6 @@ export const toWiwaError = async (response: Response): Promise<WiwaError> => {
         console.log(error);
     }
     return result;
-}
-
-export interface ClientResponse<T> {
-    data: T | undefined,
-    error: WiwaError | undefined
 }
 
 export const createQueryParams = (locale: string): URLSearchParams => {
@@ -159,50 +159,4 @@ export const deleteData = async (path: string, token?: string): Promise<WiwaErro
         error = await toWiwaError(response);
     }
     return error;
-}
-
-export interface LocaleData<T> {
-    items: LocaleDataItem<T>[]
-}
-
-export interface LocaleDataItem<T> {
-    language: string,
-    data: T
-}
-
-export interface ApplicationInfo {
-    items: ApplicationInfoItem[]
-}
-
-export interface ApplicationInfoItem {
-    title: string,
-    text: string,
-    imageFileName: string
-}
-
-export interface CompanyInfo {
-    name: string,
-    street: string,
-    city: string,
-    zipCode: string,
-    state: string,
-    phone: string,
-    mail: string,
-    businessId: string,
-    taxId: string,
-    vatRegNo: string,
-    commercialRegisterInfo: string,
-    mapUrl: string
-}
-
-export interface Page<T> {
-    totalPages: number,
-    totalElements: number,
-    size: number,
-    content: T[],
-    number: number,
-    last: boolean,
-    first: boolean,
-    numberOfElements: number,
-    empty: boolean
 }

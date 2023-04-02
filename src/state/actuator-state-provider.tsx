@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { ClientResponse } from '../client';
-import { getHealthStatus, HealthStatus } from '../client/actuator';
+import { actuatorClient, ClientResponse } from '../client';
+import { HealthStatus } from '../client/model';
 
 const TIMEOUT = 15000;
 
@@ -19,14 +19,14 @@ const ActuatorStateProvider: React.FC<any> = ({children}) => {
         if (firstRun.current) {
             firstRun.current = false;
 
-            getHealthStatus().then(
+            actuatorClient.getHealthStatus().then(
                 value => {
                     setHealthResponse(value);
                 }
             );
 
             setInterval(async () => {
-                setHealthResponse(await getHealthStatus());
+                setHealthResponse(await actuatorClient.getHealthStatus());
             }, TIMEOUT);
         }
     }, []);

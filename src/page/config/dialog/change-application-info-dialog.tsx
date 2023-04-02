@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ApplicationInfo, LocaleData } from '../../../client';
+import { ApplicationInfo, LocaleData } from '../../../client/model';
 import { getLanguages, RESOURCE } from '../../../locale';
 import { useUiState } from '../../../state';
 

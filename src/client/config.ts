@@ -1,16 +1,15 @@
 import {
     addPageQueryParams,
-    ApplicationInfo,
     ClientResponse,
-    CompanyInfo,
     createAuthorization,
+    deleteData,
     getData,
-    LocaleData,
-    Page,
     PageQueryParams,
     postData,
-    toWiwaError
+    toWiwaError,
+    WiwaError
 } from './index';
+import { ApplicationImage, ApplicationInfo, CompanyInfo, LocaleData, Page } from './model';
 
 const PATH_LOGO = '/api/config/logo';
 const PATH_TITLE = '/api/config/title';
@@ -21,11 +20,6 @@ const PATH_COOKIES_INFO = '/api/config/cookies-info';
 const PATH_GDPR_INFO = '/api/config/gdpr-info';
 const PATH_WORKING_HOURS = '/api/config/working-hours';
 const PATH_APPLICATION_IMAGES = '/api/config/application-images';
-
-export interface ApplicationImage {
-    fileName: string,
-    thumbnail: string
-}
 
 export const postLogo = async (logo: File, token: string): Promise<ClientResponse<void>> => {
     const authorization = createAuthorization(token);
@@ -103,4 +97,8 @@ export const postApplicationImage = async (file: File, token: string): Promise<C
         error = await toWiwaError(response);
     }
     return {data: resultData, error};
+}
+
+export const deleteApplicationImage = async (fileName: string, token: string): Promise<WiwaError | undefined> => {
+    return deleteData(PATH_APPLICATION_IMAGES + '/' + fileName, token);
 }

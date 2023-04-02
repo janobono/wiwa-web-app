@@ -12,14 +12,17 @@
     "change-user-details": "Change user details",
     "config": "Configuration",
     "delete": "Delete",
+    "detail": "Detail",
     "edit": "Edit",
     "first": "First",
     "home": "Home page",
     "last": "Last",
     "new": "New",
     "next": "Next",
+    "no": "No",
     "ok": "OK",
     "previous": "Previous",
+    "remove": "Remove",
     "resend": "Resend",
     "save": "Save",
     "switch-locale": "Switch locale to Slovak",
@@ -259,6 +262,9 @@
           },
           "error": "Application image could not be added."
         },
+        "application-image-details": {
+          "title": "Application image"
+        },
         "change-application-info": {
           "title": "Change application info",
           "error": "Application info could not be changed."
@@ -281,7 +287,7 @@
             "logo": {
               "label": "Logo picture",
               "validation-message1": "Logo picture is required",
-              "validation-message2": "Has to be JPG or PNG image"
+              "validation-message2": "Has to be PNG image"
             }
           },
           "error": "Logo could not be changed."
@@ -300,7 +306,8 @@
         }
       },
       "application-images": {
-        "title": "Application images"
+        "title": "Application images",
+        "delete-confirmation-question": "Do you really want to delete the application image?"
       },
       "company-info": {
         "title": "Contact info",

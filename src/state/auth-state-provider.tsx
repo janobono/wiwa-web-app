@@ -1,6 +1,19 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import decode, { JwtPayload } from 'jwt-decode';
+
 import { authClient, ClientResponse, WiwaError } from '../client';
+import {
+    AuthenticationResponse,
+    ChangeEmailRequest,
+    ChangePasswordRequest,
+    ChangeUserDetailsRequest,
+    ConfirmationRequest,
+    ResendConfirmationRequest,
+    ResetPasswordRequest,
+    SignInRequest,
+    SignUpRequest
+} from '../client/model';
+
 import { useConfigState } from '../state';
 
 const TIMEOUT = 15000;
@@ -28,14 +41,14 @@ interface AuthUser extends JwtPayload {
 export interface AuthState {
     user: AuthUser | undefined,
     token: string | undefined,
-    confirm: (confirmationRequest: authClient.ConfirmationRequest) => Promise<WiwaError | undefined>,
-    changeEmail: (changeEmailRequest: authClient.ChangeEmailRequest) => Promise<WiwaError | undefined>,
-    changePassword: (changePasswordRequest: authClient.ChangePasswordRequest) => Promise<WiwaError | undefined>,
-    changeUserDetails: (changeUserDetailsRequest: authClient.ChangeUserDetailsRequest) => Promise<WiwaError | undefined>,
-    resendConfirmation: (resendConfirmationRequest: authClient.ResendConfirmationRequest) => Promise<WiwaError | undefined>,
-    resetPassword: (resetPasswordRequest: authClient.ResetPasswordRequest) => Promise<WiwaError | undefined>,
-    signIn: (signInRequest: authClient.SignInRequest) => Promise<WiwaError | undefined>,
-    signUp: (signUpRequest: authClient.SignUpRequest) => Promise<WiwaError | undefined>,
+    confirm: (confirmationRequest: ConfirmationRequest) => Promise<WiwaError | undefined>,
+    changeEmail: (changeEmailRequest: ChangeEmailRequest) => Promise<WiwaError | undefined>,
+    changePassword: (changePasswordRequest: ChangePasswordRequest) => Promise<WiwaError | undefined>,
+    changeUserDetails: (changeUserDetailsRequest: ChangeUserDetailsRequest) => Promise<WiwaError | undefined>,
+    resendConfirmation: (resendConfirmationRequest: ResendConfirmationRequest) => Promise<WiwaError | undefined>,
+    resetPassword: (resetPasswordRequest: ResetPasswordRequest) => Promise<WiwaError | undefined>,
+    signIn: (signInRequest: SignInRequest) => Promise<WiwaError | undefined>,
+    signUp: (signUpRequest: SignUpRequest) => Promise<WiwaError | undefined>,
     refresh: () => Promise<WiwaError | undefined>,
     signOut: () => Promise<void>
 }
@@ -46,7 +59,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
     const configState = useConfigState();
 
     const firstRun = useRef(true);
-    const [authenticationResponse, setAuthenticationResponse] = useState<authClient.AuthenticationResponse>();
+    const [authenticationResponse, setAuthenticationResponse] = useState<AuthenticationResponse>();
     const [user, setUser] = useState<AuthUser>();
     const [token, setToken] = useState<string>();
 
@@ -68,13 +81,13 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
         setToken(authenticationResponse?.token);
     }, [authenticationResponse]);
 
-    const confirm = async (confirmationRequest: authClient.ConfirmationRequest): Promise<WiwaError | undefined> => {
+    const confirm = async (confirmationRequest: ConfirmationRequest): Promise<WiwaError | undefined> => {
         const clientResponse = await authClient.confirm(confirmationRequest);
         handleAuthenticationResponse(clientResponse);
         return clientResponse.error;
     }
 
-    const changeEmail = async (changeEmailRequest: authClient.ChangeEmailRequest): Promise<WiwaError | undefined> => {
+    const changeEmail = async (changeEmailRequest: ChangeEmailRequest): Promise<WiwaError | undefined> => {
         if (!authenticationResponse) {
             return undefined;
         }
@@ -83,7 +96,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
         return clientResponse.error;
     }
 
-    const changePassword = async (changePasswordRequest: authClient.ChangePasswordRequest): Promise<WiwaError | undefined> => {
+    const changePassword = async (changePasswordRequest: ChangePasswordRequest): Promise<WiwaError | undefined> => {
         if (!authenticationResponse) {
             return undefined;
         }
@@ -92,7 +105,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
         return clientResponse.error;
     }
 
-    const changeUserDetails = async (changeUserDetailsRequest: authClient.ChangeUserDetailsRequest): Promise<WiwaError | undefined> => {
+    const changeUserDetails = async (changeUserDetailsRequest: ChangeUserDetailsRequest): Promise<WiwaError | undefined> => {
         if (!authenticationResponse) {
             return undefined;
         }
@@ -101,7 +114,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
         return clientResponse.error;
     }
 
-    const resendConfirmation = async (resendConfirmationRequest: authClient.ResendConfirmationRequest): Promise<WiwaError | undefined> => {
+    const resendConfirmation = async (resendConfirmationRequest: ResendConfirmationRequest): Promise<WiwaError | undefined> => {
         if (!authenticationResponse) {
             return undefined;
         }
@@ -109,18 +122,18 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
         return clientResponse.error;
     }
 
-    const resetPassword = async (resetPasswordRequest: authClient.ResetPasswordRequest): Promise<WiwaError | undefined> => {
+    const resetPassword = async (resetPasswordRequest: ResetPasswordRequest): Promise<WiwaError | undefined> => {
         const clientResponse = await authClient.resetPassword(resetPasswordRequest);
         return clientResponse.error;
     }
 
-    const signIn = async (signInRequest: authClient.SignInRequest): Promise<WiwaError | undefined> => {
+    const signIn = async (signInRequest: SignInRequest): Promise<WiwaError | undefined> => {
         const clientResponse = await authClient.signIn(signInRequest);
         handleAuthenticationResponse(clientResponse);
         return clientResponse.error;
     }
 
-    const signUp = async (signUpRequest: authClient.SignUpRequest): Promise<WiwaError | undefined> => {
+    const signUp = async (signUpRequest: SignUpRequest): Promise<WiwaError | undefined> => {
         const clientResponse = await authClient.signUp(signUpRequest);
         handleAuthenticationResponse(clientResponse);
         return clientResponse.error;
@@ -145,7 +158,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
         return undefined;
     }
 
-    const handleAuthenticationResponse = (clientResponse: ClientResponse<authClient.AuthenticationResponse>) => {
+    const handleAuthenticationResponse = (clientResponse: ClientResponse<AuthenticationResponse>) => {
         if (clientResponse.data) {
             const _authUser = decode<AuthUser>(clientResponse.data.token);
             if (_authUser) {

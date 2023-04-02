@@ -92,17 +92,28 @@ const UiConfigPage: React.FC = () => {
 
 
             {showLogoDialog &&
-                <ChangeLogoDialog showDialog={showLogoDialog} setShowDialog={setShowLogoDialog}/>
+                <ChangeLogoDialog
+                    showDialog={showLogoDialog}
+                    setShowDialog={setShowLogoDialog}
+                />
             }
             {showTitleDialog &&
-                <ChangeTitleDialog showDialog={showTitleDialog} setShowDialog={setShowTitleDialog}/>
+                <ChangeTitleDialog
+                    showDialog={showTitleDialog}
+                    setShowDialog={setShowTitleDialog}
+                />
             }
             {showWelcomeTextDialog &&
-                <ChangeWelcomeTextDialog showDialog={showWelcomeTextDialog} setShowDialog={setShowWelcomeTextDialog}/>
+                <ChangeWelcomeTextDialog
+                    showDialog={showWelcomeTextDialog}
+                    setShowDialog={setShowWelcomeTextDialog}
+                />
             }
             {showApplicationInfoDialog &&
-                <ChangeApplicationInfoDialog showDialog={showApplicationInfoDialog}
-                                             setShowDialog={setShowApplicationInfoDialog}/>
+                <ChangeApplicationInfoDialog
+                    showDialog={showApplicationInfoDialog}
+                    setShowDialog={setShowApplicationInfoDialog}
+                />
             }
         </>
     );

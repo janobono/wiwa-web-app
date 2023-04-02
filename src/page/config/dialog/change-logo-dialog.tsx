@@ -98,7 +98,7 @@ const ChangeLogoDialog: React.FC<ChangeLogoDialogProps> = (props) => {
                                                     setLogoMessage(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_LOGO.FORM.LOGO.VALIDATION_MESSAGE1).toString());
                                                     return;
                                                 }
-                                                if (!(file.type === 'image/jpeg' || file.type === 'image/png')) {
+                                                if (file.type !== 'image/png') {
                                                     setLogo(undefined);
                                                     setLogoValid(false);
                                                     setLogoMessage(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_LOGO.FORM.LOGO.VALIDATION_MESSAGE2).toString());

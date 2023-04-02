@@ -1,4 +1,5 @@
 export { default as AddApplicationImageDialog } from './add-application-image-dialog';
+export { default as ApplicationImageDetailsDialog } from './application-image-details-dialog';
 export { default as ChangeApplicationInfoDialog } from './change-application-info-dialog';
 export { default as ChangeCompanyInfoDialog } from './change-company-info-dialog';
 export { default as ChangeLogoDialog } from './change-logo-dialog';
