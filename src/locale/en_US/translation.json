@@ -25,10 +25,11 @@
     "remove": "Remove",
     "resend": "Resend",
     "save": "Save",
-    "switch-locale": "Switch locale to Slovak",
+    "select": "Select",
     "sign-in": "Sign in",
     "sign-out": "Sign out",
     "sign-up": "Sign up",
+    "switch-locale": "Switch locale to Slovak",
     "user-account": "User account",
     "users": "Users",
     "yes": "Yes"
@@ -299,6 +300,15 @@
         "change-working-hours": {
           "title": "Change working hours",
           "error": "Working hours text could not be changed."
+        },
+        "edit-application-info-item": {
+          "title": "Application info item",
+          "item-title": "Title",
+          "item-text": "Text",
+          "item-file-name": "Application image"
+        },
+        "select-application-image": {
+          "title": "Select application image"
         }
       },
       "application-images": {

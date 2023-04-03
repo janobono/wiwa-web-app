@@ -310,11 +310,11 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                             htmlFor="state">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.STATE)}
                         </WiwaLabel>
                         <div id="state" className="grid grid-cols-1">
-                            {state.items.map((item, index) =>
+                            {languages.map((language, index) =>
                                 <LocaleDataInput
                                     key={index}
                                     name="state"
-                                    language={item.language}
+                                    language={language}
                                     data={state}
                                     setData={setState}
                                 />
@@ -327,7 +327,7 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                             className="w-full p-0.5"
                             id="phone"
                             name="phone"
-                            type="phone"
+                            type="text"
                             value={phone}
                             onChange={event => setPhone(event.target.value)}
                         />
@@ -350,7 +350,7 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                             className="w-full p-0.5"
                             id="businessId"
                             name="businessId"
-                            type="businessId"
+                            type="text"
                             value={businessId}
                             onChange={event => setBusinessId(event.target.value)}
                         />
@@ -361,7 +361,7 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                             className="w-full p-0.5"
                             id="taxId"
                             name="taxId"
-                            type="taxId"
+                            type="text"
                             value={taxId}
                             onChange={event => setTaxId(event.target.value)}
                         />
@@ -373,7 +373,7 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                             className="w-full p-0.5"
                             id="vatRegNo"
                             name="vatRegNo"
-                            type="vatRegNo"
+                            type="text"
                             value={vatRegNo}
                             onChange={event => setVatRegNo(event.target.value)}
                         />
@@ -383,11 +383,11 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                             htmlFor="commercialRegisterInfo">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.COMMERCIAL_REGISTER_INFO)}
                         </WiwaLabel>
                         <div id="commercialRegisterInfo" className="grid grid-cols-1">
-                            {commercialRegisterInfo.items.map((item, index) =>
+                            {languages.map((language, index) =>
                                 <LocaleDataArea
                                     key={index}
                                     name="commercialRegisterInfo"
-                                    language={item.language}
+                                    language={language}
                                     data={commercialRegisterInfo}
                                     setData={setCommercialRegisterInfo}
                                 />

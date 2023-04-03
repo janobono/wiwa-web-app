@@ -6,3 +6,4 @@ export { default as ChangeMarkdownDialog } from './change-markdown-dialog';
 export { default as ChangeTitleDialog } from './change-title-dialog';
 export { default as ChangeWelcomeTextDialog } from './change-welcome-text-dialog';
 export { default as EditApplicationInfoItemDialog } from './edit-application-info-item-dialog';
+export { default as SelectApplicationImageDialog } from './select-application-image-dialog';

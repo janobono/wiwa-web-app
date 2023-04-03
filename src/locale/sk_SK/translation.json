@@ -25,10 +25,11 @@
     "remove": "Odstrániť",
     "resend": "Preposlať",
     "save": "Uložiť",
-    "switch-locale": "Prepnúť lokalizáciu na Anglickú",
+    "select": "Vybrať",
     "sign-in": "Prihlásiť",
     "sign-out": "Odhlásiť",
     "sign-up": "Zaregistrovať",
+    "switch-locale": "Prepnúť lokalizáciu na Anglickú",
     "user-account": "Používateľský účet",
     "users": "Používateľia",
     "yes": "Áno"
@@ -299,6 +300,15 @@
         "change-working-hours": {
           "title": "Zmeniť otváracie hodiny",
           "error": "Nepodarilo sa zmeniť otváracie hodiny."
+        },
+        "edit-application-info-item": {
+          "title": "Položka informácií o aplikácii",
+          "item-title": "Titulka",
+          "item-text": "Text",
+          "item-file-name": "Aplikačný obrázok"
+        },
+        "select-application-image": {
+          "title": "Vybrať aplikačný obrázok"
         }
       },
       "application-images": {

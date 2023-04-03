@@ -3,7 +3,7 @@ import { Edit, FileMinus, FilePlus } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 
 import { uiClient } from '../../client';
-import { ApplicationInfo, ApplicationInfoItem, LocaleData, LocaleDataItem } from '../../client/model';
+import { ApplicationInfo, ApplicationInfoItem, LocaleData } from '../../client/model';
 import { getLanguages, RESOURCE, toLanguage, toLocale } from '../../locale';
 import { useConfigState, useUiState } from '../../state';
 
@@ -62,30 +62,68 @@ const UiConfigPage: React.FC = () => {
         }
     }
 
-    const getApplicationInfoItems = (): LocaleDataItem<ApplicationInfoItem | undefined>[] => {
+    const getSelectedApplicationInfoItems = (): LocaleData<ApplicationInfoItem> | undefined => {
         if (selectedApplicationInfoItemIndex === undefined) {
-            return [];
+            return undefined;
         }
-        return languages.map(language => {
-            const applicationInfoItem = applicationInfoData.items.find(value => value.language === language)?.data.items[selectedApplicationInfoItemIndex];
-            return {
-                language,
-                data: applicationInfoItem
+        const items = languages.map(language => {
+            let item = applicationInfoData.items.find(value => value.language === language)?.data.items[selectedApplicationInfoItemIndex];
+            if (!item) {
+                item = {title: '', text: '', imageFileName: ''};
             }
+            return {language, data: item};
         });
+        return {items};
     }
 
-    const addApplicationInfoItemHandler = (applicationInfoItems: LocaleDataItem<ApplicationInfoItem>[]) => {
-        // TODO
+    const addApplicationInfoItemHandler = (applicationInfoItems: LocaleData<ApplicationInfoItem>) => {
+        const newItems = applicationInfoData.items.map(
+            localeDataItem => {
+                const newLocaleDataItem = applicationInfoItems.items
+                    .filter(dataItem => dataItem.language === localeDataItem.language)
+                    .map(dataItem => dataItem.data)[0];
+
+                return {
+                    language: localeDataItem.language,
+                    data: {items: [...localeDataItem.data.items, newLocaleDataItem]}
+                };
+            });
+        uiState?.changeApplicationInfo({items: newItems});
+        setApplicationInfoData({items: newItems});
     }
 
-    const editApplicationInfoItemHandler = (applicationInfoItems: LocaleDataItem<ApplicationInfoItem>[]) => {
-        // TODO
+    const editApplicationInfoItemHandler = (applicationInfoItems: LocaleData<ApplicationInfoItem>) => {
+        const newItems = applicationInfoData.items.map(
+            localeDataItem => {
+                const newLocaleDataItem = applicationInfoItems.items
+                    .filter(dataItem => dataItem.language === localeDataItem.language)
+                    .map(dataItem => dataItem.data)[0];
+
+                const newLocaleDataItems = [...localeDataItem.data.items];
+                if (selectedApplicationInfoItemIndex) {
+                    newLocaleDataItems[selectedApplicationInfoItemIndex] = newLocaleDataItem;
+                }
+
+                return {
+                    language: localeDataItem.language,
+                    data: {items: newLocaleDataItems}
+                };
+            });
+        uiState?.changeApplicationInfo({items: newItems});
+        setApplicationInfoData({items: newItems});
     }
 
     const deleteApplicationInfoItemHandler = (dialogAnswer: DialogAnswer) => {
         if (dialogAnswer == DialogAnswer.YES && selectedApplicationInfoItemIndex !== undefined) {
-            // TODO
+            const newItems = applicationInfoData.items.map(
+                localeDataItem => {
+                    return {
+                        language: localeDataItem.language,
+                        data: {items: localeDataItem.data.items.filter((value, index) => index !== selectedApplicationInfoItemIndex)}
+                    };
+                });
+            uiState?.changeApplicationInfo({items: newItems});
+            setApplicationInfoData({items: newItems});
         }
     }
 
@@ -218,7 +256,7 @@ const UiConfigPage: React.FC = () => {
                 <EditApplicationInfoItemDialog
                     showDialog={showEditApplicationInfoItem}
                     setShowDialog={setShowEditApplicationInfoItem}
-                    applicationInfoItems={getApplicationInfoItems()}
+                    applicationInfoItems={getSelectedApplicationInfoItems()}
                     onApplicationInfoItemsHandler={editApplicationInfoItemHandler}
                 />
             }

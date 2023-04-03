@@ -53,10 +53,11 @@ export const RESOURCE = {
             REMOVE: 'action.remove',
             RESEND: 'action.resend',
             SAVE: 'action.save',
-            SWITCH_LOCALE: 'action.switch-locale',
+            SELECT: 'action.select',
             SIGN_IN: 'action.sign-in',
             SIGN_OUT: 'action.sign-out',
             SIGN_UP: 'action.sign-up',
+            SWITCH_LOCALE: 'action.switch-locale',
             USER_ACCOUNT: 'action.user-account',
             USERS: 'action.users',
             YES: 'action.yes'
@@ -333,7 +334,13 @@ export const RESOURCE = {
                         ERROR: 'page.config.dialog.change-working-hours.error'
                     },
                     EDIT_APPLICATION_INFO_ITEM: {
-                        TITLE: 'page.config.dialog.edit-application-info-item.title'
+                        TITLE: 'page.config.dialog.edit-application-info-item.title',
+                        ITEM_TITLE: 'page.config.dialog.edit-application-info-item.item-title',
+                        ITEM_TEXT: 'page.config.dialog.edit-application-info-item.item-text',
+                        ITEM_FILE_NAME: 'page.config.dialog.edit-application-info-item.item-file-name'
+                    },
+                    SELECT_APPLICATION_IMAGE: {
+                        TITLE: 'page.config.dialog.select-application-image.title'
                     }
                 },
                 APPLICATION_IMAGES: {
