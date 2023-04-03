@@ -100,7 +100,7 @@ const UiConfigPage: React.FC = () => {
                     .map(dataItem => dataItem.data)[0];
 
                 const newLocaleDataItems = [...localeDataItem.data.items];
-                if (selectedApplicationInfoItemIndex) {
+                if (selectedApplicationInfoItemIndex !== undefined) {
                     newLocaleDataItems[selectedApplicationInfoItemIndex] = newLocaleDataItem;
                 }
 
