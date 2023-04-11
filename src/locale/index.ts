@@ -53,6 +53,7 @@ export const RESOURCE = {
             REMOVE: 'action.remove',
             RESEND: 'action.resend',
             SAVE: 'action.save',
+            SEARCH: 'action.search',
             SELECT: 'action.select',
             SIGN_IN: 'action.sign-in',
             SIGN_OUT: 'action.sign-out',
@@ -106,6 +107,21 @@ export const RESOURCE = {
                     VALIDATION_MESSAGE1: 'component.ui.wiwa-new-password.validation-message1',
                     VALIDATION_MESSAGE2: 'component.ui.wiwa-new-password.validation-message2',
                     VALIDATION_MESSAGE3: 'component.ui.wiwa-new-password.validation-message3'
+                }
+            },
+            USER: {
+                USER_CARD: {
+                    USERNAME: 'component.user.user-card.username',
+                    EMAIL: 'component.user.user-card.email',
+                    TITLE_BEFORE: 'component.user.user-card.title-before',
+                    FIRST_NAME: 'component.user.user-card.first-name',
+                    MID_NAME: 'component.user.user-card.mid-name',
+                    LAST_NAME: 'component.user.user-card.last-name',
+                    TITLE_AFTER: 'component.user.user-card.title-after',
+                    GDPR: 'component.user.user-card.gdpr',
+                    CONFIRMED: 'component.user.user-card.confirmed',
+                    ENABLED: 'component.user.user-card.enabled',
+                    AUTHORITIES: 'component.user.user-card.authorities'
                 }
             }
         },

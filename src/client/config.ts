@@ -1,25 +1,37 @@
 import {
-    addPageQueryParams,
     ClientResponse,
     createAuthorization,
     deleteData,
     getData,
-    PageQueryParams,
+    Pageable,
     postData,
+    setPageableQueryParams,
     toWiwaError,
     WiwaError
 } from './index';
 import { ApplicationImage, ApplicationInfo, CompanyInfo, LocaleData, Page } from './model';
 
-const PATH_LOGO = '/api/config/logo';
-const PATH_TITLE = '/api/config/title';
-const PATH_WELCOME_TEXT = '/api/config/welcome-text';
-const PATH_APPLICATION_INFO = '/api/config/application-info';
-const PATH_COMPANY_INFO = '/api/config/company-info';
-const PATH_COOKIES_INFO = '/api/config/cookies-info';
-const PATH_GDPR_INFO = '/api/config/gdpr-info';
 const PATH_WORKING_HOURS = '/api/config/working-hours';
+const PATH_WELCOME_TEXT = '/api/config/welcome-text';
+const PATH_TITLE = '/api/config/title';
+const PATH_LOGO = '/api/config/logo';
+const PATH_GDPR_INFO = '/api/config/gdpr-info';
+const PATH_COOKIES_INFO = '/api/config/cookies-info';
+const PATH_COMPANY_INFO = '/api/config/company-info';
+const PATH_APPLICATION_INFO = '/api/config/application-info';
 const PATH_APPLICATION_IMAGES = '/api/config/application-images';
+
+export const postWorkingHours = async (workingHours: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
+    return postData<LocaleData<string>>(PATH_WORKING_HOURS, workingHours, token);
+}
+
+export const postWelcomeText = async (welcomeText: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
+    return postData<LocaleData<string>>(PATH_WELCOME_TEXT, welcomeText, token);
+}
+
+export const postTitle = async (data: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
+    return postData<LocaleData<string>>(PATH_TITLE, data, token);
+}
 
 export const postLogo = async (logo: File, token: string): Promise<ClientResponse<void>> => {
     const authorization = createAuthorization(token);
@@ -42,37 +54,25 @@ export const postLogo = async (logo: File, token: string): Promise<ClientRespons
     return {data: undefined, error};
 }
 
-export const postTitle = async (data: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
-    return postData<LocaleData<string>>(PATH_TITLE, data, token);
-}
-
-export const postWelcomeText = async (welcomeText: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
-    return postData<LocaleData<string>>(PATH_WELCOME_TEXT, welcomeText, token);
-}
-
-export const postApplicationInfo = async (applicationInfo: LocaleData<ApplicationInfo>, token: string): Promise<ClientResponse<LocaleData<ApplicationInfo>>> => {
-    return postData<LocaleData<ApplicationInfo>>(PATH_APPLICATION_INFO, applicationInfo, token);
-}
-
-export const postCompanyInfo = async (companyInfo: LocaleData<CompanyInfo>, token: string): Promise<ClientResponse<LocaleData<CompanyInfo>>> => {
-    return postData<LocaleData<CompanyInfo>>(PATH_COMPANY_INFO, companyInfo, token);
+export const postGdprInfo = async (gdprInfo: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
+    return postData<LocaleData<string>>(PATH_GDPR_INFO, gdprInfo, token);
 }
 
 export const postCookiesInfo = async (cookiesInfo: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
     return postData<LocaleData<string>>(PATH_COOKIES_INFO, cookiesInfo, token);
 }
 
-export const postGdprInfo = async (gdprInfo: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
-    return postData<LocaleData<string>>(PATH_GDPR_INFO, gdprInfo, token);
+export const postCompanyInfo = async (companyInfo: LocaleData<CompanyInfo>, token: string): Promise<ClientResponse<LocaleData<CompanyInfo>>> => {
+    return postData<LocaleData<CompanyInfo>>(PATH_COMPANY_INFO, companyInfo, token);
 }
 
-export const postWorkingHours = async (workingHours: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
-    return postData<LocaleData<string>>(PATH_WORKING_HOURS, workingHours, token);
+export const postApplicationInfo = async (applicationInfo: LocaleData<ApplicationInfo>, token: string): Promise<ClientResponse<LocaleData<ApplicationInfo>>> => {
+    return postData<LocaleData<ApplicationInfo>>(PATH_APPLICATION_INFO, applicationInfo, token);
 }
 
-export const getApplicationImages = async (token: string, pageQueryParams?: PageQueryParams): Promise<ClientResponse<Page<ApplicationImage>>> => {
+export const getApplicationImages = async (token: string, pageQueryParams?: Pageable): Promise<ClientResponse<Page<ApplicationImage>>> => {
     const queryParams = new URLSearchParams();
-    addPageQueryParams(queryParams, pageQueryParams);
+    setPageableQueryParams(queryParams, pageQueryParams);
     return getData(PATH_APPLICATION_IMAGES, queryParams, token);
 }
 

@@ -179,7 +179,7 @@ const UiConfigPage: React.FC = () => {
 
                 <div className="container pb-5 mx-auto">
                     <div className="flex flex-col flex-grow border items-center justify-center gap-5 p-5">
-                        <div className="flex flex-row gap-5">
+                        <div className="flex flex-row gap-1">
                             <WiwaButton
                                 title={t(RESOURCE.ACTION.ADD).toString()}
                                 onClick={() => setShowAddApplicationInfoItem(true)}

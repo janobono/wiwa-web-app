@@ -4,6 +4,7 @@ import decode, { JwtPayload } from 'jwt-decode';
 import { authClient, ClientResponse, WiwaError } from '../client';
 import {
     AuthenticationResponse,
+    Authority,
     ChangeEmailRequest,
     ChangePasswordRequest,
     ChangeUserDetailsRequest,
@@ -19,11 +20,6 @@ import { useConfigState } from '../state';
 const TIMEOUT = 15000;
 
 const TOKEN = 'TOKEN';
-
-const W_ADMIN = 'w-admin';
-const W_MANAGER = 'w-manager';
-const W_EMPLOYEE = 'w-employee';
-const W_CUSTOMER = 'w-customer';
 
 interface AuthUser extends JwtPayload {
     id: string,
@@ -209,20 +205,20 @@ const hasAnyAuthority = (user: AuthUser | undefined, ...authorities: string[]) =
 };
 
 export const hasAdminAuthority = (user: AuthUser | undefined) => {
-    return hasAnyAuthority(user, W_ADMIN);
+    return hasAnyAuthority(user, Authority.W_ADMIN);
 };
 
 export const hasManagerAuthority = (user: AuthUser | undefined) => {
-    return hasAnyAuthority(user, W_ADMIN, W_MANAGER);
+    return hasAnyAuthority(user, Authority.W_ADMIN, Authority.W_MANAGER);
 };
 
 export const hasEmployeeAuthority = (user: AuthUser | undefined) => {
-    return hasAnyAuthority(user, W_ADMIN, W_MANAGER, W_EMPLOYEE);
+    return hasAnyAuthority(user, Authority.W_ADMIN, Authority.W_MANAGER, Authority.W_EMPLOYEE);
 };
 
 export const hasCustomerAuthority = (user: AuthUser | undefined) => {
     if (user) {
-        return hasAnyAuthority(user, W_ADMIN, W_MANAGER, W_EMPLOYEE, W_CUSTOMER) && user.confirmed;
+        return hasAnyAuthority(user, Authority.W_ADMIN, Authority.W_MANAGER, Authority.W_EMPLOYEE, Authority.W_CUSTOMER) && user.confirmed;
     }
     return false;
 };

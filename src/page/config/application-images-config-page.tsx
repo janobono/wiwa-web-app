@@ -49,7 +49,7 @@ const ApplicationImagesConfigPage: React.FC = () => {
         <>
             <div className="w-full">
                 <div className="container py-5 mx-auto">
-                    <div className="flex flex-row gap-5 mb-5">
+                    <div className="flex flex-row gap-1 mb-5">
                         <WiwaButton
                             title={t(RESOURCE.ACTION.ADD).toString()}
                             onClick={() => setShowAddApplicationImageDialog(true)}

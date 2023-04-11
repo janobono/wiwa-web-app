@@ -3,6 +3,7 @@ export * as authClient from './auth';
 export * as captchaClient from './captcha';
 export * as configClient from './config';
 export * as uiClient from './ui';
+export * as userClient from './user';
 
 export const APP_IMAGES_PATH_PREFIX = '/api/ui/application-images/';
 
@@ -52,13 +53,7 @@ export const toWiwaError = async (response: Response): Promise<WiwaError> => {
     return result;
 }
 
-export const createQueryParams = (locale: string): URLSearchParams => {
-    const queryParams = new URLSearchParams();
-    queryParams.set('locale', locale);
-    return queryParams;
-}
-
-export interface PageQueryParams {
+export interface Pageable {
     page: number,
     size: number,
     sort?: {
@@ -67,12 +62,22 @@ export interface PageQueryParams {
     }
 }
 
-export const addPageQueryParams = (queryParams: URLSearchParams, pageQueryParams?: PageQueryParams) => {
-    if (pageQueryParams) {
-        queryParams.set('page', `${pageQueryParams.page}`);
-        queryParams.set('size', `${pageQueryParams.size}`);
-        if (pageQueryParams.sort) {
-            queryParams.set('sort', `${pageQueryParams.sort.field},${pageQueryParams.sort.asc ? 'ASC' : 'DESC'}`);
+export const setQueryParam = (queryParams: URLSearchParams, name: string, value?: any) => {
+    if (value) {
+        queryParams.set(name, `${value}`);
+    }
+}
+
+export const setLocaleQueryParam = (queryParams: URLSearchParams, locale: string) => {
+    setQueryParam(queryParams, 'locale', locale);
+}
+
+export const setPageableQueryParams = (queryParams: URLSearchParams, pageable?: Pageable) => {
+    if (pageable) {
+        setQueryParam(queryParams, 'page', pageable.page);
+        setQueryParam(queryParams, 'size', pageable.size);
+        if (pageable.sort) {
+            setQueryParam(queryParams, 'sort', `${pageable.sort.field},${pageable.sort.asc ? 'ASC' : 'DESC'}`);
         }
     }
 }
@@ -129,6 +134,46 @@ export const postData = async <T>(path: string, data: any, token?: string): Prom
     const authorization = createAuthorization(token);
     const response = await fetch(path, {
         method: 'POST',
+        headers: {
+            ...authorization,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    let resultData, error;
+    if (response.ok) {
+        resultData = await response.json() as T;
+    } else {
+        error = await toWiwaError(response);
+    }
+    return {data: resultData, error};
+}
+
+export const putData = async <T>(path: string, data: any, token?: string): Promise<ClientResponse<T>> => {
+    const authorization = createAuthorization(token);
+    const response = await fetch(path, {
+        method: 'PUT',
+        headers: {
+            ...authorization,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    let resultData, error;
+    if (response.ok) {
+        resultData = await response.json() as T;
+    } else {
+        error = await toWiwaError(response);
+    }
+    return {data: resultData, error};
+}
+
+export const patchData = async <T>(path: string, data: any, token?: string): Promise<ClientResponse<T>> => {
+    const authorization = createAuthorization(token);
+    const response = await fetch(path, {
+        method: 'PATCH',
         headers: {
             ...authorization,
             'Content-Type': 'application/json'
