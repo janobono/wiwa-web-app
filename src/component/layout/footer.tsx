@@ -83,7 +83,7 @@ const Footer: React.FC = () => {
             </div>
             <div className="py-5 text-sm border-t border-blue-200/90 bg-blue-100/80">
                 <div className="container px-5 m-auto">
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 justify-center">
                         <span>© 2022 Copyright:</span>
                         <WiwaLink
                             target="_blank"
