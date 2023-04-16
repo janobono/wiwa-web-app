@@ -140,6 +140,7 @@ const UiConfigPage: React.FC = () => {
                                 alt={t(RESOURCE.PAGE.CONFIG.UI.LOGO).toString()}
                             />
                             <WiwaButton
+                                size="xs"
                                 title={t(RESOURCE.ACTION.EDIT).toString()}
                                 onClick={() => setShowLogoDialog(true)}
                             >
@@ -153,6 +154,7 @@ const UiConfigPage: React.FC = () => {
                             </div>
 
                             <WiwaButton
+                                size="xs"
                                 title={t(RESOURCE.ACTION.EDIT).toString()}
                                 onClick={() => setShowTitleDialog(true)}
                             >
@@ -169,6 +171,7 @@ const UiConfigPage: React.FC = () => {
                         </div>
 
                         <WiwaButton
+                            size="xs"
                             title={t(RESOURCE.ACTION.EDIT).toString()}
                             onClick={() => setShowWelcomeTextDialog(true)}
                         >
@@ -181,6 +184,7 @@ const UiConfigPage: React.FC = () => {
                     <div className="flex flex-col flex-grow border items-center justify-center gap-5 p-5">
                         <div className="flex flex-row gap-1">
                             <WiwaButton
+                                size="xs"
                                 title={t(RESOURCE.ACTION.ADD).toString()}
                                 onClick={() => setShowAddApplicationInfoItem(true)}
                             >
@@ -188,6 +192,7 @@ const UiConfigPage: React.FC = () => {
                             </WiwaButton>
 
                             <WiwaButton
+                                size="xs"
                                 disabled={selectedApplicationInfoItemIndex === undefined}
                                 title={t(RESOURCE.ACTION.EDIT).toString()}
                                 onClick={() => setShowEditApplicationInfoItem(true)}
@@ -196,6 +201,7 @@ const UiConfigPage: React.FC = () => {
                             </WiwaButton>
 
                             <WiwaButton
+                                size="xs"
                                 disabled={selectedApplicationInfoItemIndex === undefined}
                                 variant="error"
                                 title={t(RESOURCE.ACTION.REMOVE).toString()}

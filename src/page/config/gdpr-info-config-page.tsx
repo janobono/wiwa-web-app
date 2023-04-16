@@ -40,9 +40,10 @@ const GdprInfoConfigPage: React.FC = () => {
 
     return (
         <>
-            <div className="w-full">
+            <div className="w-full min-h-[420px]">
                 <div className="container py-5 mx-auto">
                     <WiwaButton
+                        size="xs"
                         className="mb-5"
                         title={t(RESOURCE.ACTION.EDIT).toString()}
                         onClick={() => setShowMarkdownDataDialog(true)}

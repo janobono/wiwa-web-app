@@ -28,6 +28,7 @@ export const getLanguages = (): string[] => {
 
 export const RESOURCE = {
         CONNECTING: 'connecting',
+        LOADING: 'loading',
         TITLE: 'title',
         PAGE_NOT_FOUND: 'page-not-found',
         UNKNOWN_ERROR: 'unknown-error',
@@ -113,14 +114,8 @@ export const RESOURCE = {
                 USER_CARD: {
                     USERNAME: 'component.user.user-card.username',
                     EMAIL: 'component.user.user-card.email',
-                    TITLE_BEFORE: 'component.user.user-card.title-before',
                     FIRST_NAME: 'component.user.user-card.first-name',
-                    MID_NAME: 'component.user.user-card.mid-name',
                     LAST_NAME: 'component.user.user-card.last-name',
-                    TITLE_AFTER: 'component.user.user-card.title-after',
-                    GDPR: 'component.user.user-card.gdpr',
-                    CONFIRMED: 'component.user.user-card.confirmed',
-                    ENABLED: 'component.user.user-card.enabled',
                     AUTHORITIES: 'component.user.user-card.authorities'
                 }
             }

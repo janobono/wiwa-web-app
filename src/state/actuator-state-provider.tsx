@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 import { actuatorClient, ClientResponse } from '../client';
 import { HealthStatus } from '../client/model';
 
-const TIMEOUT = 15000;
+const TIMEOUT = 300000;
 
 export interface ActuatorState {
     up: boolean

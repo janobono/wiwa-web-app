@@ -35,6 +35,7 @@ interface AuthUser extends JwtPayload {
 }
 
 export interface AuthState {
+    isUserLogged: boolean,
     user?: AuthUser,
     token?: string,
     confirm: (confirmationRequest: ConfirmationRequest) => Promise<WiwaError | undefined>,
@@ -56,6 +57,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
 
     const firstRun = useRef(true);
     const [authenticationResponse, setAuthenticationResponse] = useState<AuthenticationResponse>();
+    const [isUserLogged, setUserLogged] = useState(false);
     const [user, setUser] = useState<AuthUser>();
     const [token, setToken] = useState<string>();
 
@@ -65,7 +67,7 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
             setInterval(async () => {
                 if (user?.exp) {
                     if (Date.now() - TIMEOUT > user.exp * 1000) {
-                        refresh();
+                        refresh().then(data => data && console.log(data));
                     }
                 }
             }, TIMEOUT);
@@ -163,15 +165,18 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
                 }
                 setAuthenticationResponse(clientResponse.data);
                 setUser(_authUser);
+                setUserLogged(true);
                 return;
             }
         }
+        setUserLogged(false);
     }
 
     return (
         <authStateContext.Provider
             value={
                 {
+                    isUserLogged,
                     user,
                     token,
                     confirm,

@@ -51,6 +51,7 @@ const ApplicationImagesConfigPage: React.FC = () => {
                 <div className="container py-5 mx-auto">
                     <div className="flex flex-row gap-1 mb-5">
                         <WiwaButton
+                            size="xs"
                             title={t(RESOURCE.ACTION.ADD).toString()}
                             onClick={() => setShowAddApplicationImageDialog(true)}
                         >
@@ -58,6 +59,7 @@ const ApplicationImagesConfigPage: React.FC = () => {
                         </WiwaButton>
 
                         <WiwaButton
+                            size="xs"
                             disabled={selectedApplicationImage === undefined}
                             title={t(RESOURCE.ACTION.DETAIL).toString()}
                             onClick={() => setShowApplicationImageDetailsDialog(true)}
@@ -66,6 +68,7 @@ const ApplicationImagesConfigPage: React.FC = () => {
                         </WiwaButton>
 
                         <WiwaButton
+                            size="xs"
                             disabled={selectedApplicationImage === undefined}
                             variant="error"
                             title={t(RESOURCE.ACTION.REMOVE).toString()}
@@ -74,7 +77,7 @@ const ApplicationImagesConfigPage: React.FC = () => {
                             <FileMinus size="18"/>
                         </WiwaButton>
                     </div>
-                    <div className="w-full">
+                    <div className="w-full min-h-[420px]">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
                             {applicationImages.map(applicationImage =>
                                 <ApplicationImageCard

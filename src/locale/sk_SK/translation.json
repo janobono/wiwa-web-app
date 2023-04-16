@@ -1,5 +1,6 @@
 {
   "connecting": "Pripája sa...",
+  "loading": "Načítavam...",
   "title": "Wiwa",
   "page-not-found": "404 | Nenájdené",
   "unknown-error": "Vyskytla sa neznáma chyba. Kontaktujte správcu systému.",
@@ -79,6 +80,15 @@
         "validation-message1": "Vyžaduje sa heslo",
         "validation-message2": "Vyžaduje sa potvrdenie hesla",
         "validation-message3": "Potvrdenie hesla musí byť zhodné s heslom"
+      }
+    },
+    "user": {
+      "user-card": {
+        "username": "Používateľské meno",
+        "email": "Email",
+        "first-name": "Meno",
+        "last-name": "Priezvisko",
+        "authorities": "Povolenia"
       }
     }
   },
@@ -262,7 +272,7 @@
               "validation-message2": "Musí to byť obrázok vo formáte JPG alebo PNG"
             }
           },
-          "error": "Application image could not be added."
+          "error": "Nepodarilo sa pridať aplikačný obrázok."
         },
         "application-image-details": {
           "title": "Aplikačný obrázok"

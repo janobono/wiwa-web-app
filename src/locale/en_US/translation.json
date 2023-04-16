@@ -1,5 +1,6 @@
 {
   "connecting": "Connecting...",
+  "loading": "Loading...",
   "title": "Wiwa",
   "page-not-found": "404 | Not found",
   "unknown-error": "An unknown error occurred. Please contact system administrator.",
@@ -79,6 +80,15 @@
         "validation-message1": "Password is required",
         "validation-message2": "Confirmation is required",
         "validation-message3": "Confirmation must match the password"
+      }
+    },
+    "user": {
+      "user-card": {
+        "username": "Username",
+        "email": "Email",
+        "first-name": "First name",
+        "last-name": "Last name",
+        "authorities": "Authorities"
       }
     }
   },

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { RESOURCE } from './locale';
@@ -34,52 +34,15 @@ const App: React.FC = () => {
     const {t} = useTranslation();
     const actuatorState = useActuatorState();
     const authState = useAuthState();
-    const uiState = useUiState();
 
     useEffect(() => {
-        document.title = uiState?.title ? uiState.title : t(RESOURCE.TITLE)
-    }, [uiState?.title]);
+        authState?.refresh();
+    }, [actuatorState?.up]);
 
     return (
         actuatorState?.up ?
             <BrowserRouter>
-                <Layout>
-                    <Routes>
-                        <Route path="/" element={<HomePage/>}/>
-                        <Route path="/auth">
-                            <Route path="confirm/:token" element={<ConfirmPage/>}/>
-                            <Route path="reset-password" element={<ResetPasswordPage/>}/>
-                            <Route path="sign-in" element={<SignInPage/>}/>
-                            <Route path="sign-up" element={<SignUpPage/>}/>
-                            <Route path="user-account" element={<UserAccountPage/>}/>
-                        </Route>
-                        <Route path="/ui">
-                            <Route path="contact-info" element={<ContactInfoPage/>}/>
-                            <Route path="cookies-info" element={<CookiesInfoPage/>}/>
-                            <Route path="gdpr-info" element={<GdprInfoPage/>}/>
-                        </Route>
-                        {hasManagerAuthority(authState?.user) &&
-                            <>
-                                <Route path="/config" element={<ConfigPage/>}>
-                                    <Route path="application-images" element={<ApplicationImagesConfigPage/>}/>
-                                    <Route path="ui" element={<UiConfigPage/>}/>
-                                    <Route path="company-info" element={<CompanyInfoConfigPage/>}/>
-                                    <Route path="cookies-info" element={<CookiesInfoConfigPage/>}/>
-                                    <Route path="gdpr-info" element={<GdprInfoConfigPage/>}/>
-                                    <Route path="working-hours" element={<WorkingHoursConfigPage/>}/>
-                                </Route>
-                                <Route path="/users" element={<UsersPage/>}/>
-                            </>
-                        }
-                        {hasEmployeeAuthority(authState?.user) &&
-                            <></>
-                        }
-                        {hasCustomerAuthority(authState?.user) &&
-                            <></>
-                        }
-                        <Route path="*" element={<NotFoundPage/>}/>
-                    </Routes>
-                </Layout>
+                <AppContent/>
             </BrowserRouter>
             :
             <div className="flex gap-5 w-full h-screen items-center justify-center">
@@ -90,3 +53,60 @@ const App: React.FC = () => {
 }
 
 export default App;
+
+const AppContent: React.FC = () => {
+    const navigate = useNavigate();
+    const {t} = useTranslation();
+    const authState = useAuthState();
+    const uiState = useUiState();
+
+    useEffect(() => {
+        if (!authState?.isUserLogged) {
+            navigate('/');
+        }
+    }, [authState?.isUserLogged]);
+
+    useEffect(() => {
+        document.title = uiState?.title ? uiState.title : t(RESOURCE.TITLE)
+    }, [uiState?.title]);
+
+    return (
+        <Layout>
+            <Routes>
+                <Route path="/" element={<HomePage/>}/>
+                <Route path="/auth">
+                    <Route path="confirm/:token" element={<ConfirmPage/>}/>
+                    <Route path="reset-password" element={<ResetPasswordPage/>}/>
+                    <Route path="sign-in" element={<SignInPage/>}/>
+                    <Route path="sign-up" element={<SignUpPage/>}/>
+                    <Route path="user-account" element={<UserAccountPage/>}/>
+                </Route>
+                <Route path="/ui">
+                    <Route path="contact-info" element={<ContactInfoPage/>}/>
+                    <Route path="cookies-info" element={<CookiesInfoPage/>}/>
+                    <Route path="gdpr-info" element={<GdprInfoPage/>}/>
+                </Route>
+                {hasManagerAuthority(authState?.user) &&
+                    <>
+                        <Route path="/config" element={<ConfigPage/>}>
+                            <Route path="application-images" element={<ApplicationImagesConfigPage/>}/>
+                            <Route path="ui" element={<UiConfigPage/>}/>
+                            <Route path="company-info" element={<CompanyInfoConfigPage/>}/>
+                            <Route path="cookies-info" element={<CookiesInfoConfigPage/>}/>
+                            <Route path="gdpr-info" element={<GdprInfoConfigPage/>}/>
+                            <Route path="working-hours" element={<WorkingHoursConfigPage/>}/>
+                        </Route>
+                        <Route path="/users" element={<UsersPage/>}/>
+                    </>
+                }
+                {hasEmployeeAuthority(authState?.user) &&
+                    <></>
+                }
+                {hasCustomerAuthority(authState?.user) &&
+                    <></>
+                }
+                <Route path="*" element={<NotFoundPage/>}/>
+            </Routes>
+        </Layout>
+    );
+}

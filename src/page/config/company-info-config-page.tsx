@@ -19,6 +19,7 @@ const CompanyInfoConfigPage: React.FC = () => {
             <div className="w-full">
                 <div className="container py-5 mx-auto">
                     <WiwaButton
+                        size="xs"
                         className="mb-5"
                         title={t(RESOURCE.ACTION.EDIT).toString()}
                         onClick={() => setShowCompanyInfoDialog(true)}
