@@ -22,7 +22,7 @@ export const putUser = async (id: string, userCard: UserCard, token: string): Pr
     return putData<User>(PATH_USERS + `/${id}`, userCard, token);
 }
 
-export const deleteUser = async (id: string, token: string): Promise<WiwaError | undefined> => {
+export const deleteUser = async (id: string, token: string): Promise<ClientResponse<void>> => {
     return deleteData(PATH_USERS + `/${id}`, token);
 }
 

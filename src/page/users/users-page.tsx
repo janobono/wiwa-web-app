@@ -41,7 +41,9 @@ const UsersPageContent: React.FC = () => {
                 size: 9,
                 sort: {field: 'username', asc: true}
             }, searchField);
-            setUsersPage(searchResult as Page<User>);
+            if (searchResult) {
+                setUsersPage(searchResult.data);
+            }
         } finally {
             setLoading(false);
         }

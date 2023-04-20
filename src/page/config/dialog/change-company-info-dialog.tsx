@@ -5,11 +5,18 @@ import { useTranslation } from 'react-i18next';
 import { uiClient } from '../../../client';
 import { CompanyInfo, LocaleData } from '../../../client/model';
 
-import { getLanguages, LOCALE, RESOURCE, toLocale } from '../../../locale';
+import { getLanguages, RESOURCE, toLocale } from '../../../locale';
 import { useUiState } from '../../../state';
 
-import { WiwaButton, WiwaInput, WiwaLabel, WiwaSpinner, WiwaTextArea } from '../../../component/ui';
-import { FlagSk, FlagUs } from '../../../component/ui/icon';
+import {
+    WiwaButton,
+    WiwaInput,
+    WiwaLabel,
+    WiwaLocaleDataArea,
+    WiwaLocaleDataInput,
+    WiwaSpinner,
+    WiwaTextArea
+} from '../../../component/ui';
 
 interface ChangeCompanyInfoDialogProps {
     showDialog: boolean
@@ -61,11 +68,11 @@ const ChangeCompanyInfoDialog: React.FC<ChangeCompanyInfoDialogProps> = (props) 
         setError(undefined);
         try {
             if (isFormValid) {
-                const wiwaError = await uiState?.changeCompanyInfo(companyInfoData);
-                if (wiwaError) {
-                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.ERROR).toString());
-                } else {
+                const clientResponse = await uiState?.changeCompanyInfo(companyInfoData);
+                if (clientResponse !== undefined && clientResponse.data !== undefined) {
                     props.setShowDialog(false);
+                } else {
+                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.ERROR).toString());
                 }
             }
         } finally {
@@ -250,7 +257,7 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                         </WiwaLabel>
                         <div id="name" className="grid grid-cols-1">
                             {languages.map((language, index) =>
-                                <LocaleDataInput
+                                <WiwaLocaleDataInput
                                     key={index}
                                     name="name"
                                     language={language}
@@ -266,7 +273,7 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                         </WiwaLabel>
                         <div id="street" className="grid grid-cols-1">
                             {languages.map((language, index) =>
-                                <LocaleDataInput
+                                <WiwaLocaleDataInput
                                     key={index}
                                     name="street"
                                     language={language}
@@ -282,7 +289,7 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                         </WiwaLabel>
                         <div id="city" className="grid grid-cols-1">
                             {languages.map((language, index) =>
-                                <LocaleDataInput
+                                <WiwaLocaleDataInput
                                     key={index}
                                     name="city"
                                     language={language}
@@ -311,7 +318,7 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                         </WiwaLabel>
                         <div id="state" className="grid grid-cols-1">
                             {languages.map((language, index) =>
-                                <LocaleDataInput
+                                <WiwaLocaleDataInput
                                     key={index}
                                     name="state"
                                     language={language}
@@ -384,7 +391,7 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                         </WiwaLabel>
                         <div id="commercialRegisterInfo" className="grid grid-cols-1">
                             {languages.map((language, index) =>
-                                <LocaleDataArea
+                                <WiwaLocaleDataArea
                                     key={index}
                                     name="commercialRegisterInfo"
                                     language={language}
@@ -414,82 +421,5 @@ const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
                 </>
             }
         </>
-    );
-}
-
-interface LocaleDataInputProps extends PropsWithChildren {
-    name: string,
-    language: string,
-    data: LocaleData<string>,
-    setData: React.Dispatch<React.SetStateAction<LocaleData<string>>>
-}
-
-const LocaleDataInput: React.FC<LocaleDataInputProps> = (props) => {
-    const [value, setValue] = useState('');
-
-    useEffect(() => {
-        const item = props.data?.items.find(item => item.language === props.language);
-        if (item) {
-            setValue(item.data);
-        }
-    }, []);
-
-    useEffect(() => {
-        props.setData((prevState) => {
-                const nextItems = [...prevState.items.filter(item => item.language !== props.language),
-                    {language: props.language, data: value}
-                ];
-                return {items: nextItems};
-            }
-        );
-    }, [value]);
-
-    return (
-        <div className="flex flex-row gap-2 items-center">
-            {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
-            <WiwaInput
-                className="w-full p-0.5"
-                type="text"
-                id={props.name + '_' + props.language}
-                name={props.name + '_' + props.language}
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            />
-        </div>
-    );
-}
-
-const LocaleDataArea: React.FC<LocaleDataInputProps> = (props) => {
-    const [value, setValue] = useState('');
-
-    useEffect(() => {
-        const item = props.data?.items.find(item => item.language === props.language);
-        if (item) {
-            setValue(item.data);
-        }
-    }, []);
-
-    useEffect(() => {
-        props.setData((prevState) => {
-                const nextItems = [...prevState.items.filter(item => item.language !== props.language),
-                    {language: props.language, data: value}
-                ];
-                return {items: nextItems};
-            }
-        );
-    }, [value]);
-
-    return (
-        <div className="flex flex-row gap-2 items-center">
-            {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
-            <WiwaTextArea
-                className="w-full p-0.5"
-                rows={3}
-                id={props.name + '_' + props.language}
-                name={props.name + '_' + props.language}
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            />
-        </div>
     );
 }

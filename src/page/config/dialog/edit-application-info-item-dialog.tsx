@@ -3,10 +3,9 @@ import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApplicationImage, ApplicationInfoItem, LocaleData } from '../../../client/model';
 
-import { getLanguages, LOCALE, RESOURCE, toLocale } from '../../../locale';
+import { getLanguages, RESOURCE } from '../../../locale';
 
-import { WiwaButton, WiwaInput, WiwaLabel, WiwaTextArea } from '../../../component/ui';
-import { FlagSk, FlagUs } from '../../../component/ui/icon';
+import { WiwaButton, WiwaInput, WiwaLabel, WiwaLocaleDataArea, WiwaLocaleDataInput } from '../../../component/ui';
 import { Image } from 'react-feather';
 import { APP_IMAGES_PATH_PREFIX } from '../../../client';
 import { SelectApplicationImageDialog } from './index';
@@ -187,7 +186,7 @@ const ApplicationInfoEditor: React.FC<ApplicationInfoEditorProps> = (props) => {
                         </WiwaLabel>
                         <div id="title" className="grid grid-cols-1">
                             {languages.map((language, index) =>
-                                <LocaleDataInput
+                                <WiwaLocaleDataInput
                                     key={index}
                                     name="title"
                                     language={language}
@@ -203,7 +202,7 @@ const ApplicationInfoEditor: React.FC<ApplicationInfoEditorProps> = (props) => {
                         </WiwaLabel>
                         <div id="text" className="grid grid-cols-1">
                             {languages.map((language, index) =>
-                                <LocaleDataArea
+                                <WiwaLocaleDataArea
                                     key={index}
                                     name="text"
                                     language={language}
@@ -250,82 +249,5 @@ const ApplicationInfoEditor: React.FC<ApplicationInfoEditorProps> = (props) => {
                 </>
             }
         </>
-    );
-}
-
-interface LocaleDataInputProps extends PropsWithChildren {
-    name: string,
-    language: string,
-    data: LocaleData<string>,
-    setData: React.Dispatch<React.SetStateAction<LocaleData<string>>>
-}
-
-const LocaleDataInput: React.FC<LocaleDataInputProps> = (props) => {
-    const [value, setValue] = useState('');
-
-    useEffect(() => {
-        const item = props.data?.items.find(item => item.language === props.language);
-        if (item) {
-            setValue(item.data);
-        }
-    }, []);
-
-    useEffect(() => {
-        props.setData((prevState) => {
-                const nextItems = [...prevState.items.filter(item => item.language !== props.language),
-                    {language: props.language, data: value}
-                ];
-                return {items: nextItems};
-            }
-        );
-    }, [value]);
-
-    return (
-        <div className="flex flex-row gap-2 items-center">
-            {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
-            <WiwaInput
-                className="w-full p-0.5"
-                type="text"
-                id={props.name + '_' + props.language}
-                name={props.name + '_' + props.language}
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            />
-        </div>
-    );
-}
-
-const LocaleDataArea: React.FC<LocaleDataInputProps> = (props) => {
-    const [value, setValue] = useState('');
-
-    useEffect(() => {
-        const item = props.data?.items.find(item => item.language === props.language);
-        if (item) {
-            setValue(item.data);
-        }
-    }, []);
-
-    useEffect(() => {
-        props.setData((prevState) => {
-                const nextItems = [...prevState.items.filter(item => item.language !== props.language),
-                    {language: props.language, data: value}
-                ];
-                return {items: nextItems};
-            }
-        );
-    }, [value]);
-
-    return (
-        <div className="flex flex-row gap-2 items-center">
-            {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
-            <WiwaTextArea
-                className="w-full p-0.5"
-                rows={3}
-                id={props.name + '_' + props.language}
-                name={props.name + '_' + props.language}
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            />
-        </div>
     );
 }

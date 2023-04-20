@@ -40,11 +40,11 @@ const AddApplicationImageDialog: React.FC<AddApplicationImageDialogProps> = (pro
         try {
             if (isFormValid() && applicationImage) {
                 const clientResponse = await uiState?.addApplicationImage(applicationImage);
-                if (!clientResponse || clientResponse?.error || clientResponse.data === undefined) {
-                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.ADD_APPLICATION_IMAGE.ERROR).toString());
-                } else {
+                if (clientResponse !== undefined && clientResponse.data !== undefined) {
                     props.setShowDialog(false);
                     props.onApplicationImageAddHandler(clientResponse.data);
+                } else {
+                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.ADD_APPLICATION_IMAGE.ERROR).toString());
                 }
             }
         } finally {

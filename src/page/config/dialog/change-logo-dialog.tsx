@@ -37,11 +37,11 @@ const ChangeLogoDialog: React.FC<ChangeLogoDialogProps> = (props) => {
         setError(undefined);
         try {
             if (isFormValid() && logo) {
-                const wiwaError = await uiState?.changeLogo(logo);
-                if (wiwaError) {
-                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_LOGO.ERROR).toString());
-                } else {
+                const clientResponse = await uiState?.changeLogo(logo);
+                if (clientResponse !== undefined && clientResponse.error === undefined) {
                     props.setShowDialog(false);
+                } else {
+                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_LOGO.ERROR).toString());
                 }
             }
         } finally {

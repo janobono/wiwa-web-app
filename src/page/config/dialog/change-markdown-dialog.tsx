@@ -2,7 +2,7 @@ import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dialog, Transition } from '@headlessui/react';
 
-import { WiwaError } from '../../../client';
+import { ClientResponse } from '../../../client';
 import { LocaleData } from '../../../client/model';
 
 import { LOCALE, RESOURCE, toLocale } from '../../../locale';
@@ -14,7 +14,7 @@ interface ChangeMarkdownDialogProps {
     title: string,
     errorMessage: string,
     initialData: LocaleData<string>,
-    saveData: (data: LocaleData<string>) => Promise<WiwaError | undefined> | undefined,
+    saveData: (data: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
     showDialog: boolean
     setShowDialog: (showDialog: boolean) => void
 }
@@ -40,11 +40,11 @@ const ChangeMarkdownDialog: React.FC<ChangeMarkdownDialogProps> = (props) => {
         setError(undefined);
         try {
             if (isFormValid) {
-                const wiwaError = await props.saveData(markdownData);
-                if (wiwaError) {
-                    setError(props.errorMessage);
-                } else {
+                const clientResponse = await props.saveData(markdownData);
+                if (clientResponse !== undefined && clientResponse.data !== undefined) {
                     props.setShowDialog(false);
+                } else {
+                    setError(props.errorMessage);
                 }
             }
         } finally {

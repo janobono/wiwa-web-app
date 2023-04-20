@@ -30,7 +30,7 @@ export const signIn = async (signInRequest: SignInRequest): Promise<ClientRespon
     return postData<AuthenticationResponse>(PATH_SIGN_IN, signInRequest);
 }
 
-export const resetPassword = async (resetPasswordRequest: ResetPasswordRequest): Promise<ClientResponse<boolean>> => {
+export const resetPassword = async (resetPasswordRequest: ResetPasswordRequest): Promise<ClientResponse<void>> => {
     const response = await fetch(PATH_RESET_PASSWORD, {
         method: 'POST',
         headers: {
@@ -42,10 +42,10 @@ export const resetPassword = async (resetPasswordRequest: ResetPasswordRequest):
     if (!response.ok) {
         error = await toWiwaError(response);
     }
-    return {data: response.ok, error};
+    return {data: undefined, error};
 }
 
-export const resendConfirmation = async (resendConfirmationRequest: ResendConfirmationRequest, token: string): Promise<ClientResponse<boolean>> => {
+export const resendConfirmation = async (resendConfirmationRequest: ResendConfirmationRequest, token: string): Promise<ClientResponse<void>> => {
     const authorization = createAuthorization(token);
     const response = await fetch(PATH_RESEND_CONFIRMATION, {
         method: 'POST',
@@ -59,7 +59,7 @@ export const resendConfirmation = async (resendConfirmationRequest: ResendConfir
     if (!response.ok) {
         error = await toWiwaError(response);
     }
-    return {data: response.ok, error};
+    return {data: undefined, error};
 }
 
 export const refresh = async (refreshToken: RefreshToken): Promise<ClientResponse<AuthenticationResponse>> => {

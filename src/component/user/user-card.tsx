@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 
 import { Authority, User } from '../../client/model';
 import { RESOURCE } from '../../locale';
-import { PieChart, Settings, ShoppingCart, Tool } from 'react-feather';
+import { UserAuthoritiesComponent } from './index';
 
 interface UserCardProps {
     user: User,
@@ -53,12 +53,7 @@ const UserCard: React.FC<UserCardProps> = (props) => {
                 <div>{props.user.lastName}</div>
 
                 <div className="font-bold">{t(RESOURCE.COMPONENT.USER.USER_CARD.AUTHORITIES)}</div>
-                <div className="grid grid-cols-4 gap-2">
-                    {hasAuthority(props.user, Authority.W_ADMIN) ? <Settings size="18"/> : <div/>}
-                    {hasAuthority(props.user, Authority.W_MANAGER) ? <PieChart size="18"/> : <div/>}
-                    {hasAuthority(props.user, Authority.W_EMPLOYEE) ? <Tool size="18"/> : <div/>}
-                    {hasAuthority(props.user, Authority.W_CUSTOMER) ? <ShoppingCart size="18"/> : <div/>}
-                </div>
+                <UserAuthoritiesComponent authorities={props.user.authorities}/>
             </div>
         </div>
     )

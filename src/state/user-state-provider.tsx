@@ -1,17 +1,17 @@
 import React, { createContext, useContext } from 'react';
 import { useAuthState } from './auth-state-provider';
 import { Authority, Page, User, UserCard } from '../client/model';
-import { Pageable, userClient, WiwaError } from '../client';
+import { ClientResponse, Pageable, userClient } from '../client';
 
 export interface UserState {
-    getUser: (id: string) => Promise<User | WiwaError | undefined>,
-    setUserCard: (id: string, userCard: UserCard) => Promise<User | WiwaError | undefined>,
-    deleteUser: (id: string) => Promise<WiwaError | undefined>,
-    getUsers: (pageable?: Pageable, searchField?: string, username?: string, email?: string) => Promise<Page<User> | WiwaError | undefined>,
-    addUser: (user: User) => Promise<User | WiwaError | undefined>,
-    setUserEnabled: (id: string, enabled: boolean) => Promise<User | WiwaError | undefined>,
-    setUserConfirmed: (id: string, confirmed: boolean) => Promise<User | WiwaError | undefined>,
-    setUserAuthorities: (id: string, authorities: Authority[]) => Promise<User | WiwaError | undefined>
+    getUser: (id: string) => Promise<ClientResponse<User> | undefined>,
+    setUserCard: (id: string, userCard: UserCard) => Promise<ClientResponse<User> | undefined>,
+    deleteUser: (id: string) => Promise<ClientResponse<void> | undefined>,
+    getUsers: (pageable?: Pageable, searchField?: string, username?: string, email?: string) => Promise<ClientResponse<Page<User>> | undefined>,
+    addUser: (user: User) => Promise<ClientResponse<User> | undefined>,
+    setUserEnabled: (id: string, enabled: boolean) => Promise<ClientResponse<User> | undefined>,
+    setUserConfirmed: (id: string, confirmed: boolean) => Promise<ClientResponse<User> | undefined>,
+    setUserAuthorities: (id: string, authorities: Authority[]) => Promise<ClientResponse<User> | undefined>
 }
 
 const userStateContext = createContext<UserState | undefined>(undefined);
@@ -19,33 +19,21 @@ const userStateContext = createContext<UserState | undefined>(undefined);
 const UserStateProvider: React.FC<any> = ({children}) => {
     const authState = useAuthState();
 
-    const getUser = async (id: string): Promise<User | WiwaError | undefined> => {
+    const getUser = async (id: string): Promise<ClientResponse<User> | undefined> => {
         const token = authState?.token;
         if (token) {
-            const clientResponse = await userClient.getUser(id, token);
-            if (clientResponse.error) {
-                return clientResponse.error;
-            }
-            if (clientResponse.data) {
-                return clientResponse.data;
-            }
+            return userClient.getUser(id, token);
         }
     }
 
-    const setUserCard = async (id: string, userCard: UserCard): Promise<User | WiwaError | undefined> => {
+    const setUserCard = async (id: string, userCard: UserCard): Promise<ClientResponse<User> | undefined> => {
         const token = authState?.token;
         if (token) {
-            const clientResponse = await userClient.putUser(id, userCard, token);
-            if (clientResponse.error) {
-                return clientResponse.error;
-            }
-            if (clientResponse.data) {
-                return clientResponse.data;
-            }
+            return userClient.putUser(id, userCard, token);
         }
     }
 
-    const deleteUser = async (id: string): Promise<WiwaError | undefined> => {
+    const deleteUser = async (id: string): Promise<ClientResponse<void> | undefined> => {
         const token = authState?.token;
         if (token) {
             const error = await userClient.deleteUser(id, token);
@@ -55,68 +43,38 @@ const UserStateProvider: React.FC<any> = ({children}) => {
         }
     }
 
-    const getUsers = async (pageable?: Pageable, searchField?: string, username?: string, email?: string): Promise<Page<User> | WiwaError | undefined> => {
+    const getUsers = async (pageable?: Pageable, searchField?: string, username?: string, email?: string): Promise<ClientResponse<Page<User>> | undefined> => {
         const token = authState?.token;
         if (token) {
-            const clientResponse = await userClient.getUsers(token, pageable, searchField, username, email);
-            if (clientResponse.error) {
-                return clientResponse.error;
-            }
-            if (clientResponse.data) {
-                return clientResponse.data;
-            }
+            return userClient.getUsers(token, pageable, searchField, username, email);
         }
     }
 
-    const addUser = async (user: User): Promise<User | WiwaError | undefined> => {
+    const addUser = async (user: User): Promise<ClientResponse<User> | undefined> => {
         const token = authState?.token;
         if (token) {
-            const clientResponse = await userClient.postUser(user, token);
-            if (clientResponse.error) {
-                return clientResponse.error;
-            }
-            if (clientResponse.data) {
-                return clientResponse.data;
-            }
+            return userClient.postUser(user, token);
         }
     }
 
-    const setUserEnabled = async (id: string, enabled: boolean): Promise<User | WiwaError | undefined> => {
+    const setUserEnabled = async (id: string, enabled: boolean): Promise<ClientResponse<User> | undefined> => {
         const token = authState?.token;
         if (token) {
-            const clientResponse = await userClient.patchUserEnable(id, {value: enabled}, token);
-            if (clientResponse.error) {
-                return clientResponse.error;
-            }
-            if (clientResponse.data) {
-                return clientResponse.data;
-            }
+            return userClient.patchUserEnable(id, {value: enabled}, token);
         }
     }
 
-    const setUserConfirmed = async (id: string, confirmed: boolean): Promise<User | WiwaError | undefined> => {
+    const setUserConfirmed = async (id: string, confirmed: boolean): Promise<ClientResponse<User> | undefined> => {
         const token = authState?.token;
         if (token) {
-            const clientResponse = await userClient.patchUserConfirm(id, {value: confirmed}, token);
-            if (clientResponse.error) {
-                return clientResponse.error;
-            }
-            if (clientResponse.data) {
-                return clientResponse.data;
-            }
+            return userClient.patchUserConfirm(id, {value: confirmed}, token);
         }
     }
 
-    const setUserAuthorities = async (id: string, authorities: Authority[]): Promise<User | WiwaError | undefined> => {
+    const setUserAuthorities = async (id: string, authorities: Authority[]): Promise<ClientResponse<User> | undefined> => {
         const token = authState?.token;
         if (token) {
-            const clientResponse = await userClient.patchUserAuthorities(id, {value: authorities}, token);
-            if (clientResponse.error) {
-                return clientResponse.error;
-            }
-            if (clientResponse.data) {
-                return clientResponse.data;
-            }
+            return userClient.patchUserAuthorities(id, {value: authorities}, token);
         }
     }
 

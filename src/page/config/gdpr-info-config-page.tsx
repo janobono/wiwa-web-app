@@ -56,14 +56,12 @@ const GdprInfoConfigPage: React.FC = () => {
                 </div>
             </div>
 
-            {showMarkdownDataDialog && (markdownData.items.length === languages.length) &&
+            {uiState && showMarkdownDataDialog && (markdownData.items.length === languages.length) &&
                 <ChangeMarkdownDialog
                     title={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_GDPR_INFO.TITLE)}
                     errorMessage={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_GDPR_INFO.ERROR)}
                     initialData={markdownData}
-                    saveData={(data) => {
-                        return uiState?.changeGdprInfo(data);
-                    }}
+                    saveData={uiState.changeGdprInfo}
                     showDialog={showMarkdownDataDialog}
                     setShowDialog={setShowMarkdownDataDialog}
                 />

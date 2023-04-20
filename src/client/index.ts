@@ -190,7 +190,7 @@ export const patchData = async <T>(path: string, data: any, token?: string): Pro
     return {data: resultData, error};
 }
 
-export const deleteData = async (path: string, token?: string): Promise<WiwaError | undefined> => {
+export const deleteData = async (path: string, token?: string): Promise<ClientResponse<void>> => {
     const authorization = createAuthorization(token);
     const response = await fetch(path, {
         method: 'DELETE',
@@ -203,5 +203,5 @@ export const deleteData = async (path: string, token?: string): Promise<WiwaErro
     if (!response.ok) {
         error = await toWiwaError(response);
     }
-    return error;
+    return {data: undefined, error};
 }

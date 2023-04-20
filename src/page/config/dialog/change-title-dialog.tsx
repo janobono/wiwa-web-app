@@ -55,11 +55,11 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
         setError(undefined);
         try {
             if (isFormValid) {
-                const wiwaError = await uiState?.changeTitle(titleData);
-                if (wiwaError) {
-                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_TITLE.ERROR).toString());
-                } else {
+                const clientResponse = await uiState?.changeTitle(titleData);
+                if (clientResponse !== undefined && clientResponse.data !== undefined) {
                     props.setShowDialog(false);
+                } else {
+                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_TITLE.ERROR).toString());
                 }
             }
         } finally {

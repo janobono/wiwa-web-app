@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import { ClientResponse, configClient, uiClient, WiwaError } from '../client';
+import { ClientResponse, configClient, uiClient } from '../client';
 import { ApplicationImage, ApplicationInfo, CompanyInfo, LocaleData } from '../client/model';
 
 import { useActuatorState } from './actuator-state-provider';
 import { useConfigState } from './config-state-provider';
 import { useAuthState } from './auth-state-provider';
+import { toLanguage } from '../locale';
 
 export interface UiState {
     logoUrl?: string,
@@ -16,17 +17,17 @@ export interface UiState {
     cookiesInfo?: string,
     gdprInfo?: string,
     workingHours?: string,
-    changeLogo: (logo: File) => Promise<WiwaError | undefined>,
-    changeTitle: (title: LocaleData<string>) => Promise<WiwaError | undefined>,
-    changeWelcomeText: (welcomeText: LocaleData<string>) => Promise<WiwaError | undefined>,
-    changeApplicationInfo: (applicationInfo: LocaleData<ApplicationInfo>) => Promise<WiwaError | undefined>,
-    changeCompanyInfo: (companyInfo: LocaleData<CompanyInfo>) => Promise<WiwaError | undefined>,
-    changeCookiesInfo: (cookiesInfo: LocaleData<string>) => Promise<WiwaError | undefined>,
-    changeGdprInfo: (workingHours: LocaleData<string>) => Promise<WiwaError | undefined>,
-    changeWorkingHours: (workingHours: LocaleData<string>) => Promise<WiwaError | undefined>,
+    changeLogo: (logo: File) => Promise<ClientResponse<void> | undefined>,
+    changeTitle: (title: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
+    changeWelcomeText: (welcomeText: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
+    changeApplicationInfo: (applicationInfo: LocaleData<ApplicationInfo>) => Promise<ClientResponse<LocaleData<ApplicationInfo>> | undefined>,
+    changeCompanyInfo: (companyInfo: LocaleData<CompanyInfo>) => Promise<ClientResponse<LocaleData<CompanyInfo>> | undefined>,
+    changeCookiesInfo: (cookiesInfo: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
+    changeGdprInfo: (workingHours: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
+    changeWorkingHours: (workingHours: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
     addApplicationImage: (applicationImage: File) => Promise<ClientResponse<ApplicationImage> | undefined>,
     getApplicationImages: () => Promise<ClientResponse<ApplicationImage[]> | undefined>
-    deleteApplicationImage: (fileName: string) => Promise<WiwaError | undefined>,
+    deleteApplicationImage: (fileName: string) => Promise<ClientResponse<void> | undefined>,
 }
 
 const uiStateContext = createContext<UiState | undefined>(undefined);
@@ -73,130 +74,122 @@ const UiStateProvider: React.FC<any> = ({children}) => {
         }
     }, [actuatorState?.up, configState?.locale]);
 
-    const changeLogo = async (logo: File): Promise<WiwaError | undefined> => {
+    const changeLogo = async (logo: File): Promise<ClientResponse<void> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
-        setLogoUrl(undefined);
-        try {
-            const clientResponse = await configClient.postLogo(logo, token);
-            return clientResponse.error;
-        } finally {
+        const result = await configClient.postLogo(logo, token);
+        if (actuatorState?.up && configState?.locale && result.error === undefined) {
+            setLogoUrl(undefined);
             uiClient.getLogoUrl().then(value => setLogoUrl(value.data));
         }
+        return result;
     }
 
-    const changeTitle = async (title: LocaleData<string>): Promise<WiwaError | undefined> => {
+    const changeTitle = async (title: LocaleData<string>): Promise<ClientResponse<LocaleData<string>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
-        setTitle(undefined);
-        try {
-            const clientResponse = await configClient.postTitle(title, token);
-            return clientResponse.error;
-        } finally {
-            if (actuatorState?.up && configState?.locale) {
-                uiClient.getTitle(configState.locale).then(value => setTitle(value.data));
+        const result = await configClient.postTitle(title, token);
+        if (actuatorState?.up && configState?.locale && result.data) {
+            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
+            if (item) {
+                setTitle(item.data);
             }
         }
+        return result;
     }
 
-    const changeWelcomeText = async (welcomeText: LocaleData<string>): Promise<WiwaError | undefined> => {
+    const changeWelcomeText = async (welcomeText: LocaleData<string>): Promise<ClientResponse<LocaleData<string>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
-        setWelcomeText(undefined);
-        try {
-            const clientResponse = await configClient.postWelcomeText(welcomeText, token);
-            return clientResponse.error;
-        } finally {
-            if (actuatorState?.up && configState?.locale) {
-                uiClient.getWelcomeText(configState.locale).then(value => setWelcomeText(value.data));
+        const result = await configClient.postWelcomeText(welcomeText, token);
+        if (actuatorState?.up && configState?.locale && result.data) {
+            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
+            if (item) {
+                setWelcomeText(item.data);
             }
         }
+        return result;
     }
 
-    const changeApplicationInfo = async (applicationInfo: LocaleData<ApplicationInfo>): Promise<WiwaError | undefined> => {
+    const changeApplicationInfo = async (applicationInfo: LocaleData<ApplicationInfo>): Promise<ClientResponse<LocaleData<ApplicationInfo>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
-        setApplicationInfo(undefined);
-        try {
-            const clientResponse = await configClient.postApplicationInfo(applicationInfo, token);
-            return clientResponse.error;
-        } finally {
-            if (actuatorState?.up && configState?.locale) {
-                uiClient.getApplicationInfo(configState.locale).then(value => setApplicationInfo(value.data));
+        const result = await configClient.postApplicationInfo(applicationInfo, token);
+        if (actuatorState?.up && configState?.locale && result.data) {
+            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
+            if (item) {
+                setApplicationInfo(item.data);
             }
         }
+        return result;
     }
 
-    const changeCompanyInfo = async (companyInfo: LocaleData<CompanyInfo>): Promise<WiwaError | undefined> => {
+    const changeCompanyInfo = async (companyInfo: LocaleData<CompanyInfo>): Promise<ClientResponse<LocaleData<CompanyInfo>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
-        setCompanyInfo(undefined);
-        try {
-            const clientResponse = await configClient.postCompanyInfo(companyInfo, token);
-            return clientResponse.error;
-        } finally {
-            if (actuatorState?.up && configState?.locale) {
-                uiClient.getCompanyInfo(configState.locale).then(value => setCompanyInfo(value.data));
+        const result = await configClient.postCompanyInfo(companyInfo, token);
+        if (actuatorState?.up && configState?.locale && result.data) {
+            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
+            if (item) {
+                setCompanyInfo(item.data);
             }
         }
+        return result;
     }
 
-    const changeCookiesInfo = async (cookiesInfo: LocaleData<string>): Promise<WiwaError | undefined> => {
+    const changeCookiesInfo = async (cookiesInfo: LocaleData<string>): Promise<ClientResponse<LocaleData<string>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
-        setCookiesInfo(undefined);
-        try {
-            const clientResponse = await configClient.postCookiesInfo(cookiesInfo, token);
-            return clientResponse.error;
-        } finally {
-            if (actuatorState?.up && configState?.locale) {
-                uiClient.getCookiesInfo(configState.locale).then(value => setCookiesInfo(value.data));
+        const result = await configClient.postCookiesInfo(cookiesInfo, token);
+        if (actuatorState?.up && configState?.locale && result.data) {
+            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
+            if (item) {
+                setCookiesInfo(item.data);
             }
         }
+        return result;
     }
 
-    const changeGdprInfo = async (gdprInfo: LocaleData<string>): Promise<WiwaError | undefined> => {
+    const changeGdprInfo = async (gdprInfo: LocaleData<string>): Promise<ClientResponse<LocaleData<string>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
-        setGdprInfo(undefined);
-        try {
-            const clientResponse = await configClient.postGdprInfo(gdprInfo, token);
-            return clientResponse.error;
-        } finally {
-            if (actuatorState?.up && configState?.locale) {
-                uiClient.getGdprInfo(configState.locale).then(value => setGdprInfo(value.data));
+        const result = await configClient.postGdprInfo(gdprInfo, token);
+        if (actuatorState?.up && configState?.locale && result.data) {
+            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
+            if (item) {
+                setGdprInfo(item.data);
             }
         }
+        return result;
     }
 
-    const changeWorkingHours = async (workingHours: LocaleData<string>): Promise<WiwaError | undefined> => {
+    const changeWorkingHours = async (workingHours: LocaleData<string>): Promise<ClientResponse<LocaleData<string>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
-        setWorkingHours(undefined);
-        try {
-            const clientResponse = await configClient.postWorkingHours(workingHours, token);
-            return clientResponse.error;
-        } finally {
-            if (actuatorState?.up && configState?.locale) {
-                uiClient.getWorkingHours(configState.locale).then(value => setWorkingHours(value.data));
+        const result = await configClient.postWorkingHours(workingHours, token);
+        if (actuatorState?.up && configState?.locale && result.data) {
+            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
+            if (item) {
+                setWorkingHours(item.data);
             }
         }
+        return result;
     }
 
     const addApplicationImage = async (applicationImage: File): Promise<ClientResponse<ApplicationImage> | undefined> => {
@@ -219,7 +212,7 @@ const UiStateProvider: React.FC<any> = ({children}) => {
         return undefined;
     }
 
-    const deleteApplicationImage = async (fileName: string): Promise<WiwaError | undefined> => {
+    const deleteApplicationImage = async (fileName: string): Promise<ClientResponse<void> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;

@@ -396,6 +396,59 @@ export const RESOURCE = {
                 }
             },
             USERS: {
+                DIALOG: {
+                    ADD_USER: {
+                        TITLE: 'page.users.dialog.add-user.title',
+                        FORM: {
+                            USERNAME: {
+                                LABEL: 'page.users.dialog.add-user.form.username.label',
+                                PLACEHOLDER: 'page.users.dialog.add-user.form.username.placeholder',
+                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.username.validation-message'
+                            },
+                            EMAIL: {
+                                LABEL: 'page.users.dialog.add-user.form.email.label',
+                                PLACEHOLDER: 'page.users.dialog.add-user.form.email.placeholder',
+                                VALIDATION_MESSAGE1: 'page.users.dialog.add-user.form.email.validation-message1',
+                                VALIDATION_MESSAGE2: 'page.users.dialog.add-user.form.email.validation-message2'
+                            },
+                            TITLE_BEFORE: {
+                                LABEL: 'page.users.dialog.add-user.form.title-before.label',
+                                PLACEHOLDER: 'page.users.dialog.add-user.form.title-before.placeholder',
+                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.title-before.validation-message'
+                            },
+                            TITLE_AFTER: {
+                                LABEL: 'page.users.dialog.add-user.form.title-after.label',
+                                PLACEHOLDER: 'page.users.dialog.add-user.form.title-after.placeholder',
+                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.title-after.validation-message'
+                            },
+                            FIRST_NAME: {
+                                LABEL: 'page.users.dialog.add-user.form.first-name.label',
+                                PLACEHOLDER: 'page.users.dialog.add-user.form.first-name.placeholder',
+                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.first-name.validation-message'
+                            },
+                            MID_NAME: {
+                                LABEL: 'page.users.dialog.add-user.form.mid-name.label',
+                                PLACEHOLDER: 'page.users.dialog.add-user.form.mid-name.placeholder'
+                            },
+                            LAST_NAME: {
+                                LABEL: 'page.users.dialog.add-user.form.last-name.label',
+                                PLACEHOLDER: 'page.users.dialog.add-user.form.last-name.placeholder',
+                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.last-name.validation-message'
+                            },
+                            GDPR: {
+                                LABEL: 'page.users.dialog.add-user.form.gdpr.label',
+                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.gdpr.validation-message'
+                            },
+                            CONFIRMED: {
+                                LABEL: 'page.users.dialog.add-user.form.confirmed.label'
+                            },
+                            ENABLED: {
+                                LABEL: 'page.users.dialog.add-user.form.enabled.label'
+                            }
+                        },
+                        ERROR: 'page.users.dialog.add-user.error'
+                    }
+                },
                 USERS: {
                     TITLE: 'page.users.users.title'
                 }

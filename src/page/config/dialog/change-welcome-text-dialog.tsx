@@ -55,11 +55,11 @@ const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) 
         setError(undefined);
         try {
             if (isFormValid) {
-                const wiwaError = await uiState?.changeWelcomeText(welcomeTextData);
-                if (wiwaError) {
-                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_WELCOME_TEXT.ERROR).toString());
-                } else {
+                const clientResponse = await uiState?.changeWelcomeText(welcomeTextData);
+                if (clientResponse !== undefined && clientResponse.data !== undefined) {
                     props.setShowDialog(false);
+                } else {
+                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_WELCOME_TEXT.ERROR).toString());
                 }
             }
         } finally {

@@ -6,8 +6,7 @@ import {
     Pageable,
     postData,
     setPageableQueryParams,
-    toWiwaError,
-    WiwaError
+    toWiwaError
 } from './index';
 import { ApplicationImage, ApplicationInfo, CompanyInfo, LocaleData, Page } from './model';
 
@@ -99,6 +98,6 @@ export const postApplicationImage = async (file: File, token: string): Promise<C
     return {data: resultData, error};
 }
 
-export const deleteApplicationImage = async (fileName: string, token: string): Promise<WiwaError | undefined> => {
+export const deleteApplicationImage = async (fileName: string, token: string): Promise<ClientResponse<void>> => {
     return deleteData(PATH_APPLICATION_IMAGES + '/' + fileName, token);
 }

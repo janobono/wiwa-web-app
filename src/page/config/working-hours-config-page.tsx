@@ -57,14 +57,12 @@ const WorkingHoursConfigPage: React.FC = () => {
                 </div>
             </div>
 
-            {showMarkdownDataDialog && (markdownData.items.length === languages.length) &&
+            {uiState && showMarkdownDataDialog && (markdownData.items.length === languages.length) &&
                 <ChangeMarkdownDialog
                     title={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_WORKING_HOURS.TITLE)}
                     errorMessage={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_WORKING_HOURS.ERROR)}
                     initialData={markdownData}
-                    saveData={(data) => {
-                        return uiState?.changeWorkingHours(data);
-                    }}
+                    saveData={uiState.changeWorkingHours}
                     showDialog={showMarkdownDataDialog}
                     setShowDialog={setShowMarkdownDataDialog}
                 />
