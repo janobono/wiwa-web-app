@@ -6,7 +6,9 @@ import { WiwaErrorCode } from '../../../client';
 import { RESOURCE } from '../../../locale';
 import { useAuthState } from '../../../state';
 
-import { WiwaButton, WiwaCaptcha, WiwaCheckBox, WiwaFormInput, WiwaNavLink, WiwaSpinner } from '../../../component/ui';
+import { WiwaButton, WiwaCaptcha, WiwaSpinner } from '../../../component/ui';
+import { UserCardFields } from '../../../component/user';
+import { AuthGdprCheckBox } from '../../../component/auth';
 
 interface ChangeUserDetailsDialogProps {
     showDialog: boolean
@@ -138,123 +140,27 @@ const ChangeUserDetailsDialog: React.FC<ChangeUserDetailsDialogProps> = (props) 
                                                 event.preventDefault();
                                                 handleSubmit();
                                             })}>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mb-5">
-                                                <div>
-                                                    <WiwaFormInput
-                                                        type="text"
-                                                        name="titleBefore"
-                                                        label={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.TITLE_BEFORE.LABEL)}
-                                                        placeholder={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.TITLE_BEFORE.PLACEHOLDER).toString()}
-                                                        required={false}
-                                                        value={titleBefore}
-                                                        setValue={setTitleBefore}
-                                                        valid={true}
-                                                        setValid={() => {
-                                                        }}
-                                                        validate={() => {
-                                                            return {valid: true};
-                                                        }}
-                                                    />
-                                                </div>
 
-                                                <div>
-                                                    <WiwaFormInput
-                                                        type="text"
-                                                        name="titleAfter"
-                                                        label={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.TITLE_AFTER.LABEL)}
-                                                        placeholder={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.TITLE_AFTER.PLACEHOLDER).toString()}
-                                                        required={false}
-                                                        value={titleAfter}
-                                                        setValue={setTitleAfter}
-                                                        valid={true}
-                                                        setValid={() => {
-                                                        }}
-                                                        validate={() => {
-                                                            return {valid: true};
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
+                                            <UserCardFields
+                                                titleBefore={titleBefore}
+                                                setTitleBefore={setTitleBefore}
+                                                titleAfter={titleAfter}
+                                                setTitleAfter={setTitleAfter}
+                                                firstName={firstName}
+                                                setFirstName={setFirstName}
+                                                firstNameValid={firstNameValid}
+                                                setFirstNameValid={setFirstNameValid}
+                                                midName={midName}
+                                                setMidName={setMidName}
+                                                lastName={lastName}
+                                                setLastName={setLastName}
+                                                lastNameValid={lastNameValid}
+                                                setLastNameValid={setLastNameValid}
+                                            />
 
-                                            <div className="mb-5">
-                                                <WiwaFormInput
-                                                    type="text"
-                                                    name="firstName"
-                                                    label={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.FIRST_NAME.LABEL)}
-                                                    placeholder={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.FIRST_NAME.PLACEHOLDER).toString()}
-                                                    required={true}
-                                                    value={firstName}
-                                                    setValue={setFirstName}
-                                                    valid={firstNameValid}
-                                                    setValid={setFirstNameValid}
-                                                    validate={() => {
-                                                        if (firstName.trim().length === 0) {
-                                                            return {
-                                                                valid: false,
-                                                                message: t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.FIRST_NAME.VALIDATION_MESSAGE).toString()
-                                                            };
-                                                        }
-                                                        return {valid: true};
-                                                    }}
-                                                />
-                                            </div>
+                                            <AuthGdprCheckBox gdpr={gdpr} setGdpr={setGdpr}/>
 
-                                            <div className="mb-5">
-                                                <WiwaFormInput
-                                                    type="text"
-                                                    name="midName"
-                                                    label={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.MID_NAME.LABEL)}
-                                                    placeholder={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.MID_NAME.PLACEHOLDER).toString()}
-                                                    required={false}
-                                                    value={midName}
-                                                    setValue={setMidName}
-                                                    valid={true}
-                                                    setValid={() => {
-                                                    }}
-                                                    validate={() => {
-                                                        return {valid: true};
-                                                    }}
-                                                />
-                                            </div>
-
-                                            <div className="mb-5">
-                                                <WiwaFormInput
-                                                    type="text"
-                                                    name="lastName"
-                                                    label={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.LAST_NAME.LABEL)}
-                                                    placeholder={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.LAST_NAME.PLACEHOLDER).toString()}
-                                                    required={true}
-                                                    value={lastName}
-                                                    setValue={setLastName}
-                                                    valid={lastNameValid}
-                                                    setValid={setLastNameValid}
-                                                    validate={() => {
-                                                        if (lastName.trim().length === 0) {
-                                                            return {
-                                                                valid: false,
-                                                                message: t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.LAST_NAME.VALIDATION_MESSAGE).toString()
-                                                            };
-                                                        }
-                                                        return {valid: true};
-                                                    }}
-                                                />
-                                            </div>
-
-                                            <div className="mb-5">
-                                                <WiwaCheckBox
-                                                    name="gdpr"
-                                                    value={gdpr}
-                                                    setValue={setGdpr}
-                                                    message={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.GDPR.VALIDATION_MESSAGE).toString()}
-                                                    disabled={false}
-                                                    required={true}
-                                                ><span>{t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.GDPR.LABEL)}
-                                                    <WiwaNavLink
-                                                        to="/gdpr-info">{t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_USER_DETAILS.FORM.GDPR.LINK)}</WiwaNavLink>
-                                                </span></WiwaCheckBox>
-                                            </div>
-
-                                            <div className="mb-5">
+                                            <div className="mb-2">
                                                 <WiwaCaptcha
                                                     name="captcha"
                                                     required={true}

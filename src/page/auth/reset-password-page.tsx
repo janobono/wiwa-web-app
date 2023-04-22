@@ -6,7 +6,8 @@ import { WiwaErrorCode } from '../../client';
 import { RESOURCE } from '../../locale';
 import { useAuthState } from '../../state';
 
-import { EMAIL_REGEX, WiwaButton, WiwaCaptcha, WiwaFormInput } from '../../component/ui';
+import { WiwaButton, WiwaCaptcha } from '../../component/ui';
+import { UserEmailField } from '../../component/user';
 
 const ResetPasswordPage: React.FC = () => {
     const navigate = useNavigate();
@@ -14,8 +15,8 @@ const ResetPasswordPage: React.FC = () => {
 
     const authState = useAuthState();
 
-    const [email, setEMail] = useState('');
-    const [emailValid, setEMailValid] = useState(false);
+    const [email, setEmail] = useState('');
+    const [emailValid, setEmailValid] = useState(false);
 
     const [captchaText, setCaptchaText] = useState('');
     const [captchaToken, setCaptchaToken] = useState('');
@@ -78,32 +79,13 @@ const ResetPasswordPage: React.FC = () => {
                             event.preventDefault();
                             handleSubmit();
                         })}>
-                            <div className="mb-2">
-                                <WiwaFormInput
-                                    type="email"
-                                    name="email"
-                                    label={t(RESOURCE.PAGE.AUTH.RESET_PASSWORD.FORM.EMAIL.LABEL)}
-                                    placeholder={t(RESOURCE.PAGE.AUTH.RESET_PASSWORD.FORM.EMAIL.PLACEHOLDER).toString()}
-                                    required={true}
-                                    value={email}
-                                    setValue={setEMail}
-                                    valid={emailValid}
-                                    setValid={setEMailValid}
-                                    validate={() => {
-                                        if (email.trim().length === 0) {
-                                            return {
-                                                valid: false,
-                                                message: t(RESOURCE.PAGE.AUTH.RESET_PASSWORD.FORM.EMAIL.VALIDATION_MESSAGE_1).toString()
-                                            };
-                                        }
-                                        const valid = EMAIL_REGEX.test(email);
-                                        let message;
-                                        if (!valid) {
-                                            message = t(RESOURCE.PAGE.AUTH.RESET_PASSWORD.FORM.EMAIL.VALIDATION_MESSAGE_2).toString();
-                                        }
-                                        return {valid, message};
-                                    }}/>
-                            </div>
+                            <UserEmailField
+                                email={email}
+                                setEmail={setEmail}
+                                emailValid={emailValid}
+                                setEmailValid={setEmailValid}
+                            />
+
                             <div className="mb-2">
                                 <WiwaCaptcha
                                     name="captcha"

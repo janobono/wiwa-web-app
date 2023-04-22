@@ -9,7 +9,7 @@ export interface UserCard {
 }
 
 export interface User extends UserCard {
-    id?: number,
+    id?: string,
     username: string,
     email: string,
     gdpr: boolean,

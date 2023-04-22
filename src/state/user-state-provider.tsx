@@ -102,3 +102,7 @@ export default UserStateProvider;
 export const useUserState = () => {
     return useContext(userStateContext);
 }
+
+export const containsAuthority = (authorities: Authority[], authority: Authority) => {
+    return authorities.some(a => a === authority);
+};

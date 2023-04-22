@@ -6,15 +6,9 @@ import { WiwaErrorCode } from '../../client';
 import { RESOURCE } from '../../locale';
 import { useAuthState } from '../../state';
 
-import {
-    EMAIL_REGEX,
-    WiwaButton,
-    WiwaCaptcha,
-    WiwaCheckBox,
-    WiwaFormInput,
-    WiwaNavLink,
-    WiwaNewPassword
-} from '../../component/ui';
+import { WiwaButton, WiwaCaptcha, WiwaNavLink, WiwaNewPassword } from '../../component/ui';
+import { UserCardFields, UserEmailField, UsernameField } from '../../component/user';
+import { AuthGdprCheckBox } from '../../component/auth';
 
 const SignUpPage: React.FC = () => {
     const navigate = useNavigate();
@@ -125,28 +119,12 @@ const SignUpPage: React.FC = () => {
                         event.preventDefault();
                         handleSubmit();
                     })}>
-                        <div className="mb-2">
-                            <WiwaFormInput
-                                type="text"
-                                name="username"
-                                label={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.USERNAME.LABEL)}
-                                placeholder={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.USERNAME.PLACEHOLDER).toString()}
-                                required={true}
-                                value={username}
-                                setValue={setUsername}
-                                valid={usernameValid}
-                                setValid={setUsernameValid}
-                                validate={() => {
-                                    if (username.trim().length === 0) {
-                                        return {
-                                            valid: false,
-                                            message: t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.USERNAME.VALIDATION_MESSAGE).toString()
-                                        };
-                                    }
-                                    return {valid: true};
-                                }}
-                            />
-                        </div>
+                        <UsernameField
+                            username={username}
+                            setUsername={setUsername}
+                            usernameValid={usernameValid}
+                            setUsernameValid={setUsernameValid}
+                        />
                         <div className="mb-2">
                             <WiwaNewPassword
                                 name="password"
@@ -156,141 +134,33 @@ const SignUpPage: React.FC = () => {
                                 setValid={setPasswordValid}
                             />
                         </div>
-                        <div className="mb-2">
-                            <WiwaFormInput
-                                type="email"
-                                name="email"
-                                label={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.EMAIL.LABEL)}
-                                placeholder={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.EMAIL.PLACEHOLDER).toString()}
-                                required={true}
-                                value={email}
-                                setValue={setEmail}
-                                valid={emailValid}
-                                setValid={setEmailValid}
-                                validate={() => {
-                                    if (email.trim().length === 0) {
-                                        return {
-                                            valid: false,
-                                            message: t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.EMAIL.VALIDATION_MESSAGE1).toString()
-                                        };
-                                    }
-                                    const valid = EMAIL_REGEX.test(email);
-                                    let message;
-                                    if (!valid) {
-                                        message = t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.EMAIL.VALIDATION_MESSAGE2).toString();
-                                    }
-                                    return {valid, message};
-                                }}/>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
-                            <div>
-                                <WiwaFormInput
-                                    type="text"
-                                    name="titleBefore"
-                                    label={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.TITLE_BEFORE.LABEL)}
-                                    placeholder={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.TITLE_BEFORE.PLACEHOLDER).toString()}
-                                    required={false}
-                                    value={titleBefore}
-                                    setValue={setTitleBefore}
-                                    valid={true}
-                                    setValid={() => {
-                                    }}
-                                    validate={() => {
-                                        return {valid: true};
-                                    }}
-                                />
-                            </div>
-                            <div>
-                                <WiwaFormInput
-                                    type="text"
-                                    name="titleAfter"
-                                    label={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.TITLE_AFTER.LABEL)}
-                                    placeholder={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.TITLE_AFTER.PLACEHOLDER).toString()}
-                                    required={false}
-                                    value={titleAfter}
-                                    setValue={setTitleAfter}
-                                    valid={true}
-                                    setValid={() => {
-                                    }}
-                                    validate={() => {
-                                        return {valid: true};
-                                    }}
-                                />
-                            </div>
-                        </div>
-                        <div className="mb-2">
-                            <WiwaFormInput
-                                type="text"
-                                name="firstName"
-                                label={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.FIRST_NAME.LABEL)}
-                                placeholder={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.FIRST_NAME.PLACEHOLDER).toString()}
-                                required={true}
-                                value={firstName}
-                                setValue={setFirstName}
-                                valid={firstNameValid}
-                                setValid={setFirstNameValid}
-                                validate={() => {
-                                    if (firstName.trim().length === 0) {
-                                        return {
-                                            valid: false,
-                                            message: t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.FIRST_NAME.VALIDATION_MESSAGE).toString()
-                                        };
-                                    }
-                                    return {valid: true};
-                                }}
-                            />
-                        </div>
-                        <div className="mb-2">
-                            <WiwaFormInput
-                                type="text"
-                                name="midName"
-                                label={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.MID_NAME.LABEL)}
-                                placeholder={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.MID_NAME.PLACEHOLDER).toString()}
-                                required={false}
-                                value={midName}
-                                setValue={setMidName}
-                                valid={true}
-                                setValid={() => {
-                                }}
-                                validate={() => {
-                                    return {valid: true};
-                                }}
-                            />
-                        </div>
-                        <div className="mb-2">
-                            <WiwaFormInput
-                                type="text"
-                                name="lastName"
-                                label={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.LAST_NAME.LABEL)}
-                                placeholder={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.LAST_NAME.PLACEHOLDER).toString()}
-                                required={true}
-                                value={lastName}
-                                setValue={setLastName}
-                                valid={lastNameValid}
-                                setValid={setLastNameValid}
-                                validate={() => {
-                                    if (lastName.trim().length === 0) {
-                                        return {
-                                            valid: false,
-                                            message: t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.LAST_NAME.VALIDATION_MESSAGE).toString()
-                                        };
-                                    }
-                                    return {valid: true};
-                                }}
-                            />
-                        </div>
-                        <div className="mb-2">
-                            <WiwaCheckBox
-                                name="gdpr"
-                                value={gdpr}
-                                setValue={setGdpr}
-                                message={t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.GDPR.VALIDATION_MESSAGE).toString()}
-                                disabled={false}
-                                required={true}
-                            ><span>{t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.GDPR.LABEL)} <WiwaNavLink
-                                to="/gdpr-info">{t(RESOURCE.PAGE.AUTH.SIGN_UP.FORM.GDPR.LINK)}</WiwaNavLink>
-                            </span></WiwaCheckBox>
-                        </div>
+
+                        <UserEmailField
+                            email={email}
+                            setEmail={setEmail}
+                            emailValid={emailValid}
+                            setEmailValid={setEmailValid}
+                        />
+
+                        <UserCardFields
+                            titleBefore={titleBefore}
+                            setTitleBefore={setTitleBefore}
+                            titleAfter={titleAfter}
+                            setTitleAfter={setTitleAfter}
+                            firstName={firstName}
+                            setFirstName={setFirstName}
+                            firstNameValid={firstNameValid}
+                            setFirstNameValid={setFirstNameValid}
+                            midName={midName}
+                            setMidName={setMidName}
+                            lastName={lastName}
+                            setLastName={setLastName}
+                            lastNameValid={lastNameValid}
+                            setLastNameValid={setLastNameValid}
+                        />
+
+                        <AuthGdprCheckBox gdpr={gdpr} setGdpr={setGdpr}/>
+
                         <div className="mb-2">
                             <WiwaCaptcha
                                 name="captcha"
@@ -303,6 +173,7 @@ const SignUpPage: React.FC = () => {
                                 setValid={setCaptchaValid}
                             />
                         </div>
+
                         <WiwaButton
                             type="submit"
                             className="w-full"

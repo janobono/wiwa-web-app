@@ -1,7 +1,8 @@
 import React from 'react';
+import { PieChart, Settings, ShoppingCart, Tool, X } from 'react-feather';
 
 import { Authority } from '../../client/model';
-import { PieChart, Settings, ShoppingCart, Tool } from 'react-feather';
+import { containsAuthority } from '../../state';
 
 interface UserAuthoritiesComponentProps {
     authorities: Authority[]
@@ -9,16 +10,12 @@ interface UserAuthoritiesComponentProps {
 
 const UserAuthoritiesComponent: React.FC<UserAuthoritiesComponentProps> = (props) => {
 
-    const containsAuthority = (authorities: Authority[], authority: Authority) => {
-        return authorities.some(a => a === authority);
-    };
-
     return (
         <div className="grid grid-cols-4 gap-2">
-            {containsAuthority(props.authorities, Authority.W_ADMIN) ? <Settings size="18"/> : <div/>}
-            {containsAuthority(props.authorities, Authority.W_MANAGER) ? <PieChart size="18"/> : <div/>}
-            {containsAuthority(props.authorities, Authority.W_EMPLOYEE) ? <Tool size="18"/> : <div/>}
-            {containsAuthority(props.authorities, Authority.W_CUSTOMER) ? <ShoppingCart size="18"/> : <div/>}
+            {containsAuthority(props.authorities, Authority.W_ADMIN) ? <Settings size="18"/> : <X size="18"/>}
+            {containsAuthority(props.authorities, Authority.W_MANAGER) ? <PieChart size="18"/> : <X size="18"/>}
+            {containsAuthority(props.authorities, Authority.W_EMPLOYEE) ? <Tool size="18"/> : <X size="18"/>}
+            {containsAuthority(props.authorities, Authority.W_CUSTOMER) ? <ShoppingCart size="18"/> : <X size="18"/>}
         </div>
     )
 }

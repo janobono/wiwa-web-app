@@ -74,6 +74,13 @@ export const RESOURCE = {
             USER_USERNAME_IS_USED: 'error.user-username-is-used'
         },
         COMPONENT: {
+            AUTH: {
+                AUTH_GDPR_CHECK_BOX: {
+                    LABEL: 'component.auth.auth-gdpr-check-box.label',
+                    LINK: 'component.auth.auth-gdpr-check-box.link',
+                    VALIDATION_MESSAGE: 'component.auth.auth-gdpr-check-box.validation-message'
+                }
+            },
             LAYOUT: {
                 FOOTER: {
                     LINKS: {
@@ -117,6 +124,48 @@ export const RESOURCE = {
                     FIRST_NAME: 'component.user.user-card.first-name',
                     LAST_NAME: 'component.user.user-card.last-name',
                     AUTHORITIES: 'component.user.user-card.authorities'
+                },
+                USER_CARD_FIELDS: {
+                    TITLE_BEFORE: {
+                        LABEL: 'component.user.user-card-fields.title-before.label',
+                        PLACEHOLDER: 'component.user.user-card-fields.title-before.placeholder',
+                        VALIDATION_MESSAGE: 'component.user.user-card-fields.title-before.validation-message'
+                    },
+                    TITLE_AFTER: {
+                        LABEL: 'component.user.user-card-fields.title-after.label',
+                        PLACEHOLDER: 'component.user.user-card-fields.title-after.placeholder',
+                        VALIDATION_MESSAGE: 'component.user.user-card-fields.title-after.validation-message'
+                    },
+                    FIRST_NAME: {
+                        LABEL: 'component.user.user-card-fields.first-name.label',
+                        PLACEHOLDER: 'component.user.user-card-fields.first-name.placeholder',
+                        VALIDATION_MESSAGE: 'component.user.user-card-fields.first-name.validation-message'
+                    },
+                    MID_NAME: {
+                        LABEL: 'component.user.user-card-fields.mid-name.label',
+                        PLACEHOLDER: 'component.user.user-card-fields.mid-name.placeholder'
+                    },
+                    LAST_NAME: {
+                        LABEL: 'component.user.user-card-fields.last-name.label',
+                        PLACEHOLDER: 'component.user.user-card-fields.last-name.placeholder',
+                        VALIDATION_MESSAGE: 'component.user.user-card-fields.last-name.validation-message'
+                    }
+                },
+                USER_EMAIL_FIELD: {
+                    LABEL: 'component.user.user-email-field.label',
+                    PLACEHOLDER: 'component.user.user-email-field.placeholder',
+                    VALIDATION_MESSAGE_1: 'component.user.user-email-field.validation-message-1',
+                    VALIDATION_MESSAGE_2: 'component.user.user-email-field.validation-message-2'
+                },
+                USER_PASSWORD_FIELD: {
+                    LABEL: 'component.user.user-password-field.label',
+                    PLACEHOLDER: 'component.user.user-password-field.placeholder',
+                    VALIDATION_MESSAGE: 'component.user.user-password-field.validation-message'
+                },
+                USERNAME_FIELD: {
+                    LABEL: 'component.user.username-field.label',
+                    PLACEHOLDER: 'component.user.username-field.placeholder',
+                    VALIDATION_MESSAGE: 'component.user.username-field.validation-message'
                 }
             }
         },
@@ -125,19 +174,6 @@ export const RESOURCE = {
                 DIALOG: {
                     CHANGE_EMAIL: {
                         TITLE: 'page.auth.dialog.change-email.title',
-                        FORM: {
-                            EMAIL: {
-                                LABEL: 'page.auth.dialog.change-email.form.email.label',
-                                PLACEHOLDER: 'page.auth.dialog.change-email.form.email.placeholder',
-                                VALIDATION_MESSAGE_1: 'page.auth.dialog.change-email.form.email.validation-message-1',
-                                VALIDATION_MESSAGE_2: 'page.auth.dialog.change-email.form.email.validation-message-2'
-                            },
-                            PASSWORD: {
-                                LABEL: 'page.auth.dialog.change-email.form.password.label',
-                                PLACEHOLDER: 'page.auth.dialog.change-email.form.password.placeholder',
-                                VALIDATION_MESSAGE: 'page.auth.dialog.change-email.form.password.validation-message'
-                            }
-                        },
                         MESSAGE: 'page.auth.dialog.change-email.message',
                         ERROR: 'page.auth.dialog.change-email.error'
                     },
@@ -155,37 +191,6 @@ export const RESOURCE = {
                     },
                     CHANGE_USER_DETAILS: {
                         TITLE: 'page.auth.dialog.change-user-details.title',
-                        FORM: {
-                            TITLE_BEFORE: {
-                                LABEL: 'page.auth.dialog.change-user-details.form.title-before.label',
-                                PLACEHOLDER: 'page.auth.dialog.change-user-details.form.title-before.placeholder',
-                                VALIDATION_MESSAGE: 'page.auth.dialog.change-user-details.form.title-before.validation-message'
-                            },
-                            TITLE_AFTER: {
-                                LABEL: 'page.auth.dialog.change-user-details.form.title-after.label',
-                                PLACEHOLDER: 'page.auth.dialog.change-user-details.form.title-after.placeholder',
-                                VALIDATION_MESSAGE: 'page.auth.dialog.change-user-details.form.title-after.validation-message'
-                            },
-                            FIRST_NAME: {
-                                LABEL: 'page.auth.dialog.change-user-details.form.first-name.label',
-                                PLACEHOLDER: 'page.auth.dialog.change-user-details.form.first-name.placeholder',
-                                VALIDATION_MESSAGE: 'page.auth.dialog.change-user-details.form.first-name.validation-message'
-                            },
-                            MID_NAME: {
-                                LABEL: 'page.auth.dialog.change-user-details.form.mid-name.label',
-                                PLACEHOLDER: 'page.auth.dialog.change-user-details.form.mid-name.placeholder'
-                            },
-                            LAST_NAME: {
-                                LABEL: 'page.auth.dialog.change-user-details.form.last-name.label',
-                                PLACEHOLDER: 'page.auth.dialog.change-user-details.form.last-name.placeholder',
-                                VALIDATION_MESSAGE: 'page.auth.dialog.change-user-details.form.last-name.validation-message'
-                            },
-                            GDPR: {
-                                LABEL: 'page.auth.dialog.change-user-details.form.gdpr.label',
-                                LINK: 'page.auth.dialog.change-user-details.form.gdpr.link',
-                                VALIDATION_MESSAGE: 'page.auth.dialog.change-user-details.form.gdpr.validation-message'
-                            }
-                        },
                         MESSAGE: 'page.auth.dialog.change-user-details.message',
                         ERROR: 'page.auth.dialog.change-user-details.error'
                     },
@@ -201,31 +206,13 @@ export const RESOURCE = {
                 },
                 RESET_PASSWORD: {
                     SUBMITTED_MESSAGE: 'page.auth.reset-password.submitted-message',
-                    TITLE: 'page.auth.reset-password.title',
-                    FORM: {
-                        EMAIL: {
-                            LABEL: 'page.auth.reset-password.form.email.label',
-                            PLACEHOLDER: 'page.auth.reset-password.form.email.placeholder',
-                            VALIDATION_MESSAGE_1: 'page.auth.reset-password.form.email.validation-message-1',
-                            VALIDATION_MESSAGE_2: 'page.auth.reset-password.form.email.validation-message-2'
-                        }
-                    }
+                    TITLE: 'page.auth.reset-password.title'
                 },
                 SIGN_IN: {
                     TITLE: 'page.auth.sign-in.title',
                     SUBTITLE: 'page.auth.sign-in.subtitle',
                     SUBTITLE_LINK: 'page.auth.sign-in.subtitle-link',
                     FORM: {
-                        USERNAME: {
-                            LABEL: 'page.auth.sign-in.form.username.label',
-                            PLACEHOLDER: 'page.auth.sign-in.form.username.placeholder',
-                            VALIDATION_MESSAGE: 'page.auth.sign-in.form.username.validation-message'
-                        },
-                        PASSWORD: {
-                            LABEL: 'page.auth.sign-in.form.password.label',
-                            PLACEHOLDER: 'page.auth.sign-in.form.password.placeholder',
-                            VALIDATION_MESSAGE: 'page.auth.sign-in.form.password.validation-message'
-                        },
                         LINK: 'page.auth.sign-in.form.link',
                         SUBMIT: 'page.auth.sign-in.form.submit',
                     }
@@ -235,46 +222,6 @@ export const RESOURCE = {
                     SUBTITLE: 'page.auth.sign-up.subtitle',
                     SUBTITLE_LINK: 'page.auth.sign-up.subtitle-link',
                     FORM: {
-                        USERNAME: {
-                            LABEL: 'page.auth.sign-up.form.username.label',
-                            PLACEHOLDER: 'page.auth.sign-up.form.username.placeholder',
-                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.username.validation-message'
-                        },
-                        EMAIL: {
-                            LABEL: 'page.auth.sign-up.form.email.label',
-                            PLACEHOLDER: 'page.auth.sign-up.form.email.placeholder',
-                            VALIDATION_MESSAGE1: 'page.auth.sign-up.form.email.validation-message1',
-                            VALIDATION_MESSAGE2: 'page.auth.sign-up.form.email.validation-message2'
-                        },
-                        TITLE_BEFORE: {
-                            LABEL: 'page.auth.sign-up.form.title-before.label',
-                            PLACEHOLDER: 'page.auth.sign-up.form.title-before.placeholder',
-                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.title-before.validation-message'
-                        },
-                        TITLE_AFTER: {
-                            LABEL: 'page.auth.sign-up.form.title-after.label',
-                            PLACEHOLDER: 'page.auth.sign-up.form.title-after.placeholder',
-                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.title-after.validation-message'
-                        },
-                        FIRST_NAME: {
-                            LABEL: 'page.auth.sign-up.form.first-name.label',
-                            PLACEHOLDER: 'page.auth.sign-up.form.first-name.placeholder',
-                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.first-name.validation-message'
-                        },
-                        MID_NAME: {
-                            LABEL: 'page.auth.sign-up.form.mid-name.label',
-                            PLACEHOLDER: 'page.auth.sign-up.form.mid-name.placeholder'
-                        },
-                        LAST_NAME: {
-                            LABEL: 'page.auth.sign-up.form.last-name.label',
-                            PLACEHOLDER: 'page.auth.sign-up.form.last-name.placeholder',
-                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.last-name.validation-message'
-                        },
-                        GDPR: {
-                            LABEL: 'page.auth.sign-up.form.gdpr.label',
-                            LINK: 'page.auth.sign-up.form.gdpr.link',
-                            VALIDATION_MESSAGE: 'page.auth.sign-up.form.gdpr.validation-message'
-                        },
                         SUBMIT: 'page.auth.sign-up.form.submit'
                     }
                 },
@@ -400,45 +347,6 @@ export const RESOURCE = {
                     ADD_USER: {
                         TITLE: 'page.users.dialog.add-user.title',
                         FORM: {
-                            USERNAME: {
-                                LABEL: 'page.users.dialog.add-user.form.username.label',
-                                PLACEHOLDER: 'page.users.dialog.add-user.form.username.placeholder',
-                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.username.validation-message'
-                            },
-                            EMAIL: {
-                                LABEL: 'page.users.dialog.add-user.form.email.label',
-                                PLACEHOLDER: 'page.users.dialog.add-user.form.email.placeholder',
-                                VALIDATION_MESSAGE1: 'page.users.dialog.add-user.form.email.validation-message1',
-                                VALIDATION_MESSAGE2: 'page.users.dialog.add-user.form.email.validation-message2'
-                            },
-                            TITLE_BEFORE: {
-                                LABEL: 'page.users.dialog.add-user.form.title-before.label',
-                                PLACEHOLDER: 'page.users.dialog.add-user.form.title-before.placeholder',
-                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.title-before.validation-message'
-                            },
-                            TITLE_AFTER: {
-                                LABEL: 'page.users.dialog.add-user.form.title-after.label',
-                                PLACEHOLDER: 'page.users.dialog.add-user.form.title-after.placeholder',
-                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.title-after.validation-message'
-                            },
-                            FIRST_NAME: {
-                                LABEL: 'page.users.dialog.add-user.form.first-name.label',
-                                PLACEHOLDER: 'page.users.dialog.add-user.form.first-name.placeholder',
-                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.first-name.validation-message'
-                            },
-                            MID_NAME: {
-                                LABEL: 'page.users.dialog.add-user.form.mid-name.label',
-                                PLACEHOLDER: 'page.users.dialog.add-user.form.mid-name.placeholder'
-                            },
-                            LAST_NAME: {
-                                LABEL: 'page.users.dialog.add-user.form.last-name.label',
-                                PLACEHOLDER: 'page.users.dialog.add-user.form.last-name.placeholder',
-                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.last-name.validation-message'
-                            },
-                            GDPR: {
-                                LABEL: 'page.users.dialog.add-user.form.gdpr.label',
-                                VALIDATION_MESSAGE: 'page.users.dialog.add-user.form.gdpr.validation-message'
-                            },
                             CONFIRMED: {
                                 LABEL: 'page.users.dialog.add-user.form.confirmed.label'
                             },
@@ -447,10 +355,32 @@ export const RESOURCE = {
                             }
                         },
                         ERROR: 'page.users.dialog.add-user.error'
+                    },
+                    EDIT_AUTHORITIES: {
+                        TITLE: 'page.users.dialog.edit-authorities.title',
+                        FORM: {
+                            CUSTOMER: {
+                                LABEL: 'page.users.dialog.edit-authorities.form.customer.label'
+                            },
+                            EMPLOYEE: {
+                                LABEL: 'page.users.dialog.edit-authorities.form.employee.label'
+                            },
+                            MANAGER: {
+                                LABEL: 'page.users.dialog.edit-authorities.form.manager.label'
+                            },
+                            ADMIN: {
+                                LABEL: 'page.users.dialog.edit-authorities.form.admin.label'
+                            }
+                        }
+                    },
+                    EDIT_USER: {
+                        TITLE: 'page.users.dialog.edit-user.title',
+                        ERROR: 'page.users.dialog.edit-user.error'
                     }
                 },
                 USERS: {
-                    TITLE: 'page.users.users.title'
+                    TITLE: 'page.users.users.title',
+                    DELETE_USER_CONFIRMATION_QUESTION: 'page.users.users.user-confirmation-question'
                 }
             }
         }

@@ -6,7 +6,8 @@ import { WiwaErrorCode } from '../../client';
 import { RESOURCE } from '../../locale';
 import { useAuthState } from '../../state';
 
-import { WiwaButton, WiwaFormInput, WiwaNavLink } from '../../component/ui';
+import { WiwaButton, WiwaNavLink } from '../../component/ui';
+import { UsernameField, UserPasswordField } from '../../component/user';
 
 const SignInPage: React.FC = () => {
     const navigate = useNavigate();
@@ -78,56 +79,27 @@ const SignInPage: React.FC = () => {
                         event.preventDefault();
                         handleSubmit();
                     })}>
-                        <div className="mb-2">
-                            <WiwaFormInput
-                                type="text"
-                                name="username"
-                                label={t(RESOURCE.PAGE.AUTH.SIGN_IN.FORM.USERNAME.LABEL)}
-                                placeholder={t(RESOURCE.PAGE.AUTH.SIGN_IN.FORM.USERNAME.PLACEHOLDER).toString()}
-                                required={true}
-                                value={username}
-                                setValue={setUsername}
-                                valid={usernameValid}
-                                setValid={setUsernameValid}
-                                validate={() => {
-                                    if (username.trim().length === 0) {
-                                        return {
-                                            valid: false,
-                                            message: t(RESOURCE.PAGE.AUTH.SIGN_IN.FORM.USERNAME.VALIDATION_MESSAGE).toString()
-                                        };
-                                    }
-                                    return {valid: true};
-                                }}
-                            />
-                        </div>
-                        <div className="mb-2">
-                            <WiwaFormInput
-                                type="password"
-                                name="password"
-                                label={t(RESOURCE.PAGE.AUTH.SIGN_IN.FORM.PASSWORD.LABEL)}
-                                placeholder={t(RESOURCE.PAGE.AUTH.SIGN_IN.FORM.PASSWORD.PLACEHOLDER).toString()}
-                                required={true}
-                                value={password}
-                                setValue={setPassword}
-                                valid={passwordValid}
-                                setValid={setPasswordValid}
-                                validate={() => {
-                                    if (password.trim().length === 0) {
-                                        return {
-                                            valid: false,
-                                            message: t(RESOURCE.PAGE.AUTH.SIGN_IN.FORM.PASSWORD.VALIDATION_MESSAGE).toString()
-                                        };
-                                    }
-                                    return {valid: true};
-                                }}
-                            />
-                        </div>
+                        <UsernameField
+                            username={username}
+                            setUsername={setUsername}
+                            usernameValid={usernameValid}
+                            setUsernameValid={setUsernameValid}
+                        />
+
+                        <UserPasswordField
+                            password={password}
+                            setPassword={setPassword}
+                            passwordValid={passwordValid}
+                            setPasswordValid={setPasswordValid}
+                        />
+
                         <div className="flex justify-end mb-1">
                             <WiwaNavLink
                                 className="text-xs md:text-base"
                                 to="/auth/reset-password"
                             >{t(RESOURCE.PAGE.AUTH.SIGN_IN.FORM.LINK)}</WiwaNavLink>
                         </div>
+
                         <WiwaButton
                             type="submit"
                             className="w-full"

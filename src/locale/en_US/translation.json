@@ -46,6 +46,13 @@
     "user-username-is-used": "Username is used"
   },
   "component": {
+    "auth": {
+      "auth-gdpr-check-box": {
+        "label": "Agreement with",
+        "link": "GDPR",
+        "validation-message": "GDPR consent required"
+      }
+    },
     "layout": {
       "footer": {
         "links": {
@@ -89,6 +96,46 @@
         "first-name": "First name",
         "last-name": "Last name",
         "authorities": "Authorities"
+      },
+      "user-card-fields": {
+        "title-before": {
+          "label": "Title before",
+          "placeholder": "Enter title before"
+        },
+        "title-after": {
+          "label": "Title after",
+          "placeholder": "Enter title after"
+        },
+        "first-name": {
+          "label": "First name",
+          "placeholder": "Enter first name",
+          "validation-message": "First name is required"
+        },
+        "mid-name": {
+          "label": "Mid name",
+          "placeholder": "Enter mid name"
+        },
+        "last-name": {
+          "label": "Last name",
+          "placeholder": "Enter last name",
+          "validation-message": "Last name is required"
+        }
+      },
+      "user-email-field": {
+        "label": "Email",
+        "placeholder": "Enter email",
+        "validation-message-1": "Email is required",
+        "validation-message-2": "Invalid email"
+      },
+      "user-password-field": {
+        "label": "Password",
+        "placeholder": "Enter password",
+        "validation-message": "Password is required"
+      },
+      "username-field": {
+        "label": "Username",
+        "placeholder": "Enter username",
+        "validation-message": "Username is required"
       }
     }
   },
@@ -97,19 +144,6 @@
       "dialog": {
         "change-email": {
           "title": "Change email",
-          "form": {
-            "email": {
-              "label": "Email",
-              "placeholder": "Enter email",
-              "validation-message-1": "Email is required",
-              "validation-message-2": "Invalid email"
-            },
-            "password": {
-              "label": "Password",
-              "placeholder": "Enter password",
-              "validation-message": "Password is required"
-            }
-          },
           "message": "Your email has been changed.",
           "error": "Your email could not be changed."
         },
@@ -128,35 +162,6 @@
         "change-user-details": {
           "title": "Change user details",
           "message": "Your data has been changed.",
-          "form": {
-            "title-before": {
-              "label": "Title before",
-              "placeholder": "Enter title before"
-            },
-            "title-after": {
-              "label": "Title after",
-              "placeholder": "Enter title after"
-            },
-            "first-name": {
-              "label": "First name",
-              "placeholder": "Enter first name",
-              "validation-message": "First name is required"
-            },
-            "mid-name": {
-              "label": "Mid name",
-              "placeholder": "Enter mid name"
-            },
-            "last-name": {
-              "label": "Last name",
-              "placeholder": "Enter last name",
-              "validation-message": "Last name is required"
-            },
-            "gdpr": {
-              "label": "Agreement with",
-              "link": "GDPR",
-              "validation-message": "GDPR consent required"
-            }
-          },
           "error": "Failed to change user."
         },
         "resend-confirmation": {
@@ -171,31 +176,13 @@
       },
       "reset-password": {
         "submitted-message": "We have sent an password activation link to your user email.",
-        "title": "Forgotten password",
-        "form": {
-          "email": {
-            "label": "Email",
-            "placeholder": "Enter email",
-            "validation-message-1": "Email is required",
-            "validation-message-2": "Invalid email"
-          }
-        }
+        "title": "Forgotten password"
       },
       "sign-in": {
         "title": "Sign in to your account",
         "subtitle": "Or",
         "subtitle-link": "sign up",
         "form": {
-          "username": {
-            "label": "Username",
-            "placeholder": "Enter username",
-            "validation-message": "Username is required"
-          },
-          "password": {
-            "label": "Password",
-            "placeholder": "Enter password",
-            "validation-message": "Password is required"
-          },
           "link": "Forgotten password?",
           "submit": "Sign in"
         }
@@ -205,44 +192,6 @@
         "subtitle": "Or",
         "subtitle-link": "sign in",
         "form": {
-          "username": {
-            "label": "Username",
-            "placeholder": "Enter username",
-            "validation-message": "Username is required"
-          },
-          "email": {
-            "label": "Email",
-            "placeholder": "Enter email",
-            "validation-message1": "Email is required",
-            "validation-message2": "Invalid email format"
-          },
-          "title-before": {
-            "label": "Title before",
-            "placeholder": "Enter title before"
-          },
-          "title-after": {
-            "label": "Title after",
-            "placeholder": "Enter title after"
-          },
-          "first-name": {
-            "label": "First name",
-            "placeholder": "Enter first name",
-            "validation-message": "First name is required"
-          },
-          "mid-name": {
-            "label": "Mid name",
-            "placeholder": "Enter mid name"
-          },
-          "last-name": {
-            "label": "Last name",
-            "placeholder": "Enter last name",
-            "validation-message": "Last name is required"
-          },
-          "gdpr": {
-            "label": "Agreement with",
-            "link": "GDPR",
-            "validation-message": "GDPR consent required"
-          },
           "submit": "Sign up"
         }
       },
@@ -364,8 +313,44 @@
       }
     },
     "users": {
+      "dialog": {
+        "add-user": {
+          "title": "Add user",
+          "form": {
+            "confirmed": {
+              "label": "Confirmed"
+            },
+            "enabled": {
+              "label": "Enabled"
+            }
+          },
+          "error": "Failed to add user."
+        },
+        "edit-authorities": {
+          "title": "Edit authorities",
+          "form": {
+            "customer": {
+              "label": "Customer"
+            },
+            "employee": {
+              "label": "Employee"
+            },
+            "manager": {
+              "label": "Manager"
+            },
+            "admin": {
+              "label": "admin"
+            }
+          }
+        },
+        "edit-user": {
+          "title": "Edit user",
+          "error": "Failed to edit user."
+        }
+      },
       "users": {
-        "title": "Users"
+        "title": "Users",
+        "user-confirmation-question": "Do you really want to delete user?"
       }
     }
   }

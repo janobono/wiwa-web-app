@@ -6,7 +6,8 @@ import { useAuthState } from '../../../state';
 import { WiwaErrorCode } from '../../../client';
 import { RESOURCE } from '../../../locale';
 
-import { EMAIL_REGEX, WiwaButton, WiwaCaptcha, WiwaFormInput, WiwaSpinner } from '../../../component/ui';
+import { WiwaButton, WiwaCaptcha, WiwaSpinner } from '../../../component/ui';
+import { UserEmailField, UserPasswordField } from '../../../component/user';
 
 interface ChangeEmailDialogProps {
     showDialog: boolean
@@ -124,57 +125,21 @@ const ChangeEmailDialog: React.FC<ChangeEmailDialogProps> = (props) => {
                                                 event.preventDefault();
                                                 handleSubmit();
                                             })}>
-                                            <div className="mb-5">
-                                                <WiwaFormInput
-                                                    type="email"
-                                                    name="email"
-                                                    label={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_EMAIL.FORM.EMAIL.LABEL)}
-                                                    placeholder={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_EMAIL.FORM.EMAIL.PLACEHOLDER).toString()}
-                                                    required={true}
-                                                    value={email}
-                                                    setValue={setEmail}
-                                                    valid={emailValid}
-                                                    setValid={setEmailValid}
-                                                    validate={() => {
-                                                        if (email.trim().length === 0) {
-                                                            return {
-                                                                valid: false,
-                                                                message: t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_EMAIL.FORM.EMAIL.VALIDATION_MESSAGE_1).toString()
-                                                            };
-                                                        }
-                                                        const valid = EMAIL_REGEX.test(email);
-                                                        let message;
-                                                        if (!valid) {
-                                                            message = t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_EMAIL.FORM.EMAIL.VALIDATION_MESSAGE_2).toString();
-                                                        }
-                                                        return {valid, message};
-                                                    }}/>
-                                            </div>
+                                            <UserEmailField
+                                                email={email}
+                                                setEmail={setEmail}
+                                                emailValid={emailValid}
+                                                setEmailValid={setEmailValid}
+                                            />
 
-                                            <div className="mb-5">
-                                                <WiwaFormInput
-                                                    type="password"
-                                                    name="password"
-                                                    label={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_EMAIL.FORM.PASSWORD.LABEL)}
-                                                    placeholder={t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_EMAIL.FORM.PASSWORD.PLACEHOLDER).toString()}
-                                                    required={true}
-                                                    value={password}
-                                                    setValue={setPassword}
-                                                    valid={passwordValid}
-                                                    setValid={setPasswordValid}
-                                                    validate={() => {
-                                                        if (password.trim().length === 0) {
-                                                            return {
-                                                                valid: false,
-                                                                message: t(RESOURCE.PAGE.AUTH.DIALOG.CHANGE_EMAIL.FORM.PASSWORD.VALIDATION_MESSAGE).toString()
-                                                            };
-                                                        }
-                                                        return {valid: true};
-                                                    }}
-                                                />
-                                            </div>
+                                            <UserPasswordField
+                                                password={password}
+                                                setPassword={setPassword}
+                                                passwordValid={passwordValid}
+                                                setPasswordValid={setPasswordValid}
+                                            />
 
-                                            <div className="mb-5">
+                                            <div className="mb-2">
                                                 <WiwaCaptcha
                                                     name="captcha"
                                                     required={true}
