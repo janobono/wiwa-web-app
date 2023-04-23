@@ -1,8 +1,7 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { actuatorClient, ClientResponse } from '../client';
-import { HealthStatus } from '../client/model';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { actuatorClient } from '../client';
 
-const TIMEOUT = 300000;
+const TIMEOUT = 60000;
 
 export interface ActuatorState {
     up: boolean
@@ -11,33 +10,22 @@ export interface ActuatorState {
 const actuatorStateContext = createContext<ActuatorState | undefined>(undefined);
 
 const ActuatorStateProvider: React.FC<any> = ({children}) => {
-    const firstRun = useRef(true);
     const [up, setUp] = useState(false);
-    const [healthResponse, setHealthResponse] = useState<ClientResponse<HealthStatus>>();
+    const [actuatorCounter, setActuatorCounter] = useState(0);
 
     useEffect(() => {
-        if (firstRun.current) {
-            firstRun.current = false;
-
-            actuatorClient.getHealthStatus().then(
-                value => {
-                    setHealthResponse(value);
+        actuatorClient.getHealthStatus().then(
+            data => {
+                if (data.data && data.data.status === 'UP') {
+                    setUp(true);
+                } else {
+                    setUp(false);
                 }
-            );
-
-            setInterval(async () => {
-                setHealthResponse(await actuatorClient.getHealthStatus());
-            }, TIMEOUT);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (healthResponse && healthResponse.data) {
-            setUp(healthResponse.data.status === 'UP');
-        } else {
-            setUp(false);
-        }
-    }, [healthResponse]);
+            }
+        );
+        const timer = setInterval(() => setActuatorCounter(actuatorCounter + 1), TIMEOUT);
+        return () => clearTimeout(timer);
+    }, [actuatorCounter]);
 
     return (
         <actuatorStateContext.Provider

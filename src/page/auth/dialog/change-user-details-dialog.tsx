@@ -54,7 +54,7 @@ const ChangeUserDetailsDialog: React.FC<ChangeUserDetailsDialogProps> = (props) 
         setError(undefined);
         try {
             if (isFormValid() && captchaToken) {
-                const wiwaError = await authState?.changeUserDetails({
+                const clientResponse = await authState?.changeUserDetails({
                     titleBefore,
                     firstName,
                     midName,
@@ -64,8 +64,8 @@ const ChangeUserDetailsDialog: React.FC<ChangeUserDetailsDialogProps> = (props) 
                     captchaText,
                     captchaToken
                 });
-                if (wiwaError) {
-                    switch (wiwaError.code) {
+                if (clientResponse && clientResponse.error) {
+                    switch (clientResponse.error.code) {
                         case WiwaErrorCode.INVALID_CAPTCHA:
                             setError(t(RESOURCE.ERROR.INVALID_CAPTCHA).toString());
                             break;

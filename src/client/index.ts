@@ -13,6 +13,10 @@ export interface WiwaError {
     timestamp: string
 }
 
+export const wiwaError = (message: string): WiwaError => {
+    return {code: WiwaErrorCode.UNKNOWN, message, timestamp: ''}
+}
+
 export enum WiwaErrorCode {
     UNKNOWN = 'UNKNOWN',
     NOT_FOUND = 'NOT_FOUND',
@@ -38,7 +42,7 @@ export interface ClientResponse<T> {
 }
 
 export const toWiwaError = async (response: Response): Promise<WiwaError> => {
-    const result = {code: WiwaErrorCode.UNKNOWN, message: 'Unknown exception', timestamp: ''};
+    const result = wiwaError('Unknown exception');
     try {
         const data = await response.json();
         if (data && 'code' in data && 'message' in data && 'timestamp' in data) {

@@ -42,14 +42,14 @@ const ChangeEmailDialog: React.FC<ChangeEmailDialogProps> = (props) => {
         setError(undefined);
         try {
             if (isFormValid() && captchaToken) {
-                const wiwaError = await authState?.changeEmail({
+                const clientResponse = await authState?.changeEmail({
                     email,
                     password,
                     captchaText,
                     captchaToken
                 });
-                if (wiwaError) {
-                    switch (wiwaError.code) {
+                if (clientResponse && clientResponse.error) {
+                    switch (clientResponse.error.code) {
                         case WiwaErrorCode.INVALID_CAPTCHA:
                             setError(t(RESOURCE.ERROR.INVALID_CAPTCHA).toString());
                             break;

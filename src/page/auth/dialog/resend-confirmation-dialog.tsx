@@ -34,11 +34,11 @@ const ResendConfirmationDialog: React.FC<ResendConfirmationDialogProps> = (props
         setError(undefined);
         try {
             if (isFormValid() && captchaToken) {
-                const wiwaError = await authState?.resendConfirmation({
+                const clientResponse = await authState?.resendConfirmation({
                     captchaText,
                     captchaToken
                 });
-                if (wiwaError) {
+                if (clientResponse && clientResponse.error) {
                     setError(t(RESOURCE.PAGE.AUTH.DIALOG.RESEND_CONFIRMATION.ERROR).toString());
                 } else {
                     setSubmitted(true);

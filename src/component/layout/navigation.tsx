@@ -67,7 +67,10 @@ const Navigation: React.FC = () => {
                                     <WiwaButton
                                         variant="light"
                                         title={t(RESOURCE.ACTION.SIGN_OUT).toString()}
-                                        onClick={() => authState?.signOut().then(() => navigate('/'))}
+                                        onClick={() => {
+                                            authState?.signOut();
+                                            navigate('/');
+                                        }}
                                     >
                                         <LogOut size="24"/>
                                     </WiwaButton>

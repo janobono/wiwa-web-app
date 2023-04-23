@@ -67,7 +67,7 @@ const SignUpPage: React.FC = () => {
         setError(undefined);
         try {
             if (isFormValid() && captchaToken) {
-                const wiwaError = await authState?.signUp({
+                const clientResponse = await authState?.signUp({
                     username,
                     password,
                     titleBefore,
@@ -80,8 +80,8 @@ const SignUpPage: React.FC = () => {
                     captchaText,
                     captchaToken
                 });
-                if (wiwaError) {
-                    switch (wiwaError.code) {
+                if (clientResponse && clientResponse.error) {
+                    switch (clientResponse.error.code) {
                         case WiwaErrorCode.USER_USERNAME_IS_USED:
                             setError(t(RESOURCE.ERROR.USER_USERNAME_IS_USED).toString());
                             break;
@@ -92,7 +92,7 @@ const SignUpPage: React.FC = () => {
                             setError(t(RESOURCE.ERROR.GDPR).toString());
                             break;
                         default:
-                            setError(wiwaError.message);
+                            setError(clientResponse.error.message);
                             break;
                     }
                 }

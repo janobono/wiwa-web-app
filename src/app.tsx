@@ -33,11 +33,6 @@ import { WiwaSpinner } from './component/ui';
 const App: React.FC = () => {
     const {t} = useTranslation();
     const actuatorState = useActuatorState();
-    const authState = useAuthState();
-
-    useEffect(() => {
-        authState?.refresh();
-    }, [actuatorState?.up]);
 
     return (
         actuatorState?.up ?
@@ -61,10 +56,10 @@ const AppContent: React.FC = () => {
     const uiState = useUiState();
 
     useEffect(() => {
-        if (!authState?.isUserLogged) {
+        if (!authState?.token) {
             navigate('/');
         }
-    }, [authState?.isUserLogged]);
+    }, [authState?.token]);
 
     useEffect(() => {
         document.title = uiState?.title ? uiState.title : t(RESOURCE.TITLE)

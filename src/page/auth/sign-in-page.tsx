@@ -39,9 +39,9 @@ const SignInPage: React.FC = () => {
         setError(undefined);
         try {
             if (isFormValid()) {
-                const wiwaError = await authState?.signIn({username, password});
-                if (wiwaError) {
-                    switch (wiwaError.code) {
+                const clientResponse = await authState?.signIn({username, password});
+                if (clientResponse && clientResponse.error) {
+                    switch (clientResponse.error.code) {
                         case WiwaErrorCode.USER_NOT_FOUND:
                             setError(t(RESOURCE.ERROR.USER_NOT_FOUND).toString());
                             break;
@@ -52,7 +52,7 @@ const SignInPage: React.FC = () => {
                             setError(t(RESOURCE.ERROR.INVALID_CREDENTIALS).toString());
                             break;
                         default:
-                            setError(wiwaError.message);
+                            setError(clientResponse.error.message);
                             break;
                     }
                 }

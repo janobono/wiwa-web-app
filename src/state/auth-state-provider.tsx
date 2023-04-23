@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import decode, { JwtPayload } from 'jwt-decode';
 
-import { authClient, ClientResponse, WiwaError } from '../client';
+import { authClient, ClientResponse, wiwaError } from '../client';
 import {
     AuthenticationResponse,
     Authority,
@@ -16,8 +16,6 @@ import {
 } from '../client/model';
 
 import { useConfigState } from '../state';
-
-const TIMEOUT = 15000;
 
 const TOKEN = 'TOKEN';
 
@@ -35,19 +33,17 @@ interface AuthUser extends JwtPayload {
 }
 
 export interface AuthState {
-    isUserLogged: boolean,
-    user?: AuthUser,
     token?: string,
-    confirm: (confirmationRequest: ConfirmationRequest) => Promise<WiwaError | undefined>,
-    changeEmail: (changeEmailRequest: ChangeEmailRequest) => Promise<WiwaError | undefined>,
-    changePassword: (changePasswordRequest: ChangePasswordRequest) => Promise<WiwaError | undefined>,
-    changeUserDetails: (changeUserDetailsRequest: ChangeUserDetailsRequest) => Promise<WiwaError | undefined>,
-    resendConfirmation: (resendConfirmationRequest: ResendConfirmationRequest) => Promise<WiwaError | undefined>,
-    resetPassword: (resetPasswordRequest: ResetPasswordRequest) => Promise<WiwaError | undefined>,
-    signIn: (signInRequest: SignInRequest) => Promise<WiwaError | undefined>,
-    signUp: (signUpRequest: SignUpRequest) => Promise<WiwaError | undefined>,
-    refresh: () => Promise<WiwaError | undefined>,
-    signOut: () => Promise<void>
+    user?: AuthUser,
+    confirm: (confirmationRequest: ConfirmationRequest) => Promise<ClientResponse<void>>,
+    changeEmail: (changeEmailRequest: ChangeEmailRequest) => Promise<ClientResponse<void>>,
+    changePassword: (changePasswordRequest: ChangePasswordRequest) => Promise<ClientResponse<void>>,
+    changeUserDetails: (changeUserDetailsRequest: ChangeUserDetailsRequest) => Promise<ClientResponse<void>>,
+    resendConfirmation: (resendConfirmationRequest: ResendConfirmationRequest) => Promise<ClientResponse<void>>,
+    resetPassword: (resetPasswordRequest: ResetPasswordRequest) => Promise<ClientResponse<void>>,
+    signIn: (signInRequest: SignInRequest) => Promise<ClientResponse<void>>,
+    signUp: (signUpRequest: SignUpRequest) => Promise<ClientResponse<void>>,
+    signOut: () => void
 }
 
 const authStateContext = createContext<AuthState | undefined>(undefined);
@@ -55,105 +51,106 @@ const authStateContext = createContext<AuthState | undefined>(undefined);
 const AuthStateProvider: React.FC<any> = ({children}) => {
     const configState = useConfigState();
 
-    const firstRun = useRef(true);
+    const [authCounter, setAuthCounter] = useState(0);
+
     const [authenticationResponse, setAuthenticationResponse] = useState<AuthenticationResponse>();
-    const [isUserLogged, setUserLogged] = useState(false);
     const [user, setUser] = useState<AuthUser>();
     const [token, setToken] = useState<string>();
 
     useEffect(() => {
-        if (firstRun.current) {
-            firstRun.current = false;
-            setInterval(async () => {
-                if (user?.exp) {
-                    if (Date.now() - TIMEOUT > user.exp * 1000) {
-                        refresh().then(data => data && console.log(data));
-                    }
-                }
-            }, TIMEOUT);
+        let refreshToken = localStorage.getItem(TOKEN);
+        if (!refreshToken && authenticationResponse?.refreshToken) {
+            refreshToken = authenticationResponse.refreshToken;
         }
-        refresh();
-    }, [configState?.cookiesEnabled]);
+        refresh(refreshToken);
 
-    useEffect(() => {
-        setToken(authenticationResponse?.token);
-    }, [authenticationResponse]);
+        if (token) {
+            let timeout = 15000;
+            if (user?.exp) {
+                const timeToExp = user.exp * 1000 - Date.now();
+                if (timeToExp > timeout) {
+                    timeout = timeToExp - 1000;
+                }
+            }
+            const timer = setInterval(() => setAuthCounter(authCounter + 1), timeout);
+            return () => clearTimeout(timer);
+        }
+    }, [configState?.cookiesEnabled, token, authCounter]);
 
-    const confirm = async (confirmationRequest: ConfirmationRequest): Promise<WiwaError | undefined> => {
-        const clientResponse = await authClient.confirm(confirmationRequest);
-        handleAuthenticationResponse(clientResponse);
-        return clientResponse.error;
+    const refresh = (refreshToken: string | null) => {
+        if (refreshToken) {
+            console.log('auth refresh');
+            authClient.refresh({token: refreshToken})
+                .then(data => handleAuthenticationResponse(data));
+        } else {
+            setToken(undefined);
+            setUser(undefined);
+            setAuthenticationResponse(undefined);
+        }
     }
 
-    const changeEmail = async (changeEmailRequest: ChangeEmailRequest): Promise<WiwaError | undefined> => {
+    const confirm = async (confirmationRequest: ConfirmationRequest): Promise<ClientResponse<void>> => {
+        const clientResponse = await authClient.confirm(confirmationRequest);
+        handleAuthenticationResponse(clientResponse);
+        return {data: undefined, error: clientResponse.error};
+    }
+
+    const changeEmail = async (changeEmailRequest: ChangeEmailRequest): Promise<ClientResponse<void>> => {
         if (!authenticationResponse) {
-            return undefined;
+            throw new Error('User not authenticated');
         }
         const clientResponse = await authClient.changeEmail(changeEmailRequest, authenticationResponse.token);
         handleAuthenticationResponse(clientResponse);
-        return clientResponse.error;
+        return {data: undefined, error: clientResponse.error};
     }
 
-    const changePassword = async (changePasswordRequest: ChangePasswordRequest): Promise<WiwaError | undefined> => {
+    const changePassword = async (changePasswordRequest: ChangePasswordRequest): Promise<ClientResponse<void>> => {
         if (!authenticationResponse) {
-            return undefined;
+            return {data: undefined, error: wiwaError('Unauthenticated access.')};
         }
         const clientResponse = await authClient.changePassword(changePasswordRequest, authenticationResponse.token);
         handleAuthenticationResponse(clientResponse);
-        return clientResponse.error;
+        return {data: undefined, error: clientResponse.error};
     }
 
-    const changeUserDetails = async (changeUserDetailsRequest: ChangeUserDetailsRequest): Promise<WiwaError | undefined> => {
+    const changeUserDetails = async (changeUserDetailsRequest: ChangeUserDetailsRequest): Promise<ClientResponse<void>> => {
         if (!authenticationResponse) {
-            return undefined;
+            return {data: undefined, error: wiwaError('Unauthenticated access.')};
         }
         const clientResponse = await authClient.changeUserDetails(changeUserDetailsRequest, authenticationResponse.token);
         handleAuthenticationResponse(clientResponse);
-        return clientResponse.error;
+        return {data: undefined, error: clientResponse.error};
     }
 
-    const resendConfirmation = async (resendConfirmationRequest: ResendConfirmationRequest): Promise<WiwaError | undefined> => {
+    const resendConfirmation = async (resendConfirmationRequest: ResendConfirmationRequest): Promise<ClientResponse<void>> => {
         if (!authenticationResponse) {
-            return undefined;
+            return {data: undefined, error: wiwaError('Unauthenticated access.')};
         }
         const clientResponse = await authClient.resendConfirmation(resendConfirmationRequest, authenticationResponse.token);
-        return clientResponse.error;
+        return {data: undefined, error: clientResponse.error};
     }
 
-    const resetPassword = async (resetPasswordRequest: ResetPasswordRequest): Promise<WiwaError | undefined> => {
-        const clientResponse = await authClient.resetPassword(resetPasswordRequest);
-        return clientResponse.error;
+    const resetPassword = async (resetPasswordRequest: ResetPasswordRequest): Promise<ClientResponse<void>> => {
+        return authClient.resetPassword(resetPasswordRequest);
     }
 
-    const signIn = async (signInRequest: SignInRequest): Promise<WiwaError | undefined> => {
+    const signIn = async (signInRequest: SignInRequest): Promise<ClientResponse<void>> => {
         const clientResponse = await authClient.signIn(signInRequest);
         handleAuthenticationResponse(clientResponse);
-        return clientResponse.error;
+        return {data: undefined, error: clientResponse.error};
     }
 
-    const signUp = async (signUpRequest: SignUpRequest): Promise<WiwaError | undefined> => {
+    const signUp = async (signUpRequest: SignUpRequest): Promise<ClientResponse<void>> => {
         const clientResponse = await authClient.signUp(signUpRequest);
         handleAuthenticationResponse(clientResponse);
-        return clientResponse.error;
+        return {data: undefined, error: clientResponse.error};
     }
 
-    const refresh = async () => {
-        return await refreshToken(localStorage.getItem(TOKEN));
-    }
-
-    const signOut = async () => {
+    const signOut = () => {
         localStorage.removeItem(TOKEN);
-        setAuthenticationResponse(undefined);
+        setToken(undefined);
         setUser(undefined);
-    }
-
-    const refreshToken = async (refreshToken: string | null): Promise<WiwaError | undefined> => {
-        if (refreshToken) {
-            const clientResponse = await authClient.refresh({token: refreshToken});
-            handleAuthenticationResponse(clientResponse);
-            return clientResponse.error;
-        }
-        return undefined;
+        setAuthenticationResponse(undefined);
     }
 
     const handleAuthenticationResponse = (clientResponse: ClientResponse<AuthenticationResponse>) => {
@@ -163,22 +160,23 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
                 if (configState?.cookiesEnabled) {
                     localStorage.setItem(TOKEN, clientResponse.data.refreshToken);
                 }
-                setAuthenticationResponse(clientResponse.data);
+                setToken(clientResponse.data.token);
                 setUser(_authUser);
-                setUserLogged(true);
+                setAuthenticationResponse(clientResponse.data);
                 return;
             }
         }
-        setUserLogged(false);
+        setToken(undefined);
+        setUser(undefined);
+        setAuthenticationResponse(undefined);
     }
 
     return (
         <authStateContext.Provider
             value={
                 {
-                    isUserLogged,
-                    user,
                     token,
+                    user,
                     confirm,
                     changeEmail,
                     changePassword,
@@ -187,7 +185,6 @@ const AuthStateProvider: React.FC<any> = ({children}) => {
                     resetPassword,
                     signIn,
                     signUp,
-                    refresh,
                     signOut
                 }
             }

@@ -22,8 +22,8 @@ const ConfirmPage: React.FC = () => {
         setError(undefined);
         try {
             if (token) {
-                const wiwaError = await authState?.confirm({token});
-                if (wiwaError) {
+                const clientResponse = await authState?.confirm({token});
+                if (clientResponse && clientResponse.error) {
                     setError(t(RESOURCE.PAGE.AUTH.CONFIRM.ERROR_MESSAGE).toString());
                 }
             }

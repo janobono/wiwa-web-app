@@ -36,24 +36,26 @@ const ResetPasswordPage: React.FC = () => {
         setError(undefined);
         try {
             if (isFormValid() && captchaToken) {
-                const wiwaError = await authState?.resetPassword({email, captchaText, captchaToken});
-                if (wiwaError) {
-                    switch (wiwaError.code) {
-                        case WiwaErrorCode.USER_NOT_FOUND:
-                            setError(t(RESOURCE.ERROR.USER_NOT_FOUND).toString());
-                            break;
-                        case WiwaErrorCode.USER_IS_DISABLED:
-                            setError(t(RESOURCE.ERROR.USER_IS_DISABLED).toString());
-                            break;
-                        case WiwaErrorCode.INVALID_CAPTCHA:
-                            setError(t(RESOURCE.ERROR.INVALID_CAPTCHA).toString());
-                            break;
-                        default:
-                            setError(wiwaError.message);
-                            break;
+                const clientResponse = await authState?.resetPassword({email, captchaText, captchaToken});
+                if (clientResponse) {
+                    if (clientResponse.error) {
+                        switch (clientResponse.error.code) {
+                            case WiwaErrorCode.USER_NOT_FOUND:
+                                setError(t(RESOURCE.ERROR.USER_NOT_FOUND).toString());
+                                break;
+                            case WiwaErrorCode.USER_IS_DISABLED:
+                                setError(t(RESOURCE.ERROR.USER_IS_DISABLED).toString());
+                                break;
+                            case WiwaErrorCode.INVALID_CAPTCHA:
+                                setError(t(RESOURCE.ERROR.INVALID_CAPTCHA).toString());
+                                break;
+                            default:
+                                setError(clientResponse.error.message);
+                                break;
+                        }
+                    } else {
+                        setSubmitted(true);
                     }
-                } else {
-                    setSubmitted(true);
                 }
             }
         } finally {

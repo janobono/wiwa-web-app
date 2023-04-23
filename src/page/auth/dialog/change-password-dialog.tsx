@@ -41,14 +41,14 @@ const ChangePasswordDialog: React.FC<ChangePasswordDialogProps> = (props) => {
         setError(undefined);
         try {
             if (isFormValid() && captchaToken) {
-                const wiwaError = await authState?.changePassword({
+                const clientResponse = await authState?.changePassword({
                     oldPassword,
                     newPassword,
                     captchaText,
                     captchaToken
                 });
-                if (wiwaError) {
-                    switch (wiwaError.code) {
+                if (clientResponse && clientResponse.error) {
+                    switch (clientResponse.error.code) {
                         case WiwaErrorCode.INVALID_CAPTCHA:
                             setError(t(RESOURCE.ERROR.INVALID_CAPTCHA).toString());
                             break;
