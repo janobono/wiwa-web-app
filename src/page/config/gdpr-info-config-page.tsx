@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Edit } from 'react-feather';
 
-import { uiClient } from '../../client';
-import { LocaleData } from '../../client/model';
-
-import { getLanguages, RESOURCE, toLocale } from '../../locale';
+import { RESOURCE } from '../../locale';
 import { useUiState } from '../../state';
 
 import { WiwaButton, WiwaMarkdownRenderer } from '../../component/ui';
@@ -13,30 +10,10 @@ import { ChangeMarkdownDialog } from './dialog';
 
 const GdprInfoConfigPage: React.FC = () => {
     const {t} = useTranslation();
+
     const uiState = useUiState();
 
-    const languages = getLanguages();
-
-    const [markdownData, setMarkdownData] = useState<LocaleData<string>>({items: []});
     const [showMarkdownDataDialog, setShowMarkdownDataDialog] = useState(false);
-
-    useEffect(() => {
-        reloadData();
-    }, [uiState?.gdprInfo]);
-
-    const reloadData = () => {
-        languages.map(language => uiClient.getGdprInfo(toLocale(language)).then(
-                data => {
-                    setMarkdownData((prevState) => {
-                        const nextItems = [...prevState.items.filter(item => item.language !== language),
-                            {language, data: data.data ? data.data : ''}
-                        ];
-                        return {items: nextItems};
-                    });
-                }
-            )
-        );
-    }
 
     return (
         <>
@@ -56,11 +33,11 @@ const GdprInfoConfigPage: React.FC = () => {
                 </div>
             </div>
 
-            {uiState && showMarkdownDataDialog && (markdownData.items.length === languages.length) &&
+            {uiState && uiState.gdprInfo !== undefined && showMarkdownDataDialog &&
                 <ChangeMarkdownDialog
                     title={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_GDPR_INFO.TITLE)}
                     errorMessage={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_GDPR_INFO.ERROR)}
-                    initialData={markdownData}
+                    initialData={uiState.gdprInfo}
                     saveData={uiState.changeGdprInfo}
                     showDialog={showMarkdownDataDialog}
                     setShowDialog={setShowMarkdownDataDialog}

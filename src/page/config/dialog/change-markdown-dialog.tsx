@@ -1,20 +1,19 @@
-import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dialog, Transition } from '@headlessui/react';
 
 import { ClientResponse } from '../../../client';
-import { LocaleData } from '../../../client/model';
 
-import { LOCALE, RESOURCE, toLocale } from '../../../locale';
+import { RESOURCE } from '../../../locale';
 
 import { WiwaButton, WiwaMarkdownRenderer, WiwaSpinner, WiwaTextArea } from '../../../component/ui';
-import { FlagSk, FlagUs } from '../../../component/ui/icon';
+import { SingleValueBody } from '../../../client/model';
 
 interface ChangeMarkdownDialogProps {
     title: string,
     errorMessage: string,
-    initialData: LocaleData<string>,
-    saveData: (data: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
+    initialData: string,
+    saveData: (data: string) => Promise<ClientResponse<SingleValueBody<string>> | undefined>,
     showDialog: boolean
     setShowDialog: (showDialog: boolean) => void
 }
@@ -22,30 +21,19 @@ interface ChangeMarkdownDialogProps {
 const ChangeMarkdownDialog: React.FC<ChangeMarkdownDialogProps> = (props) => {
     const {t} = useTranslation();
 
-    const [markdownData, setMarkdownData] = useState<LocaleData<string>>(props.initialData);
-    const [isFormValid, setFormValid] = useState(false);
+    const [markdown, setMarkdown] = useState(props.initialData);
     const [isSubmitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
-
-    useEffect(() => {
-        const validArray: boolean[] = markdownData.items.map(item => item.data.trim().length > 0);
-        setFormValid(
-            validArray.length > 1
-            && validArray.reduce((previousValue, currentValue) => previousValue && currentValue)
-        );
-    }, [markdownData.items])
 
     const handleSubmit = async () => {
         setSubmitting(true);
         setError(undefined);
         try {
-            if (isFormValid) {
-                const clientResponse = await props.saveData(markdownData);
-                if (clientResponse !== undefined && clientResponse.data !== undefined) {
-                    props.setShowDialog(false);
-                } else {
-                    setError(props.errorMessage);
-                }
+            const clientResponse = await props.saveData(markdown);
+            if (clientResponse !== undefined && clientResponse.data !== undefined) {
+                props.setShowDialog(false);
+            } else {
+                setError(props.errorMessage);
             }
         } finally {
             setSubmitting(false);
@@ -87,15 +75,16 @@ const ChangeMarkdownDialog: React.FC<ChangeMarkdownDialogProps> = (props) => {
                                         handleSubmit();
                                     })}>
 
-                                    {props.initialData.items.map((dataItem, index) =>
-                                        <div className="mb-5" key={index}>
-                                            <LocaleDataEditor
-                                                language={dataItem.language}
-                                                markdownData={markdownData}
-                                                setMarkdownData={setMarkdownData}
-                                            />
-                                        </div>
-                                    )}
+                                    <div className="grid grid-cols-2 gap-5 mb-5">
+                                        <WiwaTextArea
+                                            className="w-full p-0.5"
+                                            rows={20}
+                                            name="markdown"
+                                            value={markdown}
+                                            onChange={event => setMarkdown(event.target.value)}
+                                        />
+                                        <WiwaMarkdownRenderer className="prose container p-5 mx-auto" md={markdown}/>
+                                    </div>
 
                                     {isSubmitting ?
                                         <div className="flex items-center justify-center">
@@ -105,7 +94,7 @@ const ChangeMarkdownDialog: React.FC<ChangeMarkdownDialogProps> = (props) => {
                                         <WiwaButton
                                             type="submit"
                                             className="w-full"
-                                            disabled={!isFormValid || isSubmitting}
+                                            disabled={isSubmitting}
                                         >
                                             {t(RESOURCE.ACTION.SAVE)}
                                         </WiwaButton>
@@ -122,49 +111,3 @@ const ChangeMarkdownDialog: React.FC<ChangeMarkdownDialogProps> = (props) => {
 }
 
 export default ChangeMarkdownDialog;
-
-interface LocaleDataEditorProps extends PropsWithChildren {
-    language: string,
-    markdownData: LocaleData<string>,
-    setMarkdownData: React.Dispatch<React.SetStateAction<LocaleData<string>>>
-}
-
-const LocaleDataEditor: React.FC<LocaleDataEditorProps> = (props) => {
-    const [value, setValue] = useState('');
-
-    useEffect(() => {
-        const item = props.markdownData?.items.find(item => item.language === props.language);
-        if (item) {
-            setValue(item.data);
-        }
-    }, []);
-
-    useEffect(() => {
-        props.setMarkdownData((prevState) => {
-                const nextItems = [...prevState.items.filter(item => item.language !== props.language),
-                    {language: props.language, data: value}
-                ];
-                return {items: nextItems};
-            }
-        );
-    }, [value]);
-
-    return (
-        <>
-            <div className="flex flex-row mb-5">
-                {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
-            </div>
-            <div className="grid grid-cols-2 gap-5 mb-5">
-                <WiwaTextArea
-                    className="w-full p-0.5"
-                    rows={20}
-                    id={props.language}
-                    name={props.language}
-                    value={value}
-                    onChange={event => setValue(event.target.value)}
-                />
-                <WiwaMarkdownRenderer className="prose container p-5 mx-auto" md={value}/>
-            </div>
-        </>
-    );
-}

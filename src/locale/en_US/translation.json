@@ -228,6 +228,53 @@
         },
         "change-company-info": {
           "title": "Change company info",
+          "form": {
+            "name": {
+              "label": "Name",
+              "validation-message": "Name is required"
+            },
+            "street": {
+              "label": "Street",
+              "validation-message": "Street is required"
+            },
+            "city": {
+              "label": "City",
+              "validation-message": "City is required"
+            },
+            "zip-code": {
+              "label": "Zip code",
+              "validation-message": "Zip code is required"
+            },
+            "state": {
+              "label": "State",
+              "validation-message": "State is required"
+            },
+            "phone": {
+              "label": "Phone",
+              "validation-message": "Phone is required"
+            },
+            "mail": {
+              "label": "Email",
+              "validation-message1": "Email is required",
+              "validation-message2": "Invalid email"
+            },
+            "business-id": {
+              "label": "Business Id"
+            },
+            "tax-id": {
+              "label": "Tax Id"
+            },
+            "vat-reg-no": {
+              "label": "Vat registration number"
+            },
+            "commercial-register-info": {
+              "label": "Commercial register info"
+            },
+            "map-url": {
+              "label": "Map",
+              "validation-message": "Map is required"
+            }
+          },
           "error": "Company info could not be changed."
         },
         "change-cookies-info": {

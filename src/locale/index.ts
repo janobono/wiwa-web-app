@@ -258,6 +258,53 @@ export const RESOURCE = {
                     },
                     CHANGE_COMPANY_INFO: {
                         TITLE: 'page.config.dialog.change-company-info.title',
+                        FORM: {
+                            NAME: {
+                                LABEL: 'page.config.dialog.change-company-info.form.name.label',
+                                VALIDATION_MESSAGE: 'page.config.dialog.change-company-info.form.name.validation-message'
+                            },
+                            STREET: {
+                                LABEL: 'page.config.dialog.change-company-info.form.street.label',
+                                VALIDATION_MESSAGE: 'page.config.dialog.change-company-info.form.street.validation-message'
+                            },
+                            CITY: {
+                                LABEL: 'page.config.dialog.change-company-info.form.city.label',
+                                VALIDATION_MESSAGE: 'page.config.dialog.change-company-info.form.city.validation-message'
+                            },
+                            ZIP_CODE: {
+                                LABEL: 'page.config.dialog.change-company-info.form.zip-code.label',
+                                VALIDATION_MESSAGE: 'page.config.dialog.change-company-info.form.zip-code.validation-message'
+                            },
+                            STATE: {
+                                LABEL: 'page.config.dialog.change-company-info.form.state.label',
+                                VALIDATION_MESSAGE: 'page.config.dialog.change-company-info.form.state.validation-message'
+                            },
+                            PHONE: {
+                                LABEL: 'page.config.dialog.change-company-info.form.phone.label',
+                                VALIDATION_MESSAGE: 'page.config.dialog.change-company-info.form.phone.validation-message'
+                            },
+                            MAIL: {
+                                LABEL: 'page.config.dialog.change-company-info.form.mail.label',
+                                VALIDATION_MESSAGE_1: 'page.config.dialog.change-company-info.form.mail.validation-message1',
+                                VALIDATION_MESSAGE_2: 'page.config.dialog.change-company-info.form.mail.validation-message2'
+                            },
+                            BUSINESS_ID: {
+                                LABEL: 'page.config.dialog.change-company-info.form.business-id.label'
+                            },
+                            TAX_ID: {
+                                LABEL: 'page.config.dialog.change-company-info.form.tax-id.label'
+                            },
+                            VAT_REG_NO: {
+                                LABEL: 'page.config.dialog.change-company-info.form.vag-reg-no.label'
+                            },
+                            COMMERCIAL_REGISTER_INFO: {
+                                LABEL: 'page.config.dialog.change-company-info.form.commercial-register-info.label'
+                            },
+                            MAP_URL: {
+                                LABEL: 'page.config.dialog.change-company-info.form.map-url.label',
+                                VALIDATION_MESSAGE: 'page.config.dialog.change-company-info.form.map-url.validation-message'
+                            }
+                        },
                         ERROR: 'page.config.dialog.change-company-info.error'
                     },
                     CHANGE_COOKIES_INFO: {

@@ -96,25 +96,6 @@ export const createAuthorization = (token?: string): {} => {
     }
 }
 
-export const getText = async (path: string, queryParams?: URLSearchParams, token?: string): Promise<ClientResponse<string>> => {
-    const authorization = createAuthorization(token);
-    const response = await fetch(path + (queryParams ? '?' + queryParams.toString() : ''), {
-        method: 'GET',
-        headers: {
-            ...authorization,
-            'Content-Type': 'application/json'
-        }
-    });
-
-    let data, error;
-    if (response.ok) {
-        data = await response.text();
-    } else {
-        error = await toWiwaError(response);
-    }
-    return {data, error};
-}
-
 export const getData = async <T>(path: string, queryParams?: URLSearchParams, token?: string): Promise<ClientResponse<T>> => {
     const authorization = createAuthorization(token);
     const response = await fetch(path + (queryParams ? '?' + queryParams.toString() : ''), {

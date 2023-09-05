@@ -7,8 +7,7 @@ import {
     postData,
     putData,
     setPageableQueryParams,
-    setQueryParam,
-    WiwaError
+    setQueryParam
 } from './index';
 import { Authority, Page, SingleValueBody, User, UserCard } from './model';
 

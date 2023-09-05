@@ -226,6 +226,53 @@
         },
         "change-company-info": {
           "title": "Zmeniť kontaktné informácie",
+          "form": {
+            "name": {
+              "label": "Názov",
+              "validation-message": "Vyžaduje sa názov"
+            },
+            "street": {
+              "label": "Ulica",
+              "validation-message": "Vyžaduje sa ulica"
+            },
+            "city": {
+              "label": "Mesto",
+              "validation-message": "Vyžaduje sa mesto"
+            },
+            "zip-code": {
+              "label": "PSČ",
+              "validation-message": "Vyžaduje sa PSČ"
+            },
+            "state": {
+              "label": "Štát",
+              "validation-message": "Vyžaduje sa štát"
+            },
+            "phone": {
+              "label": "Telefón",
+              "validation-message": "Vyžaduje sa telefón"
+            },
+            "mail": {
+              "label": "Email",
+              "validation-message1": "Vyžaduje sa email",
+              "validation-message2": "Neplatný email"
+            },
+            "business-id": {
+              "label": "IČO"
+            },
+            "tax-id": {
+              "label": "DIČ"
+            },
+            "vat-reg-no": {
+              "label": "IČ DPH"
+            },
+            "commercial-register-info": {
+              "label": "Daňová registračná informácia"
+            },
+            "map-url": {
+              "label": "Mapa",
+              "validation-message": "Vyžaduje sa mapa"
+            }
+          },
           "error": "Nepodarilo sa zmeniť kontaktné informácie."
         },
         "change-cookies-info": {

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import i18n, { getLocale, LOCALE, LOCALE_ITEM } from '../locale';
+import i18n, { getLocale, LOCALE, LOCALE_ITEM, toLanguage } from '../locale';
+import { uiClient } from '../client';
 
 const COOKIES_ENABLED_ITEM = 'COOKIES_ENABLED';
 
@@ -16,6 +17,17 @@ const configStateContext = createContext<ConfigState | undefined>(undefined);
 const ConfigStateProvider: React.FC<any> = ({children}) => {
     const [cookiesEnabled, setCookiesEnabled] = useState(localStorage.getItem(COOKIES_ENABLED_ITEM) === 'true');
     const [locale, setLocale] = useState(getLocale());
+
+    useEffect(() => {
+        const savedLocale = localStorage.getItem(LOCALE_ITEM);
+        if (savedLocale === null) {
+            uiClient.getDefaultLocale().then(response => {
+                if (response.data) {
+                    setLocaleToLocalStorageAndChangeLanguage(response.data?.value);
+                }
+            });
+        }
+    }, []);
 
     const setCookiesEnabledToLocalStorage = (cookiesEnabled: boolean) => {
         if (cookiesEnabled) {

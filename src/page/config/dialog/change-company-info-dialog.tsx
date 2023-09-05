@@ -1,22 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { uiClient } from '../../../client';
-import { CompanyInfo, LocaleData } from '../../../client/model';
 
-import { getLanguages, RESOURCE, toLocale } from '../../../locale';
+import { RESOURCE } from '../../../locale';
 import { useUiState } from '../../../state';
 
-import {
-    WiwaButton,
-    WiwaInput,
-    WiwaLabel,
-    WiwaLocaleDataArea,
-    WiwaLocaleDataInput,
-    WiwaSpinner,
-    WiwaTextArea
-} from '../../../component/ui';
+import { EMAIL_REGEX, WiwaButton, WiwaFormInput, WiwaSpinner } from '../../../component/ui';
 
 interface ChangeCompanyInfoDialogProps {
     showDialog: boolean
@@ -28,47 +19,83 @@ const ChangeCompanyInfoDialog: React.FC<ChangeCompanyInfoDialogProps> = (props) 
 
     const uiState = useUiState();
 
-    const languages = getLanguages();
+    const [name, setName] = useState('');
+    const [nameValid, setNameValid] = useState(false);
 
-    const [companyInfoData, setCompanyInfoData] = useState<LocaleData<CompanyInfo>>({items: []});
-    const [isFormValid, setFormValid] = useState(false);
+    const [street, setStreet] = useState('');
+    const [streetValid, setStreetValid] = useState(false);
+
+    const [city, setCity] = useState('');
+    const [cityValid, setCityValid] = useState(false);
+
+    const [zipCode, setZipCode] = useState('');
+    const [zipCodeValid, setZipCodeValid] = useState(false);
+
+    const [state, setState] = useState('');
+    const [stateValid, setStateValid] = useState(false);
+
+    const [phone, setPhone] = useState('');
+    const [phoneValid, setPhoneValid] = useState(false);
+
+    const [mail, setMail] = useState('');
+    const [mailValid, setMailValid] = useState(false);
+
+    const [businessId, setBusinessId] = useState('');
+
+    const [taxId, setTaxId] = useState('');
+
+    const [vatRegNo, setVatRegNo] = useState('');
+
+    const [commercialRegisterInfo, setCommercialRegisterInfo] = useState('');
+
+    const [mapUrl, setMapUrl] = useState('');
+    const [mapUrlValid, setMapUrlValid] = useState(false);
+
+    const isFormValid = (): boolean => {
+        return nameValid && streetValid && cityValid && zipCodeValid && stateValid && phoneValid && mailValid && mapUrlValid;
+    };
+
     const [isSubmitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
     useEffect(() => {
-        languages.map(language => uiClient.getCompanyInfo(toLocale(language)).then(
-                data => {
-                    setCompanyInfoData((prevState) => {
-                        const nextItems = [...prevState.items.filter(item => item.language !== language)];
-                        const companyInfo = data.data;
-                        if (companyInfo) {
-                            nextItems.push({language, data: companyInfo});
-                        }
-                        return {items: nextItems};
-                    });
-                }
-            )
-        );
-    }, []);
-
-    useEffect(() => {
-        const validArray: boolean[] = companyInfoData.items.map(item => {
-            return Array.from(Object.values(item.data))
-                .map(value => value.toString().trim().length > 0)
-                .reduce((previousValue, currentValue) => previousValue && currentValue);
+        uiClient.getCompanyInfo().then(response => {
+            if (response.data) {
+                setName(response.data.name);
+                setStreet(response.data.street);
+                setCity(response.data.city);
+                setZipCode(response.data.zipCode);
+                setState(response.data.state);
+                setPhone(response.data.phone);
+                setMail(response.data.mail);
+                setBusinessId(response.data.businessId);
+                setTaxId(response.data.taxId);
+                setVatRegNo(response.data.vatRegNo);
+                setCommercialRegisterInfo(response.data.commercialRegisterInfo);
+                setMapUrl(response.data.mapUrl);
+            }
         });
-        setFormValid(
-            validArray.length > 1
-            && validArray.reduce((previousValue, currentValue) => previousValue && currentValue)
-        );
-    }, [companyInfoData.items])
+    }, []);
 
     const handleSubmit = async () => {
         setSubmitting(true);
         setError(undefined);
         try {
-            if (isFormValid) {
-                const clientResponse = await uiState?.changeCompanyInfo(companyInfoData);
+            if (isFormValid()) {
+                const clientResponse = await uiState?.changeCompanyInfo({
+                    name,
+                    street,
+                    city,
+                    zipCode,
+                    state,
+                    phone,
+                    mail,
+                    businessId,
+                    taxId,
+                    vatRegNo,
+                    commercialRegisterInfo,
+                    mapUrl
+                });
                 if (clientResponse !== undefined && clientResponse.data !== undefined) {
                     props.setShowDialog(false);
                 } else {
@@ -117,10 +144,258 @@ const ChangeCompanyInfoDialog: React.FC<ChangeCompanyInfoDialogProps> = (props) 
                                         handleSubmit();
                                     })}>
 
-                                    {languages.length === companyInfoData.items.length &&
-                                        <CompanyInfoEditor companyInfoData={companyInfoData}
-                                                           setCompanyInfoData={setCompanyInfoData}/>
-                                    }
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="name"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.NAME.LABEL)}
+                                            required={true}
+                                            value={name}
+                                            setValue={setName}
+                                            valid={nameValid}
+                                            setValid={setNameValid}
+                                            validate={() => {
+                                                if (name.trim().length === 0) {
+                                                    return {
+                                                        valid: false,
+                                                        message: t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.NAME.VALIDATION_MESSAGE).toString()
+                                                    };
+                                                }
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="street"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.STREET.LABEL)}
+                                            required={true}
+                                            value={street}
+                                            setValue={setStreet}
+                                            valid={streetValid}
+                                            setValid={setStreetValid}
+                                            validate={() => {
+                                                if (street.trim().length === 0) {
+                                                    return {
+                                                        valid: false,
+                                                        message: t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.STREET.VALIDATION_MESSAGE).toString()
+                                                    };
+                                                }
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="city"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.CITY.LABEL)}
+                                            required={true}
+                                            value={city}
+                                            setValue={setCity}
+                                            valid={cityValid}
+                                            setValid={setCityValid}
+                                            validate={() => {
+                                                if (city.trim().length === 0) {
+                                                    return {
+                                                        valid: false,
+                                                        message: t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.CITY.VALIDATION_MESSAGE).toString()
+                                                    };
+                                                }
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="zipCode"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.ZIP_CODE.LABEL)}
+                                            required={true}
+                                            value={zipCode}
+                                            setValue={setZipCode}
+                                            valid={zipCodeValid}
+                                            setValid={setZipCodeValid}
+                                            validate={() => {
+                                                if (zipCode.trim().length === 0) {
+                                                    return {
+                                                        valid: false,
+                                                        message: t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.ZIP_CODE.VALIDATION_MESSAGE).toString()
+                                                    };
+                                                }
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="state"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.STATE.LABEL)}
+                                            required={true}
+                                            value={state}
+                                            setValue={setState}
+                                            valid={stateValid}
+                                            setValid={setStateValid}
+                                            validate={() => {
+                                                if (state.trim().length === 0) {
+                                                    return {
+                                                        valid: false,
+                                                        message: t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.STATE.VALIDATION_MESSAGE).toString()
+                                                    };
+                                                }
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="phone"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.PHONE.LABEL)}
+                                            required={true}
+                                            value={phone}
+                                            setValue={setPhone}
+                                            valid={phoneValid}
+                                            setValid={setPhoneValid}
+                                            validate={() => {
+                                                if (phone.trim().length === 0) {
+                                                    return {
+                                                        valid: false,
+                                                        message: t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.PHONE.VALIDATION_MESSAGE).toString()
+                                                    };
+                                                }
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="mail"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.MAIL.LABEL)}
+                                            required={true}
+                                            value={mail}
+                                            setValue={setMail}
+                                            valid={mailValid}
+                                            setValid={setMailValid}
+                                            validate={() => {
+                                                if (mail.trim().length === 0) {
+                                                    return {
+                                                        valid: false,
+                                                        message: t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.MAIL.VALIDATION_MESSAGE_1).toString()
+                                                    };
+                                                }
+                                                const valid = EMAIL_REGEX.test(mail);
+                                                let message;
+                                                if (!valid) {
+                                                    message = t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.MAIL.VALIDATION_MESSAGE_2).toString();
+                                                }
+                                                return {valid, message};
+                                            }}/>
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="businessId"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.BUSINESS_ID.LABEL)}
+                                            value={businessId}
+                                            setValue={setBusinessId}
+                                            valid={true}
+                                            setValid={() => {
+                                            }}
+                                            validate={() => {
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="taxId"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.TAX_ID.LABEL)}
+                                            value={taxId}
+                                            setValue={setTaxId}
+                                            valid={true}
+                                            setValid={() => {
+                                            }}
+                                            validate={() => {
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="vatRegNo"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.VAT_REG_NO.LABEL)}
+                                            value={vatRegNo}
+                                            setValue={setVatRegNo}
+                                            valid={true}
+                                            setValid={() => {
+                                            }}
+                                            validate={() => {
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="commercialRegisterInfo"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.COMMERCIAL_REGISTER_INFO.LABEL)}
+                                            value={commercialRegisterInfo}
+                                            setValue={setCommercialRegisterInfo}
+                                            valid={true}
+                                            setValid={() => {
+                                            }}
+                                            validate={() => {
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <WiwaFormInput
+                                            type="text"
+                                            name="mapUrl"
+                                            label={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.MAP_URL.LABEL)}
+                                            required={true}
+                                            value={mapUrl}
+                                            setValue={setMapUrl}
+                                            valid={mapUrlValid}
+                                            setValid={setMapUrlValid}
+                                            validate={() => {
+                                                if (mapUrl.trim().length === 0) {
+                                                    return {
+                                                        valid: false,
+                                                        message: t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_COMPANY_INFO.FORM.MAP_URL.VALIDATION_MESSAGE).toString()
+                                                    };
+                                                }
+                                                return {valid: true};
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <iframe
+                                            width="100%"
+                                            height="280px"
+                                            src={mapUrl}
+                                            className="border-0">
+                                        </iframe>
+                                    </div>
 
                                     {isSubmitting ?
                                         <div className="flex items-center justify-center">
@@ -130,7 +405,7 @@ const ChangeCompanyInfoDialog: React.FC<ChangeCompanyInfoDialogProps> = (props) 
                                         <WiwaButton
                                             type="submit"
                                             className="w-full"
-                                            disabled={!isFormValid || isSubmitting}
+                                            disabled={!isFormValid() || isSubmitting}
                                         >
                                             {t(RESOURCE.ACTION.SAVE)}
                                         </WiwaButton>
@@ -147,279 +422,3 @@ const ChangeCompanyInfoDialog: React.FC<ChangeCompanyInfoDialogProps> = (props) 
 }
 
 export default ChangeCompanyInfoDialog;
-
-interface CompanyInfoEditorProps extends PropsWithChildren {
-    companyInfoData: LocaleData<CompanyInfo>,
-    setCompanyInfoData: React.Dispatch<React.SetStateAction<LocaleData<CompanyInfo>>>
-}
-
-const CompanyInfoEditor: React.FC<CompanyInfoEditorProps> = (props) => {
-    const {t} = useTranslation();
-
-    const languages = getLanguages();
-
-    const [name, setName] = useState<LocaleData<string>>({items: []});
-    const [street, setStreet] = useState<LocaleData<string>>({items: []});
-    const [city, setCity] = useState<LocaleData<string>>({items: []});
-    const [zipCode, setZipCode] = useState<string>('');
-    const [state, setState] = useState<LocaleData<string>>({items: []});
-    const [phone, setPhone] = useState<string>('');
-    const [mail, setMail] = useState<string>('');
-    const [businessId, setBusinessId] = useState<string>('');
-    const [taxId, setTaxId] = useState<string>('');
-    const [vatRegNo, setVatRegNo] = useState<string>('');
-    const [commercialRegisterInfo, setCommercialRegisterInfo] = useState<LocaleData<string>>({items: []});
-    const [mapUrl, setMapUrl] = useState<string>('');
-
-    useEffect(() => {
-        languages.map(language => {
-            const item = props.companyInfoData.items.find(item => item.language === language);
-            if (item) {
-                setName((prevState) => {
-                    const nextItems = prevState.items.filter(nameItem => nameItem.language !== item.language);
-                    nextItems.push({language: item.language, data: item.data.name});
-                    return {items: nextItems};
-                });
-                setStreet((prevState) => {
-                    const nextItems = prevState.items.filter(streetItem => streetItem.language !== item.language);
-                    nextItems.push({language: item.language, data: item.data.street});
-                    return {items: nextItems};
-                });
-                setCity((prevState) => {
-                    const nextItems = prevState.items.filter(cityItem => cityItem.language !== item.language);
-                    nextItems.push({language: item.language, data: item.data.city});
-                    return {items: nextItems};
-                });
-                setZipCode(item.data.zipCode);
-                setState((prevState) => {
-                    const nextItems = prevState.items.filter(stateItem => stateItem.language !== item.language);
-                    nextItems.push({language: item.language, data: item.data.state});
-                    return {items: nextItems};
-                });
-                setPhone(item.data.phone);
-                setMail(item.data.mail);
-                setBusinessId(item.data.businessId);
-                setTaxId(item.data.taxId);
-                setVatRegNo(item.data.vatRegNo);
-                setCommercialRegisterInfo((prevState) => {
-                    const nextItems = prevState.items.filter(comRegInfo => comRegInfo.language !== item.language);
-                    nextItems.push({language: item.language, data: item.data.commercialRegisterInfo});
-                    return {items: nextItems};
-                });
-                setMapUrl(item.data.mapUrl);
-            }
-        });
-    }, []);
-
-    useEffect(() => {
-        const nextItems = props.companyInfoData.items.map(item => {
-            const language = item.language;
-
-            const nameItem = name.items.find(nameItem => nameItem.language === language);
-            const streetItem = street.items.find(streetItem => streetItem.language === language);
-            const cityItem = city.items.find(cityItem => cityItem.language === language);
-            const stateItem = state.items.find(stateItem => stateItem.language === language);
-            const commercialRegisterInfoItem = commercialRegisterInfo.items.find(
-                commercialRegisterInfoItem => commercialRegisterInfoItem.language === language);
-
-            return {
-                language,
-                data: {
-                    name: nameItem ? nameItem.data : '',
-                    street: streetItem ? streetItem.data : '',
-                    city: cityItem ? cityItem.data : '',
-                    zipCode,
-                    state: stateItem ? stateItem.data : '',
-                    phone,
-                    mail,
-                    businessId,
-                    taxId,
-                    vatRegNo,
-                    commercialRegisterInfo: commercialRegisterInfoItem ? commercialRegisterInfoItem.data : '',
-                    mapUrl
-                }
-            };
-        });
-        props.setCompanyInfoData({items: nextItems});
-    }, [name, street, city, zipCode, state, phone, mail, businessId, taxId, vatRegNo, commercialRegisterInfo, mapUrl]);
-
-    return (
-        <>
-            {languages.length === name.items.length &&
-                languages.length === street.items.length &&
-                languages.length === city.items.length &&
-                languages.length === state.items.length &&
-                languages.length === commercialRegisterInfo.items.length &&
-                <>
-                    <div className="mb-2">
-                        <WiwaLabel
-                            htmlFor="name">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.NAME)}
-                        </WiwaLabel>
-                        <div id="name" className="grid grid-cols-1">
-                            {languages.map((language, index) =>
-                                <WiwaLocaleDataInput
-                                    key={index}
-                                    name="name"
-                                    language={language}
-                                    data={name}
-                                    setData={setName}
-                                />
-                            )}
-                        </div>
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel
-                            htmlFor="street">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.STREET)}
-                        </WiwaLabel>
-                        <div id="street" className="grid grid-cols-1">
-                            {languages.map((language, index) =>
-                                <WiwaLocaleDataInput
-                                    key={index}
-                                    name="street"
-                                    language={language}
-                                    data={street}
-                                    setData={setStreet}
-                                />
-                            )}
-                        </div>
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel
-                            htmlFor="city">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.CITY)}
-                        </WiwaLabel>
-                        <div id="city" className="grid grid-cols-1">
-                            {languages.map((language, index) =>
-                                <WiwaLocaleDataInput
-                                    key={index}
-                                    name="city"
-                                    language={language}
-                                    data={city}
-                                    setData={setCity}
-                                />
-                            )}
-                        </div>
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel
-                            htmlFor="zipCode">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.ZIP_CODE)}</WiwaLabel>
-                        {props.children}
-                        <WiwaInput
-                            className="w-full p-0.5"
-                            id="zipCode"
-                            name="zipCode"
-                            type="text"
-                            value={zipCode}
-                            onChange={event => setZipCode(event.target.value)}
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel
-                            htmlFor="state">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.STATE)}
-                        </WiwaLabel>
-                        <div id="state" className="grid grid-cols-1">
-                            {languages.map((language, index) =>
-                                <WiwaLocaleDataInput
-                                    key={index}
-                                    name="state"
-                                    language={language}
-                                    data={state}
-                                    setData={setState}
-                                />
-                            )}
-                        </div>
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel htmlFor="phone">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.PHONE)}</WiwaLabel>
-                        <WiwaInput
-                            className="w-full p-0.5"
-                            id="phone"
-                            name="phone"
-                            type="text"
-                            value={phone}
-                            onChange={event => setPhone(event.target.value)}
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel htmlFor="mail">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.MAIL)}</WiwaLabel>
-                        <WiwaInput
-                            className="w-full p-0.5"
-                            id="mail"
-                            name="mail"
-                            type="mail"
-                            value={mail}
-                            onChange={event => setMail(event.target.value)}
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel
-                            htmlFor="businessId">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.BUSINESS_ID)}</WiwaLabel>
-                        <WiwaInput
-                            className="w-full p-0.5"
-                            id="businessId"
-                            name="businessId"
-                            type="text"
-                            value={businessId}
-                            onChange={event => setBusinessId(event.target.value)}
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel htmlFor="taxId">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.TAX_ID)}</WiwaLabel>
-                        <WiwaInput
-                            className="w-full p-0.5"
-                            id="taxId"
-                            name="taxId"
-                            type="text"
-                            value={taxId}
-                            onChange={event => setTaxId(event.target.value)}
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel
-                            htmlFor="vatRegNo">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.VAT_REG_NO)}</WiwaLabel>
-                        <WiwaInput
-                            className="w-full p-0.5"
-                            id="vatRegNo"
-                            name="vatRegNo"
-                            type="text"
-                            value={vatRegNo}
-                            onChange={event => setVatRegNo(event.target.value)}
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel
-                            htmlFor="commercialRegisterInfo">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.COMMERCIAL_REGISTER_INFO)}
-                        </WiwaLabel>
-                        <div id="commercialRegisterInfo" className="grid grid-cols-1">
-                            {languages.map((language, index) =>
-                                <WiwaLocaleDataArea
-                                    key={index}
-                                    name="commercialRegisterInfo"
-                                    language={language}
-                                    data={commercialRegisterInfo}
-                                    setData={setCommercialRegisterInfo}
-                                />
-                            )}
-                        </div>
-                    </div>
-                    <div className="mb-2">
-                        <WiwaLabel htmlFor="mapUrl">{t(RESOURCE.PAGE.CONFIG.COMPANY_INFO.MAP_URL)}</WiwaLabel>
-                        <WiwaTextArea
-                            className="w-full p-0.5"
-                            rows={3}
-                            id="mapUrl"
-                            name="mapUrl"
-                            value={mapUrl}
-                            onChange={event => setMapUrl(event.target.value)}
-                        />
-                        <iframe
-                            width="100%"
-                            height="280px"
-                            src={mapUrl}
-                            className="border-0">
-                        </iframe>
-                    </div>
-                </>
-            }
-        </>
-    );
-}

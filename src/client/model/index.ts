@@ -8,15 +8,6 @@ export interface HealthStatus {
     status: string
 }
 
-export interface LocaleData<T> {
-    items: LocaleDataItem<T>[]
-}
-
-export interface LocaleDataItem<T> {
-    language: string,
-    data: T
-}
-
 export interface Page<T> {
     totalPages: number,
     totalElements: number,

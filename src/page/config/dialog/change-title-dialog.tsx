@@ -1,15 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { uiClient } from '../../../client';
-import { LocaleData } from '../../../client/model';
-
-import { getLanguages, LOCALE, RESOURCE, toLocale } from '../../../locale';
+import { RESOURCE } from '../../../locale';
 import { useUiState } from '../../../state';
 
 import { WiwaButton, WiwaInput, WiwaSpinner } from '../../../component/ui';
-import { FlagSk, FlagUs } from '../../../component/ui/icon';
 
 interface ChangeTitleDialogProps {
     showDialog: boolean
@@ -21,46 +17,19 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
 
     const uiState = useUiState();
 
-    const languages = getLanguages();
-
-    const [titleData, setTitleData] = useState<LocaleData<string>>({items: []});
-    const [isFormValid, setFormValid] = useState(false);
+    const [title, setTitle] = useState<string>(uiState?.title ? uiState.title : '');
     const [isSubmitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
-
-    useEffect(() => {
-        languages.map(language => uiClient.getTitle(toLocale(language)).then(
-                data => {
-                    setTitleData((prevState) => {
-                        const nextItems = [...prevState.items.filter(item => item.language !== language),
-                            {language, data: data.data ? data.data : ''}
-                        ];
-                        return {items: nextItems};
-                    });
-                }
-            )
-        );
-    }, []);
-
-    useEffect(() => {
-        const validArray: boolean[] = titleData.items.map(item => item.data.trim().length > 0);
-        setFormValid(
-            validArray.length > 1
-            && validArray.reduce((previousValue, currentValue) => previousValue && currentValue)
-        );
-    }, [titleData.items])
 
     const handleSubmit = async () => {
         setSubmitting(true);
         setError(undefined);
         try {
-            if (isFormValid) {
-                const clientResponse = await uiState?.changeTitle(titleData);
-                if (clientResponse !== undefined && clientResponse.data !== undefined) {
-                    props.setShowDialog(false);
-                } else {
-                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_TITLE.ERROR).toString());
-                }
+            const clientResponse = await uiState?.changeTitle(title);
+            if (clientResponse !== undefined && clientResponse.data !== undefined) {
+                props.setShowDialog(false);
+            } else {
+                setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_TITLE.ERROR).toString());
             }
         } finally {
             setSubmitting(false);
@@ -104,15 +73,15 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
                                         handleSubmit();
                                     })}>
 
-                                    {languages.map((language, index) =>
-                                        <div className="mb-5" key={index}>
-                                            <TitleEditor
-                                                language={language}
-                                                titleData={titleData}
-                                                setTitleData={setTitleData}
-                                            />
-                                        </div>
-                                    )}
+                                    <div className="mb-2">
+                                        <WiwaInput
+                                            className="w-full p-0.5"
+                                            type="text"
+                                            name="title"
+                                            value={title}
+                                            onChange={event => setTitle(event.target.value)}
+                                        />
+                                    </div>
 
                                     {isSubmitting ?
                                         <div className="flex items-center justify-center">
@@ -122,7 +91,7 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
                                         <WiwaButton
                                             type="submit"
                                             className="w-full"
-                                            disabled={!isFormValid || isSubmitting}
+                                            disabled={isSubmitting}
                                         >
                                             {t(RESOURCE.ACTION.SAVE)}
                                         </WiwaButton>
@@ -139,44 +108,3 @@ const ChangeTitleDialog: React.FC<ChangeTitleDialogProps> = (props) => {
 }
 
 export default ChangeTitleDialog;
-
-interface TitleEditorProps extends PropsWithChildren {
-    language: string,
-    titleData: LocaleData<string>,
-    setTitleData: React.Dispatch<React.SetStateAction<LocaleData<string>>>
-}
-
-const TitleEditor: React.FC<TitleEditorProps> = (props) => {
-    const [value, setValue] = useState('');
-
-    useEffect(() => {
-        const item = props.titleData?.items.find(item => item.language === props.language);
-        if (item) {
-            setValue(item.data);
-        }
-    }, [props.titleData]);
-
-    useEffect(() => {
-        props.setTitleData((prevState) => {
-                const nextItems = [...prevState.items.filter(item => item.language !== props.language),
-                    {language: props.language, data: value}
-                ];
-                return {items: nextItems};
-            }
-        );
-    }, [value]);
-
-    return (
-        <div className="flex flex-row gap-2 items-center">
-            {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
-            <WiwaInput
-                className="w-full p-0.5"
-                type="text"
-                id={props.language}
-                name={props.language}
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            />
-        </div>
-    );
-}

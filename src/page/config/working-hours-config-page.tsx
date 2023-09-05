@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Edit } from 'react-feather';
 
-import { uiClient } from '../../client';
-import { LocaleData } from '../../client/model';
-
-import { getLanguages, RESOURCE, toLocale } from '../../locale';
+import { RESOURCE } from '../../locale';
 import { useUiState } from '../../state';
 
 import { WiwaButton, WiwaMarkdownRenderer } from '../../component/ui';
@@ -13,30 +10,10 @@ import { ChangeMarkdownDialog } from './dialog';
 
 const WorkingHoursConfigPage: React.FC = () => {
     const {t} = useTranslation();
+
     const uiState = useUiState();
 
-    const languages = getLanguages();
-
-    const [markdownData, setMarkdownData] = useState<LocaleData<string>>({items: []});
     const [showMarkdownDataDialog, setShowMarkdownDataDialog] = useState(false);
-
-    useEffect(() => {
-        reloadData();
-    }, [uiState?.workingHours]);
-
-    const reloadData = () => {
-        languages.map(language => uiClient.getWorkingHours(toLocale(language)).then(
-                data => {
-                    setMarkdownData((prevState) => {
-                        const nextItems = [...prevState.items.filter(item => item.language !== language),
-                            {language, data: data.data ? data.data : ''}
-                        ];
-                        return {items: nextItems};
-                    });
-                }
-            )
-        );
-    }
 
     return (
         <>
@@ -44,7 +21,6 @@ const WorkingHoursConfigPage: React.FC = () => {
                 <div className="container py-5 mx-auto">
                     <WiwaButton
                         size="xs"
-                        disabled={markdownData.items.length !== languages.length}
                         className="mb-5"
                         title={t(RESOURCE.ACTION.EDIT).toString()}
                         onClick={() => setShowMarkdownDataDialog(true)}
@@ -57,11 +33,11 @@ const WorkingHoursConfigPage: React.FC = () => {
                 </div>
             </div>
 
-            {uiState && showMarkdownDataDialog && (markdownData.items.length === languages.length) &&
+            {uiState && uiState.workingHours !== undefined && showMarkdownDataDialog &&
                 <ChangeMarkdownDialog
                     title={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_WORKING_HOURS.TITLE)}
                     errorMessage={t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_WORKING_HOURS.ERROR)}
-                    initialData={markdownData}
+                    initialData={uiState.workingHours}
                     saveData={uiState.changeWorkingHours}
                     showDialog={showMarkdownDataDialog}
                     setShowDialog={setShowMarkdownDataDialog}

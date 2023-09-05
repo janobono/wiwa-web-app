@@ -8,7 +8,7 @@ import {
     setPageableQueryParams,
     toWiwaError
 } from './index';
-import { ApplicationImage, ApplicationInfo, CompanyInfo, LocaleData, Page } from './model';
+import { ApplicationImage, ApplicationInfo, CompanyInfo, Page, SingleValueBody } from './model';
 
 const PATH_WORKING_HOURS = '/api/config/working-hours';
 const PATH_WELCOME_TEXT = '/api/config/welcome-text';
@@ -20,16 +20,16 @@ const PATH_COMPANY_INFO = '/api/config/company-info';
 const PATH_APPLICATION_INFO = '/api/config/application-info';
 const PATH_APPLICATION_IMAGES = '/api/config/application-images';
 
-export const postWorkingHours = async (workingHours: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
-    return postData<LocaleData<string>>(PATH_WORKING_HOURS, workingHours, token);
+export const postWorkingHours = async (workingHours: string, token: string): Promise<ClientResponse<SingleValueBody<string>>> => {
+    return postData<SingleValueBody<string>>(PATH_WORKING_HOURS, {value: workingHours}, token);
 }
 
-export const postWelcomeText = async (welcomeText: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
-    return postData<LocaleData<string>>(PATH_WELCOME_TEXT, welcomeText, token);
+export const postWelcomeText = async (welcomeText: string, token: string): Promise<ClientResponse<SingleValueBody<string>>> => {
+    return postData<SingleValueBody<string>>(PATH_WELCOME_TEXT, {value: welcomeText}, token);
 }
 
-export const postTitle = async (data: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
-    return postData<LocaleData<string>>(PATH_TITLE, data, token);
+export const postTitle = async (title: string, token: string): Promise<ClientResponse<SingleValueBody<string>>> => {
+    return postData<SingleValueBody<string>>(PATH_TITLE, {value: title}, token);
 }
 
 export const postLogo = async (logo: File, token: string): Promise<ClientResponse<void>> => {
@@ -53,20 +53,20 @@ export const postLogo = async (logo: File, token: string): Promise<ClientRespons
     return {data: undefined, error};
 }
 
-export const postGdprInfo = async (gdprInfo: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
-    return postData<LocaleData<string>>(PATH_GDPR_INFO, gdprInfo, token);
+export const postGdprInfo = async (gdprInfo: string, token: string): Promise<ClientResponse<SingleValueBody<string>>> => {
+    return postData<SingleValueBody<string>>(PATH_GDPR_INFO, {value: gdprInfo}, token);
 }
 
-export const postCookiesInfo = async (cookiesInfo: LocaleData<string>, token: string): Promise<ClientResponse<LocaleData<string>>> => {
-    return postData<LocaleData<string>>(PATH_COOKIES_INFO, cookiesInfo, token);
+export const postCookiesInfo = async (cookiesInfo: string, token: string): Promise<ClientResponse<SingleValueBody<string>>> => {
+    return postData<SingleValueBody<string>>(PATH_COOKIES_INFO, {value: cookiesInfo}, token);
 }
 
-export const postCompanyInfo = async (companyInfo: LocaleData<CompanyInfo>, token: string): Promise<ClientResponse<LocaleData<CompanyInfo>>> => {
-    return postData<LocaleData<CompanyInfo>>(PATH_COMPANY_INFO, companyInfo, token);
+export const postCompanyInfo = async (companyInfo: CompanyInfo, token: string): Promise<ClientResponse<CompanyInfo>> => {
+    return postData<CompanyInfo>(PATH_COMPANY_INFO, companyInfo, token);
 }
 
-export const postApplicationInfo = async (applicationInfo: LocaleData<ApplicationInfo>, token: string): Promise<ClientResponse<LocaleData<ApplicationInfo>>> => {
-    return postData<LocaleData<ApplicationInfo>>(PATH_APPLICATION_INFO, applicationInfo, token);
+export const postApplicationInfo = async (applicationInfo: ApplicationInfo, token: string): Promise<ClientResponse<ApplicationInfo>> => {
+    return postData<ApplicationInfo>(PATH_APPLICATION_INFO, applicationInfo, token);
 }
 
 export const getApplicationImages = async (token: string, pageQueryParams?: Pageable): Promise<ClientResponse<Page<ApplicationImage>>> => {

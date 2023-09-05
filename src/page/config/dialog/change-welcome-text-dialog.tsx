@@ -1,15 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { uiClient } from '../../../client';
-import { LocaleData } from '../../../client/model';
-
-import { getLanguages, LOCALE, RESOURCE, toLocale } from '../../../locale';
+import { RESOURCE } from '../../../locale';
 import { useUiState } from '../../../state';
 
 import { WiwaButton, WiwaSpinner, WiwaTextArea } from '../../../component/ui';
-import { FlagSk, FlagUs } from '../../../component/ui/icon';
 
 interface ChangeWelcomeTextDialogProps {
     showDialog: boolean
@@ -21,46 +17,21 @@ const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) 
 
     const uiState = useUiState();
 
-    const languages = getLanguages();
-
-    const [welcomeTextData, setWelcomeTextData] = useState<LocaleData<string>>({items: []});
-    const [isFormValid, setFormValid] = useState(false);
+    const [welcomeText, setWelcomeText] = useState(
+        uiState?.welcomeText ? uiState.welcomeText : ''
+    );
     const [isSubmitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
-
-    useEffect(() => {
-        languages.map(language => uiClient.getWelcomeText(toLocale(language)).then(
-                data => {
-                    setWelcomeTextData((prevState) => {
-                        const nextItems = [...prevState.items.filter(item => item.language !== language),
-                            {language, data: data.data ? data.data : ''}
-                        ];
-                        return {items: nextItems};
-                    });
-                }
-            )
-        );
-    }, []);
-
-    useEffect(() => {
-        const validArray: boolean[] = welcomeTextData.items.map(item => item.data.trim().length > 0);
-        setFormValid(
-            validArray.length > 1
-            && validArray.reduce((previousValue, currentValue) => previousValue && currentValue)
-        );
-    }, [welcomeTextData.items])
 
     const handleSubmit = async () => {
         setSubmitting(true);
         setError(undefined);
         try {
-            if (isFormValid) {
-                const clientResponse = await uiState?.changeWelcomeText(welcomeTextData);
-                if (clientResponse !== undefined && clientResponse.data !== undefined) {
-                    props.setShowDialog(false);
-                } else {
-                    setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_WELCOME_TEXT.ERROR).toString());
-                }
+            const clientResponse = await uiState?.changeWelcomeText(welcomeText);
+            if (clientResponse !== undefined && clientResponse.data !== undefined) {
+                props.setShowDialog(false);
+            } else {
+                setError(t(RESOURCE.PAGE.CONFIG.DIALOG.CHANGE_WELCOME_TEXT.ERROR).toString());
             }
         } finally {
             setSubmitting(false);
@@ -104,15 +75,18 @@ const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) 
                                         handleSubmit();
                                     })}>
 
-                                    {languages.map((language, index) =>
-                                        <div className="mb-5" key={index}>
-                                            <WelcomeTextEditor
-                                                language={language}
-                                                titleData={welcomeTextData}
-                                                setTitleData={setWelcomeTextData}
-                                            />
+                                    {welcomeText &&
+                                        <div className="mb-5">
+                                            <div className="flex flex-row gap-2 items-center">
+                                                <WiwaTextArea
+                                                    className="w-full p-0.5"
+                                                    rows={10}
+                                                    value={welcomeText}
+                                                    onChange={event => setWelcomeText(event.target.value)}
+                                                />
+                                            </div>
                                         </div>
-                                    )}
+                                    }
 
                                     {isSubmitting ?
                                         <div className="flex items-center justify-center">
@@ -122,7 +96,7 @@ const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) 
                                         <WiwaButton
                                             type="submit"
                                             className="w-full"
-                                            disabled={!isFormValid || isSubmitting}
+                                            disabled={isSubmitting}
                                         >
                                             {t(RESOURCE.ACTION.SAVE)}
                                         </WiwaButton>
@@ -139,44 +113,3 @@ const ChangeWelcomeTextDialog: React.FC<ChangeWelcomeTextDialogProps> = (props) 
 }
 
 export default ChangeWelcomeTextDialog;
-
-interface WelcomeTextEditorProps extends PropsWithChildren {
-    language: string,
-    titleData: LocaleData<string>,
-    setTitleData: React.Dispatch<React.SetStateAction<LocaleData<string>>>
-}
-
-const WelcomeTextEditor: React.FC<WelcomeTextEditorProps> = (props) => {
-    const [value, setValue] = useState('');
-
-    useEffect(() => {
-        const item = props.titleData?.items.find(item => item.language === props.language);
-        if (item) {
-            setValue(item.data);
-        }
-    }, [props.titleData]);
-
-    useEffect(() => {
-        props.setTitleData((prevState) => {
-                const nextItems = [...prevState.items.filter(item => item.language !== props.language),
-                    {language: props.language, data: value}
-                ];
-                return {items: nextItems};
-            }
-        );
-    }, [value]);
-
-    return (
-        <div className="flex flex-row gap-2 items-center">
-            {toLocale(props.language) === LOCALE.EN ? <FlagUs/> : <FlagSk/>}
-            <WiwaTextArea
-                className="w-full p-0.5"
-                rows={10}
-                id={props.language}
-                name={props.language}
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            />
-        </div>
-    );
-}

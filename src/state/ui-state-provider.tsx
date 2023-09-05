@@ -1,12 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { ClientResponse, configClient, uiClient } from '../client';
-import { ApplicationImage, ApplicationInfo, CompanyInfo, LocaleData } from '../client/model';
+import { ApplicationImage, ApplicationInfo, CompanyInfo, SingleValueBody } from '../client/model';
 
 import { useActuatorState } from './actuator-state-provider';
-import { useConfigState } from './config-state-provider';
 import { useAuthState } from './auth-state-provider';
-import { toLanguage } from '../locale';
 
 export interface UiState {
     logoUrl?: string,
@@ -18,13 +16,13 @@ export interface UiState {
     gdprInfo?: string,
     workingHours?: string,
     changeLogo: (logo: File) => Promise<ClientResponse<void> | undefined>,
-    changeTitle: (title: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
-    changeWelcomeText: (welcomeText: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
-    changeApplicationInfo: (applicationInfo: LocaleData<ApplicationInfo>) => Promise<ClientResponse<LocaleData<ApplicationInfo>> | undefined>,
-    changeCompanyInfo: (companyInfo: LocaleData<CompanyInfo>) => Promise<ClientResponse<LocaleData<CompanyInfo>> | undefined>,
-    changeCookiesInfo: (cookiesInfo: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
-    changeGdprInfo: (workingHours: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
-    changeWorkingHours: (workingHours: LocaleData<string>) => Promise<ClientResponse<LocaleData<string>> | undefined>,
+    changeTitle: (title: string) => Promise<ClientResponse<SingleValueBody<string>> | undefined>,
+    changeWelcomeText: (welcomeText: string) => Promise<ClientResponse<SingleValueBody<string>> | undefined>,
+    changeApplicationInfo: (applicationInfo: ApplicationInfo) => Promise<ClientResponse<ApplicationInfo> | undefined>,
+    changeCompanyInfo: (companyInfo: CompanyInfo) => Promise<ClientResponse<CompanyInfo> | undefined>,
+    changeCookiesInfo: (cookiesInfo: string) => Promise<ClientResponse<SingleValueBody<string>> | undefined>,
+    changeGdprInfo: (workingHours: string) => Promise<ClientResponse<SingleValueBody<string>> | undefined>,
+    changeWorkingHours: (workingHours: string) => Promise<ClientResponse<SingleValueBody<string>> | undefined>,
     addApplicationImage: (applicationImage: File) => Promise<ClientResponse<ApplicationImage> | undefined>,
     getApplicationImages: () => Promise<ClientResponse<ApplicationImage[]> | undefined>
     deleteApplicationImage: (fileName: string) => Promise<ClientResponse<void> | undefined>,
@@ -34,7 +32,6 @@ const uiStateContext = createContext<UiState | undefined>(undefined);
 
 const UiStateProvider: React.FC<any> = ({children}) => {
     const actuatorState = useActuatorState();
-    const configState = useConfigState();
     const authState = useAuthState();
 
     const [logoUrl, setLogoUrl] = useState<string>();
@@ -55,14 +52,14 @@ const UiStateProvider: React.FC<any> = ({children}) => {
     }, [actuatorState?.up]);
 
     useEffect(() => {
-        if (actuatorState?.up && configState?.locale) {
-            uiClient.getTitle(configState.locale).then(value => setTitle(value.data));
-            uiClient.getWelcomeText(configState.locale).then(value => setWelcomeText(value.data));
-            uiClient.getApplicationInfo(configState.locale).then(value => setApplicationInfo(value.data));
-            uiClient.getCompanyInfo(configState.locale).then(value => setCompanyInfo(value.data));
-            uiClient.getCookiesInfo(configState.locale).then(value => setCookiesInfo(value.data));
-            uiClient.getGdprInfo(configState.locale).then(value => setGdprInfo(value.data));
-            uiClient.getWorkingHours(configState.locale).then(value => setWorkingHours(value.data));
+        if (actuatorState?.up) {
+            uiClient.getTitle().then(response => setTitle(response.data?.value));
+            uiClient.getWelcomeText().then(response => setWelcomeText(response.data?.value));
+            uiClient.getApplicationInfo().then(response => setApplicationInfo(response.data));
+            uiClient.getCompanyInfo().then(response => setCompanyInfo(response.data));
+            uiClient.getCookiesInfo().then(response => setCookiesInfo(response.data?.value));
+            uiClient.getGdprInfo().then(response => setGdprInfo(response.data?.value));
+            uiClient.getWorkingHours().then(response => setWorkingHours(response.data?.value));
         } else {
             setTitle(undefined);
             setWelcomeText(undefined);
@@ -72,7 +69,7 @@ const UiStateProvider: React.FC<any> = ({children}) => {
             setGdprInfo(undefined);
             setWorkingHours(undefined);
         }
-    }, [actuatorState?.up, configState?.locale]);
+    }, [actuatorState?.up]);
 
     const changeLogo = async (logo: File): Promise<ClientResponse<void> | undefined> => {
         const token = authState?.token;
@@ -80,114 +77,93 @@ const UiStateProvider: React.FC<any> = ({children}) => {
             return undefined;
         }
         const result = await configClient.postLogo(logo, token);
-        if (actuatorState?.up && configState?.locale && result.error === undefined) {
+        if (actuatorState?.up && result.error === undefined) {
             setLogoUrl(undefined);
             uiClient.getLogoUrl().then(value => setLogoUrl(value.data));
         }
         return result;
     }
 
-    const changeTitle = async (title: LocaleData<string>): Promise<ClientResponse<LocaleData<string>> | undefined> => {
+    const changeTitle = async (title: string): Promise<ClientResponse<SingleValueBody<string>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
         const result = await configClient.postTitle(title, token);
-        if (actuatorState?.up && configState?.locale && result.data) {
-            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
-            if (item) {
-                setTitle(item.data);
-            }
+        if (actuatorState?.up && result.data) {
+            setTitle(result.data.value);
         }
         return result;
     }
 
-    const changeWelcomeText = async (welcomeText: LocaleData<string>): Promise<ClientResponse<LocaleData<string>> | undefined> => {
+    const changeWelcomeText = async (welcomeText: string): Promise<ClientResponse<SingleValueBody<string>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
         const result = await configClient.postWelcomeText(welcomeText, token);
-        if (actuatorState?.up && configState?.locale && result.data) {
-            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
-            if (item) {
-                setWelcomeText(item.data);
-            }
+        if (actuatorState?.up && result.data) {
+            setWelcomeText(result.data.value);
         }
         return result;
     }
 
-    const changeApplicationInfo = async (applicationInfo: LocaleData<ApplicationInfo>): Promise<ClientResponse<LocaleData<ApplicationInfo>> | undefined> => {
+    const changeApplicationInfo = async (applicationInfo: ApplicationInfo): Promise<ClientResponse<ApplicationInfo> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
         const result = await configClient.postApplicationInfo(applicationInfo, token);
-        if (actuatorState?.up && configState?.locale && result.data) {
-            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
-            if (item) {
-                setApplicationInfo(item.data);
-            }
+        if (actuatorState?.up && result.data) {
+            setApplicationInfo(result.data);
         }
         return result;
     }
 
-    const changeCompanyInfo = async (companyInfo: LocaleData<CompanyInfo>): Promise<ClientResponse<LocaleData<CompanyInfo>> | undefined> => {
+    const changeCompanyInfo = async (companyInfo: CompanyInfo): Promise<ClientResponse<CompanyInfo> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
         const result = await configClient.postCompanyInfo(companyInfo, token);
-        if (actuatorState?.up && configState?.locale && result.data) {
-            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
-            if (item) {
-                setCompanyInfo(item.data);
-            }
+        if (actuatorState?.up && result.data) {
+            setCompanyInfo(result.data);
         }
         return result;
     }
 
-    const changeCookiesInfo = async (cookiesInfo: LocaleData<string>): Promise<ClientResponse<LocaleData<string>> | undefined> => {
+    const changeCookiesInfo = async (cookiesInfo: string): Promise<ClientResponse<SingleValueBody<string>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
         const result = await configClient.postCookiesInfo(cookiesInfo, token);
-        if (actuatorState?.up && configState?.locale && result.data) {
-            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
-            if (item) {
-                setCookiesInfo(item.data);
-            }
+        if (actuatorState?.up && result.data) {
+            setCookiesInfo(result.data.value);
         }
         return result;
     }
 
-    const changeGdprInfo = async (gdprInfo: LocaleData<string>): Promise<ClientResponse<LocaleData<string>> | undefined> => {
+    const changeGdprInfo = async (gdprInfo: string): Promise<ClientResponse<SingleValueBody<string>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
         const result = await configClient.postGdprInfo(gdprInfo, token);
-        if (actuatorState?.up && configState?.locale && result.data) {
-            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
-            if (item) {
-                setGdprInfo(item.data);
-            }
+        if (actuatorState?.up && result.data) {
+            setGdprInfo(result.data.value);
         }
         return result;
     }
 
-    const changeWorkingHours = async (workingHours: LocaleData<string>): Promise<ClientResponse<LocaleData<string>> | undefined> => {
+    const changeWorkingHours = async (workingHours: string): Promise<ClientResponse<SingleValueBody<string>> | undefined> => {
         const token = authState?.token;
         if (!token) {
             return undefined;
         }
         const result = await configClient.postWorkingHours(workingHours, token);
-        if (actuatorState?.up && configState?.locale && result.data) {
-            const item = result.data.items.find(item => item.language === toLanguage(configState.locale));
-            if (item) {
-                setWorkingHours(item.data);
-            }
+        if (actuatorState?.up && result.data) {
+            setWorkingHours(result.data.value);
         }
         return result;
     }
