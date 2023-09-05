@@ -7,16 +7,6 @@ export * as userClient from './user';
 
 export const APP_IMAGES_PATH_PREFIX = '/api/ui/application-images/';
 
-export interface WiwaError {
-    code: WiwaErrorCode,
-    message: string,
-    timestamp: string
-}
-
-export const wiwaError = (message: string): WiwaError => {
-    return {code: WiwaErrorCode.UNKNOWN, message, timestamp: ''}
-}
-
 export enum WiwaErrorCode {
     UNKNOWN = 'UNKNOWN',
     NOT_FOUND = 'NOT_FOUND',
@@ -34,6 +24,16 @@ export enum WiwaErrorCode {
     USER_IS_DISABLED = 'USER_IS_DISABLED',
     USER_NOT_FOUND = 'USER_NOT_FOUND',
     USER_USERNAME_IS_USED = 'USER_USERNAME_IS_USED'
+}
+
+export interface WiwaError {
+    code: WiwaErrorCode,
+    message: string,
+    timestamp: string
+}
+
+export const wiwaError = (message: string): WiwaError => {
+    return {code: WiwaErrorCode.UNKNOWN, message, timestamp: ''}
 }
 
 export interface ClientResponse<T> {

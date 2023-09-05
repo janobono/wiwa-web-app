@@ -86,7 +86,7 @@ const UsersPageContent: React.FC = () => {
     }
 
     const deleteUserHandler = (dialogAnswer: DialogAnswer) => {
-        if (dialogAnswer == DialogAnswer.YES && selectedUser !== undefined && usersPage !== undefined) {
+        if (dialogAnswer === DialogAnswer.YES && selectedUser !== undefined && usersPage !== undefined) {
             setLoading(true);
             try {
                 const newContent = usersPage.content.filter(user => user.id !== selectedUser.id);

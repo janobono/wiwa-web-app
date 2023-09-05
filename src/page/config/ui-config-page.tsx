@@ -3,7 +3,7 @@ import { Edit, FileMinus, FilePlus } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 import { ApplicationInfo, ApplicationInfoItem } from '../../client/model';
 import { RESOURCE } from '../../locale';
-import { useConfigState, useUiState } from '../../state';
+import { useUiState } from '../../state';
 
 import { WiwaButton } from '../../component/ui';
 import { ChangeLogoDialog, ChangeTitleDialog, ChangeWelcomeTextDialog, EditApplicationInfoItemDialog } from './dialog';
@@ -12,7 +12,6 @@ import { DialogAnswer, YesNoDialog } from '../../component/dialog';
 
 const UiConfigPage: React.FC = () => {
     const {t} = useTranslation();
-    const configState = useConfigState();
     const uiState = useUiState();
 
     const [showLogoDialog, setShowLogoDialog] = useState(false);

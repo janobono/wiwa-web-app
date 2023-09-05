@@ -390,6 +390,7 @@ const ChangeCompanyInfoDialog: React.FC<ChangeCompanyInfoDialogProps> = (props) 
 
                                     <div className="mb-2">
                                         <iframe
+                                            title="change-company-info-frame"
                                             width="100%"
                                             height="280px"
                                             src={mapUrl}

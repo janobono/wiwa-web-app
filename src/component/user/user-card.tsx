@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { twMerge } from 'tailwind-merge';
 
-import { Authority, User } from '../../client/model';
+import { User } from '../../client/model';
 import { RESOURCE } from '../../locale';
 import { UserAuthoritiesComponent } from './index';
 
@@ -21,10 +21,6 @@ const classes = {
 
 const UserCard: React.FC<UserCardProps> = (props) => {
     const {t} = useTranslation();
-
-    const hasAuthority = (user: User, authority: Authority) => {
-        return user.authorities.some(a => a === authority);
-    };
 
     return (
         <div

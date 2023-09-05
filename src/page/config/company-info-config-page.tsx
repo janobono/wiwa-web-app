@@ -93,6 +93,7 @@ const CompanyInfoConfigPage: React.FC = () => {
                                             <div>
                                                 {uiState?.companyInfo ?
                                                     <iframe
+                                                        title="company-info-frame"
                                                         width="100%"
                                                         height="280px"
                                                         src={uiState.companyInfo.mapUrl}
