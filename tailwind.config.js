@@ -1,12 +1,19 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
     content: [
-        "./index.html",
-        "./src/**/*.{js,ts,jsx,tsx}",
+        "./src/**/*.{js,jsx,ts,tsx,css}",
+        "./index.html"
     ],
     theme: {
         extend: {},
     },
-    plugins: [],
+    plugins: [
+        require('@tailwindcss/typography'),
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/aspect-ratio'),
+        require('daisyui'),
+    ],
+    daisyui: {
+        themes: ['winter'],
+    },
 }
-

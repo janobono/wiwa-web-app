@@ -1,0 +1,89 @@
+{
+  "baseNavigation": {
+    "localeSwitch": "Switch locale to Slovak",
+    "refreshToken": "Refresh login",
+    "authNav": {
+      "title": "User",
+      "signIn": "Sign in",
+      "signOut": "Sign out",
+      "signUp": "Sign up",
+      "changeDetails": "Account details",
+      "changeEmail": "Change email",
+      "changePassword": "Change password"
+    }
+  },
+  "captcha": {
+    "action": "Reload captcha",
+    "error": "Captcha loading error",
+    "label": "Captcha",
+    "placeholder": "Enter captcha",
+    "required": "Captcha is required"
+  },
+  "confirmAccount": {
+    "action": "Resend activation email",
+    "text": "Check your email and confirm your account, please."
+  },
+  "cookiesConsent": {
+    "action": "Allow cookies",
+    "link": "Learn More.",
+    "text": "We use cookies to optimize the site's functionality."
+  },
+  "dialogState": {
+    "cancel": "Cancel",
+    "no": "No",
+    "ok": "Ok",
+    "yes": "Yes"
+  },
+  "disabledAccount": {
+    "text": "Blocked account."
+  },
+  "error": {
+    "gdpr": "GDPR consent required",
+    "invalidCaptcha": "Invalid captcha",
+    "invalidCredentials": "Invalid credentials",
+    "unknown": "An unknown error occurred. Please contact system administrator.",
+    "unsupportedValidationToken": "Invalid consent.",
+    "userIsDisabled": "User is disabled",
+    "userEmailIsUsed": "Email is used",
+    "userNotFound": "User not found",
+    "userUsernameIsUsed": "Username is used"
+  },
+  "footer": {
+    "links": {
+      "title": "Useful links",
+      "contactInfo": "Contact Info",
+      "cookiesInfo": "Cookies Info",
+      "gdprInfo": "Gdpr Info",
+      "businessConditions": "Business Conditions"
+    },
+    "contact": {
+      "title": "Contact"
+    }
+  },
+  "imageDialog": {
+    "alt": "Selected image",
+    "ok": "Ok",
+    "cancel": "Cancel"
+  },
+  "mdDialog": {
+    "editor": "Editor",
+    "preview": "Preview",
+    "ok": "Ok",
+    "cancel": "Cancel"
+  },
+  "navigation": {
+    "admin": "Admin",
+    "manager": "Manager",
+    "employee": "Employee",
+    "customer": "My orders"
+  },
+  "pageable": {
+    "next": "Next",
+    "page": "Page",
+    "previous": "Previous"
+  },
+  "refreshToken": {
+    "action": "Refresh",
+    "text": "Login expired."
+  }
+}

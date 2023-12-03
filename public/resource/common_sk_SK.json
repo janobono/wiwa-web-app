@@ -1,0 +1,89 @@
+{
+  "baseNavigation": {
+    "localeSwitch": "Prepnúť lokalizáciu na Anglickú",
+    "refreshToken": "Obnoviť prihlásenie",
+    "authNav": {
+      "title": "Používateľ",
+      "signIn": "Prihlásiť",
+      "signOut": "Odhlásiť",
+      "signUp": "Zaregistrovať",
+      "changeDetails": "Detaily účtu",
+      "changeEmail": "Zmeniť email",
+      "changePassword": "Zmeniť heslo"
+    }
+  },
+  "captcha": {
+    "action": "Načítať kontrolný text",
+    "error": "Nepodarilo sa načítať kontrolný text",
+    "label": "Kontrolný text",
+    "placeholder": "Zadajte kontrolný text",
+    "required": "Zadajte kontrolný text"
+  },
+  "confirmAccount": {
+    "action": "Preposlať aktivačný email",
+    "text": "Prosím skontrolujte svoj e-mail a potvrďte svoj účet."
+  },
+  "cookiesConsent": {
+    "action": "Povoliť cookies",
+    "link": "Dozvedieť sa viac.",
+    "text": "Používame cookies, aby sme optimalizovali funkčnosť stránky."
+  },
+  "dialogState": {
+    "cancel": "Zrušiť",
+    "no": "Nie",
+    "ok": "Potvrdiť",
+    "yes": "Áno"
+  },
+  "disabledAccount": {
+    "text": "Zablokovaný účet."
+  },
+  "error": {
+    "gdpr": "Vyžaduje sa súhlas s GDPR",
+    "invalidCaptcha": "Nesprávny kontrolný text",
+    "invalidCredentials": "Nesprávne prihlasovacie údaje",
+    "unknown": "Vyskytla sa neznáma chyba. Kontaktujte prosím správcu systému.",
+    "unsupportedValidationToken": "Nesprávna požiadavka.",
+    "userIsDisabled": "Používateľ je zablokovaný",
+    "userEmailIsUsed": "Email sa už používa",
+    "userNotFound": "Používateľ nebol nájdený",
+    "userUsernameIsUsed": "Používateľské meno sa už používa"
+  },
+  "footer": {
+    "links": {
+      "title": "Užitočné odkazy",
+      "contactInfo": "Kontaktné Informácie",
+      "cookiesInfo": "Cookies Informácie",
+      "gdprInfo": "Gdpr Informácie",
+      "businessConditions": "Obchodné Podmienky"
+    },
+    "contact": {
+      "title": "Kontakt"
+    }
+  },
+  "imageDialog": {
+    "alt": "Zvolený obrázok",
+    "ok": "Potvrdiť",
+    "cancel": "Zrušiť"
+  },
+  "mdDialog": {
+    "editor": "Editor",
+    "preview": "Náhľad",
+    "ok": "Potvrdiť",
+    "cancel": "Zrušiť"
+  },
+  "navigation": {
+    "admin": "Správca",
+    "manager": "Manažér",
+    "employee": "Zamestnanec",
+    "customer": "Moje objednávky"
+  },
+  "pageable": {
+    "previous": "Predchádzajúca",
+    "page": "Stránka",
+    "next": "Nasledujúca"
+  },
+  "refreshToken": {
+    "action": "Obnoviť",
+    "text": "Platnosť prihlásenia vypršala."
+  }
+}

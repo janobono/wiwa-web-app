@@ -27,6 +27,8 @@ services:
       - MAIL_PORT=1025
       - WEB_URL=http://localhost
       - INIT_DATA_PATH=./data
+      - REFRESH_TOKEN_EXPIRES_IN=120
+      - TOKEN_EXPIRES_IN=60
     depends_on:
       - pg
       - smtp

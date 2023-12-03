@@ -1,0 +1,194 @@
+{
+  "title": "Admin",
+  "baseInfoTab": "Base info",
+  "appImagesTab": "App images",
+  "appInfoTab": "App info",
+  "companyInfoTab": "Company info",
+  "businessConditionsTab": "Business conditions",
+  "cookiesInfoTab": "Cookies info",
+  "gdprInfoTab": "Gdpr info",
+  "workingHoursTab": "Working hours",
+  "usersTab": "Users",
+  "appImages": {
+    "addImage": "Add image",
+    "deleteImage": "Delete image",
+    "deleteImageQuestionMessage": "Do you really want to delete image?",
+    "deleteImageQuestionTitle": "Delete image",
+    "loadImagesError": "Application images loading failed",
+    "addImageError": "Application image add failed",
+    "addAppImage": {
+      "title": "Add application image",
+      "fileLabel": "File",
+      "filePlaceholder": "Select file",
+      "fileFormat": "Supported file format is JPG or PNG",
+      "fileRequired": "File is required",
+      "error": "Application image submitting failed"
+    }
+  },
+  "applicationInfo": {
+    "title": "Application info item",
+    "valueLabel": "Application info item",
+    "valuePlaceholder": "Enter application info item",
+    "valueRequired": "Application info item is required",
+    "add": "Add application info item",
+    "edit": "Edit application info item",
+    "delete": "Delete application info item",
+    "confirm": "Confirm application info changes",
+    "deleteItemQuestionTitle": "Delete application info item",
+    "deleteItemQuestionMessage": "Do you really want to delete item?",
+    "error": "Application info changes confirmation failed",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "editItemDialog": {
+      "title": "Application info item dialog",
+      "valueLabel": "Application info item",
+      "valuePlaceholder": "Enter application info item",
+      "valueRequired": "Application info item is required"
+    }
+  },
+  "baseInfo": {
+    "logo": {
+      "title": "Edit logo",
+      "fileLabel": "File",
+      "filePlaceholder": "Select file",
+      "fileFormat": "Supported file format is PNG",
+      "fileRequired": "File is required",
+      "error": "Logo submitting failed"
+    },
+    "title": {
+      "title": "Edit title",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Enter title",
+      "titleRequired": "Title is required",
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "error": "Title submitting failed"
+    },
+    "welcomeText": {
+      "title": "Edit welcome text",
+      "valueLabel": "Welcome text",
+      "valuePlaceholder": "Enter welcome text",
+      "valueRequired": "Welcome text is required",
+      "error": "Welcome text submitting failed"
+    }
+  },
+  "companyInfo": {
+    "title": "Edit company info",
+    "nameLabel": "Name",
+    "namePlaceholder": "Enter name",
+    "nameRequired": "Name is required",
+    "streetLabel": "Street",
+    "streetPlaceholder": "Enter street",
+    "streetRequired": "Street is required",
+    "cityLabel": "City",
+    "cityPlaceholder": "Enter city",
+    "cityRequired": "City is required",
+    "zipCodeLabel": "Zip code",
+    "zipCodePlaceholder": "Enter zip code",
+    "zipCodeRequired": "Zip code is required",
+    "stateLabel": "State",
+    "statePlaceholder": "Enter state",
+    "stateRequired": "State is required",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "Enter phone",
+    "phoneRequired": "Phone is required",
+    "mailLabel": "Email",
+    "mailPlaceholder": "Enter email",
+    "mailRequired": "Email is required",
+    "mailFormat": "Invalid email",
+    "businessIdLabel": "Business id",
+    "businessIdPlaceholder": "Enter business id",
+    "taxIdLabel": "Tax id",
+    "taxIdPlaceholder": "Enter tax id",
+    "vatRegNoLabel": "Vat registration number",
+    "vatRegNoPlaceholder": "Enter vat registration number",
+    "commercialRegisterInfoLabel": "Commercial register info",
+    "commercialRegisterInfoPlaceholder": "Enter commercial register info",
+    "mapUrlLabel": "Map",
+    "mapUrlPlaceholder": "Enter map",
+    "mapUrlRequired": "Map is required",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "error": "Company info submitting failed"
+  },
+  "businessConditions": {
+    "title": "Edit business conditions",
+    "valueLabel": "Business conditions",
+    "valuePlaceholder": "Enter business conditions",
+    "valueRequired": "Business conditions are required",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "error": "Business conditions submitting failed"
+  },
+  "cookiesInfo": {
+    "title": "Edit cookies info",
+    "valueLabel": "Cookies info",
+    "valuePlaceholder": "Enter cookies info",
+    "valueRequired": "Cookies info is required",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "error": "Cookies info submitting failed"
+  },
+  "gdprInfo": {
+    "title": "Edit gdpr info",
+    "valueLabel": "Gdpr info",
+    "valuePlaceholder": "Enter gdpr info",
+    "valueRequired": "Gdpr info is required",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "error": "Gdpr info submitting failed"
+  },
+  "users": {
+    "searchUser": "Search user",
+    "searchUserPlaceholder": "Username, first name, middle name, last name or email",
+    "previous": "Previous",
+    "page": "Page",
+    "next": "Next",
+    "error": "Users loading failed",
+    "userCard": {
+      "username": "Username",
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "deleteUser": {
+        "title": "Delete user",
+        "message": "Do you really want to delete user?",
+        "error": "Delete user failed"
+      },
+      "userAuthorities": {
+        "title": "User authorities",
+        "authorities": "Authorities",
+        "customer": "Customer",
+        "employee": "Employee",
+        "manager": "Manager",
+        "admin": "Admin",
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "error": "User authorities change failed"
+      },
+      "userEnabled": {
+        "title": "Enabled",
+        "dialogTitle": "User enabled/disabled",
+        "disableQuestion": "Do you really want to disable user?",
+        "enableQuestion": "Do you really want to enable user?",
+        "error": "Enable/disable user failed"
+      },
+      "userConfirmed": {
+        "title": "Confirmed",
+        "dialogTitle": "User confirmed/denied",
+        "denyQuestion": "Do you really want to deny user?",
+        "confirmQuestion": "Do you really want to confirm user?",
+        "error": "Confirm/deny user failed"
+      }
+    }
+  },
+  "workingHours": {
+    "title": "Edit working hours",
+    "valueLabel": "Working hours",
+    "valuePlaceholder": "Enter working hours",
+    "valueRequired": "Working hours are required",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "error": "Working hours submitting failed"
+  }
+}

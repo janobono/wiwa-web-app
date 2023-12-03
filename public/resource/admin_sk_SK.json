@@ -1,0 +1,194 @@
+{
+  "title": "Správca",
+  "baseInfoTab": "Základné informácie",
+  "appImagesTab": "Aplikačné obrázky",
+  "appInfoTab": "Aplikačné informácie",
+  "companyInfoTab": "Informácie o spoločnosti",
+  "businessConditionsTab": "Obchodné podmienky",
+  "cookiesInfoTab": "Cookies informácie",
+  "gdprInfoTab": "Gdpr informácie",
+  "workingHoursTab": "Pracovné hodiny",
+  "usersTab": "Používatelia",
+  "appImages": {
+    "addImage": "Pridať obrázok",
+    "deleteImage": "Zmazať obrázok",
+    "deleteImageQuestionMessage": "Naozaj si želáte zmazať obrázok?",
+    "deleteImageQuestionTitle": "Zmazať obrázok",
+    "loadImagesError": "Chyba načítania aplikačných obrázkov",
+    "addImageError": "Chyba pridania aplikačného obrázka",
+    "addAppImage": {
+      "title": "Pridať aplikačný obrázok",
+      "fileLabel": "Súbor",
+      "filePlaceholder": "Zvoľte súbor",
+      "fileFormat": "Podporovaný formát súborov je PNG a JPG",
+      "fileRequired": "Vyžaduje sa súbor",
+      "error": "Odoslanie súboru neúspešné"
+    }
+  },
+  "applicationInfo": {
+    "title": "Položka aplikačných informácií",
+    "valueLabel": "Položka aplikačných informácií",
+    "valuePlaceholder": "Zadajte položku aplikačných informácií",
+    "valueRequired": "Vyžaduje sa položka aplikačných informácií",
+    "add": "Pridať položku aplikačných informácií",
+    "edit": "Upraviť položku aplikačných informácií",
+    "delete": "Zmazať položku aplikačných informácií",
+    "confirm": "Potvrdiť zmenu aplikačných informácií",
+    "deleteItemQuestionTitle": "Zmazať položku aplikačných informácií",
+    "deleteItemQuestionMessage": "Naozaj si želáte zmazať položku?",
+    "error": "Zmena aplikačných informácií neúspešná",
+    "submit": "Potvrdiť",
+    "cancel": "Zrušiť",
+    "editItemDialog": {
+      "title": "Dialóg položky aplikačných informácií",
+      "valueLabel": "Položka aplikačných informácií",
+      "valuePlaceholder": "Zadajte položku aplikačných informácií",
+      "valueRequired": "Vyžaduje sa položka aplikačných informácií"
+    }
+  },
+  "baseInfo": {
+    "logo": {
+      "title": "Upraviť logo",
+      "fileLabel": "Súbor",
+      "filePlaceholder": "Zvoľte súbor",
+      "fileFormat": "Podporovaný formát súborov je PNG",
+      "fileRequired": "Vyžaduje sa súbor",
+      "error": "Odoslanie súboru neúspešné"
+    },
+    "title": {
+      "title": "Upraviť názov aplikácie",
+      "titleLabel": "Názov aplikácie",
+      "titlePlaceholder": "Zadajte názov aplikácie",
+      "titleRequired": "Vyžaduje sa názov aplikácie",
+      "submit": "Odoslať",
+      "cancel": "Zrušiť",
+      "error": "Odoslanie názvu aplikácie neúspešné"
+    },
+    "welcomeText": {
+      "title": "Upraviť uvítací text",
+      "valueLabel": "Uvítací text",
+      "valuePlaceholder": "Zadajte uvítací text",
+      "valueRequired": "Vyžaduje sa uvítací text",
+      "error": "Odoslanie uvítacieho textu neúspešné"
+    }
+  },
+  "companyInfo": {
+    "title": "Upraviť informácie o spoločnosti",
+    "nameLabel": "Názov",
+    "namePlaceholder": "Zadajte názov",
+    "nameRequired": "Vyžaduje sa názov",
+    "streetLabel": "Ulica",
+    "streetPlaceholder": "Zadajte ulicu",
+    "streetRequired": "Vyžaduje sa ulica",
+    "cityLabel": "Mesto",
+    "cityPlaceholder": "Zadajte mesto",
+    "cityRequired": "Vyžaduje sa mesto",
+    "zipCodeLabel": "Psč",
+    "zipCodePlaceholder": "Zadajte psč",
+    "zipCodeRequired": "Vyžaduje sa psč",
+    "stateLabel": "Štát",
+    "statePlaceholder": "Zadajte štát",
+    "stateRequired": "Vyžaduje sa štát",
+    "phoneLabel": "Telefón",
+    "phonePlaceholder": "Zadajte telefón",
+    "phoneRequired": "Vyžaduje sa telefón",
+    "mailLabel": "Email",
+    "mailPlaceholder": "Zadajte email",
+    "mailRequired": "Vyžaduje sa email",
+    "mailFormat": "Neplatný email",
+    "businessIdLabel": "Ičo",
+    "businessIdPlaceholder": "Zadajte ičo",
+    "taxIdLabel": "Dič",
+    "taxIdPlaceholder": "Zadajte dič",
+    "vatRegNoLabel": "Ič dph",
+    "vatRegNoPlaceholder": "Zadajte ič dph",
+    "commercialRegisterInfoLabel": "Daňová registračná informácia",
+    "commercialRegisterInfoPlaceholder": "Zadajte daňovú registračnú informáciu",
+    "mapUrlLabel": "Mapa",
+    "mapUrlPlaceholder": "Zadajte mapu",
+    "mapUrlRequired": "Vyžaduje sa mapa",
+    "submit": "Odoslať",
+    "cancel": "Zrušiť",
+    "error": "Odoslanie informácií o spoločnosti neúspešné"
+  },
+  "businessConditions": {
+    "title": "Upraviť obchodné podmienky",
+    "valueLabel": "Obchodné podmienky",
+    "valuePlaceholder": "Zadajte obchodné podmienky",
+    "valueRequired": "Vyžadujú sa obchodné podmienky",
+    "submit": "Odoslať",
+    "cancel": "Zrušiť",
+    "error": "Odoslanie obchodných podmienok neúspešné"
+  },
+  "cookiesInfo": {
+    "title": "Upraviť cookies informáciu",
+    "valueLabel": "Cookies informácie",
+    "valuePlaceholder": "Zadajte cookies informácie",
+    "valueRequired": "Vyžadujú sa cookies informácie",
+    "submit": "Odoslať",
+    "cancel": "Zrušiť",
+    "error": "Odoslanie cookies informácií neúspešné"
+  },
+  "gdprInfo": {
+    "title": "Upraviť gdpr informáciu",
+    "valueLabel": "Gdpr informácia",
+    "valuePlaceholder": "Zadajte gdpr informáciu",
+    "valueRequired": "Vyžadujú sa gdpr informácie",
+    "submit": "Odoslať",
+    "cancel": "Zrušiť",
+    "error": "Odoslanie gdpr informácií neúspešné"
+  },
+  "users": {
+    "searchUser": "Vyhľadať používateľa",
+    "searchUserPlaceholder": "Používateľské meno, meno, stredné meno, priezvisko alebo email",
+    "previous": "Predchádzajúca",
+    "page": "Stránka",
+    "next": "Nasledujúca",
+    "error": "Chyba načítania používateľov",
+    "userCard": {
+      "username": "Používateľské meno",
+      "email": "Email",
+      "firstName": "Meno",
+      "lastName": "Priezvisko",
+      "deleteUser": {
+        "title": "Zmazať používateľa",
+        "message": "Naozaj si želáte zmazať používateľa?",
+        "error": "Zmazanie používateľa neúspešné"
+      },
+      "userAuthorities": {
+        "title": "Povolenia používateľa",
+        "authorities": "Povolenia",
+        "customer": "Zákazník",
+        "employee": "Zamestnanec",
+        "manager": "Manažér",
+        "admin": "Správca",
+        "submit": "Odoslať",
+        "cancel": "Zrušiť",
+        "error": "Zmena povolení neúspešná"
+      },
+      "userEnabled": {
+        "title": "Odblokovaný",
+        "dialogTitle": "Používateľ odblokovaný/zablokovaný",
+        "disableQuestion": "Naozaj si želáte zablokovať používateľa?",
+        "enableQuestion": "Naozaj si želáte odblokovať používateľa?",
+        "error": "Zablokovanie/odblokovanie používateľa neúspešné"
+      },
+      "userConfirmed": {
+        "title": "Potvrdený",
+        "dialogTitle": "Používateľ potvrdený/nepotvrdený",
+        "denyQuestion": "Naozaj si želáte nepotvrdiť používateľa?",
+        "confirmQuestion": "Naozaj si želáte potvrdiť používateľa?",
+        "error": "Potvrdenie/nepotvrdenie používateľa neúspešné"
+      }
+    }
+  },
+  "workingHours": {
+    "title": "Upraviť pracovné hodiny",
+    "valueLabel": "Pracovné hodiny",
+    "valuePlaceholder": "Zadajte pracovné hodiny",
+    "valueRequired": "Vyžadujú sa pracovné hodiny",
+    "submit": "Odoslať",
+    "cancel": "Zrušiť",
+    "error": "Odoslanie pracovných hodín neúspešné"
+  }
+}

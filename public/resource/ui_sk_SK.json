@@ -1,0 +1,12 @@
+{
+  "confirm": {
+    "title": "Spracovanie požiadavky",
+    "message": "Vaša požiadavka bola spracovaná.",
+    "error": "Vaša požiadavka nebola spracovaná."
+  },
+  "contactInfo": {
+    "businessId": "Ičo",
+    "taxId": "Dič",
+    "vatRegNo": "Ič dph"
+  }
+}

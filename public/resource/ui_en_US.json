@@ -1,0 +1,12 @@
+{
+  "confirm": {
+    "title": "Request confirmation",
+    "message": "Your request has been processed.",
+    "error": "Your request has not been processed."
+  },
+  "contactInfo": {
+    "businessId": "Business id",
+    "taxId": "Tax id",
+    "vatRegNo": "Vat registration number"
+  }
+}
