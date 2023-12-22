@@ -128,7 +128,7 @@ const AppImagesPage = () => {
                             title={resourceState?.admin?.appImages.addImage}
                             disabled={submitting}
                             onClick={() => setShowDialog(true)}
-                        ><Plus size={24}/>
+                        ><Plus size={18}/>
                         </WiwaButton>
                     </div>
 
@@ -200,7 +200,7 @@ const AppImage = ({applicationImage, deleteHandler, disabled}: {
                             }
                         });
                     }}
-                ><Trash size={24}/>
+                ><Trash size={18}/>
                 </WiwaButton>
             </div>
 

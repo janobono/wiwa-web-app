@@ -59,7 +59,7 @@ const BaseInfoPage = () => {
                             className="btn-primary"
                             title={resourceState?.admin?.baseInfo.logo.title}
                             onClick={() => setShowLogoDialog(true)}
-                        ><Edit size={24}/></WiwaButton>
+                        ><Edit size={18}/></WiwaButton>
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@ const BaseInfoPage = () => {
                             className="btn-primary"
                             title={resourceState?.admin?.baseInfo.title.title}
                             onClick={() => setShowTitleDialog(true)}
-                        ><Edit size={24}/></WiwaButton>
+                        ><Edit size={18}/></WiwaButton>
                     </div>
                 </div>
 
@@ -85,7 +85,7 @@ const BaseInfoPage = () => {
                             className="btn-primary"
                             title={resourceState?.admin?.baseInfo.welcomeText.title}
                             onClick={() => setShowWelcomeTextDialog(true)}
-                        ><Edit size={24}/></WiwaButton>
+                        ><Edit size={18}/></WiwaButton>
                     </div>
                 </div>
             </div>

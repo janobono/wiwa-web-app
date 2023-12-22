@@ -14,7 +14,8 @@ const WiwaFormInput = (
         setValue,
         setValid,
         validate,
-        children
+        children,
+        disabled
     }: {
         label?: string,
         required?: boolean,
@@ -25,7 +26,8 @@ const WiwaFormInput = (
         setValue: (value: string) => void,
         setValid?: (valid: boolean) => void,
         validate?: () => ValidationResult,
-        children?: ReactNode
+        children?: ReactNode,
+        disabled?: boolean
     }) => {
     const didMount = useRef(false);
     const [message, setMessage] = useState<string>();
@@ -63,6 +65,7 @@ const WiwaFormInput = (
                         revalidate();
                     }
                 }}
+                disabled={disabled}
             />
             {message &&
                 <label className="label">

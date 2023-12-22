@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import HomePage from './home-page';
+import NotFoundPage from './not-found-page.tsx';
 
 import AdminPage from './admin/admin-page';
 import AppImagesPage from './admin/app-images-page';
@@ -22,13 +23,17 @@ import SignInPage from './auth/sign-in-page';
 import SignOutPage from './auth/sign-out-page';
 import SignUpPage from './auth/sign-up-page';
 
+import ManagerPage from './manager/manager-page';
+import CodeListsPage from './manager/code-lists-page';
+import ProductsPage from './manager/products-page';
+import QuantityUnitsPage from './manager/quantity-units-page';
+
 import UiPage from './ui/ui-page';
 import BusinessConditionsPage from './ui/business-conditions-page';
 import ConfirmPage from './ui/confirm-page';
 import ContactInfoPage from './ui/contact-info-page';
 import CookiesInfoPage from './ui/cookies-info-page';
 import GdprInfoPage from './ui/gdpr-info-page';
-
 
 const AppPage = () => {
     return (
@@ -56,6 +61,12 @@ const AppPage = () => {
                 <Route path="sign-up" element={<SignUpPage/>}/>
             </Route>
 
+            <Route path="/manager" element={<ManagerPage/>}>
+                <Route path="code-lists" element={<CodeListsPage/>}/>
+                <Route path="products" element={<ProductsPage/>}/>
+                <Route path="quantity-units" element={<QuantityUnitsPage/>}/>
+            </Route>
+
             <Route path="/ui" element={<UiPage/>}>
                 <Route path="business-conditions" element={<BusinessConditionsPage/>}/>
                 <Route path="confirm/:token" element={<ConfirmPage/>}/>
@@ -63,6 +74,8 @@ const AppPage = () => {
                 <Route path="cookies-info" element={<CookiesInfoPage/>}/>
                 <Route path="gdpr-info" element={<GdprInfoPage/>}/>
             </Route>
+
+            <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
     )
 }

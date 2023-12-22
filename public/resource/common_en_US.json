@@ -1,4 +1,8 @@
 {
+  "action": {
+    "cancel": "Cancel",
+    "ok": "Ok"
+  },
   "baseNavigation": {
     "localeSwitch": "Switch locale to Slovak",
     "refreshToken": "Refresh login",
@@ -77,6 +81,7 @@
     "employee": "Employee",
     "customer": "My orders"
   },
+  "notFound": "404 Page not found",
   "pageable": {
     "next": "Next",
     "page": "Page",
@@ -85,5 +90,14 @@
   "refreshToken": {
     "action": "Refresh",
     "text": "Login expired."
+  },
+  "quantityType": {
+    "area": "Area",
+    "distance": "Distance",
+    "monetary": "Monetary",
+    "volume": "Volume",
+    "temporal": "Temporal",
+    "mass": "Mass",
+    "pack": "Pack"
   }
 }

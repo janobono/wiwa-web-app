@@ -145,41 +145,45 @@ export interface ResourceAdmin {
         page: string,
         next: string,
         error: string,
-        userCard: {
+        deleteUser: {
+            title: string,
+            message: string,
+            error: string
+        },
+        userAuthorities: {
+            title: string,
+            authorities: string,
+            customer: string,
+            employee: string,
+            manager: string,
+            admin: string,
+            submit: string,
+            cancel: string,
+            error: string
+        },
+        userEnabled: {
+            title: string,
+            dialogTitle: string,
+            disableQuestion: string,
+            enableQuestion: string,
+            error: string
+        },
+        userConfirmed: {
+            title: string,
+            dialogTitle: string,
+            denyQuestion: string,
+            confirmQuestion: string,
+            error: string
+        },
+        userTable: {
+            id: string,
             username: string,
             email: string,
             firstName: string,
             lastName: string,
-            deleteUser: {
-                title: string,
-                message: string,
-                error: string
-            },
-            userAuthorities: {
-                title: string,
-                authorities: string,
-                customer: string,
-                employee: string,
-                manager: string,
-                admin: string,
-                submit: string,
-                cancel: string,
-                error: string
-            },
-            userEnabled: {
-                title: string,
-                dialogTitle: string,
-                disableQuestion: string,
-                enableQuestion: string,
-                error: string
-            },
-            userConfirmed: {
-                title: string,
-                dialogTitle: string,
-                denyQuestion: string,
-                confirmQuestion: string,
-                error: string
-            }
+            authorities: string,
+            confirmed: string,
+            enabled: string
         }
     },
     workingHours: {

@@ -1,4 +1,8 @@
 export interface ResourceCommon {
+    action: {
+        cancel: string,
+        ok: string
+    },
     baseNavigation: {
         localeSwitch: string,
         refreshToken: string,
@@ -77,6 +81,7 @@ export interface ResourceCommon {
         employee: string,
         customer: string
     },
+    notFound: string,
     pageable: {
         next: string,
         page: string,
@@ -85,5 +90,14 @@ export interface ResourceCommon {
     refreshToken: {
         action: string,
         text: string
+    },
+    quantityType: {
+        area: string,
+        distance: string,
+        monetary: string,
+        volume: string,
+        temporal: string,
+        mass: string,
+        pack: string
     }
 }

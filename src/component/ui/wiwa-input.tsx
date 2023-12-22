@@ -11,7 +11,7 @@ const WiwaInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElem
 ) => (
     <input
         ref={ref}
-        className={twMerge(`input input-bordered input-sm md:input-md w-full ${className ?? ''}`)}
+        className={twMerge(`input input-bordered input-xs md:input-sm w-full ${className ?? ''}`)}
         {...props}
     >
         {children}

@@ -119,6 +119,7 @@ const WiwaFormCaptcha = (
                         />
                     }
                     <WiwaButton
+                        className="btn-sm md:btn-md"
                         title={resourceState?.common?.captcha.action}
                         onClick={() => reFetch()}
                     >

@@ -1,3 +1,31 @@
 {
-  "title": "manager"
+  "title": "Manažér",
+  "codeListsTab": "Číselníky",
+  "quantityUnitsTab": "Množstevné jednotky",
+  "productsTab": "Produkty",
+  "quantityUnits": {
+    "id": "Id",
+    "type": "Typ",
+    "unit": "Jednotka",
+    "addQuantityUnit": "Pridať množstevnú jednotku",
+    "editQuantityUnit": "Upraviť množstevnú jednotku",
+    "deleteQuantityUnit": "Zmazať množstevnú jednotku",
+    "loadQuantitiesError": "Chyba načítania množstevných jednotiek",
+    "addQuantityUnitError": "Chyba pridania množstevnej jednotky",
+    "editQuantityUnitError": "Chyba úpravy množstevnej jednotky",
+    "deleteQuantityUnitTitle": "Zmazať množstevnú jednotku",
+    "deleteQuantityUnitMessage": "Naozaj si želáte zmazať množstevnú jednotku?",
+    "quantityUnit": {
+      "title": "Množstevná jednotka",
+      "idLabel": "Id",
+      "idPlaceholder": "Zadajte id",
+      "idRequired": "Vyžaduje sa id",
+      "typeLabel": "Typ",
+      "typePlaceholder": "Zvoľte typ",
+      "typeRequired": "Vyžaduje sa typ",
+      "unitLabel": "Jednotka",
+      "unitPlaceholder": "Zadajte jednotku",
+      "unitRequired": "Vyžaduje sa jednotka"
+    }
+  }
 }

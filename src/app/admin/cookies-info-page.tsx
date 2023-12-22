@@ -44,7 +44,7 @@ const CookiesInfoPage = () => {
                             className="btn-primary"
                             title={resourceState?.admin?.cookiesInfo.title}
                             onClick={() => setShowDialog(true)}
-                        ><Edit size={24}/></WiwaButton>
+                        ><Edit size={18}/></WiwaButton>
                     </div>
                     <div className="p-5 flex content-stretch justify-center items-center">
                         <WiwaMarkdownRenderer className="prose max-w-none" md={cookiesInfo}/>

@@ -145,41 +145,45 @@
     "page": "Page",
     "next": "Next",
     "error": "Users loading failed",
-    "userCard": {
+    "deleteUser": {
+      "title": "Delete user",
+      "message": "Do you really want to delete user?",
+      "error": "Delete user failed"
+    },
+    "userAuthorities": {
+      "title": "User authorities",
+      "authorities": "Authorities",
+      "customer": "Customer",
+      "employee": "Employee",
+      "manager": "Manager",
+      "admin": "Admin",
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "error": "User authorities change failed"
+    },
+    "userEnabled": {
+      "title": "Enabled",
+      "dialogTitle": "User enabled/disabled",
+      "disableQuestion": "Do you really want to disable user?",
+      "enableQuestion": "Do you really want to enable user?",
+      "error": "Enable/disable user failed"
+    },
+    "userConfirmed": {
+      "title": "Confirmed",
+      "dialogTitle": "User confirmed/denied",
+      "denyQuestion": "Do you really want to deny user?",
+      "confirmQuestion": "Do you really want to confirm user?",
+      "error": "Confirm/deny user failed"
+    },
+    "userTable": {
+      "id": "Id",
       "username": "Username",
       "email": "Email",
       "firstName": "First name",
       "lastName": "Last name",
-      "deleteUser": {
-        "title": "Delete user",
-        "message": "Do you really want to delete user?",
-        "error": "Delete user failed"
-      },
-      "userAuthorities": {
-        "title": "User authorities",
-        "authorities": "Authorities",
-        "customer": "Customer",
-        "employee": "Employee",
-        "manager": "Manager",
-        "admin": "Admin",
-        "submit": "Submit",
-        "cancel": "Cancel",
-        "error": "User authorities change failed"
-      },
-      "userEnabled": {
-        "title": "Enabled",
-        "dialogTitle": "User enabled/disabled",
-        "disableQuestion": "Do you really want to disable user?",
-        "enableQuestion": "Do you really want to enable user?",
-        "error": "Enable/disable user failed"
-      },
-      "userConfirmed": {
-        "title": "Confirmed",
-        "dialogTitle": "User confirmed/denied",
-        "denyQuestion": "Do you really want to deny user?",
-        "confirmQuestion": "Do you really want to confirm user?",
-        "error": "Confirm/deny user failed"
-      }
+      "authorities": "Authorities",
+      "confirmed": "Confirmed",
+      "enabled": "Enabled"
     }
   },
   "workingHours": {

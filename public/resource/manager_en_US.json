@@ -1,3 +1,31 @@
 {
-  "title": "manager"
+  "title": "Manager",
+  "codeListsTab": "Code Lists",
+  "quantityUnitsTab": "Quantity units",
+  "productsTab": "Products",
+  "quantityUnits": {
+    "id": "Id",
+    "type": "Type",
+    "unit": "Unit",
+    "addQuantityUnit": "Add quantity unit",
+    "editQuantityUnit": "Edit quantity unit",
+    "deleteQuantityUnit": "Delete quantity unit",
+    "loadQuantitiesError": "Quantity units loading failed",
+    "addQuantityUnitError": "Quantity unit add failed",
+    "editQuantityUnitError": "Quantity unit edit failed",
+    "deleteQuantityUnitTitle": "Delete quantity unit",
+    "deleteQuantityUnitMessage": "Do you really want to delete quantity unit?",
+    "quantityUnit": {
+      "title": "Quantity unit",
+      "idLabel": "Id",
+      "idPlaceholder": "Enter id",
+      "idRequired": "Id is required",
+      "typeLabel": "Type",
+      "typePlaceholder": "Select type",
+      "typeRequired": "Type is required",
+      "unitLabel": "Unit",
+      "unitPlaceholder": "Enter unit",
+      "unitRequired": "Unit is required"
+    }
+  }
 }

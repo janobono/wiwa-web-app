@@ -28,7 +28,7 @@ const CompanyInfoPage = () => {
                             className="btn-primary"
                             title={resourceState?.admin?.companyInfo.title}
                             onClick={() => setShowDialog(true)}
-                        ><Edit size={24}/></WiwaButton>
+                        ><Edit size={18}/></WiwaButton>
                     </div>
 
                     <div className="overflow-x-auto">

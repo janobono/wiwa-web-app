@@ -30,7 +30,7 @@ const WiwaPageable = (
                 title={resourceState?.common?.pageable.previous}
                 disabled={disabled || !isPrevious}
                 onClick={previousHandler}
-            ><ChevronLeft size={24}/>
+            ><ChevronLeft size={18}/>
             </WiwaButton>
             <WiwaButton
                 className="join-item"
@@ -42,7 +42,7 @@ const WiwaPageable = (
                 title={resourceState?.common?.pageable.next}
                 disabled={disabled || !isNext}
                 onClick={nextHandler}
-            ><ChevronRight size={24}/>
+            ><ChevronRight size={18}/>
             </WiwaButton>
         </div>
     )

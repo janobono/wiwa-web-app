@@ -145,41 +145,45 @@
     "page": "Stránka",
     "next": "Nasledujúca",
     "error": "Chyba načítania používateľov",
-    "userCard": {
+    "deleteUser": {
+      "title": "Zmazať používateľa",
+      "message": "Naozaj si želáte zmazať používateľa?",
+      "error": "Zmazanie používateľa neúspešné"
+    },
+    "userAuthorities": {
+      "title": "Povolenia používateľa",
+      "authorities": "Povolenia",
+      "customer": "Zákazník",
+      "employee": "Zamestnanec",
+      "manager": "Manažér",
+      "admin": "Správca",
+      "submit": "Odoslať",
+      "cancel": "Zrušiť",
+      "error": "Zmena povolení neúspešná"
+    },
+    "userEnabled": {
+      "title": "Odblokovaný",
+      "dialogTitle": "Používateľ odblokovaný/zablokovaný",
+      "disableQuestion": "Naozaj si želáte zablokovať používateľa?",
+      "enableQuestion": "Naozaj si želáte odblokovať používateľa?",
+      "error": "Zablokovanie/odblokovanie používateľa neúspešné"
+    },
+    "userConfirmed": {
+      "title": "Potvrdený",
+      "dialogTitle": "Používateľ potvrdený/nepotvrdený",
+      "denyQuestion": "Naozaj si želáte nepotvrdiť používateľa?",
+      "confirmQuestion": "Naozaj si želáte potvrdiť používateľa?",
+      "error": "Potvrdenie/nepotvrdenie používateľa neúspešné"
+    },
+    "userTable": {
+      "id": "Id",
       "username": "Používateľské meno",
       "email": "Email",
       "firstName": "Meno",
       "lastName": "Priezvisko",
-      "deleteUser": {
-        "title": "Zmazať používateľa",
-        "message": "Naozaj si želáte zmazať používateľa?",
-        "error": "Zmazanie používateľa neúspešné"
-      },
-      "userAuthorities": {
-        "title": "Povolenia používateľa",
-        "authorities": "Povolenia",
-        "customer": "Zákazník",
-        "employee": "Zamestnanec",
-        "manager": "Manažér",
-        "admin": "Správca",
-        "submit": "Odoslať",
-        "cancel": "Zrušiť",
-        "error": "Zmena povolení neúspešná"
-      },
-      "userEnabled": {
-        "title": "Odblokovaný",
-        "dialogTitle": "Používateľ odblokovaný/zablokovaný",
-        "disableQuestion": "Naozaj si želáte zablokovať používateľa?",
-        "enableQuestion": "Naozaj si želáte odblokovať používateľa?",
-        "error": "Zablokovanie/odblokovanie používateľa neúspešné"
-      },
-      "userConfirmed": {
-        "title": "Potvrdený",
-        "dialogTitle": "Používateľ potvrdený/nepotvrdený",
-        "denyQuestion": "Naozaj si želáte nepotvrdiť používateľa?",
-        "confirmQuestion": "Naozaj si želáte potvrdiť používateľa?",
-        "error": "Potvrdenie/nepotvrdenie používateľa neúspešné"
-      }
+      "authorities": "Povolenia",
+      "confirmed": "Potvrdený",
+      "enabled": "Odblokovaný"
     }
   },
   "workingHours": {

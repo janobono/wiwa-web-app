@@ -1,4 +1,8 @@
 {
+  "action": {
+    "cancel": "Zrušiť",
+    "ok": "Potvrdiť"
+  },
   "baseNavigation": {
     "localeSwitch": "Prepnúť lokalizáciu na Anglickú",
     "refreshToken": "Obnoviť prihlásenie",
@@ -77,6 +81,7 @@
     "employee": "Zamestnanec",
     "customer": "Moje objednávky"
   },
+  "notFound": "404 Stránka nenájdená",
   "pageable": {
     "previous": "Predchádzajúca",
     "page": "Stránka",
@@ -85,5 +90,14 @@
   "refreshToken": {
     "action": "Obnoviť",
     "text": "Platnosť prihlásenia vypršala."
+  },
+  "quantityType": {
+    "area": "Plocha",
+    "distance": "Dĺžka",
+    "monetary": "Mena",
+    "volume": "Objem",
+    "temporal": "Čas",
+    "mass": "Hmotnosť",
+    "pack": "Balenie"
   }
 }

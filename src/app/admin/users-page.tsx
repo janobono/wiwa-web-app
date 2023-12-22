@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { PieChart, Search, Settings, ShoppingCart, Tool, Trash } from 'react-feather';
-import { twMerge } from 'tailwind-merge';
 
 import BaseDialog from '../../component/dialog/base-dialog';
 import { useAuthState } from '../../component/state/auth-state-provider';
@@ -22,6 +21,7 @@ const USER_AUTHORITIES_DIALOG_ID = 'admin-users-authorities-dialog-001';
 
 const UsersPage = () => {
     const authState = useAuthState();
+    const dialogState = useDialogState();
     const resourceState = useResourceState();
 
     const [data, setData] = useState<Page<User>>();
@@ -48,7 +48,7 @@ const UsersPage = () => {
 
                 const queryParams = new URLSearchParams();
                 setPageableQueryParams(queryParams, pageable);
-                setQueryParam(queryParams, 'search-field', searchField);
+                setQueryParam(queryParams, 'searchField', searchField);
                 const response = await getData<Page<User>>(
                     PATH_USERS,
                     queryParams,
@@ -71,11 +71,11 @@ const UsersPage = () => {
         try {
             const response = await patchData<User>(
                 PATH_USERS + '/' + id + '/authorities',
-                {value: userAuthorities},
+                userAuthorities,
                 authState?.accessToken || ''
             );
             if (response.error) {
-                setError(resourceState?.admin?.users.userCard.userAuthorities.error);
+                setError(resourceState?.admin?.users.userAuthorities.error);
             } else {
                 fetchUsers().then();
             }
@@ -93,7 +93,7 @@ const UsersPage = () => {
                 authState?.accessToken || ''
             );
             if (response.error) {
-                setError(resourceState?.admin?.users.userCard.userEnabled.error);
+                setError(resourceState?.admin?.users.userEnabled.error);
             } else {
                 fetchUsers().then();
             }
@@ -111,7 +111,7 @@ const UsersPage = () => {
                 authState?.accessToken || ''
             );
             if (response.error) {
-                setError(resourceState?.admin?.users.userCard.userConfirmed.error);
+                setError(resourceState?.admin?.users.userConfirmed.error);
             } else {
                 fetchUsers().then();
             }
@@ -128,7 +128,7 @@ const UsersPage = () => {
                 authState?.accessToken || ''
             );
             if (response.error) {
-                setError(resourceState?.admin?.users.userCard.deleteUser.error);
+                setError(resourceState?.admin?.users.deleteUser.error);
             } else {
                 fetchUsers().then();
             }
@@ -171,26 +171,74 @@ const UsersPage = () => {
                                 title={resourceState?.admin?.users.searchUser}
                                 className="join-item"
                                 onClick={fetchUsers}
-                            ><Search size={24}/></WiwaButton>
+                            ><Search size={18}/></WiwaButton>
                         </div>
                     </div>
 
-                    <div className="flex justify-center w-full pt-5">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full">
+                    <div className="overflow-x-auto">
+                        <table className="table table-zebra">
+                            <thead>
+                            <tr>
+                                <th>{resourceState?.admin?.users.userTable.id}</th>
+                                <th>{resourceState?.admin?.users.userTable.username}</th>
+                                <th>{resourceState?.admin?.users.userTable.email}</th>
+                                <th>{resourceState?.admin?.users.userTable.firstName}</th>
+                                <th>{resourceState?.admin?.users.userTable.lastName}</th>
+                                <th>{resourceState?.admin?.users.userTable.authorities}</th>
+                                <th>{resourceState?.admin?.users.userTable.confirmed}</th>
+                                <th>{resourceState?.admin?.users.userTable.enabled}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
                             {data?.content.map(user =>
-                                <UserComponent
-                                    key={user.id}
-                                    user={user}
-                                    authoritiesHandler={authoritiesHandler}
-                                    userEnabledHandler={userEnabledHandler}
-                                    userConfirmedHandler={userConfirmedHandler}
-                                    deleteHandler={deleteHandler}
-                                    disabled={submitting}
-                                />
+                                <tr key={user.id} className="hover">
+                                    <td>{user.id}</td>
+                                    <td>{user.username}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.firstName}</td>
+                                    <td>{user.lastName}</td>
+                                    <th>
+                                        <UserAuthorities user={user} disabled={submitting}
+                                                         authoritiesHandler={authoritiesHandler}/>
+                                    </th>
+                                    <th>
+                                        <UserConfirmed user={user} disabled={submitting}
+                                                       userConfirmedHandler={userConfirmedHandler}/>
+                                    </th>
+                                    <th>
+                                        <UserEnabled user={user} disabled={submitting}
+                                                     userEnabledHandler={userEnabledHandler}/>
+                                    </th>
+                                    <th>
+                                        <div className="flex flex-row w-full items-center justify-center">
+                                            <WiwaButton
+                                                className="btn-accent md:btn-xs"
+                                                title={resourceState?.admin?.users.deleteUser.title}
+                                                disabled={submitting || user.id === authState?.user?.id}
+                                                onClick={() => {
+                                                    dialogState?.showDialog({
+                                                        type: DialogType.YES_NO,
+                                                        title: resourceState?.admin?.users.deleteUser.title,
+                                                        message: resourceState?.admin?.users.deleteUser.message,
+                                                        callback: (answer: DialogAnswer) => {
+                                                            if (answer === DialogAnswer.YES) {
+                                                                if (user.id !== undefined) {
+                                                                    deleteHandler(user.id).then();
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                }}
+                                            ><Trash size={18}/>
+                                            </WiwaButton>
+                                        </div>
+                                    </th>
+                                </tr>
                             )}
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
-
                     <div className="w-full flex justify-center pt-5">
                         <WiwaPageable
                             isPrevious={previous}
@@ -209,85 +257,7 @@ const UsersPage = () => {
 
 export default UsersPage;
 
-const UserComponent = (
-    {
-        user,
-        authoritiesHandler,
-        userEnabledHandler,
-        userConfirmedHandler,
-        deleteHandler,
-        disabled
-    }: {
-        user: User,
-        authoritiesHandler: (id: string, userAuthorities: Authority[]) => void,
-        userEnabledHandler: (id: string, enabled: boolean) => void,
-        userConfirmedHandler: (id: string, confirmed: boolean) => void,
-        deleteHandler: (id: string) => void,
-        disabled: boolean
-    }) => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
-
-    return (
-        <div
-            className={twMerge(`flex flex-col border border-solid p-5
-                ${!user.enabled && 'border-2 border-accent'}
-                ${user.enabled && !user.confirmed && 'border-2 border-warning'}
-            `)}
-        >
-            <div className="flex flex-row justify-end w-full">
-                <WiwaButton
-                    className="btn-accent"
-                    title={resourceState?.admin?.users.userCard.deleteUser.title}
-                    disabled={disabled || user.id === authState?.user?.id}
-                    onClick={() => {
-                        dialogState?.showDialog({
-                            type: DialogType.YES_NO,
-                            title: resourceState?.admin?.users.userCard.deleteUser.title,
-                            message: resourceState?.admin?.users.userCard.deleteUser.message,
-                            callback: (answer: DialogAnswer) => {
-                                if (answer === DialogAnswer.YES) {
-                                    if (user.id !== undefined) {
-                                        deleteHandler(user.id);
-                                    }
-                                }
-                            }
-                        });
-                    }}
-                ><Trash size={24}/>
-                </WiwaButton>
-            </div>
-            <UserCardComponent user={user}/>
-            <UserAuthoritiesCard user={user} disabled={disabled} authoritiesHandler={authoritiesHandler}/>
-            <UserConfirmedCard user={user} disabled={disabled} userConfirmedHandler={userConfirmedHandler}/>
-            <UserEnabledCard user={user} disabled={disabled} userEnabledHandler={userEnabledHandler}/>
-        </div>
-    )
-}
-
-const UserCardComponent = ({user}: { user: User }) => {
-    const resourceState = useResourceState();
-
-    return (
-        <div
-            className="grid grid-cols-2 place-items-start gap-2 w-full items-center">
-            <div className="font-bold">{resourceState?.admin?.users.userCard.username}</div>
-            <div>{user.username}</div>
-
-            <div className="font-bold">{resourceState?.admin?.users.userCard.email}</div>
-            <div>{user.email}</div>
-
-            <div className="font-bold">{resourceState?.admin?.users.userCard.firstName}</div>
-            <div>{user.firstName}</div>
-
-            <div className="font-bold">{resourceState?.admin?.users.userCard.lastName}</div>
-            <div>{user.lastName}</div>
-        </div>
-    )
-}
-
-const UserEnabledCard = (
+const UserEnabled = (
     {
         user,
         disabled,
@@ -302,10 +272,7 @@ const UserEnabledCard = (
     const resourceState = useResourceState();
 
     return (
-        <div className="flex flex-row w-full pt-5 gap-5">
-            <div
-                className="font-bold">{resourceState?.admin?.users.userCard.userEnabled.title}
-            </div>
+        <div className="flex flex-row w-full items-center justify-center">
             <input
                 type="checkbox"
                 className="checkbox checkbox-accent"
@@ -313,10 +280,10 @@ const UserEnabledCard = (
                 onClick={() => {
                     dialogState?.showDialog({
                         type: DialogType.YES_NO,
-                        title: resourceState?.admin?.users.userCard.userEnabled.dialogTitle,
+                        title: resourceState?.admin?.users.userEnabled.dialogTitle,
                         message: user.enabled ?
-                            resourceState?.admin?.users.userCard.userEnabled.disableQuestion :
-                            resourceState?.admin?.users.userCard.userEnabled.enableQuestion,
+                            resourceState?.admin?.users.userEnabled.disableQuestion :
+                            resourceState?.admin?.users.userEnabled.enableQuestion,
                         callback: (answer: DialogAnswer) => {
                             if (answer === DialogAnswer.YES) {
                                 if (user.id !== undefined) {
@@ -327,12 +294,13 @@ const UserEnabledCard = (
                     });
                 }}
                 checked={user.enabled}
+                readOnly={true}
             />
         </div>
     )
 }
 
-const UserConfirmedCard = (
+const UserConfirmed = (
     {
         user,
         disabled,
@@ -347,10 +315,7 @@ const UserConfirmedCard = (
     const resourceState = useResourceState();
 
     return (
-        <div className="flex flex-row w-full pt-5 gap-5">
-            <div
-                className="font-bold">{resourceState?.admin?.users.userCard.userConfirmed.title}
-            </div>
+        <div className="flex flex-row w-full items-center justify-center">
             <input
                 type="checkbox"
                 className="checkbox checkbox-warning"
@@ -358,10 +323,10 @@ const UserConfirmedCard = (
                 onClick={() => {
                     dialogState?.showDialog({
                         type: DialogType.YES_NO,
-                        title: resourceState?.admin?.users.userCard.userConfirmed.dialogTitle,
+                        title: resourceState?.admin?.users.userConfirmed.dialogTitle,
                         message: user.confirmed ?
-                            resourceState?.admin?.users.userCard.userConfirmed.denyQuestion :
-                            resourceState?.admin?.users.userCard.userConfirmed.confirmQuestion,
+                            resourceState?.admin?.users.userConfirmed.denyQuestion :
+                            resourceState?.admin?.users.userConfirmed.confirmQuestion,
                         callback: (answer: DialogAnswer) => {
                             if (answer === DialogAnswer.YES) {
                                 if (user.id !== undefined) {
@@ -372,12 +337,13 @@ const UserConfirmedCard = (
                     });
                 }}
                 checked={user.confirmed}
+                readOnly={true}
             />
         </div>
     )
 }
 
-const UserAuthoritiesCard = (
+const UserAuthorities = (
     {
         user,
         disabled,
@@ -389,24 +355,20 @@ const UserAuthoritiesCard = (
     }) => {
     const authState = useAuthState();
     const resourceState = useResourceState();
-
     const [show, setShow] = useState(false);
 
     return (
         <>
-            <div className="flex flex-row w-full pt-5 gap-5 items-center">
-                <div className="font-bold">{resourceState?.admin?.users.userCard.userAuthorities.authorities}</div>
-                <button
-                    className="btn btn-ghost"
-                    title={resourceState?.admin?.users.userCard.userAuthorities.title}
-                    disabled={disabled || user.id === authState?.user?.id}
-                    onClick={() => {
-                        setShow(true);
-                    }}
-                >
-                    <WiwaUserAuthorities authorities={user.authorities}/>
-                </button>
-            </div>
+            <WiwaButton
+                title={resourceState?.admin?.users.userAuthorities.title}
+                className="btn-ghost md:btn-xs"
+                disabled={disabled || user.id === authState?.user?.id}
+                onClick={() => {
+                    setShow(true);
+                }}
+            >
+                <WiwaUserAuthorities authorities={user.authorities}/>
+            </WiwaButton>
 
             <AuthoritiesDialog
                 showDialog={show}
@@ -450,7 +412,7 @@ const AuthoritiesDialog = ({showDialog, authorities, okHandler, cancelHandler}: 
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.admin?.users.userCard.userAuthorities.title}
+                        {resourceState?.admin?.users.userAuthorities.title}
                     </div>
                     <form
                         className="max-w-sm"
@@ -481,7 +443,7 @@ const AuthoritiesDialog = ({showDialog, authorities, okHandler, cancelHandler}: 
                                     className="checkbox"
                                 />
                                 <ShoppingCart size="18"/>
-                                <span>{resourceState?.admin?.users.userCard.userAuthorities.customer}</span>
+                                <span>{resourceState?.admin?.users.userAuthorities.customer}</span>
                             </div>
                         </div>
 
@@ -494,7 +456,7 @@ const AuthoritiesDialog = ({showDialog, authorities, okHandler, cancelHandler}: 
                                     className="checkbox"
                                 />
                                 <Tool size="18"/>
-                                <span>{resourceState?.admin?.users.userCard.userAuthorities.employee}</span>
+                                <span>{resourceState?.admin?.users.userAuthorities.employee}</span>
                             </div>
                         </div>
 
@@ -507,7 +469,7 @@ const AuthoritiesDialog = ({showDialog, authorities, okHandler, cancelHandler}: 
                                     className="checkbox"
                                 />
                                 <PieChart size="18"/>
-                                <span>{resourceState?.admin?.users.userCard.userAuthorities.manager}</span>
+                                <span>{resourceState?.admin?.users.userAuthorities.manager}</span>
                             </div>
                         </div>
 
@@ -520,7 +482,7 @@ const AuthoritiesDialog = ({showDialog, authorities, okHandler, cancelHandler}: 
                                     className="checkbox"
                                 />
                                 <Settings size="18"/>
-                                <span>{resourceState?.admin?.users.userCard.userAuthorities.admin}</span>
+                                <span>{resourceState?.admin?.users.userAuthorities.admin}</span>
                             </div>
                         </div>
 
@@ -528,14 +490,14 @@ const AuthoritiesDialog = ({showDialog, authorities, okHandler, cancelHandler}: 
                             <WiwaButton
                                 className="btn-primary join-item"
                                 type="submit"
-                            >{resourceState?.admin?.users.userCard.userAuthorities.submit}
+                            >{resourceState?.admin?.users.userAuthorities.submit}
                             </WiwaButton>
                             <WiwaButton
                                 className="btn-accent join-item"
                                 onClick={() => {
                                     cancelHandler();
                                 }}
-                            >{resourceState?.admin?.users.userCard.userAuthorities.cancel}
+                            >{resourceState?.admin?.users.userAuthorities.cancel}
                             </WiwaButton>
                         </div>
                     </form>

@@ -5,7 +5,7 @@ import { containsAuthority } from '../../auth';
 
 const WiwaUserAuthorities = ({authorities}: { authorities: Authority[] }) => {
     return (
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-2 min-w-24">
             {containsAuthority(authorities, Authority.W_ADMIN) ? <Settings size="18"/> : <X size="18"/>}
             {containsAuthority(authorities, Authority.W_MANAGER) ? <PieChart size="18"/> : <X size="18"/>}
             {containsAuthority(authorities, Authority.W_EMPLOYEE) ? <Tool size="18"/> : <X size="18"/>}

@@ -1,14 +1,15 @@
-import WiwaButton from '../../component/ui/wiwa-button.tsx';
-import { Check, Edit, Plus, Trash } from 'react-feather';
-import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider.tsx';
-import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer.tsx';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import MdDialog from '../../component/dialog/md-dialog.tsx';
-import { useResourceState } from '../../component/state/resource-state-provider.tsx';
-import { CONTEXT_PATH, getData, postData } from '../../data.ts';
+import { Check, Edit, Plus, Trash } from 'react-feather';
+
+import MdDialog from '../../component/dialog/md-dialog';
+import { useAuthState } from '../../component/state/auth-state-provider';
+import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
+import { useResourceState } from '../../component/state/resource-state-provider';
+import WiwaButton from '../../component/ui/wiwa-button';
+import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
 import { ApplicationInfo } from '../../model/service';
-import { useAuthState } from '../../component/state/auth-state-provider.tsx';
+import { CONTEXT_PATH, getData, postData } from '../../data';
 
 const PATH_CONFIG_APPLICATION_INFO = CONTEXT_PATH + 'config/application-info';
 const PATH_UI_APPLICATION_INFO = CONTEXT_PATH + 'ui/application-info';
@@ -111,14 +112,14 @@ const AppInfoPage = () => {
                                 onClick={() => {
                                     editHandler();
                                 }}
-                            ><Plus size={24}/>
+                            ><Plus size={18}/>
                             </WiwaButton>
                             <WiwaButton
                                 className="btn-secondary join-item"
                                 title={resourceState?.admin?.applicationInfo.confirm}
                                 disabled={submitting || !changed}
                                 onClick={confirmHandler}
-                            ><Check size={24}/>
+                            ><Check size={18}/>
                             </WiwaButton>
                         </div>
                     </div>
@@ -183,7 +184,7 @@ const AppInfoItem = (
                         onClick={() => {
                             editHandler(index);
                         }}
-                    ><Edit size={24}/>
+                    ><Edit size={18}/>
                     </WiwaButton>
                     <WiwaButton
                         className="btn-accent join-item"
@@ -201,7 +202,7 @@ const AppInfoItem = (
                                 }
                             });
                         }}
-                    ><Trash size={24}/>
+                    ><Trash size={18}/>
                     </WiwaButton>
                 </div>
             </div>
