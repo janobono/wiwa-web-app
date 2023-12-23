@@ -3,19 +3,58 @@
   "codeListsTab": "Code Lists",
   "quantityUnitsTab": "Quantity units",
   "productsTab": "Products",
+  "codeLists": {
+    "id": "Id",
+    "code": "Code",
+    "name": "Name",
+    "codeListItems": "Items",
+    "fetchDataError": "Code lists loading failed",
+    "searchCodeList": {
+      "title": "Search code list",
+      "placeholder": "Name or code"
+    },
+    "addCodeList": {
+      "title": "Add code list",
+      "error": "Add code list failed"
+    },
+    "editCodeList": {
+      "title": "Edit code list",
+      "error": "Edit code list failed"
+    },
+    "deleteCodeList": {
+      "title": "Delete code list",
+      "message": "Do you really want to delete code list?",
+      "error": "Delete code list failed"
+    },
+    "codeListDialog": {
+      "title": "Code list",
+      "codeLabel": "Code",
+      "codePlaceholder": "Enter code",
+      "codeRequired": "Code is required",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter name",
+      "nameRequired": "Name is required"
+    }
+  },
   "quantityUnits": {
     "id": "Id",
     "type": "Type",
     "unit": "Unit",
-    "addQuantityUnit": "Add quantity unit",
-    "editQuantityUnit": "Edit quantity unit",
-    "deleteQuantityUnit": "Delete quantity unit",
-    "loadQuantitiesError": "Quantity units loading failed",
-    "addQuantityUnitError": "Quantity unit add failed",
-    "editQuantityUnitError": "Quantity unit edit failed",
-    "deleteQuantityUnitTitle": "Delete quantity unit",
-    "deleteQuantityUnitMessage": "Do you really want to delete quantity unit?",
-    "quantityUnit": {
+    "fetchDataError": "Quantity units loading failed",
+    "addQuantityUnit": {
+      "title": "Add quantity unit",
+      "error": "Quantity unit add failed"
+    },
+    "editQuantityUnit": {
+      "title": "Edit quantity unit",
+      "error": "Quantity unit edit failed"
+    },
+    "deleteQuantityUnit": {
+      "title": "Delete quantity unit",
+      "message": "Do you really want to delete quantity unit?",
+      "error": "Delete quantity unit failed"
+    },
+    "quantityUnitDialog": {
       "title": "Quantity unit",
       "idLabel": "Id",
       "idPlaceholder": "Enter id",

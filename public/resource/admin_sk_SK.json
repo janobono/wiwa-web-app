@@ -139,12 +139,11 @@
     "error": "Odoslanie gdpr informácií neúspešné"
   },
   "users": {
-    "searchUser": "Vyhľadať používateľa",
-    "searchUserPlaceholder": "Používateľské meno, meno, stredné meno, priezvisko alebo email",
-    "previous": "Predchádzajúca",
-    "page": "Stránka",
-    "next": "Nasledujúca",
-    "error": "Chyba načítania používateľov",
+    "fetchDataError": "Chyba načítania používateľov",
+    "searchUser": {
+      "title": "Vyhľadať používateľa",
+      "placeholder": "Používateľské meno, meno, stredné meno, priezvisko alebo email"
+    },
     "deleteUser": {
       "title": "Zmazať používateľa",
       "message": "Naozaj si želáte zmazať používateľa?",

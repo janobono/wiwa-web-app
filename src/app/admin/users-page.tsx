@@ -32,14 +32,14 @@ const UsersPage = () => {
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
-    const fetchUsers = async () => {
+    const fetchData = async () => {
         setError(undefined);
         setSubmitting(true);
         try {
             if (authState?.accessToken !== undefined) {
                 const pageable = {
                     page: page,
-                    size: 8,
+                    size: 10,
                     sort: {
                         field: 'username',
                         asc: true
@@ -56,7 +56,7 @@ const UsersPage = () => {
                 );
 
                 if (response.error) {
-                    setError(resourceState?.admin?.users.error);
+                    setError(resourceState?.admin?.users.fetchDataError);
                 } else if (response.data) {
                     setData(response.data);
                 }
@@ -77,7 +77,7 @@ const UsersPage = () => {
             if (response.error) {
                 setError(resourceState?.admin?.users.userAuthorities.error);
             } else {
-                fetchUsers().then();
+                fetchData().then();
             }
         } finally {
             setSubmitting(false);
@@ -95,7 +95,7 @@ const UsersPage = () => {
             if (response.error) {
                 setError(resourceState?.admin?.users.userEnabled.error);
             } else {
-                fetchUsers().then();
+                fetchData().then();
             }
         } finally {
             setSubmitting(false);
@@ -113,7 +113,7 @@ const UsersPage = () => {
             if (response.error) {
                 setError(resourceState?.admin?.users.userConfirmed.error);
             } else {
-                fetchUsers().then();
+                fetchData().then();
             }
         } finally {
             setSubmitting(false);
@@ -130,7 +130,7 @@ const UsersPage = () => {
             if (response.error) {
                 setError(resourceState?.admin?.users.deleteUser.error);
             } else {
-                fetchUsers().then();
+                fetchData().then();
             }
         } finally {
             setSubmitting(false);
@@ -138,7 +138,7 @@ const UsersPage = () => {
     }
 
     useEffect(() => {
-        fetchUsers().then();
+        fetchData().then();
     }, []);
 
     useEffect(() => {
@@ -158,19 +158,19 @@ const UsersPage = () => {
                         <div className="join pb-5 w-2/3">
                             <WiwaInput
                                 className="join-item"
-                                placeholder={resourceState?.admin?.users.searchUserPlaceholder}
+                                placeholder={resourceState?.admin?.users.searchUser.placeholder}
                                 value={searchField}
                                 onChange={event => setSearchField(event.target.value)}
                                 onKeyUp={(event) => {
                                     if (event.key === 'Enter') {
-                                        fetchUsers().then();
+                                        fetchData().then();
                                     }
                                 }}
                             />
                             <WiwaButton
-                                title={resourceState?.admin?.users.searchUser}
+                                title={resourceState?.admin?.users.searchUser.title}
                                 className="join-item"
-                                onClick={fetchUsers}
+                                onClick={fetchData}
                             ><Search size={18}/></WiwaButton>
                         </div>
                     </div>
@@ -244,7 +244,7 @@ const UsersPage = () => {
                             isPrevious={previous}
                             previousHandler={() => setPage(page + 1)}
                             page={page + 1}
-                            pageHandler={() => fetchUsers()}
+                            pageHandler={() => fetchData()}
                             isNext={next}
                             nextHandler={() => setPage(page - 1)}
                             disabled={submitting}

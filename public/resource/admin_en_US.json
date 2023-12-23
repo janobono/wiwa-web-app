@@ -139,12 +139,11 @@
     "error": "Gdpr info submitting failed"
   },
   "users": {
-    "searchUser": "Search user",
-    "searchUserPlaceholder": "Username, first name, middle name, last name or email",
-    "previous": "Previous",
-    "page": "Page",
-    "next": "Next",
-    "error": "Users loading failed",
+    "fetchDataError": "Users loading failed",
+    "searchUser": {
+      "title": "Search user",
+      "placeholder": "Username, first name, middle name, last name or email"
+    },
     "deleteUser": {
       "title": "Delete user",
       "message": "Do you really want to delete user?",

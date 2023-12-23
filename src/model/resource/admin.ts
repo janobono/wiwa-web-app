@@ -139,12 +139,11 @@ export interface ResourceAdmin {
         cancel: string
     },
     users: {
-        searchUser: string,
-        searchUserPlaceholder: string,
-        previous: string,
-        page: string,
-        next: string,
-        error: string,
+        fetchDataError: string,
+        searchUser: {
+            title: string,
+            placeholder: string
+        },
         deleteUser: {
             title: string,
             message: string,

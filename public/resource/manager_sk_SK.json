@@ -3,19 +3,58 @@
   "codeListsTab": "Číselníky",
   "quantityUnitsTab": "Množstevné jednotky",
   "productsTab": "Produkty",
+  "codeLists": {
+    "id": "Id",
+    "code": "Kód",
+    "name": "Názov",
+    "codeListItems": "Položky",
+    "fetchDataError": "Chyba načítania číselníkov",
+    "searchCodeList": {
+      "title": "Vyhľadať číselník",
+      "placeholder": "Názov alebo kód"
+    },
+    "addCodeList": {
+      "title": "Pridať číselník",
+      "error": "Chyba pridania číselníka"
+    },
+    "editCodeList": {
+      "title": "Upraviť číselník",
+      "error": "Chyba úpravy číselníka"
+    },
+    "deleteCodeList": {
+      "title": "Zmazať číselník",
+      "message": "Naozaj si želáte zmazať číselník?",
+      "error": "Chyba zmazania číselníka"
+    },
+    "codeListDialog": {
+      "title": "Číselník",
+      "codeLabel": "Kód",
+      "codePlaceholder": "Zadajte kód",
+      "codeRequired": "Vyžaduje sa kód",
+      "nameLabel": "Názov",
+      "namePlaceholder": "Zadajte názov",
+      "nameRequired": "Vyžaduje sa názov"
+    }
+  },
   "quantityUnits": {
     "id": "Id",
     "type": "Typ",
     "unit": "Jednotka",
-    "addQuantityUnit": "Pridať množstevnú jednotku",
-    "editQuantityUnit": "Upraviť množstevnú jednotku",
-    "deleteQuantityUnit": "Zmazať množstevnú jednotku",
-    "loadQuantitiesError": "Chyba načítania množstevných jednotiek",
-    "addQuantityUnitError": "Chyba pridania množstevnej jednotky",
-    "editQuantityUnitError": "Chyba úpravy množstevnej jednotky",
-    "deleteQuantityUnitTitle": "Zmazať množstevnú jednotku",
-    "deleteQuantityUnitMessage": "Naozaj si želáte zmazať množstevnú jednotku?",
-    "quantityUnit": {
+    "fetchDataError": "Chyba načítania množstevných jednotiek",
+    "addQuantityUnit": {
+      "title": "Pridať množstevnú jednotku",
+      "error": "Chyba pridania množstevnej jednotky"
+    },
+    "editQuantityUnit": {
+      "title": "Upraviť množstevnú jednotku",
+      "error": "Chyba úpravy množstevnej jednotky"
+    },
+    "deleteQuantityUnit": {
+      "title": "Zmazať množstevnú jednotku",
+      "message": "Naozaj si želáte zmazať množstevnú jednotku?",
+      "error": "Chyba zmazania množstevnej jednotky"
+    },
+    "quantityUnitDialog": {
       "title": "Množstevná jednotka",
       "idLabel": "Id",
       "idPlaceholder": "Zadajte id",
