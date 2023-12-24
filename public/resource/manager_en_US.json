@@ -7,7 +7,6 @@
     "id": "Id",
     "code": "Code",
     "name": "Name",
-    "codeListItems": "Items",
     "fetchDataError": "Code lists loading failed",
     "searchCodeList": {
       "title": "Search code list",
@@ -34,6 +33,43 @@
       "nameLabel": "Name",
       "namePlaceholder": "Enter name",
       "nameRequired": "Name is required"
+    },
+    "codeListItems": {
+      "title": "Code list items",
+      "id": "Id",
+      "code": "Code",
+      "value": "Value",
+      "fetchDataError": "Code list items loading failed",
+      "addCodeListItem": {
+        "title": "Add code list item",
+        "error": "Add code list item failed"
+      },
+      "editCodeListItem": {
+        "title": "Edit code list item",
+        "error": "Edit code list item failed"
+      },
+      "moveUpCodeListItem": {
+        "title": "Move code list item up",
+        "error": "Move code list item up failed"
+      },
+      "moveDownCodeListItem": {
+        "title": "Move code list item down",
+        "error": "Move code list item down failed"
+      },
+      "deleteCodeListItem": {
+        "title": "Delete code list item",
+        "message": "Do you really want to delete code list item?",
+        "error": "Delete code list item failed"
+      },
+      "codeListItemDialog": {
+        "title": "Code list item",
+        "codeLabel": "Code",
+        "codePlaceholder": "Enter code",
+        "codeRequired": "Code is required",
+        "valueLabel": "Value",
+        "valuePlaceholder": "Enter value",
+        "valueRequired": "Value is required"
+      }
     }
   },
   "quantityUnits": {

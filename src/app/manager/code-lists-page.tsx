@@ -217,7 +217,7 @@ const CodeListsPage = () => {
                                                 <Edit size={18}/>
                                             </WiwaButton>
                                             <WiwaButton
-                                                title={resourceState?.manager?.codeLists.codeListItems}
+                                                title={resourceState?.manager?.codeLists.codeListItems.title}
                                                 className="btn-secondary md:btn-xs join-item"
                                                 disabled={submitting}
                                                 onClick={() => navigate(codeList.id + '/items')}

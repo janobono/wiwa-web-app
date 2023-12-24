@@ -10,7 +10,7 @@ export interface CodeList {
 }
 
 export interface CodeListItemData {
-    parentId: number,
+    parentId?: number,
     code: string,
     value: string
 }

@@ -7,7 +7,6 @@
     "id": "Id",
     "code": "Kód",
     "name": "Názov",
-    "codeListItems": "Položky",
     "fetchDataError": "Chyba načítania číselníkov",
     "searchCodeList": {
       "title": "Vyhľadať číselník",
@@ -34,6 +33,43 @@
       "nameLabel": "Názov",
       "namePlaceholder": "Zadajte názov",
       "nameRequired": "Vyžaduje sa názov"
+    },
+    "codeListItems": {
+      "title": "Položky číselníka",
+      "id": "Id",
+      "code": "Kód",
+      "value": "Hodnota",
+      "fetchDataError": "Chyba načítania položiek číselníkov",
+      "addCodeListItem": {
+        "title": "Pridať položku číselníka",
+        "error": "Chyba pridania položky číselníka"
+      },
+      "editCodeListItem": {
+        "title": "Upraviť položku číselníka",
+        "error": "Chyba úpravy položky číselníka"
+      },
+      "moveUpCodeListItem": {
+        "title": "Presunúť položku číselníka nahor",
+        "error": "Chyba presunu položky číselníka nahor"
+      },
+      "moveDownCodeListItem": {
+        "title": "Presunúť položku číselníka nadol",
+        "error": "Chyba presunu položky číselníka nadol"
+      },
+      "deleteCodeListItem": {
+        "title": "Zmazať položku číselníka",
+        "message": "Naozaj si želáte zmazať položku číselníka?",
+        "error": "Chyba zmazania položky číselníka"
+      },
+      "codeListItemDialog": {
+        "title": "Code list item",
+        "codeLabel": "Code",
+        "codePlaceholder": "Enter code",
+        "codeRequired": "Code is required",
+        "valueLabel": "Value",
+        "valuePlaceholder": "Enter value",
+        "valueRequired": "Value is required"
+      }
     }
   },
   "quantityUnits": {

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { PieChart, Search, Settings, ShoppingCart, Tool, Trash } from 'react-feather';
 
+import WiwaUserAuthorities from '../../component/app/wiwa-user-authorities';
 import BaseDialog from '../../component/dialog/base-dialog';
 import { useAuthState } from '../../component/state/auth-state-provider';
 import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
@@ -9,7 +10,6 @@ import { useResourceState } from '../../component/state/resource-state-provider'
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaInput from '../../component/ui/wiwa-input';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import WiwaUserAuthorities from '../../component/user/wiwa-user-authorities';
 import { containsAuthority } from '../../auth';
 import { Authority, Page, User } from '../../model/service';
 
