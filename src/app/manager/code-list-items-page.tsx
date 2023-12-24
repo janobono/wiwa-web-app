@@ -13,7 +13,7 @@ import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import { CodeList, CodeListItem, CodeListItemData, Page } from '../../model/service';
 import { CONTEXT_PATH, deleteData, getData, patchData, postData, putData, setQueryParam } from '../../data';
 
-const PATH_CODE_LISTS = CONTEXT_PATH + 'code-lists';
+const PATH_CODE_LIST_ITEMS = CONTEXT_PATH + 'code-lists/items';
 
 const CODE_LIST_ITEM_DIALOG_ID = 'code-list-item-dialog-001';
 
@@ -48,7 +48,7 @@ const CodeListItemsPage = () => {
                     setQueryParam(queryParams, 'root', 'true');
                 }
                 const response = await getData<Page<CodeListItem>>(
-                    PATH_CODE_LISTS + '/' + codeListId + '/items',
+                    PATH_CODE_LIST_ITEMS,
                     queryParams,
                     authState?.accessToken || ''
                 );
@@ -71,13 +71,13 @@ const CodeListItemsPage = () => {
             let response;
             if (selectedItem) {
                 response = await putData<CodeList>(
-                    PATH_CODE_LISTS + '/' + codeListId + '/items/' + selectedItem.id,
+                    PATH_CODE_LIST_ITEMS + '/' + selectedItem.id,
                     codeListItemData,
                     authState?.accessToken || ''
                 );
             } else {
                 response = await postData<CodeList>(
-                    PATH_CODE_LISTS + '/' + codeListId + '/items',
+                    PATH_CODE_LIST_ITEMS,
                     codeListItemData,
                     authState?.accessToken || ''
                 );
@@ -102,7 +102,7 @@ const CodeListItemsPage = () => {
         setError(undefined);
         try {
             const response = await patchData<CodeList>(
-                PATH_CODE_LISTS + '/' + codeListId + '/items/' + id + '/move-up',
+                PATH_CODE_LIST_ITEMS + '/' + id + '/move-up',
                 undefined,
                 authState?.accessToken || ''
             );
@@ -121,7 +121,7 @@ const CodeListItemsPage = () => {
         setError(undefined);
         try {
             const response = await patchData<CodeList>(
-                PATH_CODE_LISTS + '/' + codeListId + '/items/' + id + '/move-down',
+                PATH_CODE_LIST_ITEMS + '/' + id + '/move-down',
                 undefined,
                 authState?.accessToken || ''
             );
@@ -140,7 +140,7 @@ const CodeListItemsPage = () => {
         setError(undefined);
         try {
             const response = await deleteData(
-                PATH_CODE_LISTS + '/' + codeListId + '/items/' + id,
+                PATH_CODE_LIST_ITEMS + '/' + id,
                 authState?.accessToken || ''
             )
             if (response.error) {
@@ -242,9 +242,7 @@ const CodeListItemsPage = () => {
                                                         message: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.message,
                                                         callback: (answer: DialogAnswer) => {
                                                             if (answer === DialogAnswer.YES) {
-                                                                if (item.id !== undefined) {
-                                                                    deleteHandler(item.id).then();
-                                                                }
+                                                                deleteHandler(item.id).then();
                                                             }
                                                         }
                                                     });
@@ -262,6 +260,7 @@ const CodeListItemsPage = () => {
 
                 <CodeListItemDataDialog
                     showDialog={showDialog}
+                    codeListId={Number(codeListId)}
                     parent={parentItem}
                     codeList={selectedItem}
                     okHandler={okHandler}
@@ -278,15 +277,26 @@ const CodeListItemsPage = () => {
 
 export default CodeListItemsPage;
 
-const CodeListItemDataDialog = ({showDialog, parent, codeList, okHandler, cancelHandler, error, submitting}: {
-    showDialog: boolean,
-    parent?: CodeListItem,
-    codeList?: CodeListItem,
-    okHandler: (codeListItemData: CodeListItemData) => void,
-    cancelHandler: () => void,
-    error?: string,
-    submitting: boolean
-}) => {
+const CodeListItemDataDialog = (
+    {
+        showDialog,
+        codeListId,
+        parent,
+        codeList,
+        okHandler,
+        cancelHandler,
+        error,
+        submitting
+    }: {
+        showDialog: boolean,
+        codeListId: number,
+        parent?: CodeListItem,
+        codeList?: CodeListItem,
+        okHandler: (codeListItemData: CodeListItemData) => void,
+        cancelHandler: () => void,
+        error?: string,
+        submitting: boolean
+    }) => {
     const dialogState = useDialogState();
     const resourceState = useResourceState();
 
@@ -367,7 +377,7 @@ const CodeListItemDataDialog = ({showDialog, parent, codeList, okHandler, cancel
                             className="btn-primary join-item"
                             disabled={submitting || !formValid}
                             onClick={() => {
-                                okHandler({parentId: (parent ? parent.id : undefined), code, value});
+                                okHandler({codeListId, parentId: (parent ? parent.id : undefined), code, value});
                             }}
                         >{resourceState?.common?.action.ok}
                         </WiwaButton>

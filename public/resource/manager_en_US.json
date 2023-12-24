@@ -72,6 +72,24 @@
       }
     }
   },
+  "products": {
+    "id": "Id",
+    "code": "Code",
+    "name": "Name",
+    "stockStatus": "Stock status",
+    "fetchDataError": "Products loading failed",
+    "addProduct": "Add product",
+    "editProduct": "Edit product",
+    "searchProduct": {
+      "title": "Search product",
+      "placeholder": "Name or code"
+    },
+    "deleteProduct": {
+      "title": "Delete product",
+      "message": "Do you really want to delete product?",
+      "error": "Delete product failed"
+    }
+  },
   "quantityUnits": {
     "id": "Id",
     "type": "Type",

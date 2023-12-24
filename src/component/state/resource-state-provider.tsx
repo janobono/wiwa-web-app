@@ -10,7 +10,6 @@ import {
     ResourceManager,
     ResourceUi
 } from '../../model/resource';
-import { QuantityType } from '../../model/service';
 
 const RESOURCE_ADMIN = 'admin';
 const RESOURCE_AUTH = 'auth';
@@ -88,23 +87,4 @@ export default ResourceStateProvider;
 
 export const useResourceState = () => {
     return useContext(resourceStateContext);
-}
-
-export const translateType = (type: QuantityType, resourceState?: ResourceState) => {
-    switch (type) {
-        case QuantityType.AREA:
-            return resourceState?.common?.quantityType.area;
-        case QuantityType.DISTANCE:
-            return resourceState?.common?.quantityType.distance;
-        case QuantityType.MONETARY:
-            return resourceState?.common?.quantityType.monetary;
-        case QuantityType.VOLUME:
-            return resourceState?.common?.quantityType.volume;
-        case QuantityType.TEMPORAL:
-            return resourceState?.common?.quantityType.temporal;
-        case QuantityType.MASS:
-            return resourceState?.common?.quantityType.mass;
-        case QuantityType.PACK:
-            return resourceState?.common?.quantityType.pack;
-    }
 }

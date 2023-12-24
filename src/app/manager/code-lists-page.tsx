@@ -235,9 +235,7 @@ const CodeListsPage = () => {
                                                         message: resourceState?.manager?.codeLists.deleteCodeList.message,
                                                         callback: (answer: DialogAnswer) => {
                                                             if (answer === DialogAnswer.YES) {
-                                                                if (codeList.id !== undefined) {
-                                                                    deleteHandler(codeList.id).then();
-                                                                }
+                                                                deleteHandler(codeList.id).then();
                                                             }
                                                         }
                                                     });

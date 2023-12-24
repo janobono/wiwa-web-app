@@ -2,10 +2,11 @@ import { FormEvent, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit, Plus, Trash } from 'react-feather';
 
+import WiwaQuantityType from '../../component/app/wiwa-quantity-type';
 import BaseDialog from '../../component/dialog/base-dialog';
 import { useAuthState } from '../../component/state/auth-state-provider';
 import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
-import { translateType, useResourceState } from '../../component/state/resource-state-provider';
+import { useResourceState } from '../../component/state/resource-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaSelect from '../../component/ui/wiwa-select';
@@ -145,7 +146,7 @@ const QuantityUnitsPage = () => {
                             {data?.map(quantityUnit =>
                                 <tr key={quantityUnit.id} className="hover">
                                     <td>{quantityUnit.id}</td>
-                                    <td>{translateType(quantityUnit.type, resourceState)}</td>
+                                    <td><WiwaQuantityType type={quantityUnit.type}/></td>
                                     <td>{quantityUnit.unit}</td>
                                     <th>
                                         <div className="join">
@@ -300,7 +301,7 @@ const QuantityUnitDialog = ({showDialog, quantityUnit, okHandler, cancelHandler,
                                 <option
                                     key={value}
                                     selected={type === value}
-                                    value={value}>{translateType(value, resourceState)}</option>
+                                    value={value}><WiwaQuantityType type={value}/></option>
                             )}
                         </WiwaSelect>
                         {type === undefined &&

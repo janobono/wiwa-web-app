@@ -73,6 +73,24 @@ export interface ResourceManager {
             }
         },
     },
+    products: {
+        id: string,
+        code: string,
+        name: string,
+        stockStatus: string,
+        fetchDataError: string,
+        addProduct: string,
+        editProduct: string,
+        searchProduct: {
+            title: string,
+            placeholder: string
+        },
+        deleteProduct: {
+            title: string,
+            message: string,
+            error: string
+        }
+    },
     quantityUnits: {
         id: string,
         type: string,

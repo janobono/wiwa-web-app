@@ -32,7 +32,7 @@ const WiwaSelectCodeListItem = (
         const fetchHome = async () => {
             if (codeListItemId) {
                 const response = await getData<CodeListItem>(
-                    PATH_CODE_LISTS + '/' + codeListId + '/items/' + codeListItemId,
+                    PATH_CODE_LISTS + '/items/' + codeListItemId,
                     undefined,
                     authState?.accessToken || ''
                 );
@@ -71,7 +71,7 @@ const WiwaSelectCodeListItem = (
                     setQueryParam(queryParams, 'root', 'true');
                 }
                 const response = await getData<Page<CodeListItem>>(
-                    PATH_CODE_LISTS + '/' + codeListId + '/items',
+                    PATH_CODE_LISTS + '/items',
                     queryParams,
                     authState?.accessToken || ''
                 );

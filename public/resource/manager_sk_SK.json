@@ -72,6 +72,24 @@
       }
     }
   },
+  "products": {
+    "id": "Id",
+    "code": "Kód",
+    "name": "Názov",
+    "stockStatus": "Stav",
+    "fetchDataError": "Chyba načítania produktov",
+    "addProduct": "Pridať produkt",
+    "editProduct": "Upraviť produkt",
+    "searchProduct": {
+      "title": "Vyhľadať produkt",
+      "placeholder": "Názov alebo kód"
+    },
+    "deleteProduct": {
+      "title": "Zmazať produkt",
+      "message": "Naozaj si želáte zmazať produkt?",
+      "error": "Chyba zmazania produktu"
+    }
+  },
   "quantityUnits": {
     "id": "Id",
     "type": "Typ",
