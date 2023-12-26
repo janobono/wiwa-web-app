@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit, Plus, Search, Trash } from 'react-feather';
+
 import { useAuthState } from '../../component/state/auth-state-provider';
 import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
@@ -143,7 +144,6 @@ const ProductsPage = () => {
                                     <td>{product.id}</td>
                                     <td>{product.code}</td>
                                     <td>{product.name}</td>
-                                    <td>{product.note}</td>
                                     <td>{product.stockStatus}</td>
                                     <th>
                                         <div className="join">

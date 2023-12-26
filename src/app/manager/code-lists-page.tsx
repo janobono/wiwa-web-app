@@ -5,24 +5,14 @@ import { Edit, List, Plus, Search, Trash } from 'react-feather';
 
 import BaseDialog from '../../component/dialog/base-dialog';
 import { useAuthState } from '../../component/state/auth-state-provider';
+import { useCodeListState } from '../../component/state/code-list-provider';
 import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaInput from '../../component/ui/wiwa-input';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import { CodeList, CodeListData, Page } from '../../model/service';
-import {
-    CONTEXT_PATH,
-    deleteData,
-    getData,
-    postData,
-    putData,
-    setPageableQueryParams,
-    setQueryParam
-} from '../../data';
-
-const PATH_CODE_LISTS = CONTEXT_PATH + 'code-lists';
+import { CodeList, CodeListData } from '../../model/service';
 
 const CODE_LIST_DIALOG_ID = 'code-list-dialog-001';
 
@@ -32,119 +22,58 @@ const CodeListsPage = () => {
     const authState = useAuthState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
+    const codeListState = useCodeListState();
 
     const [showDialog, setShowDialog] = useState(false);
     const [selectedCodeList, setSelectedCodeList] = useState<CodeList>();
 
-    const [data, setData] = useState<Page<CodeList>>();
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
     const [page, setPage] = useState(0);
     const [searchField, setSearchField] = useState('');
-    const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
     const fetchData = async () => {
         setError(undefined);
-        setSubmitting(true);
-        try {
-            if (authState?.accessToken !== undefined) {
-                const pageable = {
-                    page: page,
-                    size: 10,
-                    sort: {
-                        field: 'name',
-                        asc: true
-                    }
-                }
-
-                const queryParams = new URLSearchParams();
-                setPageableQueryParams(queryParams, pageable);
-                setQueryParam(queryParams, 'searchField', searchField);
-                const response = await getData<Page<CodeList>>(
-                    PATH_CODE_LISTS,
-                    queryParams,
-                    authState?.accessToken || ''
-                );
-
-                if (response.error) {
-                    setError(resourceState?.manager?.codeLists.fetchDataError);
-                } else if (response.data) {
-                    setData(response.data);
-                }
-            }
-        } finally {
-            setSubmitting(false);
+        const response = await codeListState?.fetchData(page, searchField);
+        if (response) {
+            setError(resourceState?.manager?.codeLists.fetchDataError);
         }
     }
 
     const okHandler = async (codeListData: CodeListData) => {
-        setSubmitting(true);
         setError(undefined);
-        try {
-            let response;
+        let response;
+        if (selectedCodeList) {
+            response = await codeListState?.setCodeList(selectedCodeList.id, codeListData);
+        } else {
+            response = await codeListState?.addCodeList(codeListData);
+        }
+        if (response) {
             if (selectedCodeList) {
-                response = await putData<CodeList>(
-                    PATH_CODE_LISTS + '/' + selectedCodeList.id,
-                    codeListData,
-                    authState?.accessToken || ''
-                );
+                setError(resourceState?.manager?.codeLists.editCodeList.error);
             } else {
-                response = await postData<CodeList>(
-                    PATH_CODE_LISTS,
-                    codeListData,
-                    authState?.accessToken || ''
-                );
+                setError(resourceState?.manager?.codeLists.addCodeList.error);
             }
-            if (response.data) {
-                if (selectedCodeList) {
-                    await fetchData();
-                } else {
-                    if (data) {
-                        const newData = {...data};
-                        newData.content = [response.data, ...data.content];
-                        setData(newData);
-                    }
-                }
-                setShowDialog(false);
-            } else {
-                if (selectedCodeList) {
-                    setError(resourceState?.manager?.codeLists.editCodeList.error);
-                } else {
-                    setError(resourceState?.manager?.codeLists.addCodeList.error);
-                }
-            }
-        } finally {
-            setSubmitting(false);
         }
     }
 
     const deleteHandler = async (id: number) => {
-        setSubmitting(true);
         setError(undefined);
-        try {
-            const response = await deleteData(
-                PATH_CODE_LISTS + '/' + id,
-                authState?.accessToken || ''
-            )
-            if (response.error) {
-                setError(resourceState?.manager?.codeLists.deleteCodeList.error);
-            } else {
-                await fetchData();
-            }
-        } finally {
-            setSubmitting(false);
+        const response = await codeListState?.deleteCodeList(id);
+        if (response) {
+            setError(resourceState?.manager?.codeLists.deleteCodeList.error);
         }
     }
 
     useEffect(() => {
         fetchData().then();
-    }, []);
+    }, [authState?.accessToken]);
 
     useEffect(() => {
-        setPrevious(data !== undefined && !data.first);
-        setNext(data !== undefined && !data.last);
-    }, [data]);
+        setPrevious(codeListState?.data !== undefined && !codeListState?.data.first);
+        setNext(codeListState?.data !== undefined && !codeListState?.data.last);
+    }, [codeListState?.data]);
 
     return (
         error ?
@@ -186,7 +115,7 @@ const CodeListsPage = () => {
                                     <WiwaButton
                                         title={resourceState?.manager?.codeLists.addCodeList.title}
                                         className="btn-primary btn-xs"
-                                        disabled={submitting}
+                                        disabled={codeListState?.busy}
                                         onClick={() => {
                                             setSelectedCodeList(undefined);
                                             setShowDialog(true);
@@ -198,7 +127,7 @@ const CodeListsPage = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {data?.content.map(codeList =>
+                            {codeListState?.data?.content.map(codeList =>
                                 <tr key={codeList.id} className="hover">
                                     <td>{codeList.id}</td>
                                     <td>{codeList.code}</td>
@@ -208,7 +137,7 @@ const CodeListsPage = () => {
                                             <WiwaButton
                                                 title={resourceState?.manager?.codeLists.editCodeList.title}
                                                 className="btn-primary btn-xs join-item"
-                                                disabled={submitting}
+                                                disabled={codeListState?.busy}
                                                 onClick={() => {
                                                     setSelectedCodeList(codeList);
                                                     setShowDialog(true);
@@ -219,7 +148,7 @@ const CodeListsPage = () => {
                                             <WiwaButton
                                                 title={resourceState?.manager?.codeLists.codeListItems.title}
                                                 className="btn-secondary btn-xs join-item"
-                                                disabled={submitting}
+                                                disabled={codeListState?.busy}
                                                 onClick={() => navigate(codeList.id + '/items')}
                                             >
                                                 <List size={18}/>
@@ -227,7 +156,7 @@ const CodeListsPage = () => {
                                             <WiwaButton
                                                 className="btn-accent btn-xs join-item"
                                                 title={resourceState?.manager?.codeLists.deleteCodeList.title}
-                                                disabled={submitting}
+                                                disabled={codeListState?.busy}
                                                 onClick={() => {
                                                     dialogState?.showDialog({
                                                         type: DialogType.YES_NO,
@@ -257,7 +186,7 @@ const CodeListsPage = () => {
                             pageHandler={() => fetchData()}
                             isNext={next}
                             nextHandler={() => setPage(page - 1)}
-                            disabled={submitting}
+                            disabled={codeListState?.busy}
                         />
                     </div>
                 </div>
@@ -265,13 +194,15 @@ const CodeListsPage = () => {
                 <CodeListDataDialog
                     showDialog={showDialog}
                     codeList={selectedCodeList}
-                    okHandler={okHandler}
+                    okHandler={(data) => {
+                        okHandler(data);
+                        setShowDialog(false);
+                    }}
                     cancelHandler={() => {
                         setError(undefined);
                         setShowDialog(false);
                     }}
-                    error={error}
-                    submitting={submitting}
+                    submitting={codeListState?.busy || false}
                 />
             </>
     )
@@ -279,12 +210,11 @@ const CodeListsPage = () => {
 
 export default CodeListsPage;
 
-const CodeListDataDialog = ({showDialog, codeList, okHandler, cancelHandler, error, submitting}: {
+const CodeListDataDialog = ({showDialog, codeList, okHandler, cancelHandler, submitting}: {
     showDialog: boolean,
     codeList?: CodeList,
     okHandler: (codeListData: CodeListData) => void,
     cancelHandler: () => void,
-    error?: string,
     submitting: boolean
 }) => {
     const dialogState = useDialogState();
@@ -380,11 +310,6 @@ const CodeListDataDialog = ({showDialog, codeList, okHandler, cancelHandler, err
                         >{resourceState?.common?.action.cancel}
                         </WiwaButton>
                     </div>
-                    {error &&
-                        <label className="label">
-                            <span className="label-text-alt text-error">{error}</span>
-                        </label>
-                    }
                 </div>
             </div>
         </BaseDialog>

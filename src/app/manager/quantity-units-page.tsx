@@ -7,13 +7,11 @@ import BaseDialog from '../../component/dialog/base-dialog';
 import { useAuthState } from '../../component/state/auth-state-provider';
 import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
+import { useQuantityUnitState } from '../../component/state/quantity-unit-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaSelect from '../../component/ui/wiwa-select';
 import { QuantityType, QuantityUnit } from '../../model/service';
-import { CONTEXT_PATH, deleteData, getData, postData, putData } from '../../data';
-
-const PATH_QUANTITY_UNITS = CONTEXT_PATH + 'quantity-units';
 
 const QUANTITY_UNIT_DIALOG_ID = 'manager-quantity-unit-dialog-001';
 
@@ -21,95 +19,39 @@ const QuantityUnitsPage = () => {
     const authState = useAuthState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
+    const quantityUnitState = useQuantityUnitState();
 
     const [showDialog, setShowDialog] = useState(false);
     const [selectedQuantityUnit, setSelectedQuantityUnit] = useState<QuantityUnit>();
-
-    const [data, setData] = useState<QuantityUnit[]>();
-    const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
-    const fetchData = async () => {
-        setData(undefined);
-        setSubmitting(true);
-        setError(undefined);
-        try {
-            if (authState && authState.accessToken) {
-                const response = await getData<QuantityUnit[]>(
-                    PATH_QUANTITY_UNITS,
-                    undefined,
-                    authState.accessToken
-                );
-                if (response.error) {
-                    setError(resourceState?.manager?.quantityUnits.fetchDataError);
-                } else if (response.data) {
-                    setData(response.data);
-                }
-            }
-        } finally {
-            setSubmitting(false);
-        }
-    }
-
     const okHandler = async (quantityUnit: QuantityUnit) => {
-        setSubmitting(true);
         setError(undefined);
-        try {
-            let response;
+        let response;
+        if (selectedQuantityUnit) {
+            response = await quantityUnitState?.setQuantityUnit(quantityUnit);
+        } else {
+            response = await quantityUnitState?.addQuantityUnit(quantityUnit);
+        }
+        if (response) {
             if (selectedQuantityUnit) {
-                response = await putData<QuantityUnit>(
-                    PATH_QUANTITY_UNITS,
-                    quantityUnit,
-                    authState?.accessToken || ''
-                );
+                setError(resourceState?.manager?.quantityUnits.editQuantityUnit.error);
             } else {
-                response = await postData<QuantityUnit>(
-                    PATH_QUANTITY_UNITS,
-                    quantityUnit,
-                    authState?.accessToken || ''
-                );
+                setError(resourceState?.manager?.quantityUnits.addQuantityUnit.error);
             }
-            if (response.data) {
-                if (selectedQuantityUnit) {
-                    await fetchData();
-                } else {
-                    if (data) {
-                        setData([response.data, ...data]);
-                    }
-                }
-                setShowDialog(false);
-            } else {
-                if (selectedQuantityUnit) {
-                    setError(resourceState?.manager?.quantityUnits.editQuantityUnit.error);
-                } else {
-                    setError(resourceState?.manager?.quantityUnits.addQuantityUnit.error);
-                }
-            }
-        } finally {
-            setSubmitting(false);
         }
     }
 
     const deleteHandler = async (id: string) => {
-        setSubmitting(true);
         setError(undefined);
-        try {
-            const response = await deleteData(
-                PATH_QUANTITY_UNITS + '/' + id,
-                authState?.accessToken || ''
-            )
-            if (response.error) {
-                setError(resourceState?.manager?.quantityUnits.deleteQuantityUnit.error);
-            } else {
-                await fetchData();
-            }
-        } finally {
-            setSubmitting(false);
+        const error = await quantityUnitState?.deleteQuantityUnit(id);
+        if (error) {
+            setError(resourceState?.manager?.quantityUnits.deleteQuantityUnit.error);
         }
     }
 
     useEffect(() => {
-        fetchData().then();
+        quantityUnitState?.fetchData().then();
     }, [authState?.accessToken]);
 
     return (
@@ -131,7 +73,7 @@ const QuantityUnitsPage = () => {
                                     <WiwaButton
                                         title={resourceState?.manager?.quantityUnits.addQuantityUnit.title}
                                         className="btn-primary btn-xs"
-                                        disabled={submitting}
+                                        disabled={quantityUnitState?.busy}
                                         onClick={() => {
                                             setSelectedQuantityUnit(undefined);
                                             setShowDialog(true);
@@ -143,7 +85,7 @@ const QuantityUnitsPage = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {data?.map(quantityUnit =>
+                            {quantityUnitState?.data.map(quantityUnit =>
                                 <tr key={quantityUnit.id} className="hover">
                                     <td>{quantityUnit.id}</td>
                                     <td><WiwaQuantityType type={quantityUnit.type}/></td>
@@ -153,7 +95,7 @@ const QuantityUnitsPage = () => {
                                             <WiwaButton
                                                 title={resourceState?.manager?.quantityUnits.editQuantityUnit.title}
                                                 className="btn-primary btn-xs join-item"
-                                                disabled={submitting}
+                                                disabled={quantityUnitState?.busy}
                                                 onClick={() => {
                                                     setSelectedQuantityUnit(quantityUnit);
                                                     setShowDialog(true);
@@ -164,7 +106,7 @@ const QuantityUnitsPage = () => {
                                             <WiwaButton
                                                 title={resourceState?.manager?.quantityUnits.deleteQuantityUnit.title}
                                                 className="btn-accent btn-xs join-item"
-                                                disabled={submitting}
+                                                disabled={quantityUnitState?.busy}
                                                 onClick={() => {
                                                     dialogState?.showDialog({
                                                         type: DialogType.YES_NO,
@@ -192,13 +134,15 @@ const QuantityUnitsPage = () => {
                 <QuantityUnitDialog
                     showDialog={showDialog}
                     quantityUnit={selectedQuantityUnit}
-                    okHandler={okHandler}
+                    okHandler={(data) => {
+                        okHandler(data).then();
+                        setShowDialog(false);
+                    }}
                     cancelHandler={() => {
                         setError(undefined);
                         setShowDialog(false);
                     }}
-                    error={error}
-                    submitting={submitting}
+                    submitting={quantityUnitState?.busy || false}
                 />
             </>
     )
@@ -206,12 +150,11 @@ const QuantityUnitsPage = () => {
 
 export default QuantityUnitsPage;
 
-const QuantityUnitDialog = ({showDialog, quantityUnit, okHandler, cancelHandler, error, submitting}: {
+const QuantityUnitDialog = ({showDialog, quantityUnit, okHandler, cancelHandler, submitting}: {
     showDialog: boolean,
     quantityUnit?: QuantityUnit,
     okHandler: (quantityUnit: QuantityUnit) => void,
     cancelHandler: () => void,
-    error?: string,
     submitting: boolean
 }) => {
     const dialogState = useDialogState();
@@ -294,13 +237,13 @@ const QuantityUnitDialog = ({showDialog, quantityUnit, okHandler, cancelHandler,
                         <WiwaSelect
                             onChange={event => typeChangeHandler(event)}
                         >
-                            <option disabled
-                                    selected={type === undefined}>{resourceState?.manager?.quantityUnits.quantityUnitDialog.typePlaceholder}</option>
+                            <option
+                                selected={type === undefined}
+                                disabled>{resourceState?.manager?.quantityUnits.quantityUnitDialog.typePlaceholder}</option>
 
                             {Object.values(QuantityType).map(value =>
                                 <option
                                     key={value}
-                                    selected={type === value}
                                     value={value}><WiwaQuantityType type={value}/></option>
                             )}
                         </WiwaSelect>
@@ -350,11 +293,6 @@ const QuantityUnitDialog = ({showDialog, quantityUnit, okHandler, cancelHandler,
                         >{resourceState?.common?.action.cancel}
                         </WiwaButton>
                     </div>
-                    {error &&
-                        <label className="label">
-                            <span className="label-text-alt text-error">{error}</span>
-                        </label>
-                    }
                 </div>
             </div>
         </BaseDialog>
