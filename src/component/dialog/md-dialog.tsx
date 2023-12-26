@@ -19,7 +19,9 @@ const MdDialog = (
         placeholder,
         value,
         setValue,
-        validate,
+        validate = () => {
+            return {valid: true}
+        },
         rows,
         error,
         okHandler,

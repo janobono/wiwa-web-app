@@ -173,7 +173,7 @@ const CodeListItemsPage = () => {
                                 <th>
                                     <WiwaButton
                                         title={resourceState?.manager?.codeLists.codeListItems.addCodeListItem.title}
-                                        className="btn-primary md:btn-xs"
+                                        className="btn-primary btn-xs"
                                         disabled={submitting}
                                         onClick={() => {
                                             setSelectedItem(undefined);
@@ -195,7 +195,7 @@ const CodeListItemsPage = () => {
                                         <div className="join">
                                             <WiwaButton
                                                 title={resourceState?.manager?.codeLists.codeListItems.editCodeListItem.title}
-                                                className="btn-primary md:btn-xs join-item"
+                                                className="btn-primary btn-xs join-item"
                                                 disabled={submitting}
                                                 onClick={() => {
                                                     setSelectedItem(item);
@@ -207,7 +207,7 @@ const CodeListItemsPage = () => {
 
                                             <WiwaButton
                                                 title={resourceState?.manager?.codeLists.codeListItems.moveUpCodeListItem.title}
-                                                className="btn-primary md:btn-xs join-item"
+                                                className="btn-primary btn-xs join-item"
                                                 disabled={submitting}
                                                 onClick={() => {
                                                     if (item.id !== undefined) {
@@ -220,7 +220,7 @@ const CodeListItemsPage = () => {
 
                                             <WiwaButton
                                                 title={resourceState?.manager?.codeLists.codeListItems.moveDownCodeListItem.title}
-                                                className="btn-primary md:btn-xs join-item"
+                                                className="btn-primary btn-xs join-item"
                                                 disabled={submitting}
                                                 onClick={() => {
                                                     if (item.id !== undefined) {
@@ -232,7 +232,7 @@ const CodeListItemsPage = () => {
                                             </WiwaButton>
 
                                             <WiwaButton
-                                                className="btn-accent md:btn-xs join-item"
+                                                className="btn-accent btn-xs join-item"
                                                 title={resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.title}
                                                 disabled={submitting}
                                                 onClick={() => {

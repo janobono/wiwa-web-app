@@ -89,6 +89,20 @@ export interface ResourceManager {
             title: string,
             message: string,
             error: string
+        },
+        product: {
+            title: string,
+            codeLabel: string,
+            codePlaceholder: string,
+            codeRequired: string,
+            nameLabel: string,
+            namePlaceholder: string,
+            nameRequired: string,
+            stockStatusLabel: string,
+            stockStatusPlaceholder: string,
+            stockStatusRequired: string,
+            descriptionLabel: string,
+            attributes: string
         }
     },
     quantityUnits: {

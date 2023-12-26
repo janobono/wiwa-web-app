@@ -62,13 +62,13 @@
         "error": "Chyba zmazania položky číselníka"
       },
       "codeListItemDialog": {
-        "title": "Code list item",
-        "codeLabel": "Code",
-        "codePlaceholder": "Enter code",
-        "codeRequired": "Code is required",
-        "valueLabel": "Value",
-        "valuePlaceholder": "Enter value",
-        "valueRequired": "Value is required"
+        "title": "Položka číselníka",
+        "codeLabel": "Kód",
+        "codePlaceholder": "Zadajte kód",
+        "codeRequired": "Vyžaduje sa kód",
+        "valueLabel": "Hodnota",
+        "valuePlaceholder": "Zadajte hodnotu",
+        "valueRequired": "Vyžaduje sa hodnota"
       }
     }
   },
@@ -88,6 +88,20 @@
       "title": "Zmazať produkt",
       "message": "Naozaj si želáte zmazať produkt?",
       "error": "Chyba zmazania produktu"
+    },
+    "product": {
+      "title": "Produkt",
+      "codeLabel": "Kód",
+      "codePlaceholder": "Zadajte kód",
+      "codeRequired": "Vyžaduje sa kód",
+      "nameLabel": "Názov",
+      "namePlaceholder": "Zadajte názov",
+      "nameRequired": "Vyžaduje sa názov",
+      "stockStatusLabel": "Stav na sklade",
+      "stockStatusPlaceholder": "Zvoľte stav na sklade",
+      "stockStatusRequired": "Vyžaduje sa stav na sklade",
+      "descriptionLabel": "Popis",
+      "attributes": "Atribúty produktu"
     }
   },
   "quantityUnits": {

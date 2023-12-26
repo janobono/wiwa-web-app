@@ -13,7 +13,7 @@ const WiwaButton = (
         <button
             type={type}
             disabled={disabled}
-            className={twMerge(`btn btn-xs md:btn-sm ${className ?? ''}`)}
+            className={twMerge(`btn ${className ?? ''}`)}
             {...props}
         >
             {children}

@@ -185,7 +185,7 @@ const CodeListsPage = () => {
                                 <th>
                                     <WiwaButton
                                         title={resourceState?.manager?.codeLists.addCodeList.title}
-                                        className="btn-primary md:btn-xs"
+                                        className="btn-primary btn-xs"
                                         disabled={submitting}
                                         onClick={() => {
                                             setSelectedCodeList(undefined);
@@ -207,7 +207,7 @@ const CodeListsPage = () => {
                                         <div className="join">
                                             <WiwaButton
                                                 title={resourceState?.manager?.codeLists.editCodeList.title}
-                                                className="btn-primary md:btn-xs join-item"
+                                                className="btn-primary btn-xs join-item"
                                                 disabled={submitting}
                                                 onClick={() => {
                                                     setSelectedCodeList(codeList);
@@ -218,14 +218,14 @@ const CodeListsPage = () => {
                                             </WiwaButton>
                                             <WiwaButton
                                                 title={resourceState?.manager?.codeLists.codeListItems.title}
-                                                className="btn-secondary md:btn-xs join-item"
+                                                className="btn-secondary btn-xs join-item"
                                                 disabled={submitting}
                                                 onClick={() => navigate(codeList.id + '/items')}
                                             >
                                                 <List size={18}/>
                                             </WiwaButton>
                                             <WiwaButton
-                                                className="btn-accent md:btn-xs join-item"
+                                                className="btn-accent btn-xs join-item"
                                                 title={resourceState?.manager?.codeLists.deleteCodeList.title}
                                                 disabled={submitting}
                                                 onClick={() => {

@@ -26,6 +26,7 @@ import SignUpPage from './auth/sign-up-page';
 import ManagerPage from './manager/manager-page';
 import CodeListsPage from './manager/code-lists-page';
 import CodeListItemsPage from './manager/code-list-items-page';
+import ProductPage from './manager/product-page';
 import ProductsPage from './manager/products-page';
 import QuantityUnitsPage from './manager/quantity-units-page';
 
@@ -66,6 +67,7 @@ const AppPage = () => {
                 <Route path="code-lists" element={<CodeListsPage/>}/>
                 <Route path="code-lists/:codeListId/items" element={<CodeListItemsPage/>}/>
                 <Route path="products" element={<ProductsPage/>}/>
+                <Route path="products/:productId" element={<ProductPage/>}/>
                 <Route path="quantity-units" element={<QuantityUnitsPage/>}/>
             </Route>
 

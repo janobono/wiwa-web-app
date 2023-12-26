@@ -1,6 +1,7 @@
 {
   "action": {
     "cancel": "Cancel",
+    "edit": "Edit",
     "ok": "Ok"
   },
   "baseNavigation": {
@@ -91,6 +92,17 @@
     "action": "Refresh",
     "text": "Login expired."
   },
+  "productAttributeKey": {
+    "boardCode": "Board code",
+    "structureCode": "Structure code",
+    "orientation": "Orientation"
+  },
+  "productStockStatus": {
+    "onStock": "On stock",
+    "outOfStock": "Out of stock",
+    "toOrder": "To order",
+    "onInquire": "On inquire"
+  },
   "quantityType": {
     "area": "Area",
     "distance": "Distance",
@@ -99,5 +111,9 @@
     "temporal": "Temporal",
     "mass": "Mass",
     "pack": "Pack"
+  },
+  "value": {
+    "no": "No",
+    "yes": "Yes"
   }
 }

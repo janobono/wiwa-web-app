@@ -11,7 +11,7 @@ const WiwaTextArea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTML
     ) => (
         <textarea
             ref={ref}
-            className={twMerge(`textarea textarea-bordered textarea-sm md:textarea-md w-full ${className ?? ''}`)}
+            className={twMerge(`textarea textarea-bordered w-full ${className ?? ''}`)}
             {...props}
         >
             {children}

@@ -88,6 +88,20 @@
       "title": "Delete product",
       "message": "Do you really want to delete product?",
       "error": "Delete product failed"
+    },
+    "product": {
+      "title": "Product",
+      "codeLabel": "Code",
+      "codePlaceholder": "Enter code",
+      "codeRequired": "Code is required",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter name",
+      "nameRequired": "Name is required",
+      "stockStatusLabel": "Stock status",
+      "stockStatusPlaceholder": "Select stock status",
+      "stockStatusRequired": "Stock status is required",
+      "descriptionLabel": "Description",
+      "attributes": "Product attributes"
     }
   },
   "quantityUnits": {

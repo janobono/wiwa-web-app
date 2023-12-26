@@ -12,7 +12,9 @@ const WiwaFormTextarea = (
         value,
         setValue,
         setValid,
-        validate,
+        validate = () => {
+            return {valid: true}
+        },
         rows = 5,
         children
     }: {

@@ -130,7 +130,7 @@ const QuantityUnitsPage = () => {
                                 <th>
                                     <WiwaButton
                                         title={resourceState?.manager?.quantityUnits.addQuantityUnit.title}
-                                        className="btn-primary md:btn-xs"
+                                        className="btn-primary btn-xs"
                                         disabled={submitting}
                                         onClick={() => {
                                             setSelectedQuantityUnit(undefined);
@@ -152,7 +152,7 @@ const QuantityUnitsPage = () => {
                                         <div className="join">
                                             <WiwaButton
                                                 title={resourceState?.manager?.quantityUnits.editQuantityUnit.title}
-                                                className="btn-primary md:btn-xs join-item"
+                                                className="btn-primary btn-xs join-item"
                                                 disabled={submitting}
                                                 onClick={() => {
                                                     setSelectedQuantityUnit(quantityUnit);
@@ -163,7 +163,7 @@ const QuantityUnitsPage = () => {
                                             </WiwaButton>
                                             <WiwaButton
                                                 title={resourceState?.manager?.quantityUnits.deleteQuantityUnit.title}
-                                                className="btn-accent md:btn-xs join-item"
+                                                className="btn-accent btn-xs join-item"
                                                 disabled={submitting}
                                                 onClick={() => {
                                                     dialogState?.showDialog({

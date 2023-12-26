@@ -12,7 +12,9 @@ const WiwaFormFileInput = (
         value,
         setValue,
         setValid,
-        validate,
+        validate = () => {
+            return {valid: true}
+        },
         children
     }: {
         label?: string,
@@ -66,7 +68,7 @@ const WiwaFormFileInput = (
                 id={name}
                 name={name}
                 placeholder={placeholder}
-                className="file-input file-input-bordered file-input-sm md:file-input-md w-full"
+                className="file-input file-input-bordered w-full"
                 onChange={event => {
                     if (event.target.files && setValue) {
                         setValue(event.target.files[0]);

@@ -1,6 +1,7 @@
 {
   "action": {
     "cancel": "Zrušiť",
+    "edit": "Upraviť",
     "ok": "Potvrdiť"
   },
   "baseNavigation": {
@@ -91,6 +92,17 @@
     "action": "Obnoviť",
     "text": "Platnosť prihlásenia vypršala."
   },
+  "productAttributeKey": {
+    "boardCode": "Kód dosky",
+    "structureCode": "Kód štruktúry",
+    "orientation": "Orientácia"
+  },
+  "productStockStatus": {
+    "onStock": "Skladom",
+    "outOfStock": "Nie je skladom",
+    "toOrder": "Na objednávku",
+    "onInquire": "Na dotaz"
+  },
   "quantityType": {
     "area": "Plocha",
     "distance": "Dĺžka",
@@ -99,5 +111,9 @@
     "temporal": "Čas",
     "mass": "Hmotnosť",
     "pack": "Balenie"
+  },
+  "value": {
+    "no": "Nie",
+    "yes": "Áno"
   }
 }

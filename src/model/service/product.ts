@@ -6,15 +6,15 @@ export interface ProductAttribute {
 }
 
 export enum ProductAttributeKey {
-    ORIENTATION = 'ORIENTATION',
     BOARD_CODE = 'BOARD_CODE',
-    STRUCTURE_CODE = 'STRUCTURE_CODE'
+    STRUCTURE_CODE = 'STRUCTURE_CODE',
+    ORIENTATION = 'ORIENTATION'
 }
 
 export interface ProductData {
     code: string,
     name: string,
-    note: string,
+    description: string,
     stockStatus: ProductStockStatus,
     attributes: ProductAttribute[],
     quantities: ProductQuantity[]
@@ -46,7 +46,7 @@ export interface Product {
     id: number,
     code: string,
     name: string,
-    note: string,
+    description: string,
     stockStatus: ProductStockStatus,
     attributes: ProductAttribute[],
     images: ApplicationImage[],

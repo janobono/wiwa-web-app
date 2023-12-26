@@ -13,7 +13,9 @@ const WiwaFormInput = (
         value,
         setValue,
         setValid,
-        validate,
+        validate = () => {
+            return {valid: true}
+        },
         children,
         disabled
     }: {

@@ -15,7 +15,7 @@ const WiwaMenuItem = (
             {disabled ?
                 <span>{label}</span>
                 :
-                <NavLink to={to}>{label}</NavLink>
+                <NavLink to={to} end>{label}</NavLink>
             }
         </li>
     )

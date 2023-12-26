@@ -1,6 +1,7 @@
 export interface ResourceCommon {
     action: {
         cancel: string,
+        edit: string,
         ok: string
     },
     baseNavigation: {
@@ -91,6 +92,17 @@ export interface ResourceCommon {
         action: string,
         text: string
     },
+    productAttributeKey: {
+        boardCode: string,
+        structureCode: string,
+        orientation: string
+    },
+    productStockStatus: {
+        onStock: string,
+        outOfStock: string,
+        toOrder: string,
+        onInquire: string
+    },
     quantityType: {
         area: string,
         distance: string,
@@ -99,5 +111,9 @@ export interface ResourceCommon {
         temporal: string,
         mass: string,
         pack: string
+    },
+    value: {
+        no: string,
+        yes: string
     }
 }
