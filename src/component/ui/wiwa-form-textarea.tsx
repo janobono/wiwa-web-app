@@ -50,9 +50,11 @@ const WiwaFormTextarea = (
 
     return (
         <div className="form-control w-full">
-            <label className="label">
-                <span className="label-text">{label + (required ? '*' : '')}</span>
-            </label>
+            {label &&
+                <label className="label">
+                    <span className="label-text">{label + (required ? '*' : '')}</span>
+                </label>
+            }
             <WiwaTextArea
                 id={name}
                 name={name}

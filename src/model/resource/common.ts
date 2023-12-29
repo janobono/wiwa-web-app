@@ -103,15 +103,33 @@ export interface ResourceCommon {
         toOrder: string,
         onInquire: string
     },
-    quantityType: {
-        area: string,
-        distance: string,
-        monetary: string,
-        volume: string,
-        temporal: string,
-        mass: string,
-        pack: string
+    productQuantityKey: {
+        sale: string,
+        weight: string,
+        netWeight: string,
+        length: string,
+        width: string,
+        thickness: string
     },
+    unitId: {
+        eur: string,
+        millimeter: string,
+        centimeter: string,
+        meter: string,
+        kilometer: string,
+        squareMeter: string,
+        milliliter: string,
+        liter: string,
+        cubicMeter: string,
+        second: string,
+        minute: string,
+        hour: string,
+        day: string,
+        gram: string,
+        kilogram: string,
+        piece: string,
+        package: string
+    }
     value: {
         no: string,
         yes: string

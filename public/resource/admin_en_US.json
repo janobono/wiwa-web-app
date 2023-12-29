@@ -8,6 +8,7 @@
   "cookiesInfoTab": "Cookies info",
   "gdprInfoTab": "Gdpr info",
   "workingHoursTab": "Working hours",
+  "unitsTab": "Units",
   "usersTab": "Users",
   "appImages": {
     "addImage": "Add image",
@@ -193,5 +194,16 @@
     "submit": "Submit",
     "cancel": "Cancel",
     "error": "Working hours submitting failed"
+  },
+  "units": {
+    "title": "Units",
+    "id": "Id",
+    "value": "Value",
+    "editUnit": {
+      "title": "Edit unit",
+      "valuePlaceholder": "Enter unit",
+      "valueRequired": "Unit is required",
+      "error": "Unit value submitting failed"
+    }
   }
 }

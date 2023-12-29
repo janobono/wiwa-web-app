@@ -8,6 +8,7 @@ export interface ResourceAdmin {
     cookiesInfoTab: string,
     gdprInfoTab: string,
     workingHoursTab: string,
+    unitsTab: string,
     usersTab: string,
     appImages: {
         addImage: string,
@@ -193,5 +194,16 @@ export interface ResourceAdmin {
         error: string,
         submit: string,
         cancel: string
+    },
+    units: {
+        title: string,
+        id: string,
+        value: string,
+        editUnit: {
+            title: string,
+            valuePlaceholder: string,
+            valueRequired: string,
+            error: string
+        }
     }
 }

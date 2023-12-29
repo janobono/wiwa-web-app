@@ -195,7 +195,7 @@ const CodeListsPage = () => {
                     showDialog={showDialog}
                     codeList={selectedCodeList}
                     okHandler={(data) => {
-                        okHandler(data);
+                        okHandler(data).then();
                         setShowDialog(false);
                     }}
                     cancelHandler={() => {

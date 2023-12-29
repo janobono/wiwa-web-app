@@ -8,6 +8,7 @@
   "cookiesInfoTab": "Cookies informácie",
   "gdprInfoTab": "Gdpr informácie",
   "workingHoursTab": "Pracovné hodiny",
+  "unitsTab": "Jednotky",
   "usersTab": "Používatelia",
   "appImages": {
     "addImage": "Pridať obrázok",
@@ -193,5 +194,16 @@
     "submit": "Odoslať",
     "cancel": "Zrušiť",
     "error": "Odoslanie pracovných hodín neúspešné"
+  },
+  "units": {
+    "title": "Jednotky",
+    "id": "Id",
+    "value": "Hodnota",
+    "editUnit": {
+      "title": "Upraviť jednotku",
+      "valuePlaceholder": "Zadajte jednotku",
+      "valueRequired": "Vyžaduje sa jednotka",
+      "error": "Odoslanie jednotky neúspešné"
+    }
   }
 }

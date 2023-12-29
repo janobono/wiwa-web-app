@@ -5,7 +5,8 @@ import AuthStateProvider from './auth-state-provider';
 import ConfigStateProvider from './config-state-provider';
 import DialogStateProvider from './dialog-state-provider';
 import ResourceStateProvider from './resource-state-provider';
-import UiStateProvider from './ui-state-provider.tsx';
+import UiStateProvider from './ui-state-provider';
+import UnitProvider from './unit-provider';
 
 const AppState = ({children}: { children: ReactNode }) => {
     return (
@@ -13,11 +14,13 @@ const AppState = ({children}: { children: ReactNode }) => {
             <AppStateProvider>
                 <ResourceStateProvider>
                     <AuthStateProvider>
-                        <DialogStateProvider>
-                            <UiStateProvider>
-                                {children}
-                            </UiStateProvider>
-                        </DialogStateProvider>
+                        <UnitProvider>
+                            <DialogStateProvider>
+                                <UiStateProvider>
+                                    {children}
+                                </UiStateProvider>
+                            </DialogStateProvider>
+                        </UnitProvider>
                     </AuthStateProvider>
                 </ResourceStateProvider>
             </AppStateProvider>

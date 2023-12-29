@@ -63,7 +63,6 @@ const BusinessConditionsPage = () => {
 
 export default BusinessConditionsPage;
 
-
 const BusinessConditionsDialog = (
     {
         businessConditions,

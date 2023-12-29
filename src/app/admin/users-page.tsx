@@ -211,28 +211,26 @@ const UsersPage = () => {
                                                      userEnabledHandler={userEnabledHandler}/>
                                     </th>
                                     <th>
-                                        <div className="flex flex-row w-full items-center justify-center">
-                                            <WiwaButton
-                                                className="btn-accent md:btn-xs"
-                                                title={resourceState?.admin?.users.deleteUser.title}
-                                                disabled={submitting || user.id === authState?.user?.id}
-                                                onClick={() => {
-                                                    dialogState?.showDialog({
-                                                        type: DialogType.YES_NO,
-                                                        title: resourceState?.admin?.users.deleteUser.title,
-                                                        message: resourceState?.admin?.users.deleteUser.message,
-                                                        callback: (answer: DialogAnswer) => {
-                                                            if (answer === DialogAnswer.YES) {
-                                                                if (user.id !== undefined) {
-                                                                    deleteHandler(user.id).then();
-                                                                }
+                                        <WiwaButton
+                                            className="btn-accent md:btn-xs"
+                                            title={resourceState?.admin?.users.deleteUser.title}
+                                            disabled={submitting || user.id === authState?.user?.id}
+                                            onClick={() => {
+                                                dialogState?.showDialog({
+                                                    type: DialogType.YES_NO,
+                                                    title: resourceState?.admin?.users.deleteUser.title,
+                                                    message: resourceState?.admin?.users.deleteUser.message,
+                                                    callback: (answer: DialogAnswer) => {
+                                                        if (answer === DialogAnswer.YES) {
+                                                            if (user.id !== undefined) {
+                                                                deleteHandler(user.id).then();
                                                             }
                                                         }
-                                                    });
-                                                }}
-                                            ><Trash size={18}/>
-                                            </WiwaButton>
-                                        </div>
+                                                    }
+                                                });
+                                            }}
+                                        ><Trash size={18}/>
+                                        </WiwaButton>
                                     </th>
                                 </tr>
                             )}

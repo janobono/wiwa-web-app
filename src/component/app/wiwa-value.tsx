@@ -1,21 +1,25 @@
+import { useEffect, useState } from 'react';
+
 import { useResourceState } from '../state/resource-state-provider';
 
-const WiwaValue = ({value}: { value: string }) => {
+const WiwaValue = ({value}: { value?: string }) => {
     const resourceState = useResourceState();
 
-    const translate = (value: string) => {
+    const [data, setData] = useState<string>();
+
+    useEffect(() => {
         if (value === 'true') {
-            return resourceState?.common?.value.yes;
+            setData(resourceState?.common?.value.yes);
+        } else if (value === 'false') {
+            setData(resourceState?.common?.value.no);
+        } else {
+            setData(value);
         }
-        if (value === 'false') {
-            return resourceState?.common?.value.no;
-        }
-        return value;
-    }
+    }, [resourceState?.common, value]);
 
     return (
         <>
-            {translate(value)}
+            {data}
         </>
     )
 }

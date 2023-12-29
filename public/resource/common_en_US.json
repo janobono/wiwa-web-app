@@ -103,14 +103,32 @@
     "toOrder": "To order",
     "onInquire": "On inquire"
   },
-  "quantityType": {
-    "area": "Area",
-    "distance": "Distance",
-    "monetary": "Monetary",
-    "volume": "Volume",
-    "temporal": "Temporal",
-    "mass": "Mass",
-    "pack": "Pack"
+  "productQuantityKey": {
+    "sale": "Sale",
+    "weight": "Weight",
+    "netWeight": "Net weight",
+    "length": "Length",
+    "width": "Width",
+    "thickness": "Thickness"
+  },
+  "unitId": {
+    "eur": "Euro",
+    "millimeter": "Millimeter",
+    "centimeter": "Centimeter",
+    "meter": "Meter",
+    "kilometer": "Kilometer",
+    "squareMeter": "Square meter",
+    "milliliter": "Milliliter",
+    "liter": "Liter",
+    "cubicMeter": "Cubic meter",
+    "second": "Second",
+    "minute": "Minute",
+    "hour": "Hour",
+    "day": "Day",
+    "gram": "Gram",
+    "kilogram": "Kilogram",
+    "piece": "Piece",
+    "package": "Package"
   },
   "value": {
     "no": "No",

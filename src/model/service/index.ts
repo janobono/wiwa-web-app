@@ -5,7 +5,7 @@ export * from './code-list';
 export * from './health-status';
 export * from './pagination';
 export * from './product';
-export * from './quantity';
+export * from './unit.ts';
 export * from './single-value';
 export * from './ui';
 export * from './user';

@@ -103,14 +103,32 @@
     "toOrder": "Na objednávku",
     "onInquire": "Na dotaz"
   },
-  "quantityType": {
-    "area": "Plocha",
-    "distance": "Dĺžka",
-    "monetary": "Mena",
-    "volume": "Objem",
-    "temporal": "Čas",
-    "mass": "Hmotnosť",
-    "pack": "Balenie"
+  "productQuantityKey": {
+    "sale": "Predajná jednotka",
+    "weight": "Hmotnosť",
+    "netWeight": "Čistá hmotnosť",
+    "length": "Dĺžka",
+    "width": "Šírka",
+    "thickness": "Hrúbka"
+  },
+  "unitId": {
+    "eur": "Euro",
+    "millimeter": "Millimeter",
+    "centimeter": "Centimeter",
+    "meter": "Meter",
+    "kilometer": "Kilometer",
+    "squareMeter": "Meter štvorcový",
+    "milliliter": "Milliliter",
+    "liter": "Liter",
+    "cubicMeter": "Kubický meter",
+    "second": "Sekunda",
+    "minute": "Minúta",
+    "hour": "Hodina",
+    "day": "Deň",
+    "gram": "Gram",
+    "kilogram": "Kilogram",
+    "piece": "Kus",
+    "package": "Balenie"
   },
   "value": {
     "no": "Nie",

@@ -195,7 +195,7 @@ const CodeListItemsPage = () => {
                     parent={parentItem}
                     codeList={selectedItem}
                     okHandler={(data) => {
-                        okHandler(data);
+                        okHandler(data).then();
                         setShowDialog(false);
                     }}
                     cancelHandler={() => {

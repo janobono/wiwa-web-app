@@ -12,7 +12,6 @@ const ManagerNavigation = () => {
             <ul className="menu menu-vertical md:menu-horizontal">
                 <WiwaMenuItem label={resourceState?.manager?.codeListsTab} to="/manager/code-lists"/>
                 <WiwaMenuItem label={resourceState?.manager?.productsTab} to="/manager/products"/>
-                <WiwaMenuItem label={resourceState?.manager?.quantityUnitsTab} to="/manager/quantity-units"/>
             </ul>
         </div>
     )

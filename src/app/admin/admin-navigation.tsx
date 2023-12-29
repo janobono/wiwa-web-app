@@ -19,6 +19,7 @@ const AdminNavigation = () => {
                 <WiwaMenuItem label={resourceState?.admin?.gdprInfoTab} to="/admin/gdpr-info"/>
                 <WiwaMenuItem label={resourceState?.admin?.usersTab} to="/admin/users"/>
                 <WiwaMenuItem label={resourceState?.admin?.workingHoursTab} to="/admin/working-hours"/>
+                <WiwaMenuItem label={resourceState?.admin?.unitsTab} to="/admin/units"/>
             </ul>
         </div>
     )

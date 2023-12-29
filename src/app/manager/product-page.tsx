@@ -1,44 +1,30 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { FormEvent, useEffect, useState } from 'react';
-import {
-    Product,
-    ProductAttribute,
-    ProductAttributeKey,
-    ProductQuantity,
-    ProductStockStatus,
-    ProductUnitPrice
-} from '../../model/service';
-import { CONTEXT_PATH, getData } from '../../data.ts';
+import { Product, ProductAttribute, ProductQuantity, ProductStockStatus, ProductUnitPrice } from '../../model/service';
+import { CONTEXT_PATH, getData, postData, putData } from '../../data.ts';
 import { useAuthState } from '../../component/state/auth-state-provider.tsx';
-import { useDialogState } from '../../component/state/dialog-state-provider.tsx';
 import { useResourceState } from '../../component/state/resource-state-provider.tsx';
 import WiwaFormInput from '../../component/ui/wiwa-form-input.tsx';
 import WiwaSelect from '../../component/ui/wiwa-select.tsx';
 import WiwaProductStockStatus from '../../component/app/wiwa-product-stock-status.tsx';
 import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer.tsx';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { Edit } from 'react-feather';
-import { createPortal } from 'react-dom';
-import MdDialog from '../../component/dialog/md-dialog';
+import { Check, Edit } from 'react-feather';
 import WiwaProductAttributes from '../../component/app/wiwa-product-attributes.tsx';
-import BaseDialog from '../../component/dialog/base-dialog.tsx';
-import WiwaFormCheckBox from '../../component/ui/wiwa-form-check-box.tsx';
+import WiwaProductQuantities from '../../component/app/wiwa-product-quantities.tsx';
+import ProductDescriptionDialog from './product/product-description-dialog.tsx';
+import ProductAttributesDialog from './product/product-attributes-dialog.tsx';
+import ProductQuantitiesDialog from './product/product-quantities-dialog.tsx';
 
 const PATH_PRODUCTS = CONTEXT_PATH + 'products';
 
-const PRODUCT_ATTRIBUTES_DIALOG_ID = 'product-attributes-dialog-001';
-const PRODUCT_DESCRIPTION_DIALOG_ID = 'product-description-dialog-001';
-
 const ProductPage = () => {
-    const {productId} = useParams();
-
     const navigate = useNavigate();
 
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const {productId} = useParams();
 
-    const [id, setId] = useState<number>();
+    const authState = useAuthState();
+    const resourceState = useResourceState();
 
     const [code, setCode] = useState('');
     const [codeValid, setCodeValid] = useState(false);
@@ -46,7 +32,7 @@ const ProductPage = () => {
     const [name, setName] = useState('');
     const [nameValid, setNameValid] = useState(false);
 
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState<string>();
 
     const [stockStatus, setStockStatus] = useState<ProductStockStatus>();
     const [stockStatusValid, setStockStatusValid] = useState(false);
@@ -63,13 +49,59 @@ const ProductPage = () => {
 
     const [showDescriptionDialog, setShowDescriptionDialog] = useState(false);
     const [showAttributesDialog, setShowAttributesDialog] = useState(false);
+    const [showQuantitiesDialog, setShowQuantitiesDialog] = useState(false);
+    const [showUnitPricesDialog, setShowUnitPricesDialog] = useState(false);
+    const [showPicturesDialog, setShowPicturesDialog] = useState(false);
+    const [showCodeListsDialog, setShowCodeListsDialog] = useState(false);
 
     const [changed, setChanged] = useState(false);
     const [formValid, setFormValid] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+
+    const isEditMode = () => {
+        return productId !== 'new';
+    }
+
+    const confirmHandler = async () => {
+        setSubmitting(true);
+        try {
+            const productData = {
+                code,
+                name,
+                description,
+                stockStatus,
+                attributes,
+                quantities
+            }
+            let response;
+            if (isEditMode()) {
+                response = await putData<Product>(
+                    PATH_PRODUCTS + '/' + productId,
+                    productData,
+                    authState?.accessToken || ''
+                );
+            } else {
+                response = await postData<Product>(
+                    PATH_PRODUCTS,
+                    productData,
+                    authState?.accessToken || ''
+                );
+            }
+            if (response.error) {
+                setError(response.error.message);
+            } else {
+                if (!isEditMode()) {
+                    navigate('/manager/products/' + response.data?.id);
+                }
+            }
+        } finally {
+            setSubmitting(false);
+        }
+    }
 
     useEffect(() => {
         const fetchProduct = async () => {
-            if (productId !== 'new') {
+            if (isEditMode()) {
                 setError(undefined);
                 if (authState?.accessToken !== undefined) {
                     const response = await getData<Product>(
@@ -81,8 +113,6 @@ const ProductPage = () => {
                     if (response.error) {
                         setError(response.error.message);
                     } else if (response.data) {
-                        setId(response.data.id);
-
                         setCode(response.data.code);
                         setCodeValid(true);
 
@@ -106,7 +136,7 @@ const ProductPage = () => {
             }
         }
         fetchProduct().then();
-    }, [productId]);
+    }, [authState?.accessToken, productId]);
 
     useEffect(() => {
         setFormValid(codeValid && nameValid && stockStatusValid);
@@ -127,10 +157,19 @@ const ProductPage = () => {
             <>
                 <div className="flex flex-col p-5 w-full">
                     <div className="flex flex-col items-center justify-center">
-                        <div className="text-lg md:text-xl font-bold text-center">
-                            {resourceState?.manager?.products.product.title}
+                        <div className="flex flex-row w-full">
+                            <div className="text-lg md:text-xl font-bold text-center grow">
+                                {resourceState?.manager?.products.product.title}
+                            </div>
+                            <WiwaButton
+                                className="btn-secondary join-item"
+                                title={resourceState?.manager?.products.product.confirm}
+                                disabled={!formValid || !changed || submitting}
+                                onClick={confirmHandler}
+                            ><Check size={18}/>
+                            </WiwaButton>
                         </div>
-                        <div className="flex flex-row w-full gap-5">
+                        <div className="flex flex-row w-full gap-5 pb-2">
                             <div className="flex basis-1/6">
                                 <WiwaFormInput
                                     label={resourceState?.manager?.products.product.codeLabel}
@@ -201,17 +240,15 @@ const ProductPage = () => {
                                         </label>
                                     }
                                 </div>
-
                             </div>
                         </div>
                         <div className="flex flex-row w-full gap-5">
                             <div className="flex basis-2/3">
                                 <div className="flex flex-col w-full">
                                     <div className="flex flex-row w-full gap-5">
-                                        <label className="label grow">
-                                           <span
-                                               className="label-text">{resourceState?.manager?.products.product.descriptionLabel}</span>
-                                        </label>
+                                        <span className="grow label-text">
+                                           {resourceState?.manager?.products.product.descriptionLabel}
+                                        </span>
                                         <WiwaButton
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
@@ -226,15 +263,11 @@ const ProductPage = () => {
                                 </div>
                             </div>
                             <div className="flex basis-1/3">
-                                <div className="flex flex-col w-full">
+                                <div className="flex flex-col w-full gap-2">
                                     <div className="flex flex-row w-full">
-                                        <div className="flex flex-row grow">
-                                            <WiwaProductAttributes attributes={attributes.length > 0 ? attributes : [
-                                                {key: ProductAttributeKey.BOARD_CODE, value: ''},
-                                                {key: ProductAttributeKey.STRUCTURE_CODE, value: ''},
-                                                {key: ProductAttributeKey.ORIENTATION, value: 'false'}
-                                            ]}/>
-                                        </div>
+                                        <span className="grow label-text">
+                                            {resourceState?.manager?.products.product.attributes.title}
+                                        </span>
                                         <WiwaButton
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
@@ -243,14 +276,68 @@ const ProductPage = () => {
                                             <Edit size={18}/>
                                         </WiwaButton>
                                     </div>
-                                    <div className="flex w-full">
-                                        quantities
+                                    <WiwaProductAttributes attributes={attributes}/>
+
+                                    <div className="flex flex-row w-full">
+                                        <span className="grow label-text">
+                                            {resourceState?.manager?.products.product.quantities.title}
+                                        </span>
+                                        <WiwaButton
+                                            title={resourceState?.common?.action.edit}
+                                            className="btn-primary btn-xs"
+                                            onClick={() => setShowQuantitiesDialog(true)}
+                                        >
+                                            <Edit size={18}/>
+                                        </WiwaButton>
+                                    </div>
+                                    <WiwaProductQuantities quantities={quantities}/>
+
+                                    <div className="flex flex-row w-full">
+                                        <span className="grow label-text">
+                                            {resourceState?.manager?.products.product.unitPrices.title}
+                                        </span>
+                                        <WiwaButton
+                                            title={resourceState?.common?.action.edit}
+                                            className="btn-primary btn-xs"
+                                            disabled={!isEditMode()}
+                                            onClick={() => setShowUnitPricesDialog(true)}
+                                        >
+                                            <Edit size={18}/>
+                                        </WiwaButton>
                                     </div>
                                     <div className="flex w-full">
                                         unit prices
                                     </div>
+
+                                    <div className="flex flex-row w-full">
+                                        <span className="grow label-text">
+                                            {resourceState?.manager?.products.product.pictures.title}
+                                        </span>
+                                        <WiwaButton
+                                            title={resourceState?.common?.action.edit}
+                                            className="btn-primary btn-xs"
+                                            disabled={!isEditMode()}
+                                            onClick={() => setShowPicturesDialog(true)}
+                                        >
+                                            <Edit size={18}/>
+                                        </WiwaButton>
+                                    </div>
                                     <div className="flex w-full">
                                         pictures
+                                    </div>
+
+                                    <div className="flex flex-row w-full">
+                                        <span className="grow label-text">
+                                            {resourceState?.manager?.products.product.codeLists.title}
+                                        </span>
+                                        <WiwaButton
+                                            title={resourceState?.common?.action.edit}
+                                            className="btn-primary btn-xs"
+                                            disabled={!isEditMode()}
+                                            onClick={() => setShowCodeListsDialog(true)}
+                                        >
+                                            <Edit size={18}/>
+                                        </WiwaButton>
                                     </div>
                                     <div className="flex w-full">
                                         code list items
@@ -280,140 +367,18 @@ const ProductPage = () => {
                     showDialog={showAttributesDialog}
                     setShowDialog={setShowAttributesDialog}
                 />
+
+                <ProductQuantitiesDialog
+                    quantities={quantities}
+                    setQuantities={(value) => {
+                        setQuantities(value);
+                        setChanged(true);
+                    }}
+                    showDialog={showQuantitiesDialog}
+                    setShowDialog={setShowQuantitiesDialog}
+                />
             </>
     )
 }
 
 export default ProductPage;
-
-const ProductDescriptionDialog = (
-    {
-        description,
-        setDescription,
-        showDialog,
-        setShowDialog
-    }: {
-        description: string,
-        setDescription: (description: string) => void,
-        showDialog: boolean,
-        setShowDialog: (showDialog: boolean) => void
-    }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
-
-    const [value, setValue] = useState('');
-
-    useEffect(() => {
-        setValue(description);
-    }, [description, showDialog]);
-
-    const okHandler = () => {
-        setDescription(value);
-        setShowDialog(false);
-    }
-
-    return (!dialogState?.modalRoot ? null : createPortal(
-        <MdDialog
-            disabled={false}
-            id={PRODUCT_DESCRIPTION_DIALOG_ID}
-            showDialog={showDialog}
-            title={resourceState?.manager?.products.product.title}
-            label={resourceState?.manager?.products.product.descriptionLabel}
-            placeholder={resourceState?.admin?.cookiesInfo.valuePlaceholder}
-            value={value}
-            setValue={setValue}
-            rows={20}
-            okHandler={okHandler}
-            cancelHandler={() => setShowDialog(false)}
-        />
-        , dialogState.modalRoot))
-}
-
-const ProductAttributesDialog = (
-    {
-        attributes,
-        setAttributes,
-        showDialog,
-        setShowDialog
-    }: {
-        attributes: ProductAttribute[],
-        setAttributes: (attributes: ProductAttribute[]) => void,
-        showDialog: boolean,
-        setShowDialog: (showDialog: boolean) => void
-    }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
-
-    const [boardCode, setBoardCode] = useState('');
-    const [structureCode, setStructureCode] = useState('');
-    const [orientation, setOrientation] = useState(false);
-
-    useEffect(() => {
-        attributes.forEach(value => {
-            switch (value.key) {
-                case ProductAttributeKey.BOARD_CODE:
-                    setBoardCode(value.value);
-                    break;
-                case ProductAttributeKey.STRUCTURE_CODE:
-                    setStructureCode(value.value);
-                    break;
-                case ProductAttributeKey.ORIENTATION:
-                    setOrientation(value.value === 'true');
-                    break;
-            }
-        });
-    }, [attributes, showDialog]);
-
-    return (!dialogState?.modalRoot ? null : createPortal(
-            <BaseDialog id={PRODUCT_ATTRIBUTES_DIALOG_ID} showDialog={showDialog}
-                        closeHandler={() => setShowDialog(false)}>
-                <div className="container p-5 mx-auto">
-                    <div className="flex flex-col items-center justify-center">
-                        <div className="text-lg md:text-xl font-bold text-center">
-                            {resourceState?.manager?.products.product.attributes}
-                        </div>
-
-                        <WiwaFormInput
-                            label={resourceState?.common?.productAttributeKey.boardCode}
-                            value={boardCode}
-                            setValue={setBoardCode}
-                        />
-
-                        <WiwaFormInput
-                            label={resourceState?.common?.productAttributeKey.structureCode}
-                            value={structureCode}
-                            setValue={setStructureCode}
-                        />
-
-                        <WiwaFormCheckBox className="py-5" value={orientation} setValue={setOrientation}>
-                            <span
-                                className="label-text pl-2">{resourceState?.common?.productAttributeKey.orientation}</span>
-                        </WiwaFormCheckBox>
-
-                        <div className="join pt-5">
-                            <WiwaButton
-                                className="btn-primary join-item"
-                                onClick={() => {
-                                    setAttributes([
-                                        {key: ProductAttributeKey.BOARD_CODE, value: boardCode},
-                                        {key: ProductAttributeKey.STRUCTURE_CODE, value: structureCode},
-                                        {key: ProductAttributeKey.ORIENTATION, value: orientation ? 'true' : 'false'}
-                                    ]);
-                                    setShowDialog(false);
-                                }}
-                            >{resourceState?.common?.action.ok}
-                            </WiwaButton>
-                            <WiwaButton
-                                className="btn-accent join-item"
-                                onClick={() => {
-                                    setShowDialog(false);
-                                }}
-                            >{resourceState?.common?.action.cancel}
-                            </WiwaButton>
-                        </div>
-                    </div>
-                </div>
-            </BaseDialog>
-            , dialogState.modalRoot)
-    )
-}

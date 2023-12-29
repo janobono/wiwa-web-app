@@ -151,7 +151,7 @@ const ProductsPage = () => {
                                                 title={resourceState?.manager?.products.editProduct}
                                                 className="btn-primary md:btn-xs join-item"
                                                 disabled={submitting}
-                                                onClick={() => navigate(product.id)}
+                                                onClick={() => navigate('' + product.id)}
                                             >
                                                 <Edit size={18}/>
                                             </WiwaButton>

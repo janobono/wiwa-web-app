@@ -1,25 +1,37 @@
+import { useEffect, useState } from 'react';
+
 import { useResourceState } from '../state/resource-state-provider';
 import { ProductStockStatus } from '../../model/service';
 
-const WiwaProductStockStatus = ({stockStatus}: { stockStatus: ProductStockStatus }) => {
+const WiwaProductStockStatus = ({stockStatus}: { stockStatus?: ProductStockStatus }) => {
     const resourceState = useResourceState();
 
-    const translate = (stockStatus: ProductStockStatus) => {
-        switch (stockStatus) {
-            case ProductStockStatus.ON_STOCK:
-                return resourceState?.common?.productStockStatus.onStock;
-            case ProductStockStatus.OUT_OF_STOCK:
-                return resourceState?.common?.productStockStatus.outOfStock;
-            case ProductStockStatus.TO_ORDER:
-                return resourceState?.common?.productStockStatus.toOrder;
-            case ProductStockStatus.ON_INQUIRE:
-                return resourceState?.common?.productStockStatus.onInquire;
+    const [data, setData] = useState<string>();
+
+    useEffect(() => {
+        if (stockStatus) {
+            switch (stockStatus) {
+                case ProductStockStatus.ON_STOCK:
+                    setData(resourceState?.common?.productStockStatus.onStock);
+                    break;
+                case ProductStockStatus.OUT_OF_STOCK:
+                    setData(resourceState?.common?.productStockStatus.outOfStock);
+                    break;
+                case ProductStockStatus.TO_ORDER:
+                    setData(resourceState?.common?.productStockStatus.toOrder);
+                    break;
+                case ProductStockStatus.ON_INQUIRE:
+                    setData(resourceState?.common?.productStockStatus.onInquire);
+                    break;
+            }
+        } else {
+            setData(undefined);
         }
-    }
+    }, [resourceState?.common, stockStatus]);
 
     return (
         <>
-            {translate(stockStatus)}
+            {data}
         </>
     )
 }

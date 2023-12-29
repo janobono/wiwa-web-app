@@ -1,7 +1,6 @@
 export interface ResourceManager {
     title: string,
     codeListsTab: string,
-    quantityUnitsTab: string,
     productsTab: string,
     fetchDataError: string,
     codeLists: {
@@ -102,38 +101,23 @@ export interface ResourceManager {
             stockStatusPlaceholder: string,
             stockStatusRequired: string,
             descriptionLabel: string,
-            attributes: string
-        }
-    },
-    quantityUnits: {
-        id: string,
-        type: string,
-        unit: string,
-        fetchDataError: string,
-        addQuantityUnit: {
-            title: string,
-            error: string
-        },
-        editQuantityUnit: {
-            title: string,
-            error: string
-        },
-        deleteQuantityUnit: {
-            title: string,
-            message: string,
-            error: string
-        },
-        quantityUnitDialog: {
-            title: string,
-            idLabel: string,
-            idPlaceholder: string,
-            idRequired: string,
-            typeLabel: string,
-            typePlaceholder: string,
-            typeRequired: string,
-            unitLabel: string,
-            unitPlaceholder: string,
-            unitRequired: string
+            descriptionPlaceholder: string,
+            confirm: string,
+            attributes: {
+                title: string
+            },
+            quantities: {
+                title: string
+            },
+            unitPrices: {
+                title: string
+            },
+            pictures: {
+                title: string
+            },
+            codeLists: {
+                title: string
+            },
         }
     }
 }

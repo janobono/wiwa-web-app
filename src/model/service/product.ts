@@ -1,4 +1,5 @@
 import { ApplicationImage } from './ui.ts';
+import { Unit, UnitId } from './unit.ts';
 
 export interface ProductAttribute {
     key: ProductAttributeKey,
@@ -30,7 +31,7 @@ export enum ProductStockStatus {
 export interface ProductQuantity {
     key: ProductQuantityKey,
     value: number,
-    unitId: string
+    unit: UnitId
 }
 
 export enum ProductQuantityKey {
@@ -46,7 +47,7 @@ export interface Product {
     id: number,
     code: string,
     name: string,
-    description: string,
+    description?: string,
     stockStatus: ProductStockStatus,
     attributes: ProductAttribute[],
     images: ApplicationImage[],
@@ -58,5 +59,5 @@ export interface Product {
 export interface ProductUnitPrice {
     validFrom: string,
     value: number
-    unitId: string
+    unit: UnitId
 }
