@@ -1,5 +1,22 @@
-import { useNavigate, useParams } from 'react-router-dom';
 import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Check, Edit } from 'react-feather';
+
+import ProductAttributesDialog from './product/product-attributes-dialog';
+import ProductDescriptionDialog from './product/product-description-dialog';
+import ProductQuantitiesDialog from './product/product-quantities-dialog';
+import WiwaProductAttributes from '../../component/app/wiwa-product-attributes';
+import WiwaProductQuantities from '../../component/app/wiwa-product-quantities';
+import WiwaProductCodeListItems from '../../component/app/wiwa-product-code-list-items';
+import WiwaProductImages from '../../component/app/wiwa-product-images';
+import WiwaProductUnitPrices from '../../component/app/wiwa-product-unit-prices';
+import WiwaProductStockStatus from '../../component/app/wiwa-product-stock-status';
+import { useAuthState } from '../../component/state/auth-state-provider';
+import { useResourceState } from '../../component/state/resource-state-provider';
+import WiwaButton from '../../component/ui/wiwa-button';
+import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
+import WiwaFormInput from '../../component/ui/wiwa-form-input';
+import WiwaSelect from '../../component/ui/wiwa-select';
 import {
     ApplicationImage,
     Product,
@@ -8,23 +25,7 @@ import {
     ProductStockStatus,
     ProductUnitPrice
 } from '../../model/service';
-import { CONTEXT_PATH, getData, postData, putData } from '../../data.ts';
-import { useAuthState } from '../../component/state/auth-state-provider.tsx';
-import { useResourceState } from '../../component/state/resource-state-provider.tsx';
-import WiwaFormInput from '../../component/ui/wiwa-form-input.tsx';
-import WiwaSelect from '../../component/ui/wiwa-select.tsx';
-import WiwaProductStockStatus from '../../component/app/wiwa-product-stock-status.tsx';
-import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer.tsx';
-import WiwaButton from '../../component/ui/wiwa-button';
-import { Check, Edit } from 'react-feather';
-import WiwaProductAttributes from '../../component/app/wiwa-product-attributes.tsx';
-import WiwaProductQuantities from '../../component/app/wiwa-product-quantities.tsx';
-import ProductDescriptionDialog from './product/product-description-dialog.tsx';
-import ProductAttributesDialog from './product/product-attributes-dialog.tsx';
-import ProductQuantitiesDialog from './product/product-quantities-dialog.tsx';
-import WiwaProductUnitPrices from '../../component/app/wiwa-product-unit-prices.tsx';
-import WiwaProductImages from '../../component/app/wiwa-product-images.tsx';
-import WiwaProductCodeListItems from '../../component/app/wiwa-product-code-list-items.tsx';
+import { CONTEXT_PATH, getData, postData, putData } from '../../data';
 
 const PATH_PRODUCTS = CONTEXT_PATH + 'products';
 
@@ -312,7 +313,7 @@ const ProductPage = () => {
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
                                             disabled={!isEditMode()}
-                                            onClick={() => navigate(productId + '/unit-prices')}
+                                            onClick={() => navigate('unit-prices')}
                                         >
                                             <Edit size={18}/>
                                         </WiwaButton>
@@ -327,7 +328,7 @@ const ProductPage = () => {
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
                                             disabled={!isEditMode()}
-                                            onClick={() => navigate(productId + '/images')}
+                                            onClick={() => navigate('images')}
                                         >
                                             <Edit size={18}/>
                                         </WiwaButton>
@@ -342,7 +343,7 @@ const ProductPage = () => {
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
                                             disabled={!isEditMode()}
-                                            onClick={() => navigate(productId + '/code-list')}
+                                            onClick={() => navigate('code-list-items')}
                                         >
                                             <Edit size={18}/>
                                         </WiwaButton>

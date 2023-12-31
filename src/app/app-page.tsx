@@ -28,6 +28,9 @@ import ManagerPage from './manager/manager-page';
 import CodeListsPage from './manager/code-lists-page';
 import CodeListItemsPage from './manager/code-list-items-page';
 import ProductPage from './manager/product-page';
+import ProductCodeListItemsPage from './manager/product-code-list-items';
+import ProductImagesPage from './manager/product-images-page';
+import ProductUnitPricesPage from './manager/product-unit-prices-page';
 import ProductsPage from './manager/products-page';
 
 import UiPage from './ui/ui-page';
@@ -69,6 +72,9 @@ const AppPage = () => {
                 <Route path="code-lists/:codeListId/items" element={<CodeListItemsPage/>}/>
                 <Route path="products" element={<ProductsPage/>}/>
                 <Route path="products/:productId" element={<ProductPage/>}/>
+                <Route path="products/:productId/code-list-items" element={<ProductCodeListItemsPage/>}/>
+                <Route path="products/:productId/images" element={<ProductImagesPage/>}/>
+                <Route path="products/:productId/unit-prices" element={<ProductUnitPricesPage/>}/>
             </Route>
 
             <Route path="/ui" element={<UiPage/>}>
