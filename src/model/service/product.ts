@@ -1,5 +1,5 @@
 import { ApplicationImage } from './ui.ts';
-import { Unit, UnitId } from './unit.ts';
+import { UnitId } from './unit.ts';
 
 export interface ProductAttribute {
     key: ProductAttributeKey,

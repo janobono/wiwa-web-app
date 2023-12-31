@@ -111,8 +111,8 @@
       "unitPrices": {
         "title": "Product unit prices"
       },
-      "pictures": {
-        "title": "Product pictures"
+      "images": {
+        "title": "Product images"
       },
       "codeLists": {
         "title": "Product code lists"

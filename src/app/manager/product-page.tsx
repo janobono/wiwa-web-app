@@ -1,6 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { FormEvent, useEffect, useState } from 'react';
-import { Product, ProductAttribute, ProductQuantity, ProductStockStatus, ProductUnitPrice } from '../../model/service';
+import {
+    ApplicationImage,
+    Product,
+    ProductAttribute,
+    ProductQuantity,
+    ProductStockStatus,
+    ProductUnitPrice
+} from '../../model/service';
 import { CONTEXT_PATH, getData, postData, putData } from '../../data.ts';
 import { useAuthState } from '../../component/state/auth-state-provider.tsx';
 import { useResourceState } from '../../component/state/resource-state-provider.tsx';
@@ -15,6 +22,9 @@ import WiwaProductQuantities from '../../component/app/wiwa-product-quantities.t
 import ProductDescriptionDialog from './product/product-description-dialog.tsx';
 import ProductAttributesDialog from './product/product-attributes-dialog.tsx';
 import ProductQuantitiesDialog from './product/product-quantities-dialog.tsx';
+import WiwaProductUnitPrices from '../../component/app/wiwa-product-unit-prices.tsx';
+import WiwaProductImages from '../../component/app/wiwa-product-images.tsx';
+import WiwaProductCodeListItems from '../../component/app/wiwa-product-code-list-items.tsx';
 
 const PATH_PRODUCTS = CONTEXT_PATH + 'products';
 
@@ -41,6 +51,8 @@ const ProductPage = () => {
 
     const [quantities, setQuantities] = useState<ProductQuantity[]>([]);
 
+    const [images, setImages] = useState<ApplicationImage[]>([]);
+
     const [unitPrices, setUnitPrices] = useState<ProductUnitPrice[]>([]);
 
     const [codeListItems, setCodeListItems] = useState<number[]>([]);
@@ -50,9 +62,6 @@ const ProductPage = () => {
     const [showDescriptionDialog, setShowDescriptionDialog] = useState(false);
     const [showAttributesDialog, setShowAttributesDialog] = useState(false);
     const [showQuantitiesDialog, setShowQuantitiesDialog] = useState(false);
-    const [showUnitPricesDialog, setShowUnitPricesDialog] = useState(false);
-    const [showPicturesDialog, setShowPicturesDialog] = useState(false);
-    const [showCodeListsDialog, setShowCodeListsDialog] = useState(false);
 
     const [changed, setChanged] = useState(false);
     const [formValid, setFormValid] = useState(false);
@@ -101,6 +110,7 @@ const ProductPage = () => {
 
     useEffect(() => {
         const fetchProduct = async () => {
+            setChanged(false);
             if (isEditMode()) {
                 setError(undefined);
                 if (authState?.accessToken !== undefined) {
@@ -129,6 +139,8 @@ const ProductPage = () => {
                         setQuantities(response.data.quantities);
 
                         setUnitPrices(response.data.unitPrices);
+
+                        setImages(response.data.images);
 
                         setCodeListItems(response.data.codeListItems);
                     }
@@ -300,31 +312,27 @@ const ProductPage = () => {
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
                                             disabled={!isEditMode()}
-                                            onClick={() => setShowUnitPricesDialog(true)}
+                                            onClick={() => navigate(productId + '/unit-prices')}
                                         >
                                             <Edit size={18}/>
                                         </WiwaButton>
                                     </div>
-                                    <div className="flex w-full">
-                                        unit prices
-                                    </div>
+                                    <WiwaProductUnitPrices unitPrices={unitPrices}/>
 
                                     <div className="flex flex-row w-full">
                                         <span className="grow label-text">
-                                            {resourceState?.manager?.products.product.pictures.title}
+                                            {resourceState?.manager?.products.product.images.title}
                                         </span>
                                         <WiwaButton
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
                                             disabled={!isEditMode()}
-                                            onClick={() => setShowPicturesDialog(true)}
+                                            onClick={() => navigate(productId + '/images')}
                                         >
                                             <Edit size={18}/>
                                         </WiwaButton>
                                     </div>
-                                    <div className="flex w-full">
-                                        pictures
-                                    </div>
+                                    <WiwaProductImages images={images}/>
 
                                     <div className="flex flex-row w-full">
                                         <span className="grow label-text">
@@ -334,14 +342,12 @@ const ProductPage = () => {
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
                                             disabled={!isEditMode()}
-                                            onClick={() => setShowCodeListsDialog(true)}
+                                            onClick={() => navigate(productId + '/code-list')}
                                         >
                                             <Edit size={18}/>
                                         </WiwaButton>
                                     </div>
-                                    <div className="flex w-full">
-                                        code list items
-                                    </div>
+                                    <WiwaProductCodeListItems codeListItems={codeListItems}/>
                                 </div>
                             </div>
                         </div>

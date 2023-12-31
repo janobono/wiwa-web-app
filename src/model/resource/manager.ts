@@ -112,7 +112,7 @@ export interface ResourceManager {
             unitPrices: {
                 title: string
             },
-            pictures: {
+            images: {
                 title: string
             },
             codeLists: {

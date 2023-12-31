@@ -9,12 +9,12 @@ const PRODUCT_DESCRIPTION_DIALOG_ID = 'product-description-dialog-001';
 
 const ProductDescriptionDialog = (
     {
-        description,
+        description = '',
         setDescription,
         showDialog,
         setShowDialog
     }: {
-        description: string,
+        description?: string,
         setDescription: (description: string) => void,
         showDialog: boolean,
         setShowDialog: (showDialog: boolean) => void
