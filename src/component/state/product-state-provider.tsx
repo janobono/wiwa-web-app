@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 import { useAuthState } from './auth-state-provider';
-import { CodeList, CodeListData, Page } from '../../model/service';
+import { Page, Product, ProductData } from '../../model/service';
 import {
     ClientResponse,
     CONTEXT_PATH,
@@ -13,27 +13,27 @@ import {
     setQueryParam
 } from '../../data';
 
-const PATH_CODE_LISTS = CONTEXT_PATH + 'code-lists';
+const PATH_PRODUCTS = CONTEXT_PATH + 'products';
 
-export interface CodeListState {
+export interface ProductState {
     busy: boolean,
-    data?: Page<CodeList>,
-    getCodeLists: (page: number, size: number, searchField?: string) => Promise<ClientResponse<Page<CodeList>>>,
-    getCodeList: (id: number) => Promise<ClientResponse<CodeList>>,
-    addCodeList: (codeListData: CodeListData) => Promise<ClientResponse<CodeList>>,
-    setCodeList: (id: number, codeListData: CodeListData) => Promise<ClientResponse<CodeList>>,
-    deleteCodeList: (id: number) => Promise<ClientResponse<void>>
+    data?: Page<Product>,
+    getProducts: (page: number, size: number, searchField?: string) => Promise<ClientResponse<Page<Product>>>,
+    getProduct: (id: number) => Promise<ClientResponse<Product>>,
+    addProduct: (productData: ProductData) => Promise<ClientResponse<Product>>,
+    setProduct: (id: number, productData: ProductData) => Promise<ClientResponse<Product>>,
+    deleteProduct: (id: number) => Promise<ClientResponse<void>>
 }
 
-const codeListContext = createContext<CodeListState | undefined>(undefined);
+const productStateContext = createContext<ProductState | undefined>(undefined);
 
-const CodeListProvider = ({children}: { children: ReactNode }) => {
+const ProductStateProvider = ({children}: { children: ReactNode }) => {
     const authState = useAuthState();
 
     const [busy, setBusy] = useState(false);
-    const [data, setData] = useState<Page<CodeList>>();
+    const [data, setData] = useState<Page<Product>>();
 
-    const getCodeLists = async (page: number, size: number, searchField?: string) => {
+    const getProducts = async (page: number, size: number, searchField?: string) => {
         setBusy(true);
         try {
             const pageable = {
@@ -47,8 +47,8 @@ const CodeListProvider = ({children}: { children: ReactNode }) => {
             const queryParams = new URLSearchParams();
             setPageableQueryParams(queryParams, pageable);
             setQueryParam(queryParams, 'searchField', searchField);
-            const response = await getData<Page<CodeList>>(
-                PATH_CODE_LISTS,
+            const response = await getData<Page<Product>>(
+                PATH_PRODUCTS,
                 queryParams,
                 authState?.accessToken || ''
             );
@@ -61,11 +61,11 @@ const CodeListProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const getCodeList = async (id: number) => {
+    const getProduct = async (id: number) => {
         setBusy(true);
         try {
-            return getData<CodeList>(
-                PATH_CODE_LISTS + '/' + id,
+            return getData<Product>(
+                PATH_PRODUCTS + '/' + id,
                 undefined,
                 authState?.accessToken || ''
             );
@@ -74,12 +74,12 @@ const CodeListProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const addCodeList = async (codeListData: CodeListData) => {
+    const addProduct = async (productData: ProductData) => {
         setBusy(true);
         try {
-            const response = await postData<CodeList>(
-                PATH_CODE_LISTS,
-                codeListData,
+            const response = await postData<Product>(
+                PATH_PRODUCTS,
+                productData,
                 authState?.accessToken || ''
             );
             if (response.data) {
@@ -95,12 +95,12 @@ const CodeListProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const setCodeList = async (id: number, codeListData: CodeListData) => {
+    const setProduct = async (id: number, productData: ProductData) => {
         setBusy(true);
         try {
-            const response = await putData<CodeList>(
-                PATH_CODE_LISTS + '/' + id,
-                codeListData,
+            const response = await putData<Product>(
+                PATH_PRODUCTS + '/' + id,
+                productData,
                 authState?.accessToken || ''
             );
             if (response.data) {
@@ -119,11 +119,11 @@ const CodeListProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const deleteCodeList = async (id: number) => {
+    const deleteProduct = async (id: number) => {
         setBusy(true);
         try {
             const response = await deleteData(
-                PATH_CODE_LISTS + '/' + id,
+                PATH_PRODUCTS + '/' + id,
                 authState?.accessToken || ''
             );
             if (response.error === undefined) {
@@ -143,25 +143,25 @@ const CodeListProvider = ({children}: { children: ReactNode }) => {
     }
 
     return (
-        <codeListContext.Provider
+        <productStateContext.Provider
             value={
                 {
                     busy,
                     data,
-                    getCodeLists,
-                    getCodeList,
-                    addCodeList,
-                    setCodeList,
-                    deleteCodeList
+                    getProducts,
+                    getProduct,
+                    addProduct,
+                    setProduct,
+                    deleteProduct
                 }
             }
         >{children}
-        </codeListContext.Provider>
-    )
+        </productStateContext.Provider>
+    );
 }
 
-export default CodeListProvider;
+export default ProductStateProvider;
 
-export const useCodeListState = () => {
-    return useContext(codeListContext);
+export const useProductState = () => {
+    return useContext(productStateContext);
 }

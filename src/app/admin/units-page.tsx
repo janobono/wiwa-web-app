@@ -4,9 +4,10 @@ import { Edit } from 'react-feather';
 
 import WiwaUnitId from '../../component/app/wiwa-unit-id';
 import BaseDialog from '../../component/dialog/base-dialog';
+import { useConfigState } from '../../component/state/config-state-provider';
 import { useDialogState } from '../../component/state/dialog-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
-import { useUnitState } from '../../component/state/unit-provider';
+import { useUiState } from '../../component/state/ui-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import { getUnitIdName, Unit, UnitId } from '../../model/service';
@@ -14,8 +15,9 @@ import { getUnitIdName, Unit, UnitId } from '../../model/service';
 const UNIT_VALUE_DIALOG_ID = 'admin-unit-value-dialog-001';
 
 const UnitsPage = () => {
-    const unitState = useUnitState();
+    const configState = useConfigState();
     const resourceState = useResourceState();
+    const uiState = useUiState();
 
     const [showDialog, setShowDialog] = useState(false);
     const [selectedUnitId, setSelectedUnitId] = useState<UnitId>();
@@ -23,8 +25,8 @@ const UnitsPage = () => {
 
     const okHandler = async (unit: Unit) => {
         setError(undefined);
-        const response = unitState?.setData([unit]);
-        if (response) {
+        const response = await configState?.setUnits([unit]);
+        if (response?.error) {
             setError(resourceState?.admin?.units.editUnit.error);
         }
     }
@@ -46,7 +48,7 @@ const UnitsPage = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {unitState?.data?.map((unit) =>
+                            {uiState?.units?.map((unit) =>
                                 <tr key={unit.id} className="hover">
                                     <td><WiwaUnitId unitId={unit.id}/></td>
                                     <td>{unit.value}</td>
@@ -54,7 +56,7 @@ const UnitsPage = () => {
                                         <WiwaButton
                                             className="btn-primary md:btn-xs"
                                             title={resourceState?.admin?.units.editUnit.title}
-                                            disabled={unitState?.busy}
+                                            disabled={configState?.busy}
                                             onClick={() => {
                                                 setSelectedUnitId(unit.id);
                                                 setShowDialog(true);
@@ -90,17 +92,17 @@ const UnitDialog = ({showDialog, unitId, okHandler, cancelHandler}: {
     cancelHandler: () => void
 }) => {
     const dialogState = useDialogState();
-    const unitState = useUnitState();
     const resourceState = useResourceState();
+    const uiState = useUiState();
 
     const [value, setValue] = useState('');
     const [valueValid, setValueValid] = useState(false);
 
     useEffect(() => {
         if (unitId) {
-            setValue(unitState?.getValue(unitId) || '');
+            setValue(uiState?.units?.find(unit => unit.id === unitId)?.value || '');
         }
-    }, [showDialog, unitId, unitState]);
+    }, [showDialog, uiState?.units, unitId]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <BaseDialog id={UNIT_VALUE_DIALOG_ID} showDialog={showDialog} closeHandler={cancelHandler}>

@@ -1,6 +1,6 @@
 import Footer from '../component/layout/footer';
 import Navigation from '../component/layout/navigation';
-import { useResourceState } from '../component/state/resource-state-provider.tsx';
+import { useResourceState } from '../component/state/resource-state-provider';
 
 const NotFoundPage = () => {
     const resourceState = useResourceState();

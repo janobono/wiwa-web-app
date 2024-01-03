@@ -3,7 +3,6 @@ import { ExternalLink } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 
 import { useUiState } from '../state/ui-state-provider';
-import { PATH_LOGO } from '../../data';
 
 const BaseFooter = ({children}: { children?: ReactNode }) => {
     const uiState = useUiState();
@@ -18,7 +17,7 @@ const BaseFooter = ({children}: { children?: ReactNode }) => {
                     >
                         <img
                             className="flex-none w-24 h-24 object-scale-down object-center"
-                            src={PATH_LOGO}
+                            src={uiState?.logoUrl}
                             alt="Logo"
                         />
                     </NavLink>

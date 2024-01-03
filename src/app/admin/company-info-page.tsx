@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { Edit } from 'react-feather';
 
 import BaseDialog from '../../component/dialog/base-dialog';
+import { useConfigState } from '../../component/state/config-state-provider';
 import { useDialogState } from '../../component/state/dialog-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
 import { useUiState } from '../../component/state/ui-state-provider';
@@ -108,6 +109,7 @@ const EditCompanyDialog = ({showDialog, okHandler, cancelHandler}: {
     okHandler: () => void,
     cancelHandler: () => void
 }) => {
+    const configState = useConfigState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
     const uiState = useUiState();
@@ -192,7 +194,7 @@ const EditCompanyDialog = ({showDialog, okHandler, cancelHandler}: {
         setFormError(undefined);
         try {
             if (isFormValid()) {
-                const response = await uiState?.changeCompanyInfo({
+                const response = await configState?.setCompanyInfo({
                     name,
                     street,
                     city,

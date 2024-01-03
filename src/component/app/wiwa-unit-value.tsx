@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 
-import { useUnitState } from '../state/unit-provider';
+import { useUiState } from '../state/ui-state-provider';
 import { UnitId } from '../../model/service';
 
 const WiwaUnitValue = ({unitId}: { unitId?: UnitId }) => {
-    const unitState = useUnitState();
+    const uiState = useUiState();
 
     const [data, setData] = useState<string>();
 
     useEffect(() => {
         if (unitId) {
-            setData(unitState?.getValue(unitId));
+            setData(uiState?.units?.find(unit => unit.id === unitId)?.value || '');
         } else {
             setData(undefined);
         }
-    }, [unitState?.data, unitId]);
+    }, [uiState?.units, unitId]);
 
     return (
         <>

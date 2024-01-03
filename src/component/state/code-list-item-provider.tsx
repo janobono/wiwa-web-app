@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 import { useAuthState } from './auth-state-provider';
-import { CodeListItem, CodeListItemData, Page, WiwaError } from '../../model/service';
+import { CodeListItem, CodeListItemData, Page } from '../../model/service';
 import {
     ClientResponse,
     CONTEXT_PATH,
@@ -17,14 +17,14 @@ const PATH_CODE_LIST_ITEMS = CONTEXT_PATH + 'code-lists/items';
 
 export interface CodeListItemState {
     busy: boolean,
-    fetchData: (codeListId: number, parentId?: number) => Promise<WiwaError | undefined>,
     data?: CodeListItem[],
+    getCodeListItems: (codeListId: number, parentId?: number) => Promise<ClientResponse<Page<CodeListItem>>>,
     getCodeListItem: (id: number) => Promise<ClientResponse<CodeListItem>>,
-    addCodeListItem: (codeListItemData: CodeListItemData) => Promise<WiwaError | undefined>,
-    setCodeListItem: (id: number, codeListItemData: CodeListItemData) => Promise<WiwaError | undefined>,
-    deleteCodeListItem: (id: number) => Promise<WiwaError | undefined>,
-    moveUpCodeListItem: (id: number) => Promise<WiwaError | undefined>,
-    moveDownCodeListItem: (id: number) => Promise<WiwaError | undefined>
+    addCodeListItem: (codeListItemData: CodeListItemData) => Promise<ClientResponse<CodeListItem>>,
+    setCodeListItem: (id: number, codeListItemData: CodeListItemData) => Promise<ClientResponse<CodeListItem>>,
+    deleteCodeListItem: (id: number) => Promise<ClientResponse<void>>,
+    moveUpCodeListItem: (id: number) => Promise<ClientResponse<CodeListItem>>,
+    moveDownCodeListItem: (id: number) => Promise<ClientResponse<CodeListItem>>
 }
 
 const codeListItemContext = createContext<CodeListItemState | undefined>(undefined);
@@ -35,29 +35,25 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<CodeListItem[]>();
 
-    const fetchData = async (codeListId: number, parentId?: number) => {
+    const getCodeListItems = async (codeListId: number, parentId?: number) => {
         setBusy(true);
         try {
-            if (authState?.accessToken !== undefined) {
-                const queryParams = new URLSearchParams();
-                setQueryParam(queryParams, 'codeListId', codeListId);
-                if (parentId) {
-                    setQueryParam(queryParams, 'parentId', parentId);
-                } else {
-                    setQueryParam(queryParams, 'root', 'true');
-                }
-                const response = await getData<Page<CodeListItem>>(
-                    PATH_CODE_LIST_ITEMS,
-                    queryParams,
-                    authState?.accessToken || ''
-                );
-
-                if (response.error) {
-                    return response.error;
-                } else if (response.data) {
-                    setData(response.data.content);
-                }
+            const queryParams = new URLSearchParams();
+            setQueryParam(queryParams, 'codeListId', codeListId);
+            if (parentId) {
+                setQueryParam(queryParams, 'parentId', parentId);
+            } else {
+                setQueryParam(queryParams, 'root', 'true');
             }
+            const response = await getData<Page<CodeListItem>>(
+                PATH_CODE_LIST_ITEMS,
+                queryParams,
+                authState?.accessToken || ''
+            );
+            if (response.data) {
+                setData(response.data.content);
+            }
+            return response;
         } finally {
             setBusy(false);
         }
@@ -84,14 +80,13 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
                 codeListItemData,
                 authState?.accessToken || ''
             );
-            if (response.error) {
-                return response.error;
-            } else if (response.data) {
+            if (response.data) {
                 if (data) {
                     const newData = [response.data, ...data];
                     setData(newData);
                 }
             }
+            return response;
         } finally {
             setBusy(false);
         }
@@ -105,9 +100,7 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
                 codeListItemData,
                 authState?.accessToken || ''
             );
-            if (response.error) {
-                return response.error;
-            } else if (response.data) {
+            if (response.data) {
                 if (data) {
                     const newData = [...data];
                     const index = newData.findIndex(item => item.id === id);
@@ -117,6 +110,7 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
                     }
                 }
             }
+            return response;
         } finally {
             setBusy(false);
         }
@@ -129,9 +123,7 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
                 PATH_CODE_LIST_ITEMS + '/' + id,
                 authState?.accessToken || ''
             );
-            if (response.error) {
-                return response.error;
-            } else {
+            if (response.error === undefined) {
                 if (data) {
                     const newData = [...data];
                     const index = newData.findIndex(item => item.id === id);
@@ -141,6 +133,7 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
                     }
                 }
             }
+            return response;
         } finally {
             setBusy(false);
         }
@@ -149,14 +142,11 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
     const moveUpCodeListItem = async (id: number) => {
         setBusy(true);
         try {
-            const response = await patchData<CodeListItem>(
+            return patchData<CodeListItem>(
                 PATH_CODE_LIST_ITEMS + '/' + id + '/move-up',
                 undefined,
                 authState?.accessToken || ''
             );
-            if (response.error) {
-                return response.error;
-            }
         } finally {
             setBusy(false);
         }
@@ -165,14 +155,11 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
     const moveDownCodeListItem = async (id: number) => {
         setBusy(true);
         try {
-            const response = await patchData<CodeListItem>(
+            return patchData<CodeListItem>(
                 PATH_CODE_LIST_ITEMS + '/' + id + '/move-down',
                 undefined,
                 authState?.accessToken || ''
             );
-            if (response.error) {
-                return response.error;
-            }
         } finally {
             setBusy(false);
         }
@@ -183,8 +170,8 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
             value={
                 {
                     busy,
-                    fetchData,
                     data,
+                    getCodeListItems,
                     getCodeListItem,
                     addCodeListItem,
                     setCodeListItem,

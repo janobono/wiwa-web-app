@@ -1,37 +1,13 @@
-import { useEffect, useState } from 'react';
-
-import { useConfigState } from '../../component/state/config-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
 import { useUiState } from '../../component/state/ui-state-provider';
 import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
-import { SingleValueBody } from '../../model/service';
-import { CONTEXT_PATH, getData } from '../../data';
-
-const PATH_UI_WORKING_HOURS = CONTEXT_PATH + 'ui/working-hours';
 
 const ContactInfoPage = () => {
-    const configState = useConfigState();
     const resourceState = useResourceState();
     const uiState = useUiState();
 
-    const [workingHours, setWorkingHours] = useState<string>();
-
-    useEffect(() => {
-        if (configState?.up) {
-            const fetchWorkingHours = async () => {
-                const response = await getData<SingleValueBody<string>>(PATH_UI_WORKING_HOURS);
-                if (response.data) {
-                    setWorkingHours(response.data.value);
-                }
-            }
-            fetchWorkingHours().then();
-        }
-    }, [configState?.up]);
-
     return (
-
         <div className="flex flex-col gap-5 pt-5">
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 px-5 w-full">
                 <div>
                     {uiState?.companyInfo ?
@@ -50,7 +26,7 @@ const ContactInfoPage = () => {
                 </div>
                 <div className="border border-solid flex flex-row h-full p-5">
                     <div className="flex flex-col w-full">
-                        <WiwaMarkdownRenderer className="prose" md={workingHours}/>
+                        <WiwaMarkdownRenderer className="prose" md={uiState?.workingHours}/>
                     </div>
                 </div>
             </div>

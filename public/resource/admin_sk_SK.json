@@ -17,6 +17,7 @@
     "deleteImageQuestionTitle": "Zmazať obrázok",
     "loadImagesError": "Chyba načítania aplikačných obrázkov",
     "addImageError": "Chyba pridania aplikačného obrázka",
+    "deleteImageError": "Chyba zmazania aplikačného obrázka",
     "addAppImage": {
       "title": "Pridať aplikačný obrázok",
       "fileLabel": "Súbor",

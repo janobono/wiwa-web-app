@@ -1,7 +1,6 @@
 import { Pageable, WiwaError, WiwaErrorCode } from './model/service';
 
 export const CONTEXT_PATH = '/api/'
-export const PATH_LOGO = CONTEXT_PATH + 'ui/logo';
 
 export const wiwaError = (message: string): WiwaError => {
     return {code: WiwaErrorCode.UNKNOWN, message, timestamp: ''}
@@ -186,25 +185,4 @@ export const postFile = async <T>(path: string, file: File, token: string): Prom
         error = await toWiwaError(response);
     }
     return {data: resultData, error};
-}
-
-export const postFileVoidResponse = async (path: string, file: File, token: string): Promise<ClientResponse<void>> => {
-    const authorization = createAuthorization(token);
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const response = await fetch(path, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            ...authorization
-        },
-    });
-
-    let error;
-    if (!response.ok) {
-        error = await toWiwaError(response);
-    }
-    return {data: undefined, error};
 }

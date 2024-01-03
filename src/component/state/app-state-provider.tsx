@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { useConfigState } from './config-state-provider';
 
 const COOKIES_ENABLED = 'cookies-enabled';
 const LOCALE = 'locale';
@@ -7,33 +6,29 @@ export const LOCALE_EN = 'en_US';
 export const LOCALE_SK = 'sk_SK';
 
 export interface AppState {
-    enableCookies: () => void,
-    switchLocale: () => void,
     cookiesEnabled?: boolean,
     locale?: string,
+    enableCookies: () => void,
+    switchLocale: () => void,
+    setDefaultLocale: (locale: string) => void
 }
 
 const appStateContext = createContext<AppState | undefined>(undefined);
 
 const AppStateProvider = ({children}: { children: ReactNode }) => {
-    const configState = useConfigState();
-
     const [cookiesEnabled, setCookiesEnabled] = useState<boolean>();
+    const [defaultLocale, setDefaultLocale] = useState<string>();
     const [locale, setLocale] = useState<string>();
 
     useEffect(() => {
-        if (configState?.up) {
-            setCookiesEnabled(localStorage.getItem(COOKIES_ENABLED) === 'true');
-        }
-    }, [configState?.up]);
+        setCookiesEnabled(localStorage.getItem(COOKIES_ENABLED) === 'true');
+    }, []);
 
     useEffect(() => {
-        if (configState?.defaultLocale) {
-            if (locale === undefined) {
-                setLocale(localStorage.getItem(LOCALE) || configState?.defaultLocale);
-            }
+        if (locale === undefined) {
+            setLocale(localStorage.getItem(LOCALE) || defaultLocale || LOCALE_EN);
         }
-    }, [configState?.defaultLocale]);
+    }, [defaultLocale, locale]);
 
     const enableCookies = () => {
         localStorage.setItem(COOKIES_ENABLED, 'true');
@@ -55,10 +50,11 @@ const AppStateProvider = ({children}: { children: ReactNode }) => {
         <appStateContext.Provider
             value={
                 {
+                    cookiesEnabled,
+                    locale,
                     enableCookies,
                     switchLocale,
-                    cookiesEnabled,
-                    locale
+                    setDefaultLocale
                 }
             }
         >{children}

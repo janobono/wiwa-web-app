@@ -2,81 +2,39 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit, Plus, Search, Trash } from 'react-feather';
 
-import { useAuthState } from '../../component/state/auth-state-provider';
 import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
+import { useProductState } from '../../component/state/product-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaInput from '../../component/ui/wiwa-input';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import { Page, Product } from '../../model/service';
-import { CONTEXT_PATH, deleteData, getData, setPageableQueryParams, setQueryParam } from '../../data';
-
-const PATH_PRODUCTS = CONTEXT_PATH + 'products';
 
 const ProductsPage = () => {
     const navigate = useNavigate();
 
-    const authState = useAuthState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
+    const productState = useProductState();
 
-    const [data, setData] = useState<Page<Product>>();
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
     const [page, setPage] = useState(0);
     const [searchField, setSearchField] = useState('');
-    const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
     const fetchData = async () => {
         setError(undefined);
-        setSubmitting(true);
-        try {
-            if (authState?.accessToken !== undefined) {
-                const pageable = {
-                    page: page,
-                    size: 10,
-                    sort: {
-                        field: 'name',
-                        asc: true
-                    }
-                }
-
-                const queryParams = new URLSearchParams();
-                setPageableQueryParams(queryParams, pageable);
-                setQueryParam(queryParams, 'searchField', searchField);
-                const response = await getData<Page<Product>>(
-                    PATH_PRODUCTS,
-                    queryParams,
-                    authState?.accessToken || ''
-                );
-
-                if (response.error) {
-                    setError(resourceState?.manager?.products.fetchDataError);
-                } else if (response.data) {
-                    setData(response.data);
-                }
-            }
-        } finally {
-            setSubmitting(false);
+        const response = await productState?.getProducts(page, 10, searchField);
+        if (response?.error) {
+            setError(resourceState?.manager?.products.fetchDataError);
         }
     }
 
     const deleteHandler = async (id: number) => {
-        setSubmitting(true);
         setError(undefined);
-        try {
-            const response = await deleteData(
-                PATH_PRODUCTS + '/' + id,
-                authState?.accessToken || ''
-            )
-            if (response.error) {
-                setError(resourceState?.manager?.products.deleteProduct.error);
-            } else {
-                await fetchData();
-            }
-        } finally {
-            setSubmitting(false);
+        const response = await productState?.deleteProduct(id);
+        if (response?.error) {
+            setError(resourceState?.manager?.products.deleteProduct.error);
         }
     }
 
@@ -85,9 +43,9 @@ const ProductsPage = () => {
     }, []);
 
     useEffect(() => {
-        setPrevious(data !== undefined && !data.first);
-        setNext(data !== undefined && !data.last);
-    }, [data]);
+        setPrevious(productState?.data !== undefined && !productState?.data?.first);
+        setNext(productState?.data !== undefined && !productState?.data?.last);
+    }, [productState?.data]);
 
     return (
         error ?
@@ -130,7 +88,7 @@ const ProductsPage = () => {
                                     <WiwaButton
                                         title={resourceState?.manager?.products.addProduct}
                                         className="btn-primary md:btn-xs"
-                                        disabled={submitting}
+                                        disabled={productState?.busy}
                                         onClick={() => navigate('new')}
                                     >
                                         <Plus size={18}/>
@@ -139,7 +97,7 @@ const ProductsPage = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {data?.content.map(product =>
+                            {productState?.data?.content.map(product =>
                                 <tr key={product.id} className="hover">
                                     <td>{product.id}</td>
                                     <td>{product.code}</td>
@@ -150,7 +108,7 @@ const ProductsPage = () => {
                                             <WiwaButton
                                                 title={resourceState?.manager?.products.editProduct}
                                                 className="btn-primary md:btn-xs join-item"
-                                                disabled={submitting}
+                                                disabled={productState?.busy}
                                                 onClick={() => navigate('' + product.id)}
                                             >
                                                 <Edit size={18}/>
@@ -158,7 +116,7 @@ const ProductsPage = () => {
                                             <WiwaButton
                                                 className="btn-accent md:btn-xs join-item"
                                                 title={resourceState?.manager?.products.deleteProduct.title}
-                                                disabled={submitting}
+                                                disabled={productState?.busy}
                                                 onClick={() => {
                                                     dialogState?.showDialog({
                                                         type: DialogType.YES_NO,
@@ -188,7 +146,7 @@ const ProductsPage = () => {
                             pageHandler={() => fetchData()}
                             isNext={next}
                             nextHandler={() => setPage(page - 1)}
-                            disabled={submitting}
+                            disabled={productState?.busy}
                         />
                     </div>
                 </div>

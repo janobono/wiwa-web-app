@@ -35,8 +35,8 @@ const CodeListsPage = () => {
 
     const fetchData = async () => {
         setError(undefined);
-        const response = await codeListState?.fetchData(page, searchField);
-        if (response) {
+        const response = await codeListState?.getCodeLists(page, 10, searchField);
+        if (response?.error) {
             setError(resourceState?.manager?.codeLists.fetchDataError);
         }
     }
@@ -49,7 +49,7 @@ const CodeListsPage = () => {
         } else {
             response = await codeListState?.addCodeList(codeListData);
         }
-        if (response) {
+        if (response?.error) {
             if (selectedCodeList) {
                 setError(resourceState?.manager?.codeLists.editCodeList.error);
             } else {
@@ -61,7 +61,7 @@ const CodeListsPage = () => {
     const deleteHandler = async (id: number) => {
         setError(undefined);
         const response = await codeListState?.deleteCodeList(id);
-        if (response) {
+        if (response?.error) {
             setError(resourceState?.manager?.codeLists.deleteCodeList.error);
         }
     }

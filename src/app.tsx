@@ -6,23 +6,22 @@ import ConfirmAccount from './component/layout/confirm-account';
 import CookiesConsent from './component/layout/cookies-consent';
 import DisabledAccount from './component/layout/disabled-account';
 import RefreshToken from './component/layout/refresh-token';
-import { useConfigState } from './component/state/config-state-provider';
+import { useHealthState } from './component/state/health-state-provider';
+import { useUiState } from './component/state/ui-state-provider';
 import WiwaSpinner from './component/ui/wiwa-spinner';
 
 function App() {
-    const configState = useConfigState();
+    const healthState = useHealthState();
+    const uiState = useUiState();
 
     useEffect(() => {
-        document.title = configState?.appTitle || '';
-    }, [configState?.appTitle]);
-
-    useEffect(() => {
+        document.title = uiState?.applicationProperties?.appTitle || '';
         const el = document.querySelector('meta[name=\'description\']');
-        el?.setAttribute('content', configState?.appDescription || '');
-    }, [configState?.appDescription]);
+        el?.setAttribute('content', uiState?.applicationProperties?.appDescription || '');
+    }, [uiState?.applicationProperties]);
 
     return (
-        configState?.up ?
+        healthState?.up ?
             <BrowserRouter>
                 <ConfirmAccount/>
                 <CookiesConsent/>

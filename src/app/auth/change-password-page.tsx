@@ -40,14 +40,14 @@ const ChangePasswordPage = () => {
         setFormError(undefined);
         try {
             if (isFormValid()) {
-                const errorCode = await authState?.changePassword({
+                const response = await authState?.changePassword({
                     oldPassword,
                     newPassword,
                     captchaText,
                     captchaToken
                 });
-                if (errorCode) {
-                    switch (errorCode) {
+                if (response?.error) {
+                    switch (response?.error.code) {
                         case WiwaErrorCode.USER_IS_DISABLED:
                             setFormError(resourceState?.common?.error.userIsDisabled);
                             break;

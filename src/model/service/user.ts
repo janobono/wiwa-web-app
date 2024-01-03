@@ -1,16 +1,13 @@
 import type { Authority } from './authority';
 
-export interface UserCard {
+export interface User {
+    id: number,
+    username: string,
     titleBefore?: string,
     firstName: string,
     midName?: string,
     lastName: string,
     titleAfter?: string
-}
-
-export interface User extends UserCard {
-    id?: string,
-    username: string,
     email: string,
     gdpr: boolean,
     confirmed: boolean,

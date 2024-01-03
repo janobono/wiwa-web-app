@@ -38,14 +38,14 @@ const ChangeEmailPage = () => {
         setFormError(undefined);
         try {
             if (isFormValid()) {
-                const errorCode = await authState?.changeEmail({
+                const response = await authState?.changeEmail({
                     email,
                     password,
                     captchaText,
                     captchaToken
                 });
-                if (errorCode) {
-                    switch (errorCode) {
+                if (response?.error) {
+                    switch (response?.error.code) {
                         case WiwaErrorCode.USER_IS_DISABLED:
                             setFormError(resourceState?.common?.error.userIsDisabled);
                             break;

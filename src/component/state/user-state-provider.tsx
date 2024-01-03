@@ -1,54 +1,54 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 import { useAuthState } from './auth-state-provider';
-import { CodeList, CodeListData, Page } from '../../model/service';
+import { Authority, Page, User } from '../../model/service';
 import {
     ClientResponse,
     CONTEXT_PATH,
     deleteData,
     getData,
-    postData,
-    putData,
+    patchData,
     setPageableQueryParams,
     setQueryParam
 } from '../../data';
 
-const PATH_CODE_LISTS = CONTEXT_PATH + 'code-lists';
+const PATH_USERS = CONTEXT_PATH + 'users';
 
-export interface CodeListState {
+export interface UserState {
     busy: boolean,
-    data?: Page<CodeList>,
-    getCodeLists: (page: number, size: number, searchField?: string) => Promise<ClientResponse<Page<CodeList>>>,
-    getCodeList: (id: number) => Promise<ClientResponse<CodeList>>,
-    addCodeList: (codeListData: CodeListData) => Promise<ClientResponse<CodeList>>,
-    setCodeList: (id: number, codeListData: CodeListData) => Promise<ClientResponse<CodeList>>,
-    deleteCodeList: (id: number) => Promise<ClientResponse<void>>
+    data?: Page<User>,
+    getUsers: (page: number, size: number, searchField?: string) => Promise<ClientResponse<Page<User>>>,
+    setAuthorities: (id: number, authorities: Authority[]) => Promise<ClientResponse<User>>,
+    setConfirmed: (id: number, confirmed: boolean) => Promise<ClientResponse<User>>,
+    setEnabled: (id: number, enabled: boolean) => Promise<ClientResponse<User>>,
+    deleteUser: (id: number) => Promise<ClientResponse<void>>
 }
 
-const codeListContext = createContext<CodeListState | undefined>(undefined);
+const userContext = createContext<UserState | undefined>(undefined);
 
-const CodeListProvider = ({children}: { children: ReactNode }) => {
+const UserProvider = ({children}: { children: ReactNode }) => {
     const authState = useAuthState();
 
     const [busy, setBusy] = useState(false);
-    const [data, setData] = useState<Page<CodeList>>();
+    const [data, setData] = useState<Page<User>>();
 
-    const getCodeLists = async (page: number, size: number, searchField?: string) => {
+    const getUsers = async (page: number, size: number, searchField?: string) => {
         setBusy(true);
         try {
             const pageable = {
                 page,
                 size,
                 sort: {
-                    field: 'name',
+                    field: 'username',
                     asc: true
                 }
             }
+
             const queryParams = new URLSearchParams();
             setPageableQueryParams(queryParams, pageable);
             setQueryParam(queryParams, 'searchField', searchField);
-            const response = await getData<Page<CodeList>>(
-                PATH_CODE_LISTS,
+            const response = await getData<Page<User>>(
+                PATH_USERS,
                 queryParams,
                 authState?.accessToken || ''
             );
@@ -61,46 +61,12 @@ const CodeListProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const getCodeList = async (id: number) => {
+    const setAuthorities = async (id: number, authorities: Authority[]) => {
         setBusy(true);
         try {
-            return getData<CodeList>(
-                PATH_CODE_LISTS + '/' + id,
-                undefined,
-                authState?.accessToken || ''
-            );
-        } finally {
-            setBusy(false);
-        }
-    }
-
-    const addCodeList = async (codeListData: CodeListData) => {
-        setBusy(true);
-        try {
-            const response = await postData<CodeList>(
-                PATH_CODE_LISTS,
-                codeListData,
-                authState?.accessToken || ''
-            );
-            if (response.data) {
-                if (data) {
-                    const newData = {...data};
-                    newData.content = [response.data, ...data.content];
-                    setData(newData);
-                }
-            }
-            return response;
-        } finally {
-            setBusy(false);
-        }
-    }
-
-    const setCodeList = async (id: number, codeListData: CodeListData) => {
-        setBusy(true);
-        try {
-            const response = await putData<CodeList>(
-                PATH_CODE_LISTS + '/' + id,
-                codeListData,
+            const response = await patchData<User>(
+                PATH_USERS + '/' + id + '/authorities',
+                authorities,
                 authState?.accessToken || ''
             );
             if (response.data) {
@@ -119,14 +85,62 @@ const CodeListProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const deleteCodeList = async (id: number) => {
+    const setConfirmed = async (id: number, confirmed: boolean) => {
+        setBusy(true);
+        try {
+            const response = await patchData<User>(
+                PATH_USERS + '/' + id + '/confirm',
+                {value: confirmed},
+                authState?.accessToken || ''
+            );
+            if (response.data) {
+                if (data) {
+                    const newData = {...data};
+                    const index = newData.content.findIndex(item => item.id === id);
+                    if (index !== -1) {
+                        newData.content[index] = response.data;
+                        setData(newData);
+                    }
+                }
+            }
+            return response;
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const setEnabled = async (id: number, enabled: boolean) => {
+        setBusy(true);
+        try {
+            const response = await patchData<User>(
+                PATH_USERS + '/' + id + '/enable',
+                {value: enabled},
+                authState?.accessToken || ''
+            );
+            if (response.data) {
+                if (data) {
+                    const newData = {...data};
+                    const index = newData.content.findIndex(item => item.id === id);
+                    if (index !== -1) {
+                        newData.content[index] = response.data;
+                        setData(newData);
+                    }
+                }
+            }
+            return response;
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const deleteUser = async (id: number) => {
         setBusy(true);
         try {
             const response = await deleteData(
-                PATH_CODE_LISTS + '/' + id,
+                PATH_USERS + '/' + id,
                 authState?.accessToken || ''
             );
-            if (response.error === undefined) {
+            if (response.data) {
                 if (data) {
                     const newData = {...data};
                     const index = newData.content.findIndex(item => item.id === id);
@@ -143,25 +157,25 @@ const CodeListProvider = ({children}: { children: ReactNode }) => {
     }
 
     return (
-        <codeListContext.Provider
+        <userContext.Provider
             value={
                 {
                     busy,
                     data,
-                    getCodeLists,
-                    getCodeList,
-                    addCodeList,
-                    setCodeList,
-                    deleteCodeList
+                    getUsers,
+                    setAuthorities,
+                    setConfirmed,
+                    setEnabled,
+                    deleteUser
                 }
             }
         >{children}
-        </codeListContext.Provider>
+        </userContext.Provider>
     )
 }
 
-export default CodeListProvider;
+export default UserProvider;
 
-export const useCodeListState = () => {
-    return useContext(codeListContext);
+export const useUserState = () => {
+    return useContext(userContext);
 }

@@ -4,11 +4,11 @@ import { createPortal } from 'react-dom';
 import BaseDialog from '../../../component/dialog/base-dialog';
 import { useDialogState } from '../../../component/state/dialog-state-provider';
 import { useResourceState } from '../../../component/state/resource-state-provider';
+import { useUiState } from '../../../component/state/ui-state-provider';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import { getUnitIdName, ProductQuantity, ProductQuantityKey, UnitId } from '../../../model/service';
-import WiwaSelect from '../../../component/ui/wiwa-select.tsx';
-import WiwaInput from '../../../component/ui/wiwa-input.tsx';
-import { useUnitState } from '../../../component/state/unit-provider.tsx';
+import WiwaSelect from '../../../component/ui/wiwa-select';
+import WiwaInput from '../../../component/ui/wiwa-input';
 
 const PRODUCT_QUANTITIES_DIALOG_ID = 'product-quantities-dialog-001';
 
@@ -55,18 +55,23 @@ const ProductQuantitiesDialog = (
                     break;
                 case ProductQuantityKey.WEIGHT:
                     setWeightValue(value.value.toString());
+                    setWeightUnitId(value.unit.toString());
                     break;
                 case ProductQuantityKey.NET_WEIGHT:
                     setNetWeightValue(value.value.toString());
+                    setNetWeightUnitId(value.unit.toString());
                     break;
                 case ProductQuantityKey.LENGTH:
                     setLengthValue(value.value.toString());
+                    setLengthUnitId(value.unit.toString());
                     break;
                 case ProductQuantityKey.WIDTH:
                     setWidthValue(value.value.toString());
+                    setWidthUnitId(value.unit.toString());
                     break;
                 case ProductQuantityKey.THICKNESS:
                     setThicknessValue(value.value.toString());
+                    setThicknessUnitId(value.unit.toString());
                     break;
             }
         });
@@ -261,7 +266,7 @@ const SelectQuantityUnit = (
         setValue: (value: string) => void
     }) => {
     const resourceState = useResourceState();
-    const unitState = useUnitState();
+    const uiState = useUiState();
 
     const quantityUnitChangeHandler = (event: FormEvent<HTMLSelectElement>) => {
         setValue(event.currentTarget.value);
@@ -271,7 +276,7 @@ const SelectQuantityUnit = (
         <WiwaSelect
             onChange={event => quantityUnitChangeHandler(event)}
         >
-            {unitState?.data?.map(unit =>
+            {uiState?.units?.map(unit =>
                 <option
                     key={unit.id}
                     selected={unit.id.toString() === value}

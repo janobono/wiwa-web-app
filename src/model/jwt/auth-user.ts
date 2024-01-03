@@ -1,7 +1,7 @@
 import type { JwtPayload } from 'jwt-decode';
 
 export interface AuthUser extends JwtPayload {
-    id: string,
+    id: number,
     titleBefore: string,
     firstName: string,
     midName: string,

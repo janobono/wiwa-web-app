@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 
 import { LOCALE_EN, useAppState } from '../state/app-state-provider';
 import { useAuthState } from '../state/auth-state-provider';
-import { useConfigState } from '../state/config-state-provider';
 import { useResourceState } from '../state/resource-state-provider';
 import { useUiState } from '../state/ui-state-provider';
 import WiwaButton from '../ui/wiwa-button';
@@ -134,14 +133,14 @@ const LocaleSwitch = () => {
 
 const UserCard = () => {
     const authState = useAuthState();
-    const configState = useConfigState();
+    const uiState = useUiState();
     const resourceState = useResourceState();
 
     const [value, setValue] = useState(0);
 
     useEffect(() => {
         if (!authState?.accessExpired && authState?.timeToAccessExpiration) {
-            const MAX_TIME = (configState?.tokenExpiresIn || 0) * 60 * 1000;
+            const MAX_TIME = (uiState?.applicationProperties?.tokenExpiresIn || 0) * 60 * 1000;
             if (authState.timeToAccessExpiration > MAX_TIME) {
                 setValue(100);
             } else {
@@ -151,7 +150,7 @@ const UserCard = () => {
         } else {
             setValue(0);
         }
-    }, [configState?.tokenExpiresIn, authState?.accessExpired, authState?.timeToAccessExpiration]);
+    }, [uiState?.applicationProperties?.tokenExpiresIn, authState?.accessExpired, authState?.timeToAccessExpiration]);
 
     return (
         <div

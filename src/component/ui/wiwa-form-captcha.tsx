@@ -4,11 +4,8 @@ import { RefreshCw } from 'react-feather';
 import WiwaButton from './wiwa-button';
 import WiwaInput from './wiwa-input';
 import WiwaSpinner from './wiwa-spinner';
+import { useCaptchaState } from '../state/captcha-state-provider';
 import { useResourceState } from '../state/resource-state-provider';
-import { Captcha } from '../../model/service';
-import { CONTEXT_PATH, getData } from '../../data';
-
-const PATH_CAPTCHA = CONTEXT_PATH + 'captcha';
 
 const WiwaFormCaptcha = (
     {
@@ -30,12 +27,12 @@ const WiwaFormCaptcha = (
         setToken: (value: string) => void,
         setValid?: (valid: boolean) => void,
     }) => {
+    const captchaState = useCaptchaState();
     const resourceState = useResourceState();
 
     const didMount = useRef(false);
     const [message, setMessage] = useState<string>();
-    const [loading, setLoading] = useState(true);
-    const [loadingError, setLoadingError] = useState(true);
+    const [error, setError] = useState(true);
     const [image, setImage] = useState('');
 
     const revalidate = () => {
@@ -65,24 +62,21 @@ const WiwaFormCaptcha = (
     }, []);
 
     const reFetch = useCallback(async () => {
-        setLoading(true);
-        setLoadingError(false);
+        setError(false);
         try {
-            const response = await getData<Captcha>(PATH_CAPTCHA);
-            if (response.data) {
+            const response = await captchaState?.getCaptcha();
+            if (response?.data) {
                 if (setToken) {
                     setToken(response.data.captchaToken);
                 }
                 setImage(response.data.captchaImage);
             } else {
-                setLoadingError(true);
+                setError(true);
             }
         } catch (error) {
-            setLoadingError(true);
-        } finally {
-            setLoading(false);
+            setError(true);
         }
-    }, [setToken])
+    }, [captchaState, setToken])
 
     return (
         <div className="form-control w-full">
@@ -102,11 +96,11 @@ const WiwaFormCaptcha = (
                     }
                 }}
             />
-            {loading ?
+            {captchaState?.busy ?
                 <WiwaSpinner/>
                 :
                 <div className="flex-1 flex flex-wrap pt-1.5">
-                    {loadingError ?
+                    {error ?
                         <div
                             className="font-normal flex-1 text-sm md:text-base text-error align-middle">
                             {resourceState?.common?.captcha.error}

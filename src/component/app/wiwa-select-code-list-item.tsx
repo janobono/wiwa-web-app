@@ -52,8 +52,8 @@ const WiwaSelectCodeListItem = (
         setError(undefined);
         setLoading(true);
         try {
-            const response = await codeListItemState?.fetchData(codeListId, parentId);
-            if (response) {
+            const response = await codeListItemState?.getCodeListItems(codeListId, parentId);
+            if (response?.error) {
                 setError(resourceState?.common?.error.unknown);
             }
         } finally {

@@ -31,9 +31,9 @@ const SignInPage = () => {
         setFormError(undefined);
         try {
             if (isFormValid()) {
-                const errorCode = await authState?.signIn({username: username || '', password: password || ''});
-                if (errorCode) {
-                    switch (errorCode) {
+                const response = await authState?.signIn({username: username || '', password: password || ''});
+                if (response?.error) {
+                    switch (response?.error.code) {
                         case WiwaErrorCode.USER_NOT_FOUND:
                             setFormError(resourceState?.common?.error.userNotFound);
                             break;

@@ -7,15 +7,12 @@ import BaseDialog from '../../component/dialog/base-dialog';
 import { useAuthState } from '../../component/state/auth-state-provider';
 import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
+import { useUserState } from '../../component/state/user-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaInput from '../../component/ui/wiwa-input';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
 import { containsAuthority } from '../../auth';
-import { Authority, Page, User } from '../../model/service';
-
-import { CONTEXT_PATH, deleteData, getData, patchData, setPageableQueryParams, setQueryParam } from '../../data';
-
-const PATH_USERS = CONTEXT_PATH + 'users';
+import { Authority, User } from '../../model/service';
 
 const USER_AUTHORITIES_DIALOG_ID = 'admin-users-authorities-dialog-001';
 
@@ -23,117 +20,47 @@ const UsersPage = () => {
     const authState = useAuthState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
+    const userState = useUserState();
 
-    const [data, setData] = useState<Page<User>>();
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
     const [page, setPage] = useState(0);
     const [searchField, setSearchField] = useState('');
-    const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
     const fetchData = async () => {
         setError(undefined);
-        setSubmitting(true);
-        try {
-            if (authState?.accessToken !== undefined) {
-                const pageable = {
-                    page: page,
-                    size: 10,
-                    sort: {
-                        field: 'username',
-                        asc: true
-                    }
-                }
-
-                const queryParams = new URLSearchParams();
-                setPageableQueryParams(queryParams, pageable);
-                setQueryParam(queryParams, 'searchField', searchField);
-                const response = await getData<Page<User>>(
-                    PATH_USERS,
-                    queryParams,
-                    authState?.accessToken || ''
-                );
-
-                if (response.error) {
-                    setError(resourceState?.admin?.users.fetchDataError);
-                } else if (response.data) {
-                    setData(response.data);
-                }
-            }
-        } finally {
-            setSubmitting(false);
+        const response = await userState?.getUsers(page, 10, searchField);
+        if (response?.error) {
+            setError(resourceState?.admin?.users.fetchDataError);
         }
     }
 
-    const authoritiesHandler = async (id: string, userAuthorities: Authority[]) => {
-        setSubmitting(true);
-        try {
-            const response = await patchData<User>(
-                PATH_USERS + '/' + id + '/authorities',
-                userAuthorities,
-                authState?.accessToken || ''
-            );
-            if (response.error) {
-                setError(resourceState?.admin?.users.userAuthorities.error);
-            } else {
-                fetchData().then();
-            }
-        } finally {
-            setSubmitting(false);
+    const authoritiesHandler = async (id: number, authorities: Authority[]) => {
+        const response = await userState?.setAuthorities(id, authorities);
+        if (response?.error) {
+            setError(resourceState?.admin?.users.userAuthorities.error);
         }
     }
 
-    const userEnabledHandler = async (id: string, enabled: boolean) => {
-        setSubmitting(true);
-        try {
-            const response = await patchData<User>(
-                PATH_USERS + '/' + id + '/enable',
-                {value: enabled},
-                authState?.accessToken || ''
-            );
-            if (response.error) {
-                setError(resourceState?.admin?.users.userEnabled.error);
-            } else {
-                fetchData().then();
-            }
-        } finally {
-            setSubmitting(false);
+    const userEnabledHandler = async (id: number, enabled: boolean) => {
+        const response = await userState?.setEnabled(id, enabled);
+        if (response?.error) {
+            setError(resourceState?.admin?.users.userEnabled.error);
         }
     }
 
-    const userConfirmedHandler = async (id: string, confirmed: boolean) => {
-        setSubmitting(true);
-        try {
-            const response = await patchData<User>(
-                PATH_USERS + '/' + id + '/confirm',
-                {value: confirmed},
-                authState?.accessToken || ''
-            );
-            if (response.error) {
-                setError(resourceState?.admin?.users.userConfirmed.error);
-            } else {
-                fetchData().then();
-            }
-        } finally {
-            setSubmitting(false);
+    const userConfirmedHandler = async (id: number, confirmed: boolean) => {
+        const response = await userState?.setConfirmed(id, confirmed);
+        if (response?.error) {
+            setError(resourceState?.admin?.users.userConfirmed.error);
         }
     }
 
-    const deleteHandler = async (id: string) => {
-        setSubmitting(true);
-        try {
-            const response = await deleteData(
-                PATH_USERS + '/' + id,
-                authState?.accessToken || ''
-            );
-            if (response.error) {
-                setError(resourceState?.admin?.users.deleteUser.error);
-            } else {
-                fetchData().then();
-            }
-        } finally {
-            setSubmitting(false);
+    const deleteHandler = async (id: number) => {
+        const response = await userState?.deleteUser(id);
+        if (response?.error) {
+            setError(resourceState?.admin?.users.deleteUser.error);
         }
     }
 
@@ -142,9 +69,9 @@ const UsersPage = () => {
     }, []);
 
     useEffect(() => {
-        setPrevious(data !== undefined && !data.first);
-        setNext(data !== undefined && !data.last);
-    }, [data]);
+        setPrevious(userState?.data !== undefined && !userState?.data.first);
+        setNext(userState?.data !== undefined && !userState?.data.last);
+    }, [userState?.data]);
 
     return (
         error ?
@@ -191,7 +118,7 @@ const UsersPage = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {data?.content.map(user =>
+                            {userState?.data?.content.map(user =>
                                 <tr key={user.id} className="hover">
                                     <td>{user.id}</td>
                                     <td>{user.username}</td>
@@ -199,22 +126,22 @@ const UsersPage = () => {
                                     <td>{user.firstName}</td>
                                     <td>{user.lastName}</td>
                                     <th>
-                                        <UserAuthorities user={user} disabled={submitting}
+                                        <UserAuthorities user={user} disabled={userState?.busy}
                                                          authoritiesHandler={authoritiesHandler}/>
                                     </th>
                                     <th>
-                                        <UserConfirmed user={user} disabled={submitting}
+                                        <UserConfirmed user={user} disabled={userState?.busy}
                                                        userConfirmedHandler={userConfirmedHandler}/>
                                     </th>
                                     <th>
-                                        <UserEnabled user={user} disabled={submitting}
+                                        <UserEnabled user={user} disabled={userState?.busy}
                                                      userEnabledHandler={userEnabledHandler}/>
                                     </th>
                                     <th>
                                         <WiwaButton
                                             className="btn-accent md:btn-xs"
                                             title={resourceState?.admin?.users.deleteUser.title}
-                                            disabled={submitting || user.id === authState?.user?.id}
+                                            disabled={userState?.busy || user.id === authState?.user?.id}
                                             onClick={() => {
                                                 dialogState?.showDialog({
                                                     type: DialogType.YES_NO,
@@ -245,7 +172,7 @@ const UsersPage = () => {
                             pageHandler={() => fetchData()}
                             isNext={next}
                             nextHandler={() => setPage(page - 1)}
-                            disabled={submitting}
+                            disabled={userState?.busy}
                         />
                     </div>
                 </div>
@@ -263,7 +190,7 @@ const UserEnabled = (
     }: {
         user: User,
         disabled: boolean,
-        userEnabledHandler: (id: string, enabled: boolean) => void
+        userEnabledHandler: (id: number, enabled: boolean) => void
     }) => {
     const authState = useAuthState();
     const dialogState = useDialogState();
@@ -284,9 +211,7 @@ const UserEnabled = (
                             resourceState?.admin?.users.userEnabled.enableQuestion,
                         callback: (answer: DialogAnswer) => {
                             if (answer === DialogAnswer.YES) {
-                                if (user.id !== undefined) {
-                                    userEnabledHandler(user.id, !user.enabled);
-                                }
+                                userEnabledHandler(user.id, !user.enabled);
                             }
                         }
                     });
@@ -306,7 +231,7 @@ const UserConfirmed = (
     }: {
         user: User,
         disabled: boolean,
-        userConfirmedHandler: (id: string, confirmed: boolean) => void
+        userConfirmedHandler: (id: number, confirmed: boolean) => void
     }) => {
     const authState = useAuthState();
     const dialogState = useDialogState();
@@ -327,9 +252,7 @@ const UserConfirmed = (
                             resourceState?.admin?.users.userConfirmed.confirmQuestion,
                         callback: (answer: DialogAnswer) => {
                             if (answer === DialogAnswer.YES) {
-                                if (user.id !== undefined) {
-                                    userConfirmedHandler(user.id, !user.confirmed);
-                                }
+                                userConfirmedHandler(user.id, !user.confirmed);
                             }
                         }
                     });
@@ -349,7 +272,7 @@ const UserAuthorities = (
     }: {
         user: User,
         disabled: boolean,
-        authoritiesHandler: (id: string, userAuthorities: Authority[]) => void
+        authoritiesHandler: (id: number, userAuthorities: Authority[]) => void
     }) => {
     const authState = useAuthState();
     const resourceState = useResourceState();
@@ -374,7 +297,7 @@ const UserAuthorities = (
                 cancelHandler={() => setShow(false)}
                 okHandler={(authorities) => {
                     try {
-                        authoritiesHandler(user.id || '', authorities);
+                        authoritiesHandler(user.id, authorities);
                     } finally {
                         setShow(false);
                     }

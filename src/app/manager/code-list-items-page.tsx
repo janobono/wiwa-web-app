@@ -35,8 +35,8 @@ const CodeListItemsPage = () => {
 
     const fetchData = async () => {
         setError(undefined);
-        const response = await codeListItemState?.fetchData(Number(codeListId), parentItem?.id);
-        if (response) {
+        const response = await codeListItemState?.getCodeListItems(Number(codeListId), parentItem?.id);
+        if (response?.error) {
             setError(resourceState?.manager?.codeLists.codeListItems.fetchDataError);
         }
     }
@@ -49,7 +49,7 @@ const CodeListItemsPage = () => {
         } else {
             response = await codeListItemState?.addCodeListItem(codeListItemData);
         }
-        if (response) {
+        if (response?.error) {
             if (selectedItem) {
                 setError(resourceState?.manager?.codeLists.codeListItems.editCodeListItem.error);
             } else {
@@ -61,7 +61,7 @@ const CodeListItemsPage = () => {
     const moveUpHandler = async (id: number) => {
         setError(undefined);
         const response = await codeListItemState?.moveUpCodeListItem(id);
-        if (response) {
+        if (response?.error) {
             setError(resourceState?.manager?.codeLists.codeListItems.moveUpCodeListItem.error);
         }
         fetchData().then();
@@ -70,7 +70,7 @@ const CodeListItemsPage = () => {
     const moveDownHandler = async (id: number) => {
         setError(undefined);
         const response = await codeListItemState?.moveDownCodeListItem(id);
-        if (response) {
+        if (response?.error) {
             setError(resourceState?.manager?.codeLists.codeListItems.moveDownCodeListItem.error);
         }
         fetchData().then();
@@ -79,7 +79,7 @@ const CodeListItemsPage = () => {
     const deleteHandler = async (id: number) => {
         setError(undefined);
         const response = await codeListItemState?.deleteCodeListItem(id);
-        if (response) {
+        if (response?.error) {
             setError(resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.error);
         }
     }

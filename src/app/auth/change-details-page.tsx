@@ -43,7 +43,7 @@ const ChangeDetailsPage = () => {
         setFormError(undefined);
         try {
             if (isFormValid()) {
-                const errorCode = await authState?.changeUserDetails({
+                const response = await authState?.changeUserDetails({
                     titleBefore,
                     firstName,
                     midName,
@@ -53,8 +53,8 @@ const ChangeDetailsPage = () => {
                     captchaText,
                     captchaToken
                 });
-                if (errorCode) {
-                    switch (errorCode) {
+                if (response?.error) {
+                    switch (response?.error.code) {
                         case WiwaErrorCode.USER_IS_DISABLED:
                             setFormError(resourceState?.common?.error.userIsDisabled);
                             break;

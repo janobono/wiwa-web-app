@@ -3,43 +3,34 @@ import { createPortal } from 'react-dom';
 import { Check, Edit, Plus, Trash } from 'react-feather';
 
 import MdDialog from '../../component/dialog/md-dialog';
-import { useAuthState } from '../../component/state/auth-state-provider';
+import { useConfigState } from '../../component/state/config-state-provider';
 import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
+import { useUiState } from '../../component/state/ui-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
 import { ApplicationInfo } from '../../model/service';
-import { CONTEXT_PATH, getData, postData } from '../../data';
-
-const PATH_CONFIG_APPLICATION_INFO = CONTEXT_PATH + 'config/application-info';
-const PATH_UI_APPLICATION_INFO = CONTEXT_PATH + 'ui/application-info';
 
 const APP_INFO_DIALOG_ID = 'admin-app-info-item-dialog-001';
 
 const AppInfoPage = () => {
-    const authState = useAuthState();
+    const configState = useConfigState();
     const resourceState = useResourceState();
+    const uiState = useUiState();
 
     const [data, setData] = useState<ApplicationInfo>();
 
     const [currentIndex, setCurrentIndex] = useState<number>();
     const [currentItem, setCurrentItem] = useState('');
     const [showDialog, setShowDialog] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
     const [changed, setChanged] = useState(false);
     const [error, setError] = useState<string>();
 
     useEffect(() => {
         setError(undefined);
         setChanged(false);
-        const fetchApplicationInfo = async () => {
-            const response = await getData<ApplicationInfo>(PATH_UI_APPLICATION_INFO);
-            if (response.data) {
-                setData(response.data);
-            }
-        }
-        fetchApplicationInfo().then();
-    }, []);
+        setData(uiState?.applicationInfo);
+    }, [uiState?.applicationInfo]);
 
     const editHandler = (index?: number) => {
         if (index !== undefined && data !== undefined) {
@@ -75,23 +66,11 @@ const AppInfoPage = () => {
     }
 
     const confirmHandler = async () => {
-        setSubmitting(true);
-        try {
-            if (data) {
-                const response = await postData<ApplicationInfo>(
-                    PATH_CONFIG_APPLICATION_INFO,
-                    data,
-                    authState?.accessToken || ''
-                );
-                if (response.error) {
-                    setError(resourceState?.admin?.applicationInfo.error);
-                } else {
-                    setData(data);
-                    setChanged(false);
-                }
+        if (data) {
+            const response = await configState?.setApplicationInfo(data);
+            if (response?.error) {
+                setError(resourceState?.admin?.applicationInfo.error);
             }
-        } finally {
-            setSubmitting(false);
         }
     }
 
@@ -108,7 +87,7 @@ const AppInfoPage = () => {
                             <WiwaButton
                                 className="btn-primary join-item"
                                 title={resourceState?.admin?.applicationInfo.add}
-                                disabled={submitting}
+                                disabled={configState?.busy}
                                 onClick={() => {
                                     editHandler();
                                 }}
@@ -117,7 +96,7 @@ const AppInfoPage = () => {
                             <WiwaButton
                                 className="btn-secondary join-item"
                                 title={resourceState?.admin?.applicationInfo.confirm}
-                                disabled={submitting || !changed}
+                                disabled={configState?.busy || !changed}
                                 onClick={confirmHandler}
                             ><Check size={18}/>
                             </WiwaButton>
@@ -133,7 +112,7 @@ const AppInfoPage = () => {
                                         index={index}
                                         deleteHandler={deleteItemHandler}
                                         editHandler={editHandler}
-                                        disabled={submitting}
+                                        disabled={configState?.busy}
                                     />
                             )
                             : <></>

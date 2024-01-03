@@ -19,9 +19,9 @@ const ConfirmPage = () => {
         if (token) {
             const action = async () => {
                 try {
-                    const errorCode = await authState?.confirm({token});
-                    if (errorCode) {
-                        switch (errorCode) {
+                    const response = await authState?.confirm({token});
+                    if (response?.error) {
+                        switch (response?.error.code) {
                             case WiwaErrorCode.UNSUPPORTED_VALIDATION_TOKEN:
                                 setMessage(resourceState?.common?.error.unsupportedValidationToken);
                                 break;

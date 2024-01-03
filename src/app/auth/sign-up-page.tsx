@@ -58,7 +58,7 @@ const SignUpPage = () => {
         setFormError(undefined);
         try {
             if (isFormValid()) {
-                const errorCode = await authState?.signUp({
+                const response = await authState?.signUp({
                     username,
                     password,
                     titleBefore,
@@ -71,8 +71,8 @@ const SignUpPage = () => {
                     captchaText,
                     captchaToken
                 });
-                if (errorCode) {
-                    switch (errorCode) {
+                if (response?.error) {
+                    switch (response?.error.code) {
                         case WiwaErrorCode.USER_USERNAME_IS_USED:
                             setFormError(resourceState?.common?.error.userUsernameIsUsed);
                             break;

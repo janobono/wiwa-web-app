@@ -17,6 +17,7 @@
     "deleteImageQuestionTitle": "Delete image",
     "loadImagesError": "Application images loading failed",
     "addImageError": "Application image add failed",
+    "deleteImageError": "Application image delete failed",
     "addAppImage": {
       "title": "Add application image",
       "fileLabel": "File",

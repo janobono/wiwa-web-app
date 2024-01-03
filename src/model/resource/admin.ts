@@ -17,6 +17,7 @@ export interface ResourceAdmin {
         deleteImageQuestionTitle: string,
         loadImagesError: string,
         addImageError: string,
+        deleteImageError: string,
         addAppImage: {
             title: string,
             fileLabel: string,

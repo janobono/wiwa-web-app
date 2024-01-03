@@ -3,116 +3,65 @@ import { createPortal } from 'react-dom';
 import { Plus, Trash } from 'react-feather';
 
 import ImageDialog from '../../component/dialog/image-dialog';
-import { useAuthState } from '../../component/state/auth-state-provider';
+import { useApplicationImageState } from '../../component/state/application-image-state-provider';
 import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import { ApplicationImage, Page } from '../../model/service';
-import { CONTEXT_PATH, deleteData, getData, postFile, setPageableQueryParams } from '../../data';
-
-const PATH_CONFIG_APPLICATION_IMAGES = CONTEXT_PATH + 'config/application-images';
+import { ApplicationImage } from '../../model/service';
 
 const APP_IMAGE_DIALOG_ID = 'admin-app-images-image-dialog-001';
 
 const AppImagesPage = () => {
-    const authState = useAuthState();
+    const applicationImageState = useApplicationImageState();
     const resourceState = useResourceState();
 
-    const [data, setData] = useState<Page<ApplicationImage>>();
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
     const fetchData = async (page: number) => {
-        setData(undefined);
-        setSubmitting(true);
         setError(undefined);
-        try {
-            if (authState && authState.accessToken) {
-                const queryParams = new URLSearchParams();
-                setPageableQueryParams(queryParams, {
-                    page,
-                    size: 8,
-                    sort: {
-                        field: 'fileName',
-                        asc: true
-                    }
-                });
-                const response = await getData<Page<ApplicationImage>>(
-                    PATH_CONFIG_APPLICATION_IMAGES,
-                    queryParams,
-                    authState.accessToken
-                );
-                if (response.error) {
-                    setError(resourceState?.admin?.appImages.loadImagesError);
-                } else if (response.data) {
-                    setData(response.data);
-                }
-            }
-        } finally {
-            setSubmitting(false);
+        const response = await applicationImageState?.getApplicationImages(page, 8);
+        if (response?.error) {
+            setError(resourceState?.admin?.appImages.loadImagesError);
         }
     }
 
     const addHandler = async (file: File) => {
-        setSubmitting(true);
         setError(undefined);
-        try {
-            const response = await postFile<ApplicationImage>(
-                PATH_CONFIG_APPLICATION_IMAGES,
-                file,
-                authState?.accessToken || ''
-            );
-            if (response.data) {
-                if (data) {
-                    const newData = {...data};
-                    newData.content = [response.data, ...data.content];
-                    setData(newData);
-                }
-                setShowDialog(false);
-            } else {
-                setError(resourceState?.admin?.appImages.addImageError);
-            }
-        } finally {
-            setSubmitting(false);
+        const response = await applicationImageState?.addApplicationImage(file);
+        if (response?.data) {
+            setShowDialog(false);
+        } else {
+            setError(resourceState?.admin?.appImages.addImageError);
         }
     }
 
     const deleteHandler = async (filename: string) => {
-        setSubmitting(true);
         setError(undefined);
-        try {
-            const response = await deleteData(
-                PATH_CONFIG_APPLICATION_IMAGES + '/' + filename,
-                authState?.accessToken || ''
-            )
-            if (response.error) {
-                console.log(response.error);
-            }
-            await fetchData(page());
-        } finally {
-            setSubmitting(false);
+        const response = await applicationImageState?.deleteApplicationImage(filename);
+        if (response?.error) {
+            setError(resourceState?.admin?.appImages.deleteImageError);
         }
     }
 
     const page = () => {
-        if (data) {
-            return data.number;
+        if (applicationImageState?.data) {
+            return applicationImageState?.data.number;
         }
         return 0;
     }
 
     useEffect(() => {
         fetchData(page()).then();
-    }, [authState?.accessToken]);
+    }, []);
 
     useEffect(() => {
-        setPrevious(data !== undefined && !data.first);
-        setNext(data !== undefined && !data.last);
-    }, [data]);
+        setPrevious(applicationImageState?.data !== undefined && !applicationImageState?.data.first);
+        setNext(applicationImageState?.data !== undefined && !applicationImageState?.data.last);
+    }, [applicationImageState?.data]);
 
     return (
         error ?
@@ -126,7 +75,7 @@ const AppImagesPage = () => {
                         <WiwaButton
                             className="btn-primary"
                             title={resourceState?.admin?.appImages.addImage}
-                            disabled={submitting}
+                            disabled={applicationImageState?.busy}
                             onClick={() => setShowDialog(true)}
                         ><Plus size={18}/>
                         </WiwaButton>
@@ -134,12 +83,12 @@ const AppImagesPage = () => {
 
                     <div className="w-full flex justify-center pt-5">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 items-start w-full">
-                            {data?.content.map(appImage =>
+                            {applicationImageState?.data?.content.map(appImage =>
                                 <AppImage
                                     key={appImage.fileName}
                                     applicationImage={appImage}
                                     deleteHandler={deleteHandler}
-                                    disabled={submitting}
+                                    disabled={applicationImageState?.busy}
                                 />
                             )}
                         </div>
@@ -153,7 +102,7 @@ const AppImagesPage = () => {
                             pageHandler={() => fetchData(page()).then()}
                             isNext={next}
                             nextHandler={() => fetchData(page() + 1).then()}
-                            disabled={submitting}
+                            disabled={applicationImageState?.busy}
                         />
                     </div>
                 </div>

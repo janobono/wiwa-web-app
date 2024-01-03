@@ -11,8 +11,7 @@ import {
     ConfirmationRequest,
     ResetPasswordRequest,
     SignInRequest,
-    SignUpRequest,
-    WiwaErrorCode
+    SignUpRequest
 } from '../../model/service';
 import {
     decodeUser,
@@ -40,14 +39,14 @@ export const REFRESH_TIMEOUT = 15000;
 
 export interface AuthState {
     refreshAuth: () => void,
-    signIn: (signInRequest: SignInRequest) => Promise<WiwaErrorCode | undefined>,
+    signIn: (signInRequest: SignInRequest) => Promise<ClientResponse<AuthenticationResponse>>,
     signOut: () => void,
-    signUp: (signUpRequest: SignUpRequest) => Promise<WiwaErrorCode | undefined>,
-    confirm: (confirmationRequest: ConfirmationRequest) => Promise<WiwaErrorCode | undefined>,
-    resetPassword: (resetPasswordRequest: ResetPasswordRequest) => Promise<WiwaErrorCode | undefined>,
-    changePassword: (changePasswordRequest: ChangePasswordRequest) => Promise<WiwaErrorCode | undefined>,
-    changeEmail: (changeEmailRequest: ChangeEmailRequest) => Promise<WiwaErrorCode | undefined>,
-    changeUserDetails: (changeUserDetailsRequest: ChangeUserDetailsRequest) => Promise<WiwaErrorCode | undefined>,
+    signUp: (signUpRequest: SignUpRequest) => Promise<ClientResponse<AuthenticationResponse>>,
+    confirm: (confirmationRequest: ConfirmationRequest) => Promise<ClientResponse<AuthenticationResponse>>,
+    resetPassword: (resetPasswordRequest: ResetPasswordRequest) => Promise<ClientResponse<void>>,
+    changePassword: (changePasswordRequest: ChangePasswordRequest) => Promise<ClientResponse<AuthenticationResponse>>,
+    changeEmail: (changeEmailRequest: ChangeEmailRequest) => Promise<ClientResponse<AuthenticationResponse>>,
+    changeUserDetails: (changeUserDetailsRequest: ChangeUserDetailsRequest) => Promise<ClientResponse<AuthenticationResponse>>,
     accessToken?: string,
     refreshToken?: string,
     user?: AuthUser,
@@ -155,9 +154,7 @@ const AuthStateProvider = ({children}: { children: ReactNode }) => {
         const response = await postData<AuthenticationResponse>(
             PATH_SIGN_IN, signInRequest);
         handleAuthenticationResponse(response);
-        if (response.error) {
-            return response.error.code;
-        }
+        return response;
     }
 
     const signOut = async () => {
@@ -171,53 +168,45 @@ const AuthStateProvider = ({children}: { children: ReactNode }) => {
         const response = await postData<AuthenticationResponse>(
             PATH_SIGN_UP, signUpRequest);
         handleAuthenticationResponse(response);
-        if (response.error) {
-            return response.error.code;
-        }
+        return response;
     }
 
     const confirm = async (confirmationRequest: ConfirmationRequest) => {
         const response = await postData<AuthenticationResponse>(
             PATH_CONFIRM, confirmationRequest);
         handleAuthenticationResponse(response);
-        if (response.error) {
-            return response.error.code;
-        }
+        return response;
     }
 
     const resetPassword = async (resetPasswordRequest: ResetPasswordRequest) => {
-        const response = await postDataVoidResponse(
-            PATH_RESET_PASSWORD, resetPasswordRequest);
-        if (response.error) {
-            return response.error.code;
-        }
+        return postDataVoidResponse(PATH_RESET_PASSWORD, resetPasswordRequest);
     }
 
     const changePassword = async (changePasswordRequest: ChangePasswordRequest) => {
         const response = await postData<AuthenticationResponse>(
             PATH_CHANGE_PASSWORD, changePasswordRequest, accessToken);
-        if (response.error) {
-            return response.error.code;
+        if (response.error === undefined) {
+            handleAuthenticationResponse(response);
         }
-        handleAuthenticationResponse(response);
+        return response;
     }
 
     const changeEmail = async (changeEmailRequest: ChangeEmailRequest) => {
         const response = await postData<AuthenticationResponse>(
             PATH_CHANGE_EMAIL, changeEmailRequest, accessToken);
-        if (response.error) {
-            return response.error.code;
+        if (response.error === undefined) {
+            handleAuthenticationResponse(response);
         }
-        handleAuthenticationResponse(response);
+        return response;
     }
 
     const changeUserDetails = async (changeUserDetailsRequest: ChangeUserDetailsRequest) => {
         const response = await postData<AuthenticationResponse>(
             PATH_CHANGE_USER_DETAILS, changeUserDetailsRequest, accessToken);
-        if (response.error) {
-            return response.error.code;
+        if (response.error === undefined) {
+            handleAuthenticationResponse(response);
         }
-        handleAuthenticationResponse(response);
+        return response;
     }
 
     return (

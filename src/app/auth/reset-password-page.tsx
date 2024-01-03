@@ -36,13 +36,13 @@ const ResetPasswordPage = () => {
         setFormError(undefined);
         try {
             if (isFormValid()) {
-                const errorCode = await authState?.resetPassword({
+                const response = await authState?.resetPassword({
                     email,
                     captchaText,
                     captchaToken
                 });
-                if (errorCode) {
-                    switch (errorCode) {
+                if (response?.error) {
+                    switch (response?.error.code) {
                         case WiwaErrorCode.USER_NOT_FOUND:
                             setFormError(resourceState?.common?.error.userNotFound);
                             break;

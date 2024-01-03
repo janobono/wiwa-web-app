@@ -5,19 +5,13 @@ import { Edit } from 'react-feather';
 import BaseDialog from '../../component/dialog/base-dialog';
 import ImageDialog from '../../component/dialog/image-dialog';
 import MdDialog from '../../component/dialog/md-dialog';
-import { useAuthState } from '../../component/state/auth-state-provider';
 import { useDialogState } from '../../component/state/dialog-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
 import { useUiState } from '../../component/state/ui-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
-import { SingleValueBody } from '../../model/service';
-import { CONTEXT_PATH, getData, PATH_LOGO, postData, postFileVoidResponse } from '../../data';
-
-const PATH_CONFIG_LOGO = CONTEXT_PATH + 'config/logo';
-const PATH_CONFIG_WELCOME_TEXT = CONTEXT_PATH + 'config/welcome-text';
-const PATH_UI_WELCOME_TEXT = CONTEXT_PATH + 'ui/welcome-text';
+import { useConfigState } from '../../component/state/config-state-provider.tsx';
 
 const LOGO_DIALOG_ID = 'admin-base-info-logo-dialog-001';
 const TITLE_DIALOG_ID = 'admin-base-info-title-dialog-001';
@@ -27,21 +21,9 @@ const BaseInfoPage = () => {
     const resourceState = useResourceState();
     const uiState = useUiState();
 
-    const [welcomeText, setWelcomeText] = useState('');
-
     const [showLogoDialog, setShowLogoDialog] = useState(false);
     const [showTitleDialog, setShowTitleDialog] = useState(false);
     const [showWelcomeTextDialog, setShowWelcomeTextDialog] = useState(false);
-
-    useEffect(() => {
-        const fetchWelcomeText = async () => {
-            const response = await getData<SingleValueBody<string>>(PATH_UI_WELCOME_TEXT);
-            if (response.data) {
-                setWelcomeText(response.data.value);
-            }
-        }
-        fetchWelcomeText().then();
-    }, []);
 
     return (
         <>
@@ -50,7 +32,7 @@ const BaseInfoPage = () => {
                     <div className="p-5 flex content-stretch justify-center items-center">
                         <img
                             className="flex-none w-24 h-24 object-scale-down object-center"
-                            src={PATH_LOGO}
+                            src={uiState?.logoUrl}
                             alt="Logo"
                         />
                     </div>
@@ -78,7 +60,7 @@ const BaseInfoPage = () => {
 
                 <div className="border border-solid flex flex-row justify-between">
                     <div className="p-5 flex content-stretch justify-center items-center">
-                        <WiwaMarkdownRenderer className="prose max-w-none" md={welcomeText}/>
+                        <WiwaMarkdownRenderer className="prose max-w-none" md={uiState?.welcomeText}/>
                     </div>
                     <div className="p-5 flex content-stretch justify-center items-center">
                         <WiwaButton
@@ -91,23 +73,18 @@ const BaseInfoPage = () => {
             </div>
             <LogoDialog
                 showDialog={showLogoDialog}
-                okHandler={() => {
-                    setShowLogoDialog(false);
-                }}
+                okHandler={() => setShowLogoDialog(false)}
                 cancelHandler={() => setShowLogoDialog(false)}
             />
             <TitleDialog
                 showDialog={showTitleDialog}
-                okHandler={() => {
-                    setShowTitleDialog(false);
-                }}
+                okHandler={() => setShowTitleDialog(false)}
                 cancelHandler={() => setShowTitleDialog(false)}
             />
             <WelcomeTextDialog
-                welcomeText={welcomeText}
-                setWelcomeText={setWelcomeText}
                 showDialog={showWelcomeTextDialog}
-                setShowDialog={setShowWelcomeTextDialog}
+                okHandler={() => setShowWelcomeTextDialog(false)}
+                cancelHandler={() => setShowWelcomeTextDialog(false)}
             />
         </>
     )
@@ -120,12 +97,11 @@ const LogoDialog = ({showDialog, okHandler, cancelHandler}: {
     okHandler: () => void,
     cancelHandler: () => void
 }) => {
-    const authState = useAuthState();
+    const configState = useConfigState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
 
     const [file, setFile] = useState<File>();
-    const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string>();
 
     useEffect(() => {
@@ -135,28 +111,19 @@ const LogoDialog = ({showDialog, okHandler, cancelHandler}: {
 
     const submitHandler = async () => {
         setError(undefined);
-        setSubmitting(true);
-        try {
-            if (file) {
-                const response = await postFileVoidResponse(
-                    PATH_CONFIG_LOGO,
-                    file,
-                    authState?.accessToken || ''
-                );
-                if (response.error) {
-                    setError(resourceState?.admin?.baseInfo.logo.error);
-                } else {
-                    okHandler();
-                }
+        if (file) {
+            const response = await configState?.setLogo(file);
+            if (response?.error) {
+                setError(resourceState?.admin?.baseInfo.logo.error);
+            } else {
+                okHandler();
             }
-        } finally {
-            setSubmitting(false);
         }
     }
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <ImageDialog
-            disabled={submitting}
+            disabled={configState?.busy}
             id={LOGO_DIALOG_ID}
             showDialog={showDialog}
             title={resourceState?.admin?.baseInfo.logo.title}
@@ -191,36 +158,30 @@ const TitleDialog = ({showDialog, okHandler, cancelHandler}: {
     okHandler: () => void,
     cancelHandler: () => void
 }) => {
+    const configState = useConfigState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
     const uiState = useUiState();
 
     const [value, setValue] = useState('');
     const [valid, setValid] = useState(false);
-
-    const [formSubmit, setFormSubmit] = useState(false);
-    const [formError, setFormError] = useState<string>();
+    const [error, setError] = useState<string>();
 
     useEffect(() => {
         if (uiState?.title) {
             setValue(uiState?.title);
         }
-    }, [uiState?.title]);
+    }, [uiState?.title, showDialog]);
 
     const submit = async () => {
-        setFormSubmit(true);
-        setFormError(undefined);
-        try {
-            if (valid) {
-                const response = await uiState?.changeTitle(value);
-                if (response?.error) {
-                    setFormError(resourceState?.admin?.baseInfo.title.error);
-                } else {
-                    okHandler();
-                }
+        setError(undefined);
+        if (valid) {
+            const response = await configState?.setTitle(value);
+            if (response?.error) {
+                setError(resourceState?.admin?.baseInfo.title.error);
+            } else {
+                okHandler();
             }
-        } finally {
-            setFormSubmit(false);
         }
     }
 
@@ -253,20 +214,20 @@ const TitleDialog = ({showDialog, okHandler, cancelHandler}: {
                     <div className="join pt-5">
                         <WiwaButton
                             className="btn-primary join-item"
-                            disabled={formSubmit || !valid}
+                            disabled={configState?.busy || !valid}
                             onClick={submit}
                         >{resourceState?.admin?.baseInfo.title.submit}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
-                            disabled={formSubmit}
+                            disabled={configState?.busy}
                             onClick={cancelHandler}
                         >{resourceState?.admin?.baseInfo.title.cancel}
                         </WiwaButton>
                     </div>
-                    {formError &&
+                    {error &&
                         <label className="label">
-                            <span className="label-text-alt text-error">{formError}</span>
+                            <span className="label-text-alt text-error">{error}</span>
                         </label>
                     }
                 </div>
@@ -275,55 +236,40 @@ const TitleDialog = ({showDialog, okHandler, cancelHandler}: {
         , dialogState.modalRoot))
 }
 
-const WelcomeTextDialog = (
-    {
-        welcomeText,
-        setWelcomeText,
-        showDialog,
-        setShowDialog
-    }: {
-        welcomeText: string,
-        setWelcomeText: (welcomeText: string) => void
-        showDialog: boolean,
-        setShowDialog: (showDialog: boolean) => void
-    }) => {
-    const authState = useAuthState();
+const WelcomeTextDialog = ({showDialog, okHandler, cancelHandler}: {
+    showDialog: boolean,
+    okHandler: () => void,
+    cancelHandler: () => void
+}) => {
+    const configState = useConfigState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
+    const uiState = useUiState();
 
     const [value, setValue] = useState('');
     const [valid, setValid] = useState(false);
     const [error, setError] = useState<string>();
-    const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
-        setValue(welcomeText);
-    }, [welcomeText, showDialog]);
+        if (uiState?.welcomeText) {
+            setValue(uiState?.welcomeText);
+        }
+    }, [uiState?.welcomeText, showDialog]);
 
-    const okHandler = async () => {
-        setDisabled(true);
-        try {
-            if (valid) {
-                const response = await postData(
-                    PATH_CONFIG_WELCOME_TEXT,
-                    {value},
-                    authState?.accessToken || ''
-                );
-                if (response.error) {
-                    setError(resourceState?.admin?.baseInfo.welcomeText.error);
-                } else {
-                    setWelcomeText(value);
-                    setShowDialog(false);
-                }
+    const submit = async () => {
+        if (valid) {
+            const response = await configState?.setWelcomeText(value);
+            if (response?.error) {
+                setError(resourceState?.admin?.baseInfo.welcomeText.error);
+            } else {
+                okHandler();
             }
-        } finally {
-            setDisabled(false);
         }
     }
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <MdDialog
-            disabled={disabled}
+            disabled={configState?.busy || false}
             id={WELCOME_TEXT_DIALOG_ID}
             showDialog={showDialog}
             title={resourceState?.admin?.baseInfo.welcomeText.title}
@@ -345,8 +291,8 @@ const WelcomeTextDialog = (
             }}
             rows={20}
             error={error}
-            okHandler={okHandler}
-            cancelHandler={() => setShowDialog(false)}
+            okHandler={submit}
+            cancelHandler={cancelHandler}
         />
         , dialogState.modalRoot))
 }

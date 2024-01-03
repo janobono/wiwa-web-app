@@ -15,7 +15,7 @@ export enum ProductAttributeKey {
 export interface ProductData {
     code: string,
     name: string,
-    description: string,
+    description?: string,
     stockStatus: ProductStockStatus,
     attributes: ProductAttribute[],
     quantities: ProductQuantity[]

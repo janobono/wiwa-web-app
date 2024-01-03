@@ -1,88 +1,171 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
-import { useAuthState } from './auth-state-provider';
-import { useConfigState } from './config-state-provider';
-import { CompanyInfo, SingleValueBody } from '../../model/service';
-import { ClientResponse, CONTEXT_PATH, getData, postData } from '../../data';
+import { useAppState } from './app-state-provider';
+import { useHealthState } from './health-state-provider';
+import { ApplicationInfo, ApplicationProperties, CompanyInfo, SingleValueBody, Unit } from '../../model/service';
+import { CONTEXT_PATH, getData } from '../../data';
 
-const PATH_CONFIG_TITLE = CONTEXT_PATH + 'config/title';
-const PATH_CONFIG_COMPANY_INFO = CONTEXT_PATH + 'config/company-info';
-
-const PATH_UI_TITLE = CONTEXT_PATH + 'ui/title';
-const PATH_UI_COMPANY_INFO = CONTEXT_PATH + 'ui/company-info';
+const PATH_UI = CONTEXT_PATH + 'ui/';
 
 export interface UiState {
-    title?: string,
+    applicationInfo?: ApplicationInfo,
+    setApplicationInfo: (applicationInfo?: ApplicationInfo) => void,
+    applicationProperties?: ApplicationProperties,
+    setApplicationProperties: (applicationProperties?: ApplicationProperties) => void,
+    businessConditions?: string,
+    setBusinessConditions: (businessConditions?: string) => void,
     companyInfo?: CompanyInfo,
-    changeTitle: (title: string) => Promise<ClientResponse<SingleValueBody<string>>>,
-    changeCompanyInfo: (companyInfo: CompanyInfo) => Promise<ClientResponse<CompanyInfo>>
+    setCompanyInfo: (companyInfo?: CompanyInfo) => void,
+    cookiesInfo?: string,
+    setCookiesInfo: (cookiesInfo?: string) => void,
+    gdprInfo?: string,
+    setGdprInfo: (gdprInfo?: string) => void,
+    logoUrl?: string,
+    title?: string,
+    setTitle: (title?: string) => void,
+    units?: Unit[],
+    setUnits: (units?: Unit[]) => void,
+    welcomeText?: string,
+    setWelcomeText: (welcomeText?: string) => void,
+    workingHours?: string,
+    setWorkingHours: (workingHours?: string) => void
 }
 
 const uiStateContext = createContext<UiState | undefined>(undefined);
 
 const UiStateProvider = ({children}: { children: ReactNode }) => {
-    const configState = useConfigState();
-    const authState = useAuthState();
+    const healthState = useHealthState();
+    const appState = useAppState();
 
-    const [title, setTitle] = useState<string>();
+    const [applicationInfo, setApplicationInfo] = useState<ApplicationInfo>();
+    const [applicationProperties, setApplicationProperties] = useState<ApplicationProperties>();
+    const [businessConditions, setBusinessConditions] = useState<string>();
     const [companyInfo, setCompanyInfo] = useState<CompanyInfo>();
+    const [cookiesInfo, setCookiesInfo] = useState<string>();
+    const [gdprInfo, setGdprInfo] = useState<string>();
+    const [logoUrl, setLogoUrl] = useState<string>();
+    const [title, setTitle] = useState<string>();
+    const [units, setUnits] = useState<Unit[]>();
+    const [welcomeText, setWelcomeText] = useState<string>();
+    const [workingHours, setWorkingHours] = useState<string>();
 
     useEffect(() => {
-        if (configState?.up) {
+        if (healthState?.up) {
+            const fetchApplicationInfo = async () => {
+                const response = await getData<ApplicationInfo>(PATH_UI + 'application-info');
+                if (response.data) {
+                    setApplicationInfo(response.data);
+                }
+            }
+            fetchApplicationInfo().then();
+
+            const fetchApplicationProperties = async () => {
+                const response = await getData<ApplicationProperties>(PATH_UI + 'application-properties');
+                if (response.data) {
+                    setApplicationProperties(response.data);
+                }
+            }
+            fetchApplicationProperties().then();
+
+            const fetchBusinessConditions = async () => {
+                const response = await getData<SingleValueBody<string>>(PATH_UI + 'business-conditions');
+                if (response.data) {
+                    setBusinessConditions(response.data.value);
+                }
+            }
+            fetchBusinessConditions().then();
+
+            const fetchCompanyInfo = async () => {
+                const response = await getData<CompanyInfo>(PATH_UI + 'company-info');
+                if (response.data) {
+                    setCompanyInfo(response.data);
+                }
+            }
+            fetchCompanyInfo().then();
+
+            const fetchCookiesInfo = async () => {
+                const response = await getData<SingleValueBody<string>>(PATH_UI + 'cookies-info');
+                if (response.data) {
+                    setCookiesInfo(response.data.value);
+                }
+            }
+            fetchCookiesInfo().then();
+
+            const fetchGdprInfo = async () => {
+                const response = await getData<SingleValueBody<string>>(PATH_UI + 'gdpr-info');
+                if (response.data) {
+                    setGdprInfo(response.data.value);
+                }
+            }
+            fetchGdprInfo().then();
+
+            setLogoUrl(PATH_UI + 'logo');
+
             const fetchTitle = async () => {
-                const response = await getData<SingleValueBody<string>>(PATH_UI_TITLE);
+                const response = await getData<SingleValueBody<string>>(PATH_UI + 'title');
                 if (response.data) {
                     setTitle(response.data.value);
                 }
             }
             fetchTitle().then();
 
-            const fetchCompanyInfo = async () => {
-                const response = await getData<CompanyInfo>(PATH_UI_COMPANY_INFO);
+            const fetchUnits = async () => {
+                const response = await getData<Unit[]>(PATH_UI + 'units');
                 if (response.data) {
-                    setCompanyInfo(response.data);
+                    setUnits(response.data);
                 }
             }
-            fetchCompanyInfo().then();
+            fetchUnits().then();
+
+            const fetchWelcomeText = async () => {
+                const response = await getData<SingleValueBody<string>>(PATH_UI + 'welcome-text');
+                if (response.data) {
+                    setWelcomeText(response.data.value);
+                }
+            }
+            fetchWelcomeText().then();
+
+            const fetchWorkingHours = async () => {
+                const response = await getData<SingleValueBody<string>>(PATH_UI + 'working-hours');
+                if (response.data) {
+                    setWorkingHours(response.data.value);
+                }
+            }
+            fetchWorkingHours().then();
         }
-    }, [configState?.up]);
+    }, [healthState?.up]);
 
-    const changeTitle = async (title: string) => {
-        const response = await postData<SingleValueBody<string>>(
-            PATH_CONFIG_TITLE,
-            {value: title},
-            authState?.accessToken
-        );
-
-        if (response.data) {
-            setTitle(response.data.value);
+    useEffect(() => {
+        if (applicationProperties) {
+            appState?.setDefaultLocale(applicationProperties.defaultLocale);
         }
-
-        return response;
-    }
-
-    const changeCompanyInfo = async (companyInfo: CompanyInfo) => {
-        const response = await postData<CompanyInfo>(
-            PATH_CONFIG_COMPANY_INFO,
-            companyInfo,
-            authState?.accessToken
-        );
-
-        if (response.data) {
-            setCompanyInfo(response.data);
-        }
-
-        return response;
-    }
+    }, [appState, applicationProperties]);
 
     return (
         <uiStateContext.Provider
             value={
                 {
-                    title,
+                    applicationInfo,
+                    setApplicationInfo,
+                    applicationProperties,
+                    setApplicationProperties,
+                    businessConditions,
+                    setBusinessConditions,
                     companyInfo,
-                    changeTitle,
-                    changeCompanyInfo
+                    setCompanyInfo,
+                    cookiesInfo,
+                    setCookiesInfo,
+                    gdprInfo,
+                    setGdprInfo,
+                    logoUrl,
+                    title,
+                    setTitle,
+                    units,
+                    setUnits,
+                    welcomeText,
+                    setWelcomeText,
+                    workingHours,
+                    setWorkingHours
                 }
             }
         >{children}

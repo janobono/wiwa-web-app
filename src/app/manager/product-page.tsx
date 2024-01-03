@@ -11,31 +11,27 @@ import WiwaProductCodeListItems from '../../component/app/wiwa-product-code-list
 import WiwaProductImages from '../../component/app/wiwa-product-images';
 import WiwaProductUnitPrices from '../../component/app/wiwa-product-unit-prices';
 import WiwaProductStockStatus from '../../component/app/wiwa-product-stock-status';
-import { useAuthState } from '../../component/state/auth-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
+import { useProductState } from '../../component/state/product-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaSelect from '../../component/ui/wiwa-select';
 import {
     ApplicationImage,
-    Product,
     ProductAttribute,
     ProductQuantity,
     ProductStockStatus,
     ProductUnitPrice
 } from '../../model/service';
-import { CONTEXT_PATH, getData, postData, putData } from '../../data';
-
-const PATH_PRODUCTS = CONTEXT_PATH + 'products';
 
 const ProductPage = () => {
     const navigate = useNavigate();
 
     const {productId} = useParams();
 
-    const authState = useAuthState();
     const resourceState = useResourceState();
+    const productState = useProductState();
 
     const [code, setCode] = useState('');
     const [codeValid, setCodeValid] = useState(false);
@@ -66,46 +62,32 @@ const ProductPage = () => {
 
     const [changed, setChanged] = useState(false);
     const [formValid, setFormValid] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
 
     const isEditMode = () => {
         return productId !== 'new';
     }
 
     const confirmHandler = async () => {
-        setSubmitting(true);
-        try {
-            const productData = {
-                code,
-                name,
-                description,
-                stockStatus,
-                attributes,
-                quantities
+        const productData = {
+            code: code || '',
+            name: name || '',
+            description,
+            stockStatus: stockStatus || ProductStockStatus.ON_STOCK,
+            attributes: attributes || [],
+            quantities: quantities || []
+        }
+        let response;
+        if (isEditMode()) {
+            response = await productState?.setProduct(Number(productId), productData);
+        } else {
+            response = await productState?.addProduct(productData);
+        }
+        if (response?.error) {
+            setError(response.error.message);
+        } else {
+            if (!isEditMode()) {
+                navigate('/manager/products/' + response?.data?.id);
             }
-            let response;
-            if (isEditMode()) {
-                response = await putData<Product>(
-                    PATH_PRODUCTS + '/' + productId,
-                    productData,
-                    authState?.accessToken || ''
-                );
-            } else {
-                response = await postData<Product>(
-                    PATH_PRODUCTS,
-                    productData,
-                    authState?.accessToken || ''
-                );
-            }
-            if (response.error) {
-                setError(response.error.message);
-            } else {
-                if (!isEditMode()) {
-                    navigate('/manager/products/' + response.data?.id);
-                }
-            }
-        } finally {
-            setSubmitting(false);
         }
     }
 
@@ -114,42 +96,36 @@ const ProductPage = () => {
             setChanged(false);
             if (isEditMode()) {
                 setError(undefined);
-                if (authState?.accessToken !== undefined) {
-                    const response = await getData<Product>(
-                        PATH_PRODUCTS + '/' + productId,
-                        undefined,
-                        authState?.accessToken || ''
-                    );
+                const response = await productState?.getProduct(Number(productId));
 
-                    if (response.error) {
-                        setError(response.error.message);
-                    } else if (response.data) {
-                        setCode(response.data.code);
-                        setCodeValid(true);
+                if (response?.error) {
+                    setError(response.error.message);
+                } else if (response?.data) {
+                    setCode(response.data.code);
+                    setCodeValid(true);
 
-                        setName(response.data.name);
-                        setNameValid(true);
+                    setName(response.data.name);
+                    setNameValid(true);
 
-                        setDescription(response.data.description);
+                    setDescription(response.data.description);
 
-                        setStockStatus(response.data.stockStatus);
-                        setStockStatusValid(true);
+                    setStockStatus(response.data.stockStatus);
+                    setStockStatusValid(true);
 
-                        setAttributes(response.data.attributes);
+                    setAttributes(response.data.attributes);
 
-                        setQuantities(response.data.quantities);
+                    setQuantities(response.data.quantities);
 
-                        setUnitPrices(response.data.unitPrices);
+                    setUnitPrices(response.data.unitPrices);
 
-                        setImages(response.data.images);
+                    setImages(response.data.images);
 
-                        setCodeListItems(response.data.codeListItems);
-                    }
+                    setCodeListItems(response.data.codeListItems);
                 }
             }
         }
         fetchProduct().then();
-    }, [authState?.accessToken, productId]);
+    }, [productId]);
 
     useEffect(() => {
         setFormValid(codeValid && nameValid && stockStatusValid);
@@ -177,7 +153,7 @@ const ProductPage = () => {
                             <WiwaButton
                                 className="btn-secondary join-item"
                                 title={resourceState?.manager?.products.product.confirm}
-                                disabled={!formValid || !changed || submitting}
+                                disabled={!formValid || !changed || productState?.busy}
                                 onClick={confirmHandler}
                             ><Check size={18}/>
                             </WiwaButton>
