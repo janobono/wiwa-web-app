@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 import { useAuthState } from './auth-state-provider';
-import { Page, Product, ProductData } from '../../model/service';
+import { Page, Product, ProductData, ProductUnitPrice } from '../../model/service';
 import {
     ClientResponse,
     CONTEXT_PATH,
@@ -22,7 +22,8 @@ export interface ProductState {
     getProduct: (id: number) => Promise<ClientResponse<Product>>,
     addProduct: (productData: ProductData) => Promise<ClientResponse<Product>>,
     setProduct: (id: number, productData: ProductData) => Promise<ClientResponse<Product>>,
-    deleteProduct: (id: number) => Promise<ClientResponse<void>>
+    deleteProduct: (id: number) => Promise<ClientResponse<void>>,
+    setProductUnitPrices: (id: number, productUnitPrices: ProductUnitPrice[]) => Promise<ClientResponse<Product>>
 }
 
 const productStateContext = createContext<ProductState | undefined>(undefined);
@@ -142,6 +143,27 @@ const ProductStateProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
+    const setProductUnitPrices = async (id: number, productUnitPrices: ProductUnitPrice[]) => {
+        setBusy(true);
+        try {
+            const response = await postData<Product>(
+                PATH_PRODUCTS + '/' + id + '/product-unit-prices',
+                productUnitPrices,
+                authState?.accessToken || ''
+            );
+            if (response.data) {
+                if (data) {
+                    const newData = {...data};
+                    newData.content = [response.data, ...data.content];
+                    setData(newData);
+                }
+            }
+            return response;
+        } finally {
+            setBusy(false);
+        }
+    }
+
     return (
         <productStateContext.Provider
             value={
@@ -152,7 +174,8 @@ const ProductStateProvider = ({children}: { children: ReactNode }) => {
                     getProduct,
                     addProduct,
                     setProduct,
-                    deleteProduct
+                    deleteProduct,
+                    setProductUnitPrices
                 }
             }
         >{children}

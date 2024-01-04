@@ -1,14 +1,13 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import BaseDialog from '../../../component/dialog/base-dialog';
 import { useDialogState } from '../../../component/state/dialog-state-provider';
 import { useResourceState } from '../../../component/state/resource-state-provider';
-import { useUiState } from '../../../component/state/ui-state-provider';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { getUnitIdName, ProductQuantity, ProductQuantityKey, UnitId } from '../../../model/service';
-import WiwaSelect from '../../../component/ui/wiwa-select';
+import { ProductQuantity, ProductQuantityKey, UnitId } from '../../../model/service';
 import WiwaInput from '../../../component/ui/wiwa-input';
+import WiwaSelectQuantityUnit from '../../../component/app/wiwa-select-quantity-unit.tsx';
 
 const PRODUCT_QUANTITIES_DIALOG_ID = 'product-quantities-dialog-001';
 
@@ -98,7 +97,9 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <SelectQuantityUnit value={saleUnitId} setValue={setSaleUnitId}/>
+                                <WiwaSelectQuantityUnit value={saleUnitId} setValue={setSaleUnitId} unitIds={[
+                                    UnitId.PIECE, UnitId.PACKAGE, UnitId.METER, UnitId.MILLIMETER, UnitId.KILOGRAM, UnitId.GRAM, UnitId.LITER, UnitId.MILLILITER
+                                ]}/>
                             </div>
                         </div>
 
@@ -114,7 +115,9 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <SelectQuantityUnit value={weightUnitId} setValue={setWeightUnitId}/>
+                                <WiwaSelectQuantityUnit value={weightUnitId} setValue={setWeightUnitId} unitIds={[
+                                    UnitId.KILOGRAM, UnitId.GRAM
+                                ]}/>
                             </div>
                         </div>
 
@@ -130,7 +133,9 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <SelectQuantityUnit value={netWeightUnitId} setValue={setNetWeightUnitId}/>
+                                <WiwaSelectQuantityUnit value={netWeightUnitId} setValue={setNetWeightUnitId} unitIds={[
+                                    UnitId.KILOGRAM, UnitId.GRAM
+                                ]}/>
                             </div>
                         </div>
 
@@ -146,7 +151,9 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <SelectQuantityUnit value={lengthUnitId} setValue={setLengthUnitId}/>
+                                <WiwaSelectQuantityUnit value={lengthUnitId} setValue={setLengthUnitId} unitIds={[
+                                    UnitId.MILLIMETER, UnitId.METER
+                                ]}/>
                             </div>
                         </div>
 
@@ -162,7 +169,9 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <SelectQuantityUnit value={widthUnitId} setValue={setWidthUnitId}/>
+                                <WiwaSelectQuantityUnit value={widthUnitId} setValue={setWidthUnitId} unitIds={[
+                                    UnitId.MILLIMETER, UnitId.METER
+                                ]}/>
                             </div>
                         </div>
 
@@ -178,7 +187,9 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <SelectQuantityUnit value={thicknessUnitId} setValue={setThicknessUnitId}/>
+                                <WiwaSelectQuantityUnit value={thicknessUnitId} setValue={setThicknessUnitId} unitIds={[
+                                    UnitId.MILLIMETER, UnitId.METER
+                                ]}/>
                             </div>
                         </div>
 
@@ -257,31 +268,3 @@ const ProductQuantitiesDialog = (
 
 export default ProductQuantitiesDialog;
 
-const SelectQuantityUnit = (
-    {
-        value,
-        setValue
-    }: {
-        value?: string
-        setValue: (value: string) => void
-    }) => {
-    const resourceState = useResourceState();
-    const uiState = useUiState();
-
-    const quantityUnitChangeHandler = (event: FormEvent<HTMLSelectElement>) => {
-        setValue(event.currentTarget.value);
-    }
-
-    return (
-        <WiwaSelect
-            onChange={event => quantityUnitChangeHandler(event)}
-        >
-            {uiState?.units?.map(unit =>
-                <option
-                    key={unit.id}
-                    selected={unit.id.toString() === value}
-                    value={unit.id}>{getUnitIdName(unit.id, resourceState?.common)} [{unit.value}]</option>
-            )}
-        </WiwaSelect>
-    )
-}

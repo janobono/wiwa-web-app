@@ -110,7 +110,23 @@ export interface ResourceManager {
                 title: string
             },
             unitPrices: {
-                title: string
+                title: string,
+                validFrom: string,
+                price: string,
+                confirm: string,
+                confirmDataError: string,
+                addPrice: {
+                    title: string,
+                    validFrom: string,
+                    validFromRequired: string,
+                    value: string,
+                    valueRequired: string,
+                    unit: string
+                }
+                deletePrice: {
+                    title: string,
+                    message: string
+                }
             },
             images: {
                 title: string
@@ -118,6 +134,7 @@ export interface ResourceManager {
             codeLists: {
                 title: string
             },
+            fetchDataError: string
         }
     }
 }

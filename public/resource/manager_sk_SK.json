@@ -109,14 +109,31 @@
         "title": "Množstevné parametre produktu"
       },
       "unitPrices": {
-        "title": "Jednotkové ceny produktu"
+        "title": "Jednotkové ceny produktu",
+        "validFrom": "Platná od",
+        "price": "Jednotková cena",
+        "confirm": "Potvrdiť zmeny jednotkových cien produktu",
+        "confirmDataError": "Chyba potvrdenia zmien jednotkových cien produktu",
+        "addPrice": {
+          "title": "Pridať jednotkovú cenu",
+          "validFrom": "Platnosť od",
+          "validFromRequired": "Vyžaduje sa platnosť od",
+          "value": "Hodnota",
+          "valueRequired": "Vyžaduje sa hodnota",
+          "unit": "Mena"
+        },
+        "deletePrice": {
+          "title": "Zmazať jednotkovú cenu",
+          "message": "Naozaj si želáte zmazať jednotkovú cenu?"
+        }
       },
       "images": {
         "title": "Obrázky produktu"
       },
       "codeLists": {
         "title": "Číselníky produktu"
-      }
+      },
+      "fetchDataError": "Chyba načítania produktu"
     }
   }
 }

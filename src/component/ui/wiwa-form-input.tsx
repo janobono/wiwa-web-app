@@ -17,11 +17,13 @@ const WiwaFormInput = (
             return {valid: true}
         },
         children,
-        disabled
+        disabled,
+        min,
+        max,
     }: {
         label?: string,
         required?: boolean,
-        type?: 'text' | 'password' | 'email',
+        type?: 'text' | 'password' | 'email' | 'date' | 'number',
         name?: string,
         placeholder?: string,
         value?: string,
@@ -29,7 +31,9 @@ const WiwaFormInput = (
         setValid?: (valid: boolean) => void,
         validate?: () => ValidationResult,
         children?: ReactNode,
-        disabled?: boolean
+        disabled?: boolean,
+        min?: string
+        max?: string
     }) => {
     const didMount = useRef(false);
     const [message, setMessage] = useState<string>();
@@ -70,6 +74,8 @@ const WiwaFormInput = (
                     }
                 }}
                 disabled={disabled}
+                min={min}
+                max={max}
             />
             {message &&
                 <label className="label">

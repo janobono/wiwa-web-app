@@ -83,7 +83,7 @@ const ProductPage = () => {
             response = await productState?.addProduct(productData);
         }
         if (response?.error) {
-            setError(response.error.message);
+            setError(resourceState?.manager?.products.product.fetchDataError);
         } else {
             if (!isEditMode()) {
                 navigate('/manager/products/' + response?.data?.id);
@@ -99,7 +99,7 @@ const ProductPage = () => {
                 const response = await productState?.getProduct(Number(productId));
 
                 if (response?.error) {
-                    setError(response.error.message);
+                    setError(resourceState?.manager?.products.product.fetchDataError);
                 } else if (response?.data) {
                     setCode(response.data.code);
                     setCodeValid(true);
@@ -151,7 +151,7 @@ const ProductPage = () => {
                                 {resourceState?.manager?.products.product.title}
                             </div>
                             <WiwaButton
-                                className="btn-secondary join-item"
+                                className="btn-secondary"
                                 title={resourceState?.manager?.products.product.confirm}
                                 disabled={!formValid || !changed || productState?.busy}
                                 onClick={confirmHandler}

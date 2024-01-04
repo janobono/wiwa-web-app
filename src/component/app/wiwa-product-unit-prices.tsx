@@ -1,5 +1,6 @@
+import WiwaUnitValue from './wiwa-unit-value';
+import WiwaValueDate from './wiwa-value-date';
 import WiwaValueNumber from './wiwa-value-number';
-import WiwaUnitValue from './wiwa-unit-value.tsx';
 import { ProductUnitPrice } from '../../model/service';
 
 const WiwaProductUnitPrices = ({unitPrices}: { unitPrices: ProductUnitPrice[] }) => {
@@ -9,7 +10,7 @@ const WiwaProductUnitPrices = ({unitPrices}: { unitPrices: ProductUnitPrice[] })
                 <tbody>
                 {unitPrices.map((unitPrice, index) =>
                     <tr key={index}>
-                        <th>{unitPrice.validFrom}</th>
+                        <th><WiwaValueDate value={unitPrice.validFrom}/></th>
                         <td><WiwaValueNumber value={unitPrice.value}/><span> </span><WiwaUnitValue
                             unitId={unitPrice.unit}/>
                         </td>

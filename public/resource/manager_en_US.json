@@ -109,14 +109,31 @@
         "title": "Product quantities"
       },
       "unitPrices": {
-        "title": "Product unit prices"
+        "title": "Product unit prices",
+        "validFrom": "Valid from",
+        "price": "Unit price",
+        "confirm": "Confirm product unit prices changes",
+        "confirmDataError": "Product unit prices confirmation failed",
+        "addPrice": {
+          "title": "Add price",
+          "validFrom": "Valid from",
+          "validFromRequired": "Valid from is required",
+          "value": "Value",
+          "valueRequired": "Value and currency is required",
+          "unit": "Currency"
+        },
+        "deletePrice": {
+          "title": "Delete unit price",
+          "message": "Do you really want to delete unit price?"
+        }
       },
       "images": {
         "title": "Product images"
       },
       "codeLists": {
         "title": "Product code lists"
-      }
+      },
+      "fetchDataError": "Product loading failed"
     }
   }
 }
