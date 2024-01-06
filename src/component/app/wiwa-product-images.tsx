@@ -1,10 +1,11 @@
-import { ApplicationImage } from '../../model/service';
-import { twMerge } from 'tailwind-merge';
 import { useEffect, useState } from 'react';
-import { useDialogState } from '../state/dialog-state-provider.tsx';
 import { createPortal } from 'react-dom';
-import BaseDialog from '../dialog/base-dialog.tsx';
-import { useUiState } from '../state/ui-state-provider.tsx';
+import { twMerge } from 'tailwind-merge';
+
+import BaseDialog from '../dialog/base-dialog';
+import { useDialogState } from '../state/dialog-state-provider';
+import { useUiState } from '../state/ui-state-provider';
+import { ApplicationImage } from '../../model/service';
 
 const WiwaProductImages = ({imageDialogId, id, images, className}: {
     imageDialogId: string,

@@ -1,6 +1,6 @@
 import WiwaProductQuantityKey from './wiwa-product-quantity-key';
 import WiwaValueNumber from './wiwa-value-number';
-import WiwaUnitValue from './wiwa-unit-value.tsx';
+import WiwaUnitValue from './wiwa-unit-value';
 import { ProductQuantity } from '../../model/service';
 
 const WiwaProductQuantities = ({quantities}: { quantities: ProductQuantity[] }) => {

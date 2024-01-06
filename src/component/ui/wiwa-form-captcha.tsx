@@ -79,7 +79,7 @@ const WiwaFormCaptcha = (
     }, [captchaState, setToken])
 
     return (
-        <div className="form-control w-full">
+        <div className="form-control w-full pb-2">
             <input type="hidden" id={tokenName} name={tokenName} value={token}/>
             <label className="label">
                 <span className="label-text">{resourceState?.common?.captcha.label + (required ? '*' : '')}</span>
