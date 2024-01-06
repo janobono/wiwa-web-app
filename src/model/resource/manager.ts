@@ -103,6 +103,7 @@ export interface ResourceManager {
             descriptionLabel: string,
             descriptionPlaceholder: string,
             confirm: string,
+            back: string,
             attributes: {
                 title: string
             },
@@ -129,7 +130,20 @@ export interface ResourceManager {
                 }
             },
             images: {
-                title: string
+                title: string,
+                addImage: {
+                    title: string,
+                    fileLabel: string,
+                    filePlaceholder: string,
+                    fileRequired: string,
+                    fileFormat: string,
+                    error: string
+                },
+                deleteImage: {
+                    title: string,
+                    message: string,
+                    error: string
+                }
             },
             codeLists: {
                 title: string

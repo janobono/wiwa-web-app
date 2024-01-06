@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft, Check, Plus, Trash } from 'react-feather';
 
+import WiwaSelectQuantityUnit from '../../component/app/wiwa-select-quantity-unit';
+import WiwaValueDate from '../../component/app/wiwa-value-date';
+import WiwaValueNumber from '../../component/app/wiwa-value-number';
+import WiwaUnitValue from '../../component/app/wiwa-unit-value';
+import BaseDialog from '../../component/dialog/base-dialog';
+import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
 import { useProductState } from '../../component/state/product-state-provider';
 import { useResourceState } from '../../component/state/resource-state-provider';
+import WiwaButton from '../../component/ui/wiwa-button';
+import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import { ProductUnitPrice, UnitId } from '../../model/service';
-import WiwaButton from '../../component/ui/wiwa-button.tsx';
-import { Check, Plus, Trash } from 'react-feather';
-import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider.tsx';
-import WiwaValueDate from '../../component/app/wiwa-value-date.tsx';
-import WiwaValueNumber from '../../component/app/wiwa-value-number.tsx';
-import WiwaUnitValue from '../../component/app/wiwa-unit-value.tsx';
-import { createPortal } from 'react-dom';
-import BaseDialog from '../../component/dialog/base-dialog.tsx';
-import WiwaSelectQuantityUnit from '../../component/app/wiwa-select-quantity-unit.tsx';
-import WiwaFormInput from '../../component/ui/wiwa-form-input.tsx';
 
 const PRICE_DIALOG_ID = 'price-dialog-001';
 
@@ -100,13 +100,22 @@ const ProductUnitPricesPage = () => {
                         <div className="label-text text-center grow">
                             {resourceState?.manager?.products.product.unitPrices.title + ': ' + title}
                         </div>
-                        <WiwaButton
-                            className="btn-secondary"
-                            title={resourceState?.manager?.products.product.unitPrices.confirm}
-                            disabled={!changed || productState?.busy}
-                            onClick={confirmHandler}
-                        ><Check size={18}/>
-                        </WiwaButton>
+                        <div className="join">
+                            <WiwaButton
+                                className="btn-primary join-item"
+                                title={resourceState?.manager?.products.product.unitPrices.confirm}
+                                disabled={!changed || productState?.busy}
+                                onClick={confirmHandler}
+                            ><Check size={18}/>
+                            </WiwaButton>
+
+                            <WiwaButton
+                                className="btn-secondary join-item"
+                                title={resourceState?.manager?.products.product.back}
+                                onClick={() => navigate('/manager/products/' + productId)}
+                            ><ArrowLeft size={18}/>
+                            </WiwaButton>
+                        </div>
                     </div>
 
                     <div className="overflow-x-auto">

@@ -102,6 +102,7 @@
       "descriptionLabel": "Popis",
       "descriptionPlaceholder": "Zadajte popis",
       "confirm": "Potvrdiť zmeny produktu",
+      "back": "Späť na produkt",
       "attributes": {
         "title": "Atribúty produktu"
       },
@@ -128,7 +129,20 @@
         }
       },
       "images": {
-        "title": "Obrázky produktu"
+        "title": "Obrázky produktu",
+        "addImage": {
+          "title": "Pridať obrázok produktu",
+          "fileLabel": "Súbor",
+          "filePlaceholder": "Zvoľte súbor",
+          "fileFormat": "Podporovaný formát súborov je PNG a JPG",
+          "fileRequired": "Vyžaduje sa súbor",
+          "error": "Chyba pridania obrázku produktu"
+        },
+        "deleteImage": {
+          "title": "Zmazať obrázok produktu",
+          "message": "Naozaj si želáte zmazať obrázok produktu?",
+          "error": "Chyba zmazania obrázku produktu"
+        }
       },
       "codeLists": {
         "title": "Číselníky produktu"

@@ -6,8 +6,10 @@ import {
     ClientResponse,
     CONTEXT_PATH,
     deleteData,
+    deleteDataNoVoid,
     getData,
     postData,
+    postFile,
     putData,
     setPageableQueryParams,
     setQueryParam
@@ -23,7 +25,9 @@ export interface ProductState {
     addProduct: (productData: ProductData) => Promise<ClientResponse<Product>>,
     setProduct: (id: number, productData: ProductData) => Promise<ClientResponse<Product>>,
     deleteProduct: (id: number) => Promise<ClientResponse<void>>,
-    setProductUnitPrices: (id: number, productUnitPrices: ProductUnitPrice[]) => Promise<ClientResponse<Product>>
+    setProductUnitPrices: (id: number, productUnitPrices: ProductUnitPrice[]) => Promise<ClientResponse<Product>>,
+    addProductImage: (id: number, file: File) => Promise<ClientResponse<Product>>,
+    deleteProductImage: (id: number, fileName: string) => Promise<ClientResponse<Product>>
 }
 
 const productStateContext = createContext<ProductState | undefined>(undefined);
@@ -154,8 +158,58 @@ const ProductStateProvider = ({children}: { children: ReactNode }) => {
             if (response.data) {
                 if (data) {
                     const newData = {...data};
-                    newData.content = [response.data, ...data.content];
-                    setData(newData);
+                    const index = newData.content.findIndex(item => item.id === id);
+                    if (index !== -1) {
+                        newData.content[index] = response.data;
+                        setData(newData);
+                    }
+                }
+            }
+            return response;
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const addProductImage = async (id: number, file: File) => {
+        setBusy(true);
+        try {
+            const response = await postFile<Product>(
+                PATH_PRODUCTS + '/' + id + '/product-images',
+                file,
+                authState?.accessToken || ''
+            );
+            if (response.data) {
+                if (data) {
+                    const newData = {...data};
+                    const index = newData.content.findIndex(item => item.id === id);
+                    if (index !== -1) {
+                        newData.content[index] = response.data;
+                        setData(newData);
+                    }
+                }
+            }
+            return response;
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const deleteProductImage = async (id: number, fileName: string) => {
+        setBusy(true);
+        try {
+            const response = await deleteDataNoVoid<Product>(
+                PATH_PRODUCTS + '/' + id + '/product-images/' + fileName,
+                authState?.accessToken || ''
+            )
+            if (response.data) {
+                if (data) {
+                    const newData = {...data};
+                    const index = newData.content.findIndex(item => item.id === id);
+                    if (index !== -1) {
+                        newData.content[index] = response.data;
+                        setData(newData);
+                    }
                 }
             }
             return response;
@@ -175,7 +229,9 @@ const ProductStateProvider = ({children}: { children: ReactNode }) => {
                     addProduct,
                     setProduct,
                     deleteProduct,
-                    setProductUnitPrices
+                    setProductUnitPrices,
+                    addProductImage,
+                    deleteProductImage
                 }
             }
         >{children}

@@ -28,7 +28,9 @@ export interface UiState {
     welcomeText?: string,
     setWelcomeText: (welcomeText?: string) => void,
     workingHours?: string,
-    setWorkingHours: (workingHours?: string) => void
+    setWorkingHours: (workingHours?: string) => void,
+    getApplicationImageUrl: (fileName: string) => string,
+    getProductImageUrl: (id: number, fileName: string) => string
 }
 
 const uiStateContext = createContext<UiState | undefined>(undefined);
@@ -141,6 +143,14 @@ const UiStateProvider = ({children}: { children: ReactNode }) => {
         }
     }, [appState, applicationProperties]);
 
+    const getApplicationImageUrl = (fileName: string) => {
+        return CONTEXT_PATH + 'ui/application-images' + fileName;
+    }
+
+    const getProductImageUrl = (id: number, fileName: string) => {
+        return CONTEXT_PATH + 'ui/product-images/' + id + '/' + fileName;
+    }
+
     return (
         <uiStateContext.Provider
             value={
@@ -165,7 +175,9 @@ const UiStateProvider = ({children}: { children: ReactNode }) => {
                     welcomeText,
                     setWelcomeText,
                     workingHours,
-                    setWorkingHours
+                    setWorkingHours,
+                    getApplicationImageUrl,
+                    getProductImageUrl
                 }
             }
         >{children}

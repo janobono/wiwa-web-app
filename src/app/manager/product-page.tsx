@@ -25,6 +25,8 @@ import {
     ProductUnitPrice
 } from '../../model/service';
 
+const IMAGE_DIALOG_ID = 'product-image-detail-dialog-001';
+
 const ProductPage = () => {
     const navigate = useNavigate();
 
@@ -249,6 +251,26 @@ const ProductPage = () => {
                                     <div className="p-5 flex content-stretch justify-center items-center">
                                         <WiwaMarkdownRenderer className="prose max-w-none" md={description}/>
                                     </div>
+
+                                    <div className="flex flex-row w-full gap-5">
+                                        <span className="grow label-text">
+                                            {resourceState?.manager?.products.product.images.title}
+                                        </span>
+                                        <WiwaButton
+                                            title={resourceState?.common?.action.edit}
+                                            className="btn-primary btn-xs"
+                                            disabled={!isEditMode()}
+                                            onClick={() => navigate('images')}
+                                        >
+                                            <Edit size={18}/>
+                                        </WiwaButton>
+                                    </div>
+                                    <WiwaProductImages
+                                        className="h-16"
+                                        imageDialogId={IMAGE_DIALOG_ID}
+                                        id={Number(productId)}
+                                        images={images}
+                                    />
                                 </div>
                             </div>
                             <div className="flex basis-1/3">
@@ -295,21 +317,6 @@ const ProductPage = () => {
                                         </WiwaButton>
                                     </div>
                                     <WiwaProductUnitPrices unitPrices={unitPrices}/>
-
-                                    <div className="flex flex-row w-full">
-                                        <span className="grow label-text">
-                                            {resourceState?.manager?.products.product.images.title}
-                                        </span>
-                                        <WiwaButton
-                                            title={resourceState?.common?.action.edit}
-                                            className="btn-primary btn-xs"
-                                            disabled={!isEditMode()}
-                                            onClick={() => navigate('images')}
-                                        >
-                                            <Edit size={18}/>
-                                        </WiwaButton>
-                                    </div>
-                                    <WiwaProductImages images={images}/>
 
                                     <div className="flex flex-row w-full">
                                         <span className="grow label-text">

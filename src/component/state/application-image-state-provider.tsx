@@ -9,7 +9,6 @@ const PATH_APPLICATION_IMAGES = CONTEXT_PATH + 'config/application-images';
 export interface ApplicationImageState {
     busy: boolean,
     data?: Page<ApplicationImage>,
-    getApplicationImageUrl: (fileName: string) => string,
     getApplicationImages: (page: number, size: number) => Promise<ClientResponse<Page<ApplicationImage>>>,
     addApplicationImage: (file: File) => Promise<ClientResponse<ApplicationImage>>,
     deleteApplicationImage: (fileName: string) => Promise<ClientResponse<void>>,
@@ -22,10 +21,6 @@ const ApplicationImageProvider = ({children}: { children: ReactNode }) => {
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<ApplicationImage>>();
-
-    const getApplicationImageUrl = (fileName: string) => {
-        return CONTEXT_PATH + 'ui/application-images' + fileName;
-    }
 
     const getApplicationImages = async (page: number, size: number) => {
         setBusy(true);
@@ -105,7 +100,6 @@ const ApplicationImageProvider = ({children}: { children: ReactNode }) => {
                 {
                     busy,
                     data,
-                    getApplicationImageUrl,
                     getApplicationImages,
                     addApplicationImage,
                     deleteApplicationImage

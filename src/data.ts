@@ -164,6 +164,22 @@ export const deleteData = async (path: string, token?: string): Promise<ClientRe
     return {data: undefined, error};
 }
 
+export const deleteDataNoVoid = async <T>(path: string, token?: string): Promise<ClientResponse<T>> => {
+    const authorization = createAuthorization(token);
+    const response = await fetch(path, {
+        method: 'DELETE',
+        headers: authorization
+    });
+
+    let resultData, error;
+    if (response.ok) {
+        resultData = await response.json() as T;
+    } else {
+        error = await toWiwaError(response);
+    }
+    return {data: resultData, error};
+}
+
 export const postFile = async <T>(path: string, file: File, token: string): Promise<ClientResponse<T>> => {
     const authorization = createAuthorization(token);
 

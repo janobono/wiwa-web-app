@@ -102,6 +102,7 @@
       "descriptionLabel": "Description",
       "descriptionPlaceholder": "Enter description",
       "confirm": "Confirm product changes",
+      "back": "Back to product",
       "attributes": {
         "title": "Product attributes"
       },
@@ -128,7 +129,20 @@
         }
       },
       "images": {
-        "title": "Product images"
+        "title": "Product images",
+        "addImage": {
+          "title": "Add product image",
+          "fileLabel": "File",
+          "filePlaceholder": "Select file",
+          "fileFormat": "Supported file format is JPG or PNG",
+          "fileRequired": "File is required",
+          "error": "Add product image failed"
+        },
+        "deleteImage": {
+          "title": "Delete product image",
+          "message": "Do you really want to delete product image?",
+          "error": "Delete product image failed"
+        }
       },
       "codeLists": {
         "title": "Product code lists"
