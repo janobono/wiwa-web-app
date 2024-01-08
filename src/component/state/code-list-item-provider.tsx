@@ -13,7 +13,7 @@ import {
     setQueryParam
 } from '../../data';
 
-const PATH_CODE_LIST_ITEMS = CONTEXT_PATH + 'code-lists/items';
+const PATH_CODE_LIST_ITEMS = CONTEXT_PATH + 'code-list-items';
 
 export interface CodeListItemState {
     busy: boolean,

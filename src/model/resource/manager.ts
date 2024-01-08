@@ -1,6 +1,7 @@
 export interface ResourceManager {
     title: string,
     codeListsTab: string,
+    productConfigTab: string,
     productsTab: string,
     fetchDataError: string,
     codeLists: {
@@ -72,6 +73,26 @@ export interface ResourceManager {
             }
         },
     },
+    productConfig: {
+        vatRate: {
+            title: string
+        },
+        productCategories: {
+            title: string
+        },
+        boardCategory: {
+            title: string
+        },
+        edgeCategory: {
+            title: string
+        },
+        serviceCategory: {
+            title: string
+        },
+        searchCategories: {
+            title: string
+        }
+    },
     products: {
         id: string,
         code: string,
@@ -108,7 +129,13 @@ export interface ResourceManager {
                 title: string
             },
             quantities: {
-                title: string
+                title: string,
+                salePlaceholder: string,
+                weightPlaceholder: string,
+                netWeightPlaceholder: string,
+                lengthPlaceholder: string,
+                widthPlaceholder: string,
+                thicknessPlaceholder: string
             },
             unitPrices: {
                 title: string,
@@ -122,7 +149,8 @@ export interface ResourceManager {
                     validFromRequired: string,
                     value: string,
                     valueRequired: string,
-                    unit: string
+                    unit: string,
+                    unitPlaceholder: string
                 }
                 deletePrice: {
                     title: string,

@@ -201,7 +201,7 @@ const PriceDialog = ({showDialog, okHandler, cancelHandler}: {
     const [value, setValue] = useState('');
     const [valueValid, setValueValid] = useState(false);
 
-    const [unitId, setUnitId] = useState(UnitId.EUR.toString());
+    const [unitId, setUnitId] = useState<UnitId>();
 
     const [formValid, setFormValid] = useState(false);
 
@@ -268,8 +268,9 @@ const PriceDialog = ({showDialog, okHandler, cancelHandler}: {
                                 className="label-text">{resourceState?.manager?.products.product.unitPrices.addPrice.unit + '*'}</span>
                         </label>
                         <WiwaSelectQuantityUnit
+                            placeholder={resourceState?.manager?.products.product.unitPrices.addPrice.unitPlaceholder}
                             value={unitId}
-                            setValue={setUnitId}
+                            setValue={(unit) => setUnitId(unit as UnitId)}
                             unitIds={[UnitId.EUR]}/>
                     </div>
 
@@ -278,7 +279,7 @@ const PriceDialog = ({showDialog, okHandler, cancelHandler}: {
                             className="btn-primary join-item"
                             disabled={!formValid}
                             onClick={() => {
-                                okHandler({validFrom, value: Number(value), unit: unitId as UnitId});
+                                okHandler({validFrom, value: Number(value), unit: unitId});
                             }}
                         >{resourceState?.common?.action.ok}
                         </WiwaButton>

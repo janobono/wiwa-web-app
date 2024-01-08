@@ -27,50 +27,50 @@ const ProductQuantitiesDialog = (
     const resourceState = useResourceState();
 
     const [saleValue, setSaleValue] = useState('');
-    const [saleUnitId, setSaleUnitId] = useState('');
+    const [saleUnitId, setSaleUnitId] = useState<UnitId>();
 
     const [weightValue, setWeightValue] = useState('');
-    const [weightUnitId, setWeightUnitId] = useState('');
+    const [weightUnitId, setWeightUnitId] = useState<UnitId>();
 
 
     const [netWeightValue, setNetWeightValue] = useState('');
-    const [netWeightUnitId, setNetWeightUnitId] = useState('');
+    const [netWeightUnitId, setNetWeightUnitId] = useState<UnitId>();
 
     const [lengthValue, setLengthValue] = useState('');
-    const [lengthUnitId, setLengthUnitId] = useState('');
+    const [lengthUnitId, setLengthUnitId] = useState<UnitId>();
 
     const [widthValue, setWidthValue] = useState('');
-    const [widthUnitId, setWidthUnitId] = useState('');
+    const [widthUnitId, setWidthUnitId] = useState<UnitId>();
 
     const [thicknessValue, setThicknessValue] = useState('');
-    const [thicknessUnitId, setThicknessUnitId] = useState('');
+    const [thicknessUnitId, setThicknessUnitId] = useState<UnitId>();
 
     useEffect(() => {
         quantities.forEach(value => {
             switch (value.key) {
                 case ProductQuantityKey.SALE:
                     setSaleValue(value.value.toString());
-                    setSaleUnitId(value.unit.toString());
+                    setSaleUnitId(value.unit);
                     break;
                 case ProductQuantityKey.WEIGHT:
                     setWeightValue(value.value.toString());
-                    setWeightUnitId(value.unit.toString());
+                    setWeightUnitId(value.unit);
                     break;
                 case ProductQuantityKey.NET_WEIGHT:
                     setNetWeightValue(value.value.toString());
-                    setNetWeightUnitId(value.unit.toString());
+                    setNetWeightUnitId(value.unit);
                     break;
                 case ProductQuantityKey.LENGTH:
                     setLengthValue(value.value.toString());
-                    setLengthUnitId(value.unit.toString());
+                    setLengthUnitId(value.unit);
                     break;
                 case ProductQuantityKey.WIDTH:
                     setWidthValue(value.value.toString());
-                    setWidthUnitId(value.unit.toString());
+                    setWidthUnitId(value.unit);
                     break;
                 case ProductQuantityKey.THICKNESS:
                     setThicknessValue(value.value.toString());
-                    setThicknessUnitId(value.unit.toString());
+                    setThicknessUnitId(value.unit);
                     break;
             }
         });
@@ -97,9 +97,21 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <WiwaSelectQuantityUnit value={saleUnitId} setValue={setSaleUnitId} unitIds={[
-                                    UnitId.PIECE, UnitId.PACKAGE, UnitId.METER, UnitId.MILLIMETER, UnitId.KILOGRAM, UnitId.GRAM, UnitId.LITER, UnitId.MILLILITER
-                                ]}/>
+                                <WiwaSelectQuantityUnit
+                                    placeholder={resourceState?.manager?.products.product.quantities.salePlaceholder}
+                                    value={saleUnitId}
+                                    setValue={(unit) => setSaleUnitId(unit as UnitId)}
+                                    unitIds={[
+                                        UnitId.PIECE,
+                                        UnitId.PACKAGE,
+                                        UnitId.METER,
+                                        UnitId.MILLIMETER,
+                                        UnitId.KILOGRAM,
+                                        UnitId.GRAM,
+                                        UnitId.LITER,
+                                        UnitId.MILLILITER
+                                    ]}
+                                />
                             </div>
                         </div>
 
@@ -115,9 +127,12 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <WiwaSelectQuantityUnit value={weightUnitId} setValue={setWeightUnitId} unitIds={[
-                                    UnitId.KILOGRAM, UnitId.GRAM
-                                ]}/>
+                                <WiwaSelectQuantityUnit
+                                    placeholder={resourceState?.manager?.products.product.quantities.weightPlaceholder}
+                                    value={weightUnitId}
+                                    setValue={(unit) => setWeightUnitId(unit as UnitId)}
+                                    unitIds={[UnitId.KILOGRAM, UnitId.GRAM]}
+                                />
                             </div>
                         </div>
 
@@ -133,9 +148,12 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <WiwaSelectQuantityUnit value={netWeightUnitId} setValue={setNetWeightUnitId} unitIds={[
-                                    UnitId.KILOGRAM, UnitId.GRAM
-                                ]}/>
+                                <WiwaSelectQuantityUnit
+                                    placeholder={resourceState?.manager?.products.product.quantities.netWeightPlaceholder}
+                                    value={netWeightUnitId}
+                                    setValue={(unit) => setNetWeightUnitId(unit as UnitId)}
+                                    unitIds={[UnitId.KILOGRAM, UnitId.GRAM]}
+                                />
                             </div>
                         </div>
 
@@ -151,9 +169,12 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <WiwaSelectQuantityUnit value={lengthUnitId} setValue={setLengthUnitId} unitIds={[
-                                    UnitId.MILLIMETER, UnitId.METER
-                                ]}/>
+                                <WiwaSelectQuantityUnit
+                                    placeholder={resourceState?.manager?.products.product.quantities.lengthPlaceholder}
+                                    value={lengthUnitId}
+                                    setValue={(unit) => setLengthUnitId(unit as UnitId)}
+                                    unitIds={[UnitId.MILLIMETER, UnitId.METER]}
+                                />
                             </div>
                         </div>
 
@@ -169,9 +190,12 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <WiwaSelectQuantityUnit value={widthUnitId} setValue={setWidthUnitId} unitIds={[
-                                    UnitId.MILLIMETER, UnitId.METER
-                                ]}/>
+                                <WiwaSelectQuantityUnit
+                                    placeholder={resourceState?.manager?.products.product.quantities.widthPlaceholder}
+                                    value={widthUnitId}
+                                    setValue={(unit) => setWidthUnitId(unit as UnitId)}
+                                    unitIds={[UnitId.MILLIMETER, UnitId.METER]}
+                                />
                             </div>
                         </div>
 
@@ -187,9 +211,12 @@ const ProductQuantitiesDialog = (
                                 />
                             </div>
                             <div className="flex flex-row shrink pl-2">
-                                <WiwaSelectQuantityUnit value={thicknessUnitId} setValue={setThicknessUnitId} unitIds={[
-                                    UnitId.MILLIMETER, UnitId.METER
-                                ]}/>
+                                <WiwaSelectQuantityUnit
+                                    placeholder={resourceState?.manager?.products.product.quantities.thicknessPlaceholder}
+                                    value={thicknessUnitId}
+                                    setValue={(unit) => setThicknessUnitId(unit as UnitId)}
+                                    unitIds={[UnitId.MILLIMETER, UnitId.METER]}
+                                />
                             </div>
                         </div>
 
@@ -198,51 +225,51 @@ const ProductQuantitiesDialog = (
                                 className="btn-primary join-item"
                                 onClick={() => {
                                     const newQuantities = [];
-                                    if (saleValue.trim().length > 0 && saleUnitId.trim().length > 0) {
+                                    if (saleValue.trim().length > 0 && saleUnitId !== undefined) {
                                         newQuantities.push({
                                             key: ProductQuantityKey.SALE,
                                             value: Number(saleValue),
-                                            unit: saleUnitId as UnitId
+                                            unit: saleUnitId
                                         });
                                     }
 
-                                    if (weightValue.trim().length > 0 && weightUnitId.trim().length > 0) {
+                                    if (weightValue.trim().length > 0 && weightUnitId !== undefined) {
                                         newQuantities.push({
                                             key: ProductQuantityKey.WEIGHT,
                                             value: Number(weightValue),
-                                            unit: weightUnitId as UnitId
+                                            unit: weightUnitId
                                         });
                                     }
 
-                                    if (netWeightValue.trim().length > 0 && netWeightUnitId.trim().length > 0) {
+                                    if (netWeightValue.trim().length > 0 && netWeightUnitId !== undefined) {
                                         newQuantities.push({
                                             key: ProductQuantityKey.NET_WEIGHT,
                                             value: Number(netWeightValue),
-                                            unit: netWeightUnitId as UnitId
+                                            unit: netWeightUnitId
                                         });
                                     }
 
-                                    if (lengthValue.trim().length > 0 && lengthUnitId.trim().length > 0) {
+                                    if (lengthValue.trim().length > 0 && lengthUnitId !== undefined) {
                                         newQuantities.push({
                                             key: ProductQuantityKey.LENGTH,
                                             value: Number(lengthValue),
-                                            unit: lengthUnitId as UnitId
+                                            unit: lengthUnitId
                                         });
                                     }
 
-                                    if (widthValue.trim().length > 0 && widthUnitId.trim().length > 0) {
+                                    if (widthValue.trim().length > 0 && widthUnitId !== undefined) {
                                         newQuantities.push({
                                             key: ProductQuantityKey.WIDTH,
                                             value: Number(widthValue),
-                                            unit: widthUnitId as UnitId
+                                            unit: widthUnitId
                                         });
                                     }
 
-                                    if (thicknessValue.trim().length > 0 && thicknessUnitId.trim().length > 0) {
+                                    if (thicknessValue.trim().length > 0 && thicknessUnitId !== undefined) {
                                         newQuantities.push({
                                             key: ProductQuantityKey.THICKNESS,
                                             value: Number(thicknessValue),
-                                            unit: thicknessUnitId as UnitId
+                                            unit: thicknessUnitId
                                         });
                                     }
 

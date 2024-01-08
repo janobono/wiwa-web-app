@@ -91,6 +91,7 @@ const ProductPage = () => {
                 navigate('/manager/products/' + response?.data?.id);
             }
         }
+        setChanged(false);
     }
 
     useEffect(() => {

@@ -7,11 +7,13 @@ import { useUiState } from '../state/ui-state-provider.tsx';
 
 const WiwaSelectQuantityUnit = (
     {
+        placeholder,
         value,
         setValue,
         unitIds,
     }: {
-        value?: string
+        placeholder?: string
+        value?: string,
         setValue: (value: string) => void,
         unitIds?: UnitId[]
     }) => {
@@ -44,6 +46,7 @@ const WiwaSelectQuantityUnit = (
         <WiwaSelect
             onChange={event => quantityUnitChangeHandler(event)}
         >
+            {placeholder && <option disabled selected={value === undefined}>{placeholder}</option>}
             {data?.map(unit =>
                 <option
                     key={unit.id}

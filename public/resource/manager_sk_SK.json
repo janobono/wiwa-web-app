@@ -1,6 +1,7 @@
 {
   "title": "Manažér",
   "codeListsTab": "Číselníky",
+  "productConfigTab": "Konfigurácia produktov",
   "productsTab": "Produkty",
   "codeLists": {
     "id": "Id",
@@ -71,6 +72,26 @@
       }
     }
   },
+  "productConfig": {
+    "vatRate": {
+      "title": "Sadzba DPH"
+    },
+    "productCategories": {
+      "title": "Kategórie produktov"
+    },
+    "boardCategory": {
+      "title": "Kategória veľkoplošných materiálov"
+    },
+    "edgeCategory": {
+      "title": "Kategória hrán"
+    },
+    "serviceCategory": {
+      "title": "Kategória služieb"
+    },
+    "searchCategories": {
+      "title": "Kategórie vyhľadávania"
+    }
+  },
   "products": {
     "id": "Id",
     "code": "Kód",
@@ -107,7 +128,13 @@
         "title": "Atribúty produktu"
       },
       "quantities": {
-        "title": "Množstevné parametre produktu"
+        "title": "Množstevné parametre produktu",
+        "salePlaceholder": "Zvoľte predajnú jednotku",
+        "weightPlaceholder": "Zvoľte hmotnostnú jednotku",
+        "netWeightPlaceholder": "Zvoľte jednotku čistej hmotnosťi",
+        "lengthPlaceholder": "Zvoľte jednotku dĺžky",
+        "widthPlaceholder": "Zvoľte jednotku šírky",
+        "thicknessPlaceholder": "Zvoľte jednotku hrúbky"
       },
       "unitPrices": {
         "title": "Jednotkové ceny produktu",
@@ -121,7 +148,8 @@
           "validFromRequired": "Vyžaduje sa platnosť od",
           "value": "Hodnota",
           "valueRequired": "Vyžaduje sa hodnota",
-          "unit": "Mena"
+          "unit": "Mena",
+          "unitPlaceholder": "Zvoľte jednotku meny"
         },
         "deletePrice": {
           "title": "Zmazať jednotkovú cenu",

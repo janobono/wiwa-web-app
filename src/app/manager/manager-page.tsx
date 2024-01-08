@@ -6,6 +6,7 @@ import BaseFooter from '../../component/layout/base-footer';
 import BaseNavigation from '../../component/layout/base-navigation';
 import CodeListProvider from '../../component/state/code-list-provider';
 import CodeListItemProvider from '../../component/state/code-list-item-provider';
+import ProductConfigStateProvider from '../../component/state/product-config-provider';
 import ProductStateProvider from '../../component/state/product-state-provider';
 
 const AdminPage = () => {
@@ -17,7 +18,9 @@ const AdminPage = () => {
                 <CodeListProvider>
                     <CodeListItemProvider>
                         <ProductStateProvider>
-                            <Outlet/>
+                            <ProductConfigStateProvider>
+                                <Outlet/>
+                            </ProductConfigStateProvider>
                         </ProductStateProvider>
                     </CodeListItemProvider>
                 </CodeListProvider>

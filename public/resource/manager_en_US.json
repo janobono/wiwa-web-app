@@ -1,6 +1,7 @@
 {
   "title": "Manager",
   "codeListsTab": "Code Lists",
+  "productConfigTab": "Product config",
   "productsTab": "Products",
   "codeLists": {
     "id": "Id",
@@ -71,6 +72,26 @@
       }
     }
   },
+  "productConfig": {
+    "vatRate": {
+      "title": "Vat rate"
+    },
+    "productCategories": {
+      "title": "Product categories"
+    },
+    "boardCategory": {
+      "title": "Board category"
+    },
+    "edgeCategory": {
+      "title": "Edge category"
+    },
+    "serviceCategory": {
+      "title": "Service category"
+    },
+    "searchCategories": {
+      "title": "Search categories"
+    }
+  },
   "products": {
     "id": "Id",
     "code": "Code",
@@ -107,7 +128,13 @@
         "title": "Product attributes"
       },
       "quantities": {
-        "title": "Product quantities"
+        "title": "Product quantities",
+        "salePlaceholder": "Select sale unit",
+        "weightPlaceholder": "Select weight unit",
+        "netWeightPlaceholder": "Select net weight unit",
+        "lengthPlaceholder": "Select length unit",
+        "widthPlaceholder": "Select width unit",
+        "thicknessPlaceholder": "Select thickness unit"
       },
       "unitPrices": {
         "title": "Product unit prices",
@@ -121,7 +148,8 @@
           "validFromRequired": "Valid from is required",
           "value": "Value",
           "valueRequired": "Value and currency is required",
-          "unit": "Currency"
+          "unit": "Currency",
+          "unitPlaceholder": "Select currency unit"
         },
         "deletePrice": {
           "title": "Delete unit price",
