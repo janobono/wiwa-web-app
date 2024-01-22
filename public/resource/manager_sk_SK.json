@@ -74,7 +74,9 @@
   },
   "productConfig": {
     "vatRate": {
-      "title": "Sadzba DPH"
+      "title": "Sadzba DPH",
+      "required": "Vyžaduje sa sadzba DPH",
+      "error": "Chyba zmeny sadzby DPH"
     },
     "productCategories": {
       "title": "Kategórie produktov"

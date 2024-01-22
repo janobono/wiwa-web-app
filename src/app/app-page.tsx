@@ -11,9 +11,9 @@ import AdminBusinessConditionsPage from './admin/business-conditions-page';
 import AdminCompanyInfoPage from './admin/company-info-page';
 import AdminCookiesInfoPage from './admin/cookies-info-page';
 import AdminGdprInfoPage from './admin/gdpr-info-page';
+import UnitsPage from './admin/units-page';
 import UsersPage from './admin/users-page';
 import WorkingHoursPage from './admin/working-hours-page';
-import UnitsPage from './admin/units-page';
 
 import AuthPage from './auth/auth-page';
 import ChangeDetailsPage from './auth/change-details-page';
@@ -26,13 +26,14 @@ import SignUpPage from './auth/sign-up-page';
 
 import ManagerPage from './manager/manager-page';
 import CodeListsPage from './manager/code-lists-page';
-import CodeListItemsPage from './manager/code-list-items-page';
+import CodeListItemsPage from './manager/code-lists/code-list-items-page';
 import ProductConfigPage from './manager/product-config-page';
-import ProductPage from './manager/product-page';
-import ProductCodeListItemsPage from './manager/product-code-list-items';
-import ProductImagesPage from './manager/product-images-page';
-import ProductUnitPricesPage from './manager/product-unit-prices-page';
+import ProductCategoriesPage from './manager/product-config/product-categories-page';
 import ProductsPage from './manager/products-page';
+import ProductImagesPage from './manager/products/product-images-page';
+import ProductPage from './manager/products/product-page';
+import ProductCodeListItemsPage from './manager/products/product-code-list-items';
+import ProductUnitPricesPage from './manager/products/product-unit-prices-page';
 
 import UiPage from './ui/ui-page';
 import BusinessConditionsPage from './ui/business-conditions-page';
@@ -53,9 +54,9 @@ const AppPage = () => {
                 <Route path="company-info" element={<AdminCompanyInfoPage/>}/>
                 <Route path="cookies-info" element={<AdminCookiesInfoPage/>}/>
                 <Route path="gdpr-info" element={<AdminGdprInfoPage/>}/>
+                <Route path="units" element={<UnitsPage/>}/>
                 <Route path="users" element={<UsersPage/>}/>
                 <Route path="working-hours" element={<WorkingHoursPage/>}/>
-                <Route path="units" element={<UnitsPage/>}/>
             </Route>
 
             <Route path="/auth" element={<AuthPage/>}>
@@ -72,6 +73,7 @@ const AppPage = () => {
                 <Route path="code-lists" element={<CodeListsPage/>}/>
                 <Route path="code-lists/:codeListId/items" element={<CodeListItemsPage/>}/>
                 <Route path="product-config" element={<ProductConfigPage/>}/>
+                <Route path="product-config/product-categories" element={<ProductCategoriesPage/>}/>
                 <Route path="products" element={<ProductsPage/>}/>
                 <Route path="products/:productId" element={<ProductPage/>}/>
                 <Route path="products/:productId/code-list-items" element={<ProductCodeListItemsPage/>}/>

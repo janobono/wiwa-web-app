@@ -122,7 +122,7 @@ const CodeListProvider = ({children}: { children: ReactNode }) => {
     const deleteCodeList = async (id: number) => {
         setBusy(true);
         try {
-            const response = await deleteData(
+            const response = await deleteData<void>(
                 PATH_CODE_LISTS + '/' + id,
                 authState?.accessToken || ''
             );

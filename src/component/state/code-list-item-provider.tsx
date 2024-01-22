@@ -119,7 +119,7 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
     const deleteCodeListItem = async (id: number) => {
         setBusy(true);
         try {
-            const response = await deleteData(
+            const response = await deleteData<void>(
                 PATH_CODE_LIST_ITEMS + '/' + id,
                 authState?.accessToken || ''
             );

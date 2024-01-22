@@ -2,28 +2,28 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Check, Edit } from 'react-feather';
 
-import ProductAttributesDialog from './product/product-attributes-dialog';
-import ProductDescriptionDialog from './product/product-description-dialog';
-import ProductQuantitiesDialog from './product/product-quantities-dialog';
-import WiwaProductAttributes from '../../component/app/wiwa-product-attributes';
-import WiwaProductQuantities from '../../component/app/wiwa-product-quantities';
-import WiwaProductCodeListItems from '../../component/app/wiwa-product-code-list-items';
-import WiwaProductImages from '../../component/app/wiwa-product-images';
-import WiwaProductUnitPrices from '../../component/app/wiwa-product-unit-prices';
-import WiwaProductStockStatus from '../../component/app/wiwa-product-stock-status';
-import { useResourceState } from '../../component/state/resource-state-provider';
-import { useProductState } from '../../component/state/product-state-provider';
-import WiwaButton from '../../component/ui/wiwa-button';
-import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
-import WiwaSelect from '../../component/ui/wiwa-select';
+import ProductAttributesDialog from './product-attributes-dialog';
+import ProductDescriptionDialog from './product-description-dialog';
+import ProductQuantitiesDialog from './product-quantities-dialog';
+import WiwaProductAttributes from '../../../component/app/wiwa-product-attributes';
+import WiwaProductQuantities from '../../../component/app/wiwa-product-quantities';
+import WiwaProductCodeListItems from '../../../component/app/wiwa-product-code-list-items';
+import WiwaProductImages from '../../../component/app/wiwa-product-images';
+import WiwaProductUnitPrices from '../../../component/app/wiwa-product-unit-prices';
+import WiwaProductStockStatus from '../../../component/app/wiwa-product-stock-status';
+import { useResourceState } from '../../../component/state/resource-state-provider';
+import { useProductState } from '../../../component/state/product-state-provider';
+import WiwaButton from '../../../component/ui/wiwa-button';
+import WiwaMarkdownRenderer from '../../../component/ui/wiwa-markdown-renderer';
+import WiwaFormInput from '../../../component/ui/wiwa-form-input';
+import WiwaSelect from '../../../component/ui/wiwa-select';
 import {
     ApplicationImage,
     ProductAttribute,
     ProductQuantity,
     ProductStockStatus,
     ProductUnitPrice
-} from '../../model/service';
+} from '../../../model/service';
 
 const IMAGE_DIALOG_ID = 'product-image-detail-dialog-001';
 

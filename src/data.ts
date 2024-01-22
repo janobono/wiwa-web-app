@@ -65,7 +65,10 @@ export const getData = async <T>(path: string, queryParams?: URLSearchParams, to
 
     let data, error;
     if (response.ok) {
-        data = await response.json() as T;
+        const text = await response.text();
+        if (text.length > 0) {
+            data = await JSON.parse(text) as T;
+        }
     } else {
         error = await toWiwaError(response);
     }
@@ -85,29 +88,14 @@ export const postData = async <T>(path: string, data: any, token?: string): Prom
 
     let resultData, error;
     if (response.ok) {
-        resultData = await response.json() as T;
+        const text = await response.text();
+        if (text.length > 0) {
+            resultData = await JSON.parse(text) as T;
+        }
     } else {
         error = await toWiwaError(response);
     }
     return {data: resultData, error};
-}
-
-export const postDataVoidResponse = async (path: string, data: any, token?: string): Promise<ClientResponse<void>> => {
-    const authorization = createAuthorization(token);
-    const response = await fetch(path, {
-        method: 'POST',
-        headers: {
-            ...authorization,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-
-    let error;
-    if (!response.ok) {
-        error = await toWiwaError(response);
-    }
-    return {data: undefined, error};
 }
 
 export const putData = async <T>(path: string, data: any, token?: string): Promise<ClientResponse<T>> => {
@@ -123,7 +111,10 @@ export const putData = async <T>(path: string, data: any, token?: string): Promi
 
     let resultData, error;
     if (response.ok) {
-        resultData = await response.json() as T;
+        const text = await response.text();
+        if (text.length > 0) {
+            resultData = await JSON.parse(text) as T;
+        }
     } else {
         error = await toWiwaError(response);
     }
@@ -143,28 +134,17 @@ export const patchData = async <T>(path: string, data: any, token?: string): Pro
 
     let resultData, error;
     if (response.ok) {
-        resultData = await response.json() as T;
+        const text = await response.text();
+        if (text.length > 0) {
+            resultData = await JSON.parse(text) as T;
+        }
     } else {
         error = await toWiwaError(response);
     }
     return {data: resultData, error};
 }
 
-export const deleteData = async (path: string, token?: string): Promise<ClientResponse<void>> => {
-    const authorization = createAuthorization(token);
-    const response = await fetch(path, {
-        method: 'DELETE',
-        headers: authorization
-    });
-
-    let error;
-    if (!response.ok) {
-        error = await toWiwaError(response);
-    }
-    return {data: undefined, error};
-}
-
-export const deleteDataNoVoid = async <T>(path: string, token?: string): Promise<ClientResponse<T>> => {
+export const deleteData = async <T>(path: string, token?: string): Promise<ClientResponse<T>> => {
     const authorization = createAuthorization(token);
     const response = await fetch(path, {
         method: 'DELETE',
@@ -173,7 +153,10 @@ export const deleteDataNoVoid = async <T>(path: string, token?: string): Promise
 
     let resultData, error;
     if (response.ok) {
-        resultData = await response.json() as T;
+        const text = await response.text();
+        if (text.length > 0) {
+            resultData = await JSON.parse(text) as T;
+        }
     } else {
         error = await toWiwaError(response);
     }

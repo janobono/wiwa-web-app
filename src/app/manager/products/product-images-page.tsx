@@ -3,12 +3,12 @@ import { createPortal } from 'react-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash } from 'react-feather';
 
-import ImageDialog from '../../component/dialog/image-dialog';
-import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
-import { useProductState } from '../../component/state/product-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
-import WiwaButton from '../../component/ui/wiwa-button';
-import { ApplicationImage } from '../../model/service';
+import ImageDialog from '../../../component/dialog/image-dialog';
+import { DialogAnswer, DialogType, useDialogState } from '../../../component/state/dialog-state-provider';
+import { useProductState } from '../../../component/state/product-state-provider';
+import { useResourceState } from '../../../component/state/resource-state-provider';
+import WiwaButton from '../../../component/ui/wiwa-button';
+import { ApplicationImage } from '../../../model/service';
 
 const IMAGE_DIALOG_ID = 'image-dialog-001';
 

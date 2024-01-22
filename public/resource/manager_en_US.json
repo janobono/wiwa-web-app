@@ -74,7 +74,9 @@
   },
   "productConfig": {
     "vatRate": {
-      "title": "Vat rate"
+      "title": "Vat rate",
+      "required": "Vat rate is required",
+      "error": "Vat rate change failed"
     },
     "productCategories": {
       "title": "Product categories"

@@ -4,6 +4,7 @@ import { useAuthState } from './auth-state-provider';
 import { useHealthState } from './health-state-provider';
 import { SingleValueBody } from '../../model/service';
 import { ClientResponse, CONTEXT_PATH, getData, postData } from '../../data';
+import { ProductCategory, ProductCategoryItem, ProductCategoryItemData } from '../../model/service/product-category.ts';
 
 const PATH_PRODUCT_CONFIG = CONTEXT_PATH + 'product-config/';
 
@@ -11,16 +12,16 @@ export interface ProductConfigState {
     busy: boolean,
     vatRate?: number,
     setVatRate: (vatRate: number) => Promise<ClientResponse<SingleValueBody<number>>>,
-    productCategories?: number[],
-    setProductCategories: (productCategories: number[]) => Promise<ClientResponse<number[]>>,
-    boardCategoryId?: number,
-    setBoardCategoryId: (boardCategoryId: number) => Promise<ClientResponse<SingleValueBody<number>>>,
-    edgeCategoryId?: number,
-    setEdgeCategoryId: (edgeCategoryId: number) => Promise<ClientResponse<SingleValueBody<number>>>,
-    serviceCategoryId?: number,
-    setServiceCategoryId: (serviceCategoryId: number) => Promise<ClientResponse<SingleValueBody<number>>>,
-    searchCategories?: number[],
-    setSearchCategories: (searchCategories: number[]) => Promise<ClientResponse<number[]>>
+    productCategories?: ProductCategory[],
+    setProductCategories: (productCategories: number[]) => Promise<ClientResponse<ProductCategory[]>>,
+    boardCategoryItem?: ProductCategoryItem,
+    setBoardCategoryItem: (boardCategoryItemData: ProductCategoryItemData) => Promise<ClientResponse<ProductCategoryItem>>,
+    edgeCategoryItem?: ProductCategoryItem,
+    setEdgeCategoryItem: (edgeCategoryItemData: ProductCategoryItemData) => Promise<ClientResponse<ProductCategoryItem>>,
+    serviceCategoryItem?: ProductCategoryItem,
+    setServiceCategoryItem: (serviceCategoryItemData: ProductCategoryItemData) => Promise<ClientResponse<ProductCategoryItem>>,
+    searchItems?: ProductCategoryItem[],
+    setSearchItems: (searchItems: ProductCategoryItemData[]) => Promise<ClientResponse<ProductCategoryItem[]>>
 }
 
 const productConfigStateContext = createContext<ProductConfigState | undefined>(undefined);
@@ -31,11 +32,11 @@ const ProductConfigStateProvider = ({children}: { children: ReactNode }) => {
 
     const [busy, setBusy] = useState(false);
     const [vatRate, setVatRateValue] = useState<number>();
-    const [productCategories, setProductCategoriesValue] = useState<number[]>();
-    const [boardCategoryId, setBoardCategoryIdValue] = useState<number>();
-    const [edgeCategoryId, setEdgeCategoryIdValue] = useState<number>();
-    const [serviceCategoryId, setServiceCategoryIdValue] = useState<number>();
-    const [searchCategories, setSearchCategoriesValue] = useState<number[]>();
+    const [productCategories, setProductCategoriesValue] = useState<ProductCategory[]>();
+    const [boardCategoryItem, setBoardCategoryItemValue] = useState<ProductCategoryItem>();
+    const [edgeCategoryItem, setEdgeCategoryItemValue] = useState<ProductCategoryItem>();
+    const [serviceCategoryItem, setServiceCategoryItemValue] = useState<ProductCategoryItem>();
+    const [searchItems, setSearchItemsValue] = useState<ProductCategoryItem[]>();
 
     useEffect(() => {
         if (healthState?.up) {
@@ -52,7 +53,7 @@ const ProductConfigStateProvider = ({children}: { children: ReactNode }) => {
             fetchVatRate().then();
 
             const fetchProductCategories = async () => {
-                const response = await getData<number[]>(
+                const response = await getData<ProductCategory[]>(
                     PATH_PRODUCT_CONFIG + 'product-categories',
                     undefined,
                     authState?.accessToken
@@ -63,53 +64,53 @@ const ProductConfigStateProvider = ({children}: { children: ReactNode }) => {
             }
             fetchProductCategories().then();
 
-            const fetchBoardCategoryId = async () => {
-                const response = await getData<SingleValueBody<number>>(
-                    PATH_PRODUCT_CONFIG + 'board-category-id',
+            const fetchBoardCategoryItem = async () => {
+                const response = await getData<ProductCategoryItem>(
+                    PATH_PRODUCT_CONFIG + 'board-category-item',
                     undefined,
                     authState?.accessToken
                 );
                 if (response.data) {
-                    setBoardCategoryIdValue(response.data.value);
+                    setBoardCategoryItemValue(response.data);
                 }
             }
-            fetchBoardCategoryId().then();
+            fetchBoardCategoryItem().then();
 
-            const fetchEdgeCategoryId = async () => {
-                const response = await getData<SingleValueBody<number>>(
-                    PATH_PRODUCT_CONFIG + 'edge-category-id',
+            const fetchEdgeCategoryItem = async () => {
+                const response = await getData<ProductCategoryItem>(
+                    PATH_PRODUCT_CONFIG + 'edge-category-item',
                     undefined,
                     authState?.accessToken
                 );
                 if (response.data) {
-                    setEdgeCategoryIdValue(response.data.value);
+                    setEdgeCategoryItemValue(response.data);
                 }
             }
-            fetchEdgeCategoryId().then();
+            fetchEdgeCategoryItem().then();
 
-            const fetchServiceCategoryId = async () => {
-                const response = await getData<SingleValueBody<number>>(
-                    PATH_PRODUCT_CONFIG + 'service-category-id',
+            const fetchServiceCategoryItem = async () => {
+                const response = await getData<ProductCategoryItem>(
+                    PATH_PRODUCT_CONFIG + 'service-category-item',
                     undefined,
                     authState?.accessToken
                 );
                 if (response.data) {
-                    setServiceCategoryIdValue(response.data.value);
+                    setServiceCategoryItemValue(response.data);
                 }
             }
-            fetchServiceCategoryId().then();
+            fetchServiceCategoryItem().then();
 
-            const fetchSearchCategories = async () => {
-                const response = await getData<number[]>(
-                    PATH_PRODUCT_CONFIG + 'search-categories',
+            const fetchSearchItems = async () => {
+                const response = await getData<ProductCategoryItem[]>(
+                    PATH_PRODUCT_CONFIG + 'search-items',
                     undefined,
                     authState?.accessToken
                 );
                 if (response.data) {
-                    setSearchCategoriesValue(response.data);
+                    setSearchItemsValue(response.data);
                 }
             }
-            fetchSearchCategories().then();
+            fetchSearchItems().then();
         }
     }, [healthState?.up]);
 
@@ -133,7 +134,7 @@ const ProductConfigStateProvider = ({children}: { children: ReactNode }) => {
     const setProductCategories = async (productCategories: number[]) => {
         setBusy(true);
         try {
-            const response = await postData<number[]>(
+            const response = await postData<ProductCategory[]>(
                 PATH_PRODUCT_CONFIG + 'product-categories',
                 productCategories,
                 authState?.accessToken
@@ -147,16 +148,16 @@ const ProductConfigStateProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const setBoardCategoryId = async (boardCategoryId: number) => {
+    const setBoardCategoryItem = async (boardCategoryItemData: ProductCategoryItemData) => {
         setBusy(true);
         try {
-            const response = await postData<SingleValueBody<number>>(
-                PATH_PRODUCT_CONFIG + 'board-category-id',
-                {value: boardCategoryId},
+            const response = await postData<ProductCategoryItem>(
+                PATH_PRODUCT_CONFIG + 'board-category-item',
+                boardCategoryItemData,
                 authState?.accessToken
             );
             if (response.data) {
-                setBoardCategoryIdValue(response.data.value);
+                setBoardCategoryItemValue(response.data);
             }
             return response;
         } finally {
@@ -164,16 +165,16 @@ const ProductConfigStateProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const setEdgeCategoryId = async (edgeCategoryId: number) => {
+    const setEdgeCategoryItem = async (edgeCategoryItemData: ProductCategoryItemData) => {
         setBusy(true);
         try {
-            const response = await postData<SingleValueBody<number>>(
-                PATH_PRODUCT_CONFIG + 'edge-category-id',
-                {value: edgeCategoryId},
+            const response = await postData<ProductCategoryItem>(
+                PATH_PRODUCT_CONFIG + 'edge-category-item',
+                edgeCategoryItemData,
                 authState?.accessToken
             );
             if (response.data) {
-                setEdgeCategoryIdValue(response.data.value);
+                setEdgeCategoryItemValue(response.data);
             }
             return response;
         } finally {
@@ -181,16 +182,16 @@ const ProductConfigStateProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const setServiceCategoryId = async (serviceCategoryId: number) => {
+    const setServiceCategoryItem = async (serviceCategoryItemData: ProductCategoryItemData) => {
         setBusy(true);
         try {
-            const response = await postData<SingleValueBody<number>>(
-                PATH_PRODUCT_CONFIG + 'service-category-id',
-                {value: serviceCategoryId},
+            const response = await postData<ProductCategoryItem>(
+                PATH_PRODUCT_CONFIG + 'service-category-item',
+                serviceCategoryItemData,
                 authState?.accessToken
             );
             if (response.data) {
-                setServiceCategoryIdValue(response.data.value);
+                setServiceCategoryItemValue(response.data);
             }
             return response;
         } finally {
@@ -198,16 +199,16 @@ const ProductConfigStateProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const setSearchCategories = async (searchCategories: number[]) => {
+    const setSearchItems = async (searchItems: ProductCategoryItemData[]) => {
         setBusy(true);
         try {
-            const response = await postData<number[]>(
-                PATH_PRODUCT_CONFIG + 'search-categories',
-                searchCategories,
+            const response = await postData<ProductCategoryItem[]>(
+                PATH_PRODUCT_CONFIG + 'search-items',
+                searchItems,
                 authState?.accessToken
             );
             if (response.data) {
-                setSearchCategoriesValue(response.data);
+                setSearchItemsValue(response.data);
             }
             return response;
         } finally {
@@ -224,14 +225,14 @@ const ProductConfigStateProvider = ({children}: { children: ReactNode }) => {
                     setVatRate,
                     productCategories,
                     setProductCategories,
-                    boardCategoryId,
-                    setBoardCategoryId,
-                    edgeCategoryId,
-                    setEdgeCategoryId,
-                    serviceCategoryId,
-                    setServiceCategoryId,
-                    searchCategories,
-                    setSearchCategories
+                    boardCategoryItem,
+                    setBoardCategoryItem,
+                    edgeCategoryItem,
+                    setEdgeCategoryItem,
+                    serviceCategoryItem,
+                    setServiceCategoryItem,
+                    searchItems,
+                    setSearchItems
                 }
             }
         >{children}

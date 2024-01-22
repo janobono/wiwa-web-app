@@ -136,7 +136,7 @@ const UserProvider = ({children}: { children: ReactNode }) => {
     const deleteUser = async (id: number) => {
         setBusy(true);
         try {
-            const response = await deleteData(
+            const response = await deleteData<void>(
                 PATH_USERS + '/' + id,
                 authState?.accessToken || ''
             );

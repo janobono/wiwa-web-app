@@ -21,7 +21,7 @@ import {
     isRefreshExpired,
     isUserAccessExpired
 } from '../../auth';
-import { ClientResponse, CONTEXT_PATH, postData, postDataVoidResponse } from '../../data';
+import { ClientResponse, CONTEXT_PATH, postData } from '../../data';
 
 const PATH_REFRESH = CONTEXT_PATH + 'auth/refresh';
 const PATH_SIGN_IN = CONTEXT_PATH + 'auth/sign-in';
@@ -179,7 +179,7 @@ const AuthStateProvider = ({children}: { children: ReactNode }) => {
     }
 
     const resetPassword = async (resetPasswordRequest: ResetPasswordRequest) => {
-        return postDataVoidResponse(PATH_RESET_PASSWORD, resetPasswordRequest);
+        return postData<void>(PATH_RESET_PASSWORD, resetPasswordRequest);
     }
 
     const changePassword = async (changePasswordRequest: ChangePasswordRequest) => {

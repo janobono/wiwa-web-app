@@ -75,7 +75,9 @@ export interface ResourceManager {
     },
     productConfig: {
         vatRate: {
-            title: string
+            title: string,
+            required: string,
+            error: string
         },
         productCategories: {
             title: string

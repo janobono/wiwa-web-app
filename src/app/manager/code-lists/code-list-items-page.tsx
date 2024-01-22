@@ -3,15 +3,15 @@ import { createPortal } from 'react-dom';
 import { useParams } from 'react-router-dom';
 import { ArrowDown, ArrowUp, Edit, Plus, Trash } from 'react-feather';
 
-import WiwaSelectCodeListItem from '../../component/app/wiwa-select-code-list-item';
-import BaseDialog from '../../component/dialog/base-dialog';
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { useCodeListItemState } from '../../component/state/code-list-item-provider';
-import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
-import WiwaButton from '../../component/ui/wiwa-button';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
-import { CodeListItem, CodeListItemData } from '../../model/service';
+import WiwaSelectCodeListItem from '../../../component/app/wiwa-select-code-list-item';
+import BaseDialog from '../../../component/dialog/base-dialog';
+import { useAuthState } from '../../../component/state/auth-state-provider';
+import { useCodeListItemState } from '../../../component/state/code-list-item-provider';
+import { DialogAnswer, DialogType, useDialogState } from '../../../component/state/dialog-state-provider';
+import { useResourceState } from '../../../component/state/resource-state-provider';
+import WiwaButton from '../../../component/ui/wiwa-button';
+import WiwaFormInput from '../../../component/ui/wiwa-form-input';
+import { CodeListItem, CodeListItemData } from '../../../model/service';
 
 const CODE_LIST_ITEM_DIALOG_ID = 'code-list-item-dialog-001';
 

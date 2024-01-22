@@ -74,7 +74,7 @@ const ApplicationImageProvider = ({children}: { children: ReactNode }) => {
     const deleteApplicationImage = async (fileName: string) => {
         setBusy(true);
         try {
-            const response = await deleteData(
+            const response = await deleteData<void>(
                 PATH_APPLICATION_IMAGES + '/' + fileName,
                 authState?.accessToken || ''
             )

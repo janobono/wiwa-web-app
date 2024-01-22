@@ -6,7 +6,6 @@ import {
     ClientResponse,
     CONTEXT_PATH,
     deleteData,
-    deleteDataNoVoid,
     getData,
     postData,
     postFile,
@@ -127,7 +126,7 @@ const ProductStateProvider = ({children}: { children: ReactNode }) => {
     const deleteProduct = async (id: number) => {
         setBusy(true);
         try {
-            const response = await deleteData(
+            const response = await deleteData<void>(
                 PATH_PRODUCTS + '/' + id,
                 authState?.accessToken || ''
             );
@@ -198,7 +197,7 @@ const ProductStateProvider = ({children}: { children: ReactNode }) => {
     const deleteProductImage = async (id: number, fileName: string) => {
         setBusy(true);
         try {
-            const response = await deleteDataNoVoid<Product>(
+            const response = await deleteData<Product>(
                 PATH_PRODUCTS + '/' + id + '/product-images/' + fileName,
                 authState?.accessToken || ''
             )

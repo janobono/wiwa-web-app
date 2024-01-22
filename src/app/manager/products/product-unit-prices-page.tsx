@@ -3,17 +3,17 @@ import { createPortal } from 'react-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Check, Plus, Trash } from 'react-feather';
 
-import WiwaSelectQuantityUnit from '../../component/app/wiwa-select-quantity-unit';
-import WiwaValueDate from '../../component/app/wiwa-value-date';
-import WiwaValueNumber from '../../component/app/wiwa-value-number';
-import WiwaUnitValue from '../../component/app/wiwa-unit-value';
-import BaseDialog from '../../component/dialog/base-dialog';
-import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
-import { useProductState } from '../../component/state/product-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
-import WiwaButton from '../../component/ui/wiwa-button';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
-import { ProductUnitPrice, UnitId } from '../../model/service';
+import WiwaSelectQuantityUnit from '../../../component/app/wiwa-select-quantity-unit';
+import WiwaValueDate from '../../../component/app/wiwa-value-date';
+import WiwaValueNumber from '../../../component/app/wiwa-value-number';
+import WiwaUnitValue from '../../../component/app/wiwa-unit-value';
+import BaseDialog from '../../../component/dialog/base-dialog';
+import { DialogAnswer, DialogType, useDialogState } from '../../../component/state/dialog-state-provider';
+import { useProductState } from '../../../component/state/product-state-provider';
+import { useResourceState } from '../../../component/state/resource-state-provider';
+import WiwaButton from '../../../component/ui/wiwa-button';
+import WiwaFormInput from '../../../component/ui/wiwa-form-input';
+import { ProductUnitPrice, UnitId } from '../../../model/service';
 
 const PRICE_DIALOG_ID = 'price-dialog-001';
 
@@ -214,8 +214,8 @@ const PriceDialog = ({showDialog, okHandler, cancelHandler}: {
     }, [showDialog]);
 
     useEffect(() => {
-        setFormValid(validFromValid && valueValid);
-    }, [validFromValid, valueValid]);
+        setFormValid(validFromValid && valueValid && unitId !== undefined);
+    }, [validFromValid, valueValid, unitId]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <BaseDialog id={PRICE_DIALOG_ID} showDialog={showDialog} closeHandler={cancelHandler}>
@@ -279,7 +279,9 @@ const PriceDialog = ({showDialog, okHandler, cancelHandler}: {
                             className="btn-primary join-item"
                             disabled={!formValid}
                             onClick={() => {
-                                okHandler({validFrom, value: Number(value), unit: unitId});
+                                if (unitId) {
+                                    okHandler({validFrom, value: Number(value), unit: unitId});
+                                }
                             }}
                         >{resourceState?.common?.action.ok}
                         </WiwaButton>
