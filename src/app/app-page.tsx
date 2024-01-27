@@ -1,7 +1,7 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import HomePage from './home-page';
-import NotFoundPage from './not-found-page.tsx';
+import NotFoundPage from './not-found-page';
 
 import AdminPage from './admin/admin-page';
 import AppImagesPage from './admin/app-images-page';
@@ -25,14 +25,17 @@ import SignOutPage from './auth/sign-out-page';
 import SignUpPage from './auth/sign-up-page';
 
 import ManagerPage from './manager/manager-page';
-import CodeListsPage from './manager/code-lists-page';
+import CodeListsBasePage from './manager/code-lists-base-page';
+import CodeListsPage from './manager/code-lists/code-lists-page';
 import CodeListItemsPage from './manager/code-lists/code-list-items-page';
-import ProductConfigPage from './manager/product-config-page';
+import ProductConfigBasePage from './manager/product-config-base-page';
+import ProductConfigPage from './manager/product-config/product-config-page';
 import ProductCategoriesPage from './manager/product-config/product-categories-page';
-import ProductsPage from './manager/products-page';
-import ProductImagesPage from './manager/products/product-images-page';
+import ProductsBasePage from './manager/products-base-page';
+import ProductsPage from './manager/products/products-page';
 import ProductPage from './manager/products/product-page';
-import ProductCodeListItemsPage from './manager/products/product-code-list-items';
+import ProductCategoryItemsPage from './manager/products/product-category-items-page';
+import ProductImagesPage from './manager/products/product-images-page';
 import ProductUnitPricesPage from './manager/products/product-unit-prices-page';
 
 import UiPage from './ui/ui-page';
@@ -47,6 +50,7 @@ const AppPage = () => {
         <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route path="/admin" element={<AdminPage/>}>
+                <Route index element={<Navigate to="app-images" replace/>}/>
                 <Route path="app-images" element={<AppImagesPage/>}/>
                 <Route path="app-info" element={<AppInfoPage/>}/>
                 <Route path="base-info" element={<BaseInfoPage/>}/>
@@ -70,15 +74,25 @@ const AppPage = () => {
             </Route>
 
             <Route path="/manager" element={<ManagerPage/>}>
-                <Route path="code-lists" element={<CodeListsPage/>}/>
-                <Route path="code-lists/:codeListId/items" element={<CodeListItemsPage/>}/>
-                <Route path="product-config" element={<ProductConfigPage/>}/>
-                <Route path="product-config/product-categories" element={<ProductCategoriesPage/>}/>
-                <Route path="products" element={<ProductsPage/>}/>
-                <Route path="products/:productId" element={<ProductPage/>}/>
-                <Route path="products/:productId/code-list-items" element={<ProductCodeListItemsPage/>}/>
-                <Route path="products/:productId/images" element={<ProductImagesPage/>}/>
-                <Route path="products/:productId/unit-prices" element={<ProductUnitPricesPage/>}/>
+                <Route index element={<Navigate to="code-lists" replace/>}/>
+                <Route path="code-lists" element={<CodeListsBasePage/>}>
+                    <Route index element={<Navigate to="index" replace/>}/>
+                    <Route path="index" element={<CodeListsPage/>}/>
+                    <Route path=":codeListId/items" element={<CodeListItemsPage/>}/>
+                </Route>
+                <Route path="products" element={<ProductsBasePage/>}>
+                    <Route index element={<Navigate to="index" replace/>}/>
+                    <Route path="index" element={<ProductsPage/>}/>
+                    <Route path=":productId/index" element={<ProductPage/>}/>
+                    <Route path=":productId/category-items" element={<ProductCategoryItemsPage/>}/>
+                    <Route path=":productId/images" element={<ProductImagesPage/>}/>
+                    <Route path=":productId/unit-prices" element={<ProductUnitPricesPage/>}/>
+                </Route>
+                <Route path="product-config" element={<ProductConfigBasePage/>}>
+                    <Route index element={<Navigate to="index" replace/>}/>
+                    <Route path="index" element={<ProductConfigPage/>}/>
+                    <Route path="product-categories" element={<ProductCategoriesPage/>}/>
+                </Route>
             </Route>
 
             <Route path="/ui" element={<UiPage/>}>

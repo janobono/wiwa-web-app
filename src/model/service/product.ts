@@ -12,6 +12,26 @@ export enum ProductAttributeKey {
     ORIENTATION = 'ORIENTATION'
 }
 
+export interface ProductCategory {
+    id: number,
+    name: string
+}
+
+export interface ProductCategoryData {
+    id: number
+}
+
+export interface ProductCategoryItem {
+    id?: number,
+    name?: string,
+    category: ProductCategory
+}
+
+export interface ProductCategoryItemData {
+    categoryId: number,
+    itemId?: number
+}
+
 export interface ProductData {
     code: string,
     name: string,
@@ -53,7 +73,7 @@ export interface Product {
     images: ApplicationImage[],
     quantities: ProductQuantity[],
     unitPrices: ProductUnitPrice[],
-    codeListItems: number[]
+    categoryItems: ProductCategoryItem[]
 }
 
 export interface ProductUnitPrice {

@@ -175,7 +175,7 @@ export interface ResourceManager {
                     error: string
                 }
             },
-            codeLists: {
+            categoryItems: {
                 title: string
             },
             fetchDataError: string

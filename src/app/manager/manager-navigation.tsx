@@ -10,9 +10,9 @@ const ManagerNavigation = () => {
                 {resourceState?.manager?.title}
             </div>
             <ul className="menu menu-vertical md:menu-horizontal">
-                <WiwaMenuItem label={resourceState?.manager?.codeListsTab} to="/manager/code-lists"/>
-                <WiwaMenuItem label={resourceState?.manager?.productConfigTab} to="/manager/product-config"/>
-                <WiwaMenuItem label={resourceState?.manager?.productsTab} to="/manager/products"/>
+                <WiwaMenuItem label={resourceState?.manager?.codeListsTab} to="/manager/code-lists/index"/>
+                <WiwaMenuItem label={resourceState?.manager?.productConfigTab} to="/manager/product-config/index"/>
+                <WiwaMenuItem label={resourceState?.manager?.productsTab} to="/manager/products/index"/>
             </ul>
         </div>
     )

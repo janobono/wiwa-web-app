@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import BaseDialog from '../../../component/dialog/base-dialog.tsx';
 import WiwaFormInput from '../../../component/ui/wiwa-form-input.tsx';
 import WiwaButton from '../../../component/ui/wiwa-button.tsx';
-import { useProductConfigState } from '../../../component/state/product-config-provider.tsx';
+import { useProductConfigState } from '../../../component/state/product-config-state-provider.tsx';
 
 const VAT_RATE_DIALOG_ID = 'manager-product-config-vat-rate-dialog-001';
 

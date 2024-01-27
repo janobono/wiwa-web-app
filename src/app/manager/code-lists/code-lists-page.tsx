@@ -3,16 +3,16 @@ import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Edit, List, Plus, Search, Trash } from 'react-feather';
 
-import BaseDialog from '../../component/dialog/base-dialog';
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { useCodeListState } from '../../component/state/code-list-provider';
-import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
-import WiwaButton from '../../component/ui/wiwa-button';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
-import WiwaInput from '../../component/ui/wiwa-input';
-import WiwaPageable from '../../component/ui/wiwa-pageable';
-import { CodeList, CodeListData } from '../../model/service';
+import BaseDialog from '../../../component/dialog/base-dialog';
+import { useAuthState } from '../../../component/state/auth-state-provider';
+import { DialogAnswer, DialogType, useDialogState } from '../../../component/state/dialog-state-provider';
+import { useCodeListState } from '../../../component/state/code-list-state-provider.tsx';
+import { useResourceState } from '../../../component/state/resource-state-provider';
+import WiwaButton from '../../../component/ui/wiwa-button';
+import WiwaFormInput from '../../../component/ui/wiwa-form-input';
+import WiwaInput from '../../../component/ui/wiwa-input';
+import WiwaPageable from '../../../component/ui/wiwa-pageable';
+import { CodeList, CodeListData } from '../../../model/service';
 
 const CODE_LIST_DIALOG_ID = 'code-list-dialog-001';
 
@@ -149,7 +149,7 @@ const CodeListsPage = () => {
                                                 title={resourceState?.manager?.codeLists.codeListItems.title}
                                                 className="btn-secondary btn-xs join-item"
                                                 disabled={codeListState?.busy}
-                                                onClick={() => navigate(codeList.id + '/items')}
+                                                onClick={() => navigate('/manager/code-lists/' + codeList.id + '/items')}
                                             >
                                                 <List size={18}/>
                                             </WiwaButton>

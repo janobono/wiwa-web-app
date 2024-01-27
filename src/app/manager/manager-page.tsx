@@ -4,10 +4,6 @@ import ManagerNavigation from './manager-navigation';
 import AccessDefender from '../../component/layout/access-defender';
 import BaseFooter from '../../component/layout/base-footer';
 import BaseNavigation from '../../component/layout/base-navigation';
-import CodeListProvider from '../../component/state/code-list-provider';
-import CodeListItemProvider from '../../component/state/code-list-item-provider';
-import ProductConfigStateProvider from '../../component/state/product-config-provider';
-import ProductStateProvider from '../../component/state/product-state-provider';
 
 const AdminPage = () => {
     return (
@@ -15,15 +11,7 @@ const AdminPage = () => {
             <BaseNavigation/>
             <ManagerNavigation/>
             <main className="w-full bg-base text-base-content">
-                <CodeListProvider>
-                    <CodeListItemProvider>
-                        <ProductStateProvider>
-                            <ProductConfigStateProvider>
-                                <Outlet/>
-                            </ProductConfigStateProvider>
-                        </ProductStateProvider>
-                    </CodeListItemProvider>
-                </CodeListProvider>
+                <Outlet/>
             </main>
             <BaseFooter/>
         </AccessDefender>

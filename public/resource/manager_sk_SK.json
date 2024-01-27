@@ -174,8 +174,8 @@
           "error": "Chyba zmazania obrázku produktu"
         }
       },
-      "codeLists": {
-        "title": "Číselníky produktu"
+      "categoryItems": {
+        "title": "Položky kategorií produktu"
       },
       "fetchDataError": "Chyba načítania produktu"
     }

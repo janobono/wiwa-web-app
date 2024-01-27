@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit, Plus, Search, Trash } from 'react-feather';
 
-import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
-import { useProductState } from '../../component/state/product-state-provider';
-import WiwaButton from '../../component/ui/wiwa-button';
-import WiwaInput from '../../component/ui/wiwa-input';
-import WiwaPageable from '../../component/ui/wiwa-pageable';
+import { DialogAnswer, DialogType, useDialogState } from '../../../component/state/dialog-state-provider';
+import { useProductState } from '../../../component/state/product-state-provider';
+import { useResourceState } from '../../../component/state/resource-state-provider';
+import WiwaButton from '../../../component/ui/wiwa-button';
+import WiwaInput from '../../../component/ui/wiwa-input';
+import WiwaPageable from '../../../component/ui/wiwa-pageable';
 
 const ProductsPage = () => {
     const navigate = useNavigate();
@@ -89,7 +89,7 @@ const ProductsPage = () => {
                                         title={resourceState?.manager?.products.addProduct}
                                         className="btn-primary md:btn-xs"
                                         disabled={productState?.busy}
-                                        onClick={() => navigate('new')}
+                                        onClick={() => navigate('/manager/products/new/index')}
                                     >
                                         <Plus size={18}/>
                                     </WiwaButton>
@@ -109,7 +109,7 @@ const ProductsPage = () => {
                                                 title={resourceState?.manager?.products.editProduct}
                                                 className="btn-primary md:btn-xs join-item"
                                                 disabled={productState?.busy}
-                                                onClick={() => navigate('' + product.id)}
+                                                onClick={() => navigate('/manager/products/' + product.id + '/index')}
                                             >
                                                 <Edit size={18}/>
                                             </WiwaButton>

@@ -2,9 +2,9 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 
 import { useAuthState } from './auth-state-provider';
 import { useHealthState } from './health-state-provider';
-import { SingleValueBody } from '../../model/service';
+import { ProductCategoryData, SingleValueBody } from '../../model/service';
 import { ClientResponse, CONTEXT_PATH, getData, postData } from '../../data';
-import { ProductCategory, ProductCategoryItem, ProductCategoryItemData } from '../../model/service/product-category.ts';
+import { ProductCategory, ProductCategoryItem, ProductCategoryItemData } from '../../model/service';
 
 const PATH_PRODUCT_CONFIG = CONTEXT_PATH + 'product-config/';
 
@@ -13,7 +13,7 @@ export interface ProductConfigState {
     vatRate?: number,
     setVatRate: (vatRate: number) => Promise<ClientResponse<SingleValueBody<number>>>,
     productCategories?: ProductCategory[],
-    setProductCategories: (productCategories: number[]) => Promise<ClientResponse<ProductCategory[]>>,
+    setProductCategories: (productCategories: ProductCategoryData[]) => Promise<ClientResponse<ProductCategory[]>>,
     boardCategoryItem?: ProductCategoryItem,
     setBoardCategoryItem: (boardCategoryItemData: ProductCategoryItemData) => Promise<ClientResponse<ProductCategoryItem>>,
     edgeCategoryItem?: ProductCategoryItem,
@@ -131,7 +131,7 @@ const ProductConfigStateProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const setProductCategories = async (productCategories: number[]) => {
+    const setProductCategories = async (productCategories: ProductCategoryData[]) => {
         setBusy(true);
         try {
             const response = await postData<ProductCategory[]>(

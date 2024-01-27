@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { useProductConfigState } from '../../component/state/product-config-provider.tsx';
-import { useResourceState } from '../../component/state/resource-state-provider.tsx';
-import WiwaButton from '../../component/ui/wiwa-button.tsx';
-import { Edit } from 'react-feather';
-import WiwaValueNumber from '../../component/app/wiwa-value-number.tsx';
-import VatRateDialog from './product-config/vat-rate-dialog.tsx';
 import { useNavigate } from 'react-router-dom';
+import { Edit } from 'react-feather';
+
+import { useProductConfigState } from '../../../component/state/product-config-state-provider.tsx';
+import { useResourceState } from '../../../component/state/resource-state-provider.tsx';
+import WiwaValueNumber from '../../../component/app/wiwa-value-number.tsx';
+import WiwaButton from '../../../component/ui/wiwa-button.tsx';
+import VatRateDialog from './vat-rate-dialog.tsx';
+
+
 
 const ProductConfigPage = () => {
     const navigate = useNavigate();

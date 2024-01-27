@@ -112,7 +112,7 @@ const ProductUnitPricesPage = () => {
                             <WiwaButton
                                 className="btn-secondary join-item"
                                 title={resourceState?.manager?.products.product.back}
-                                onClick={() => navigate('/manager/products/' + productId)}
+                                onClick={() => navigate('/manager/products/' + productId + '/index')}
                             ><ArrowLeft size={18}/>
                             </WiwaButton>
                         </div>

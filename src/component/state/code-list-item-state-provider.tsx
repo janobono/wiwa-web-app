@@ -29,7 +29,7 @@ export interface CodeListItemState {
 
 const codeListItemContext = createContext<CodeListItemState | undefined>(undefined);
 
-const CodeListItemProvider = ({children}: { children: ReactNode }) => {
+const CodeListItemStateProvider = ({children}: { children: ReactNode }) => {
     const authState = useAuthState();
 
     const [busy, setBusy] = useState(false);
@@ -185,7 +185,7 @@ const CodeListItemProvider = ({children}: { children: ReactNode }) => {
     )
 }
 
-export default CodeListItemProvider;
+export default CodeListItemStateProvider;
 
 export const useCodeListItemState = () => {
     return useContext(codeListItemContext);

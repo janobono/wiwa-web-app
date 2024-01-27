@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useResourceState } from '../state/resource-state-provider';
-import { useCodeListState } from '../state/code-list-provider';
-import { useCodeListItemState } from '../state/code-list-item-provider';
+import { useCodeListState } from '../state/code-list-state-provider.tsx';
+import { useCodeListItemState } from '../state/code-list-item-state-provider.tsx';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaSpinner from '../ui/wiwa-spinner';
 import { CodeListItem } from '../../model/service';

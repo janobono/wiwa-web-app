@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 import { useAuthState } from './auth-state-provider';
-import { Page, Product, ProductData, ProductUnitPrice } from '../../model/service';
+import { Page, Product, ProductCategoryItemData, ProductData, ProductUnitPrice } from '../../model/service';
 import {
     ClientResponse,
     CONTEXT_PATH,
@@ -24,6 +24,7 @@ export interface ProductState {
     addProduct: (productData: ProductData) => Promise<ClientResponse<Product>>,
     setProduct: (id: number, productData: ProductData) => Promise<ClientResponse<Product>>,
     deleteProduct: (id: number) => Promise<ClientResponse<void>>,
+    setProductCategoryItems: (id: number, productCategoryItems: ProductCategoryItemData[]) => Promise<ClientResponse<Product>>,
     setProductUnitPrices: (id: number, productUnitPrices: ProductUnitPrice[]) => Promise<ClientResponse<Product>>,
     addProductImage: (id: number, file: File) => Promise<ClientResponse<Product>>,
     deleteProductImage: (id: number, fileName: string) => Promise<ClientResponse<Product>>
@@ -146,11 +147,35 @@ const ProductStateProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
+    const setProductCategoryItems = async (id: number, productCategoryItems: ProductCategoryItemData[]) => {
+        setBusy(true);
+        try {
+            const response = await postData<Product>(
+                PATH_PRODUCTS + '/' + id + '/category-items',
+                productCategoryItems,
+                authState?.accessToken || ''
+            );
+            if (response.data) {
+                if (data) {
+                    const newData = {...data};
+                    const index = newData.content.findIndex(item => item.id === id);
+                    if (index !== -1) {
+                        newData.content[index] = response.data;
+                        setData(newData);
+                    }
+                }
+            }
+            return response;
+        } finally {
+            setBusy(false);
+        }
+    }
+
     const setProductUnitPrices = async (id: number, productUnitPrices: ProductUnitPrice[]) => {
         setBusy(true);
         try {
             const response = await postData<Product>(
-                PATH_PRODUCTS + '/' + id + '/product-unit-prices',
+                PATH_PRODUCTS + '/' + id + '/unit-prices',
                 productUnitPrices,
                 authState?.accessToken || ''
             );
@@ -174,7 +199,7 @@ const ProductStateProvider = ({children}: { children: ReactNode }) => {
         setBusy(true);
         try {
             const response = await postFile<Product>(
-                PATH_PRODUCTS + '/' + id + '/product-images',
+                PATH_PRODUCTS + '/' + id + '/images',
                 file,
                 authState?.accessToken || ''
             );
@@ -198,7 +223,7 @@ const ProductStateProvider = ({children}: { children: ReactNode }) => {
         setBusy(true);
         try {
             const response = await deleteData<Product>(
-                PATH_PRODUCTS + '/' + id + '/product-images/' + fileName,
+                PATH_PRODUCTS + '/' + id + '/images/' + fileName,
                 authState?.accessToken || ''
             )
             if (response.data) {
@@ -228,6 +253,7 @@ const ProductStateProvider = ({children}: { children: ReactNode }) => {
                     addProduct,
                     setProduct,
                     deleteProduct,
+                    setProductCategoryItems,
                     setProductUnitPrices,
                     addProductImage,
                     deleteProductImage

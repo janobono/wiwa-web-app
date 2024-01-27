@@ -7,7 +7,7 @@ import ProductDescriptionDialog from './product-description-dialog';
 import ProductQuantitiesDialog from './product-quantities-dialog';
 import WiwaProductAttributes from '../../../component/app/wiwa-product-attributes';
 import WiwaProductQuantities from '../../../component/app/wiwa-product-quantities';
-import WiwaProductCodeListItems from '../../../component/app/wiwa-product-code-list-items';
+import WiwaProductCategoryItems from '../../../component/app/wiwa-product-category-items.tsx';
 import WiwaProductImages from '../../../component/app/wiwa-product-images';
 import WiwaProductUnitPrices from '../../../component/app/wiwa-product-unit-prices';
 import WiwaProductStockStatus from '../../../component/app/wiwa-product-stock-status';
@@ -20,6 +20,7 @@ import WiwaSelect from '../../../component/ui/wiwa-select';
 import {
     ApplicationImage,
     ProductAttribute,
+    ProductCategoryItem,
     ProductQuantity,
     ProductStockStatus,
     ProductUnitPrice
@@ -54,7 +55,7 @@ const ProductPage = () => {
 
     const [unitPrices, setUnitPrices] = useState<ProductUnitPrice[]>([]);
 
-    const [codeListItems, setCodeListItems] = useState<number[]>([]);
+    const [categoryItems, setCategoryItems] = useState<ProductCategoryItem[]>([]);
 
     const [error, setError] = useState<string>();
 
@@ -88,7 +89,7 @@ const ProductPage = () => {
             setError(resourceState?.manager?.products.product.fetchDataError);
         } else {
             if (!isEditMode()) {
-                navigate('/manager/products/' + response?.data?.id);
+                navigate('/manager/products/' + response?.data?.id + '/index');
             }
         }
         setChanged(false);
@@ -123,7 +124,7 @@ const ProductPage = () => {
 
                     setImages(response.data.images);
 
-                    setCodeListItems(response.data.codeListItems);
+                    setCategoryItems(response.data.categoryItems);
                 }
             }
         }
@@ -261,7 +262,7 @@ const ProductPage = () => {
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
                                             disabled={!isEditMode()}
-                                            onClick={() => navigate('images')}
+                                            onClick={() => navigate('/manager/products/' + productId + '/images')}
                                         >
                                             <Edit size={18}/>
                                         </WiwaButton>
@@ -312,7 +313,7 @@ const ProductPage = () => {
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
                                             disabled={!isEditMode()}
-                                            onClick={() => navigate('unit-prices')}
+                                            onClick={() => navigate('/manager/products/' + productId + '/unit-prices')}
                                         >
                                             <Edit size={18}/>
                                         </WiwaButton>
@@ -321,18 +322,18 @@ const ProductPage = () => {
 
                                     <div className="flex flex-row w-full">
                                         <span className="grow label-text">
-                                            {resourceState?.manager?.products.product.codeLists.title}
+                                            {resourceState?.manager?.products.product.categoryItems.title}
                                         </span>
                                         <WiwaButton
                                             title={resourceState?.common?.action.edit}
                                             className="btn-primary btn-xs"
                                             disabled={!isEditMode()}
-                                            onClick={() => navigate('code-list-items')}
+                                            onClick={() => navigate('/manager/products/' + productId + '/category-items')}
                                         >
                                             <Edit size={18}/>
                                         </WiwaButton>
                                     </div>
-                                    <WiwaProductCodeListItems codeListItems={codeListItems}/>
+                                    <WiwaProductCategoryItems categoryItems={categoryItems}/>
                                 </div>
                             </div>
                         </div>

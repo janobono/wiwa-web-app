@@ -1,6 +1,14 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useProductConfigState } from '../../../component/state/product-config-state-provider.tsx';
+import { useResourceState } from '../../../component/state/resource-state-provider.tsx';
 
 const ProductCategoriesPage = () => {
+    const navigate = useNavigate();
+
+    const productConfigState = useProductConfigState();
+    const resourceState = useResourceState();
 
     const [error, setError] = useState<string>();
 

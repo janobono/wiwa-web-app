@@ -174,8 +174,8 @@
           "error": "Delete product image failed"
         }
       },
-      "codeLists": {
-        "title": "Product code lists"
+      "categoryItems": {
+        "title": "Product category items"
       },
       "fetchDataError": "Product loading failed"
     }
