@@ -79,7 +79,20 @@
       "error": "Vat rate change failed"
     },
     "productCategories": {
-      "title": "Product categories"
+      "title": "Product categories",
+      "id": "Id",
+      "code": "Code",
+      "name": "Name",
+      "confirm": "Confirm product categories changes",
+      "back": "Back to product config",
+      "error": "Product categories confirmation failed",
+      "addProductCategory": {
+        "title": "Add product category"
+      },
+      "deleteProductCategory": {
+        "title": "Delete product category",
+        "message": "Do you really want to delete product category?"
+      }
     },
     "boardCategory": {
       "title": "Board category"

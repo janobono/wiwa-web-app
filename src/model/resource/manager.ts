@@ -80,7 +80,20 @@ export interface ResourceManager {
             error: string
         },
         productCategories: {
-            title: string
+            title: string,
+            id: string,
+            code: string,
+            name: string,
+            confirm: string,
+            back: string,
+            error: string,
+            addProductCategory: {
+                title: string
+            },
+            deleteProductCategory: {
+                title: string,
+                message: string
+            }
         },
         boardCategory: {
             title: string

@@ -111,6 +111,19 @@ export interface ResourceCommon {
         width: string,
         thickness: string
     },
+    selectCodeListDialog: {
+        title: string,
+        searchTitle: string,
+        searchPlaceholder: string,
+        id: string,
+        code: string,
+        name: string,
+        error: string
+    },
+    selectCodeListItemDialog: {
+        title: string,
+        codeListPlaceholder: string
+    },
     unitId: {
         eur: string,
         millimeter: string,

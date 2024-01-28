@@ -14,22 +14,24 @@ export enum ProductAttributeKey {
 
 export interface ProductCategory {
     id: number,
+    code: string,
     name: string
 }
 
 export interface ProductCategoryData {
-    id: number
+    categoryId: number
 }
 
 export interface ProductCategoryItem {
-    id?: number,
-    name?: string,
+    id: number,
+    code: string,
+    name: string,
     category: ProductCategory
 }
 
 export interface ProductCategoryItemData {
     categoryId: number,
-    itemId?: number
+    itemId: number
 }
 
 export interface ProductData {

@@ -93,7 +93,6 @@ const CodeListItemsPage = () => {
             <>
                 <div className="flex flex-col p-5 w-full">
                     <WiwaSelectCodeListItem codeListId={Number(codeListId)} itemSelectedHandler={setParentItem}/>
-
                     <div className="overflow-x-auto">
                         <table className="table table-zebra">
                             <thead>

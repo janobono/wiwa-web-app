@@ -79,7 +79,20 @@
       "error": "Chyba zmeny sadzby DPH"
     },
     "productCategories": {
-      "title": "Kategórie produktov"
+      "title": "Kategórie produktov",
+      "id": "Id",
+      "code": "Kód",
+      "name": "Názov",
+      "confirm": "Potvrdiť zmeny kategórií produktov",
+      "back": "Späť na konfiguráciu produktov",
+      "error": "Chyba potvrdenia zmien kategórií produktov",
+      "addProductCategory": {
+        "title": "Pridať kategóriu produktov"
+      },
+      "deleteProductCategory": {
+        "title": "Odstrániť kategóriu produktov",
+        "message": "Naozaj si želáte zmazať kategóriu produktu?"
+      }
     },
     "boardCategory": {
       "title": "Kategória veľkoplošných materiálov"
