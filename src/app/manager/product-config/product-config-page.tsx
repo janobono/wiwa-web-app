@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit } from 'react-feather';
 
-import { useProductConfigState } from '../../../component/state/product-config-state-provider.tsx';
-import { useResourceState } from '../../../component/state/resource-state-provider.tsx';
-import WiwaValueNumber from '../../../component/app/wiwa-value-number.tsx';
-import WiwaButton from '../../../component/ui/wiwa-button.tsx';
-import VatRateDialog from './vat-rate-dialog.tsx';
-import WiwaSelectCodeListItemDialog from '../../../component/app/wiwa-select-code-list-item-dialog.tsx';
-import CodeListStateProvider from '../../../component/state/code-list-state-provider.tsx';
-import CodeListItemStateProvider from '../../../component/state/code-list-item-state-provider.tsx';
+import VatRateDialog from './vat-rate-dialog';
+import WiwaSelectCodeListItemDialog from '../../../component/app/wiwa-select-code-list-item-dialog';
+import WiwaValueNumber from '../../../component/app/wiwa-value-number';
+import CodeListStateProvider from '../../../component/state/code-list-state-provider';
+import CodeListItemStateProvider from '../../../component/state/code-list-item-state-provider';
+import { useProductConfigState } from '../../../component/state/product-config-state-provider';
+import { useResourceState } from '../../../component/state/resource-state-provider';
+import WiwaButton from '../../../component/ui/wiwa-button';
 import { ProductCategory } from '../../../model/service';
 
 const SELECT_BOARD_CATEGORY_DIALOG_ID = 'product-config-select-board-category-dialog-001';
@@ -151,14 +151,29 @@ const ProductConfigPage = () => {
                             </th>
                         </tr>
                         <tr className="hover">
-                            <th>{resourceState?.manager?.productConfig.searchCategories.title}</th>
-                            <td>{productConfigState?.searchItems?.length}</td>
+                            <th>{resourceState?.manager?.productConfig.searchItems.title}</th>
+                            <td>
+                                <div className="flex flex-col gap-1">
+                                    {productConfigState?.searchItems?.map(searchItem =>
+                                        <div
+                                            key={searchItem.id}
+                                            className="badge badge-secondary"
+                                        >
+                                            {searchItem.category.code}:{searchItem.category.name}
+                                            <div
+                                                className="badge badge-primary">
+                                                {searchItem.code}:{searchItem.name}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </td>
                             <th>
                                 <WiwaButton
                                     className="btn-primary md:btn-xs"
                                     title={resourceState?.common?.action.edit}
                                     disabled={productConfigState?.busy || productCategories.length === 0}
-                                    onClick={() => navigate('/manager/product-config/search-categories')}
+                                    onClick={() => navigate('/manager/product-config/search-items')}
                                 ><Edit size={18}/>
                                 </WiwaButton>
                             </th>

@@ -103,8 +103,24 @@
     "serviceCategory": {
       "title": "Kategória služieb"
     },
-    "searchCategories": {
-      "title": "Kategórie vyhľadávania"
+    "searchItems": {
+      "title": "Položky kategórií vyhľadávania",
+      "id": "Id",
+      "code": "Kód",
+      "name": "Názov",
+      "categoryId": "Id kategórie",
+      "categoryCode": "Kód kategórie",
+      "categoryName": "Názov kategórie",
+      "confirm": "Potvrdiť zmeny položiek kategórií vyhľadávania",
+      "back": "Späť na konfiguráciu produktov",
+      "error": "Chyba potvrdenia zmien položiek kategórií vyhľadávania",
+      "addSearchItem": {
+        "title": "Pridať položku kategórie vyhľadávania"
+      },
+      "deleteSearchItem": {
+        "title": "Odstrániť položku kategórie vyhľadávania",
+        "message": "Naozaj si želáte zmazať položku kategórie vyhľadávania?"
+      }
     }
   },
   "products": {

@@ -104,8 +104,24 @@ export interface ResourceManager {
         serviceCategory: {
             title: string
         },
-        searchCategories: {
-            title: string
+        searchItems: {
+            title: string,
+            id: string,
+            code: string,
+            name: string,
+            categoryId: string,
+            categoryCode: string,
+            categoryName: string,
+            confirm: string,
+            back: string,
+            error: string,
+            addSearchItem: {
+                title: string
+            },
+            deleteSearchItem: {
+                title: string,
+                message: string
+            }
         }
     },
     products: {

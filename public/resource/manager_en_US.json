@@ -103,8 +103,24 @@
     "serviceCategory": {
       "title": "Service category"
     },
-    "searchCategories": {
-      "title": "Search categories"
+    "searchItems": {
+      "title": "Search category items",
+      "id": "Id",
+      "code": "Code",
+      "name": "Name",
+      "categoryId": "Category Id",
+      "categoryCode": "Category code",
+      "categoryName": "Category name",
+      "confirm": "Confirm search category items changes",
+      "back": "Back to product config",
+      "error": "Search category items confirmation failed",
+      "addSearchItem": {
+        "title": "Add search category item"
+      },
+      "deleteSearchItem": {
+        "title": "Delete search category item",
+        "message": "Do you really want to delete search category item?"
+      }
     }
   },
   "products": {

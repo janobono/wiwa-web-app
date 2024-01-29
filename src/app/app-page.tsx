@@ -31,6 +31,7 @@ import CodeListItemsPage from './manager/code-lists/code-list-items-page';
 import ProductConfigBasePage from './manager/product-config-base-page';
 import ProductConfigPage from './manager/product-config/product-config-page';
 import ProductCategoriesPage from './manager/product-config/product-categories-page';
+import SearchItemsPage from './manager/product-config/search-items-page.tsx';
 import ProductsBasePage from './manager/products-base-page';
 import ProductsPage from './manager/products/products-page';
 import ProductPage from './manager/products/product-page';
@@ -92,6 +93,7 @@ const AppPage = () => {
                     <Route index element={<Navigate to="index" replace/>}/>
                     <Route path="index" element={<ProductConfigPage/>}/>
                     <Route path="product-categories" element={<ProductCategoriesPage/>}/>
+                    <Route path="search-items" element={<SearchItemsPage/>}/>
                 </Route>
             </Route>
 
