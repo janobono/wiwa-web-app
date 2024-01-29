@@ -205,7 +205,23 @@ export interface ResourceManager {
                 }
             },
             categoryItems: {
-                title: string
+                title: string,
+                id: string,
+                code: string,
+                name: string,
+                categoryId: string,
+                categoryCode: string,
+                categoryName: string,
+                confirm: string,
+                back: string,
+                error: string,
+                addItem: {
+                    title: string
+                },
+                deleteItem: {
+                    title: string,
+                    message: string
+                }
             },
             fetchDataError: string
         }

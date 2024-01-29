@@ -7,7 +7,15 @@ const WiwaProductCategoryItems = ({categoryItems}: { categoryItems: ProductCateg
                 <tbody>
                 {categoryItems.map(item =>
                     <tr key={item.id}>
-                        <th>{item.id}</th>
+                        <td>
+                            <div className="badge badge-secondary">
+                                {item.category.code}:{item.category.name}
+                                <div
+                                    className="badge badge-primary">
+                                    {item.code}:{item.name}
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 )}
                 </tbody>

@@ -14,6 +14,9 @@ const WiwaProductUnitPrices = ({unitPrices}: { unitPrices: ProductUnitPrice[] })
                         <td><WiwaValueNumber value={unitPrice.value}/><span> </span><WiwaUnitValue
                             unitId={unitPrice.unit}/>
                         </td>
+                        <td><WiwaValueNumber value={unitPrice.vatValue}/><span> </span><WiwaUnitValue
+                            unitId={unitPrice.unit}/>
+                        </td>
                     </tr>
                 )}
                 </tbody>

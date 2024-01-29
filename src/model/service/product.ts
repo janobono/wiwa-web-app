@@ -80,6 +80,7 @@ export interface Product {
 
 export interface ProductUnitPrice {
     validFrom: string,
-    value: number
+    value: number,
+    vatValue?: number,
     unit: UnitId
 }

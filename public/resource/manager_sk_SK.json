@@ -204,7 +204,23 @@
         }
       },
       "categoryItems": {
-        "title": "Položky kategorií produktu"
+        "title": "Položky kategorií produktu",
+        "id": "Id",
+        "code": "Kód",
+        "name": "Názov",
+        "categoryId": "Id kategórie",
+        "categoryCode": "Kód kategórie",
+        "categoryName": "Názov kategórie",
+        "confirm": "Potvrdiť zmeny položiek kategórií produktu",
+        "back": "Späť na produkt",
+        "error": "Chyba potvrdenia zmien položiek kategórií produktu",
+        "addItem": {
+          "title": "Pridať položku kategórie produktu"
+        },
+        "deleteItem": {
+          "title": "Odstrániť položku kategórií produktu",
+          "message": "Naozaj si želáte zmazať položku kategórií produktu?"
+        }
       },
       "fetchDataError": "Chyba načítania produktu"
     }

@@ -204,7 +204,23 @@
         }
       },
       "categoryItems": {
-        "title": "Product category items"
+        "title": "Product category items",
+        "id": "Id",
+        "code": "Code",
+        "name": "Name",
+        "categoryId": "Category Id",
+        "categoryCode": "Category code",
+        "categoryName": "Category name",
+        "confirm": "Confirm product category items changes",
+        "back": "Back to product",
+        "error": "Product category items confirmation failed",
+        "addItem": {
+          "title": "Add product category item"
+        },
+        "deleteItem": {
+          "title": "Delete product category item",
+          "message": "Do you really want to delete product category item?"
+        }
       },
       "fetchDataError": "Product loading failed"
     }
