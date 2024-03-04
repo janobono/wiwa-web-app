@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 import { Captcha } from '../../model/service';
 import { ClientResponse, CONTEXT_PATH, getData } from '../../data';
 
-const PATH_CAPTCHA = CONTEXT_PATH + 'captcha';
+const PATH_CAPTCHA = CONTEXT_PATH + 'ui/captcha';
 
 export interface CaptchaState {
     busy: boolean,

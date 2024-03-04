@@ -2,14 +2,14 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 
 import { useAppState } from './app-state-provider';
 import { useHealthState } from './health-state-provider';
-import { ApplicationInfo, ApplicationProperties, CompanyInfo, SingleValueBody, Unit } from '../../model/service';
+import { ApplicationProperties, CompanyInfo, SingleValueBody, Unit } from '../../model/service';
 import { CONTEXT_PATH, getData } from '../../data';
 
 const PATH_UI = CONTEXT_PATH + 'ui/';
 
 export interface UiState {
-    applicationInfo?: ApplicationInfo,
-    setApplicationInfo: (applicationInfo?: ApplicationInfo) => void,
+    applicationInfo?: string[],
+    setApplicationInfo: (applicationInfo?: string[]) => void,
     applicationProperties?: ApplicationProperties,
     setApplicationProperties: (applicationProperties?: ApplicationProperties) => void,
     businessConditions?: string,
@@ -39,7 +39,7 @@ const UiStateProvider = ({children}: { children: ReactNode }) => {
     const healthState = useHealthState();
     const appState = useAppState();
 
-    const [applicationInfo, setApplicationInfo] = useState<ApplicationInfo>();
+    const [applicationInfo, setApplicationInfo] = useState<string[]>();
     const [applicationProperties, setApplicationProperties] = useState<ApplicationProperties>();
     const [businessConditions, setBusinessConditions] = useState<string>();
     const [companyInfo, setCompanyInfo] = useState<CompanyInfo>();
@@ -54,7 +54,7 @@ const UiStateProvider = ({children}: { children: ReactNode }) => {
     useEffect(() => {
         if (healthState?.up) {
             const fetchApplicationInfo = async () => {
-                const response = await getData<ApplicationInfo>(PATH_UI + 'application-info');
+                const response = await getData<string[]>(PATH_UI + 'application-info');
                 if (response.data) {
                     setApplicationInfo(response.data);
                 }

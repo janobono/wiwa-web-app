@@ -13,7 +13,7 @@ const HomePage = () => {
                 <div className="container flex flex-col justify-center items-center gap-5 p-5 m-auto">
                     <WiwaMarkdownRenderer className="prose max-w-none" md={uiState?.welcomeText}/>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {uiState?.applicationInfo?.items.map((item, index) =>
+                        {uiState?.applicationInfo?.map((item, index) =>
                             <WiwaMarkdownRenderer className="prose prose-sm" key={index} md={item}/>
                         )}
                     </div>

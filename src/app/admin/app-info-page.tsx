@@ -9,7 +9,6 @@ import { useResourceState } from '../../component/state/resource-state-provider'
 import { useUiState } from '../../component/state/ui-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
-import { ApplicationInfo } from '../../model/service';
 
 const APP_INFO_DIALOG_ID = 'admin-app-info-item-dialog-001';
 
@@ -18,7 +17,7 @@ const AppInfoPage = () => {
     const resourceState = useResourceState();
     const uiState = useUiState();
 
-    const [data, setData] = useState<ApplicationInfo>();
+    const [data, setData] = useState<string[]>();
 
     const [currentIndex, setCurrentIndex] = useState<number>();
     const [currentItem, setCurrentItem] = useState('');
@@ -35,7 +34,7 @@ const AppInfoPage = () => {
     const editHandler = (index?: number) => {
         if (index !== undefined && data !== undefined) {
             setCurrentIndex(index);
-            setCurrentItem(data.items[index]);
+            setCurrentItem(data[index]);
         } else {
             setCurrentIndex(undefined);
             setCurrentItem('');
@@ -45,11 +44,11 @@ const AppInfoPage = () => {
 
     const setItemHandler = (item: string, index?: number) => {
         if (data) {
-            const _data = {items: [...data.items]};
+            const _data =  [...data];
             if (index !== undefined) {
-                _data.items[index] = item;
+                _data[index] = item;
             } else {
-                _data.items.push(item);
+                _data.push(item);
             }
             setData(_data);
             setShowDialog(false);
@@ -59,8 +58,8 @@ const AppInfoPage = () => {
 
     const deleteItemHandler = (index: number) => {
         if (data) {
-            const _data = {items: [...data.items]};
-            _data.items.splice(index, 1);
+            const _data =  [...data];
+            _data.splice(index, 1);
             setData(_data);
         }
     }
@@ -104,7 +103,7 @@ const AppInfoPage = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         {data ?
-                            data.items.map(
+                            data.map(
                                 (item, index) =>
                                     <AppInfoItem
                                         key={index}

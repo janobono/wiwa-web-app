@@ -10,10 +10,6 @@ export interface ApplicationImage {
     thumbnail: string
 }
 
-export interface ApplicationInfo {
-    items: string[]
-}
-
 export interface CompanyInfo {
     name: string,
     street: string,

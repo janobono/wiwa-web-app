@@ -4,7 +4,6 @@ import { useAuthState } from './auth-state-provider';
 import { useUiState } from './ui-state-provider';
 import {
     ApplicationImage,
-    ApplicationInfo,
     ApplicationProperties,
     CompanyInfo,
     SingleValueBody,
@@ -16,7 +15,7 @@ const PATH_CONFIG = CONTEXT_PATH + 'config/';
 
 export interface ConfigState {
     busy: boolean,
-    setApplicationInfo: (applicationInfo: ApplicationInfo) => Promise<ClientResponse<ApplicationInfo>>,
+    setApplicationInfo: (applicationInfo: string[]) => Promise<ClientResponse<string[]>>,
     setApplicationProperties: (applicationProperties: ApplicationProperties) => Promise<ClientResponse<ApplicationProperties>>,
     setBusinessConditions: (businessConditions: string) => Promise<ClientResponse<SingleValueBody<string>>>,
     setCompanyInfo: (companyInfo: CompanyInfo) => Promise<ClientResponse<CompanyInfo>>,
@@ -37,10 +36,10 @@ const ConfigStateProvider = ({children}: { children: ReactNode }) => {
 
     const [busy, setBusy] = useState(false);
 
-    const setApplicationInfo = async (applicationInfo: ApplicationInfo) => {
+    const setApplicationInfo = async (applicationInfo: string[]) => {
         setBusy(true);
         try {
-            const response = await postData<ApplicationInfo>(
+            const response = await postData<string[]>(
                 PATH_CONFIG + 'application-info',
                 applicationInfo,
                 authState?.accessToken
