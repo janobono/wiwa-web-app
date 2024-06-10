@@ -77,7 +77,7 @@ const UnitsPage = () => {
                                     <th>
                                         <WiwaButton
                                             className="btn-primary md:btn-xs"
-                                            title={resourceState?.admin?.units.editUnit.title}
+                                            title={resourceState?.common?.action.edit}
                                             disabled={busy}
                                             onClick={() => {
                                                 setSelectedUnitId(unit.id);
@@ -170,9 +170,7 @@ const UnitDialog = ({showDialog, unitId, okHandler, cancelHandler}: {
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
-                            onClick={() => {
-                                cancelHandler();
-                            }}
+                            onClick={cancelHandler}
                         >{resourceState?.common?.action.cancel}
                         </WiwaButton>
                     </div>

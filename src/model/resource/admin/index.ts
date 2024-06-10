@@ -233,6 +233,21 @@ export interface ResourceAdmin {
             csvSeparator: string,
             csvReplacements: string,
             csvColumns: string
+        },
+        key: string,
+        value: string,
+        error: string,
+        editEntry: {
+            label: string,
+            placeholder: string,
+            required: string
+        },
+        csvReplacement: {
+            title: string,
+            regexLabel: string,
+            regexPlaceholder: string,
+            regexRequired: string,
+            replacementLabel: string
         }
     },
     textInfo: {

@@ -235,8 +235,23 @@
       "content": "Content",
       "packageType": "Package type",
       "csvSeparator": "CSV separator",
-      "csvReplacements": "CSV replacements",
+      "csvReplacements": "CSV replace",
       "csvColumns": "CSV columns"
+    },
+    "key": "key",
+    "value": "value",
+    "error": "Order format submitting error",
+    "editEntry": {
+      "label": "Value",
+      "placeholder": "Enter value",
+      "required": "Value is required"
+    },
+    "csvReplacement": {
+      "title": "CSV replace",
+      "regexLabel": "regex",
+      "regexPlaceholder": "Enter regex",
+      "regexRequired": "Regex is required",
+      "replacementLabel": "replacement"
     }
   },
   "textInfo": {

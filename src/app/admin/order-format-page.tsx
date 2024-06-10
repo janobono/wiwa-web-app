@@ -13,6 +13,12 @@ import {
     OrderProperties
 } from '../../api/model/application';
 import { getOrderProperties } from '../../api/controller/ui';
+import EntryListEditor from '../../component/app/admin/entry-list-editor.tsx';
+import { setOrderProperties } from '../../api/controller/config';
+import CsvReplacementsEditor from '../../component/app/admin/csv-replacements-editor.tsx';
+import CsvSeparatorEditor from '../../component/app/admin/csv-separator-editor.tsx';
+
+const ORDER_FORMAT_DIALOG_ID = 'order-format-dialog-';
 
 const OrderFormatPage = () => {
     const authState = useAuthState();
@@ -22,10 +28,28 @@ const OrderFormatPage = () => {
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<OrderProperties>();
+    const [error, setError] = useState<string>();
 
     useEffect(() => {
         getOrderProperties().then(data => setValue(data.data));
     }, []);
+
+    const saveValue = async (newData: OrderProperties) => {
+        setError(undefined);
+        setBusy(true);
+        try {
+            if (value) {
+                const response = await setOrderProperties(newData, authState?.authToken?.accessToken);
+                if (response.error) {
+                    setError(resourceState?.admin?.orderFormat.error);
+                } else {
+                    setValue(response.data);
+                }
+            }
+        } finally {
+            setBusy(false);
+        }
+    }
 
     return (
         <div className="flex flex-col p-5 w-full">
@@ -48,126 +72,166 @@ const OrderFormatPage = () => {
             </select>
 
             {index == 1 &&
-                <div className="overflow-x-auto">
-                    <table className="table table-zebra">
-                        <tbody>
-                        {Object.values(BoardDimension).map(key =>
-                            <tr key={key || ''} className="hover">
-                                <td>{key}</td>
-                                <td>{value?.dimensions.find(item => item.key === key)?.value || key}</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
+                <EntryListEditor
+                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                    busy={busy}
+                    keys={Object.values(BoardDimension)}
+                    entries={value?.dimensions || []}
+                    submitHandler={async (entries) => {
+                        if (value) {
+                            const newData = {...value};
+                            newData.dimensions = entries;
+                            await saveValue(newData);
+                        }
+                    }}
+                />
             }
 
             {index == 2 &&
-                <div className="overflow-x-auto">
-                    <table className="table table-zebra">
-                        <tbody>
-                        {Object.values(BoardPosition).map(key =>
-                            <tr key={key || ''} className="hover">
-                                <td>{key}</td>
-                                <td>{value?.boards.find(item => item.key === key)?.value || key}</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
+                <EntryListEditor
+                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                    busy={busy}
+                    keys={Object.values(BoardPosition)}
+                    entries={value?.boards || []}
+                    submitHandler={async (entries) => {
+                        if (value) {
+                            const newData = {...value};
+                            newData.boards = entries;
+                            await saveValue(newData);
+                        }
+                    }}
+                />
             }
 
             {index == 3 &&
-                <div className="overflow-x-auto">
-                    <table className="table table-zebra">
-                        <tbody>
-                        {Object.values(EdgePosition).map(key =>
-                            <tr key={key || ''} className="hover">
-                                <td>{key}</td>
-                                <td>{value?.edges.find(item => item.key === key)?.value || key}</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
+                <EntryListEditor
+                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                    busy={busy}
+                    keys={Object.values(EdgePosition)}
+                    entries={value?.edges || []}
+                    submitHandler={async (entries) => {
+                        if (value) {
+                            const newData = {...value};
+                            newData.edges = entries;
+                            await saveValue(newData);
+                        }
+                    }}
+                />
             }
 
             {index == 4 &&
-                <div className="overflow-x-auto">
-                    <table className="table table-zebra">
-                        <tbody>
-                        {Object.values(CornerPosition).map(key =>
-                            <tr key={key || ''} className="hover">
-                                <td>{key}</td>
-                                <td>{value?.corners.find(item => item.key === key)?.value || key}</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
+                <EntryListEditor
+                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                    busy={busy}
+                    keys={Object.values(CornerPosition)}
+                    entries={value?.corners || []}
+                    submitHandler={async (entries) => {
+                        if (value) {
+                            const newData = {...value};
+                            newData.corners = entries;
+                            await saveValue(newData);
+                        }
+                    }}
+                />
             }
 
             {index == 5 &&
-                <div className="overflow-x-auto">
-                    <table className="table table-zebra">
-                        <tbody>
-                        {Object.values(OrderPattern).map(key =>
-                            <tr key={key || ''} className="hover">
-                                <td>{key}</td>
-                                <td>{value?.pattern.find(item => item.key === key)?.value || key}</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
+                <EntryListEditor
+                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                    busy={busy}
+                    keys={Object.values(OrderPattern)}
+                    entries={value?.pattern || []}
+                    submitHandler={async (entries) => {
+                        if (value) {
+                            const newData = {...value};
+                            newData.pattern = entries;
+                            await saveValue(newData);
+                        }
+                    }}
+                />
             }
 
             {index == 6 &&
-                <div className="overflow-x-auto">
-                    <table className="table table-zebra">
-                        <tbody>
-                        {Object.values(OrderContent).map(key =>
-                            <tr key={key || ''} className="hover">
-                                <td>{key}</td>
-                                <td>{value?.content.find(item => item.key === key)?.value || key}</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
+                <EntryListEditor
+                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                    busy={busy}
+                    keys={Object.values(OrderContent)}
+                    entries={value?.content || []}
+                    submitHandler={async (entries) => {
+                        if (value) {
+                            const newData = {...value};
+                            newData.content = entries;
+                            await saveValue(newData);
+                        }
+                    }}
+                />
             }
 
             {index == 7 &&
-                <div className="overflow-x-auto">
-                    <table className="table table-zebra">
-                        <tbody>
-                        {Object.values(OrderPackageType).map(key =>
-                            <tr key={key || ''} className="hover">
-                                <td>{key}</td>
-                                <td>{value?.packageType.find(item => item.key === key)?.value || key}</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
+                <EntryListEditor
+                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                    busy={busy}
+                    keys={Object.values(OrderPackageType)}
+                    entries={value?.packageType || []}
+                    submitHandler={async (entries) => {
+                        if (value) {
+                            const newData = {...value};
+                            newData.packageType = entries;
+                            await saveValue(newData);
+                        }
+                    }}
+                />
             }
 
-            {index == 8 && <div>csvSeparator</div>}
-            {index == 9 && <div>csvReplacements</div>}
+            {index == 8 &&
+                <CsvSeparatorEditor
+                    busy={busy}
+                    separator={value?.csvSeparator || ''}
+                    submitHandler={async (separator) => {
+                        if (value) {
+                            const newData = {...value};
+                            newData.csvSeparator = separator;
+                            await saveValue(newData);
+                        }
+                    }}
+                />
+            }
+
+            {index == 9 &&
+                <CsvReplacementsEditor
+                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                    busy={busy}
+                    entries={value?.csvReplacements || []}
+                    submitHandler={async (entries) => {
+                        if (value) {
+                            const newData = {...value};
+                            newData.csvReplacements = entries;
+                            await saveValue(newData);
+                        }
+                    }}
+                />
+            }
 
             {index == 10 &&
-                <div className="overflow-x-auto">
-                    <table className="table table-zebra">
-                        <tbody>
-                        {Object.values(CSVColumn).map(key =>
-                            <tr key={key || ''} className="hover">
-                                <td>{key}</td>
-                                <td>{value?.csvColumns.find(item => item.key === key)?.value || key}</td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
+                <EntryListEditor
+                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                    busy={busy}
+                    keys={Object.values(CSVColumn)}
+                    entries={value?.csvColumns || []}
+                    submitHandler={async (entries) => {
+                        if (value) {
+                            const newData = {...value};
+                            newData.csvColumns = entries;
+                            await saveValue(newData);
+                        }
+                    }}
+                />
+            }
+
+            {error &&
+                <label className="label">
+                    <span className="label-text-alt text-error">{error}</span>
+                </label>
             }
         </div>
     )

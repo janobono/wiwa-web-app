@@ -231,8 +231,23 @@
       "content": "Obsah",
       "packageType": "Typ balenia",
       "csvSeparator": "CSV oddeľovač",
-      "csvReplacements": "CSV text filtre",
+      "csvReplacements": "CSV nahradenie textu",
       "csvColumns": "CSV stĺpce"
+    },
+    "key": "kľúč",
+    "value": "hodnota",
+    "error": "Odoslanie formátu objednávky neúspešné",
+    "editEntry": {
+      "label": "Hodnota",
+      "placeholder": "Zadajte hodnotu",
+      "required": "Vyžaduje sa hodnota"
+    },
+    "csvReplacement": {
+      "title": "CSV nahradenie textu",
+      "regexLabel": "regulárny výraz",
+      "regexPlaceholder": "Zadajte regulárny výraz",
+      "regexRequired": "Vyžaduje sa regulárny výraz",
+      "replacementLabel": "nahradiť"
     }
   },
   "textInfo": {

@@ -319,9 +319,9 @@ const CompanyInfoPage = () => {
                     </iframe>
                 </div>
 
-                <div className="join pt-5">
+                <div className="pt-5">
                     <WiwaButton
-                        className="btn-primary join-item"
+                        className="btn-primary"
                         disabled={busy || !isFormValid()}
                         onClick={submit}
                     >{resourceState?.common?.action.submit}

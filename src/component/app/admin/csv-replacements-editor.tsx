@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Edit } from 'react-feather';
+import { Minus, Plus } from 'react-feather';
 
 import { Entry } from '../../../api/model';
 import BaseDialog from '../../dialog/base-dialog';
@@ -9,10 +9,9 @@ import WiwaButton from '../../ui/wiwa-button';
 import { useDialogState } from '../../../state/dialog';
 import { useResourceState } from '../../../state/resource';
 
-const EntryListEditor = ({dialogId, busy, keys, entries, submitHandler}: {
+const CsvReplacementsEditor = ({dialogId, busy, entries, submitHandler}: {
     dialogId: string,
     busy: boolean,
-    keys: string[],
     entries: Entry<string, string>[],
     submitHandler: (entries: Entry<string, string>[]) => Promise<void>
 }) => {
@@ -20,11 +19,11 @@ const EntryListEditor = ({dialogId, busy, keys, entries, submitHandler}: {
 
     const [data, setData] = useState<Entry<string, string>[]>();
     const [showDialog, setShowDialog] = useState(false);
-    const [selectedKey, setSelectedKey] = useState<string>();
-    const [selectedValue, setSelectedValue] = useState<string>();
 
     useEffect(() => {
-        setData(entries);
+        if (entries) {
+            setData([...entries]);
+        }
     }, [entries]);
 
     return (
@@ -34,30 +33,45 @@ const EntryListEditor = ({dialogId, busy, keys, entries, submitHandler}: {
                     <thead>
                     <tr>
                         <th>
-                            {resourceState?.admin?.orderFormat.key}
+                            {resourceState?.admin?.orderFormat.csvReplacement.regexLabel}
                         </th>
                         <th>
-                            {resourceState?.admin?.orderFormat.value}
+                            {resourceState?.admin?.orderFormat.csvReplacement.replacementLabel}
                         </th>
-                        <th></th>
+                        <th>
+                            <WiwaButton
+                                className="btn-primary md:btn-xs"
+                                title={resourceState?.common?.action.add}
+                                disabled={busy}
+                                onClick={() => {
+                                    setShowDialog(true);
+                                }}
+                            ><Plus size={18}/>
+                            </WiwaButton>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
-                    {keys?.map(key =>
-                        <tr key={key} className="hover">
-                            <td>{key}</td>
-                            <td>{data?.find(item => item.key === key)?.value || key}</td>
+                    {data?.map(entry =>
+                        <tr key={entry.key} className="hover">
+                            <td>{entry.key}</td>
+                            <td>{entry.value}</td>
                             <td>
                                 <WiwaButton
                                     className="btn-primary md:btn-xs"
-                                    title={resourceState?.common?.action.edit}
+                                    title={resourceState?.common?.action.delete}
                                     disabled={busy}
                                     onClick={() => {
-                                        setSelectedKey(key);
-                                        setSelectedValue(data?.find(item => item.key === key)?.value || key);
-                                        setShowDialog(true);
+                                        if (data) {
+                                            const newData = [...data];
+                                            const index = newData.findIndex(item => item.key === entry.key);
+                                            if (index !== -1) {
+                                                newData.splice(index, 1);
+                                                setData(newData);
+                                            }
+                                        }
                                     }}
-                                ><Edit size={18}/>
+                                ><Minus size={18}/>
                                 </WiwaButton>
                             </td>
                         </tr>
@@ -77,26 +91,20 @@ const EntryListEditor = ({dialogId, busy, keys, entries, submitHandler}: {
                     </WiwaButton>
                 </div>
             </div>
-            <EntryDialog
+            <CsvReplacementDialog
                 dialogId={dialogId}
                 showDialog={showDialog}
-                key={selectedKey || ''}
-                value={selectedValue || ''}
-                setValue={setSelectedValue}
-                okHandler={() => {
-                    if (selectedKey !== undefined && data !== undefined) {
+                okHandler={(entry) => {
+                    if (data) {
                         const newData = [...data];
-                        const index = newData.findIndex(item => item.key == selectedKey);
-                        console.log(selectedKey);
-                        console.log(newData);
+                        const index = newData.findIndex(item => item.key === entry.key);
                         if (index !== -1) {
-                            newData[index] = {key: selectedKey, value: selectedValue || selectedKey};
-                        } else {
-                            newData.push({key: selectedKey, value: selectedValue || selectedKey});
+                            newData.splice(index, 1);
                         }
+                        newData.push(entry);
                         setData(newData);
-                        setShowDialog(false);
                     }
+                    setShowDialog(false);
                 }}
                 cancelHandler={() => setShowDialog(false)}
             />
@@ -104,53 +112,65 @@ const EntryListEditor = ({dialogId, busy, keys, entries, submitHandler}: {
     )
 }
 
-export default EntryListEditor;
+export default CsvReplacementsEditor;
 
-const EntryDialog = ({dialogId, showDialog, key, value, setValue, okHandler, cancelHandler}: {
+const CsvReplacementDialog = ({dialogId, showDialog, okHandler, cancelHandler}: {
     dialogId: string,
     showDialog: boolean,
-    key: string,
-    value: string,
-    setValue: (value: string) => void,
-    okHandler: () => void,
+    okHandler: (entry: Entry<string, string>) => void,
     cancelHandler: () => void
 }) => {
     const dialogState = useDialogState();
     const resourceState = useResourceState();
 
-    const [valueValid, setValueValid] = useState(false);
+    const [regex, setRegex] = useState('');
+    const [regexValid, setRegexValid] = useState(false);
+
+    const [replacement, setReplacement] = useState('');
+
+    useEffect(() => {
+        setRegex('');
+        setReplacement('');
+    }, [showDialog]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <BaseDialog id={dialogId} showDialog={showDialog} closeHandler={cancelHandler}>
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {key}
+                        {resourceState?.admin?.orderFormat.csvReplacement.title}
                     </div>
 
                     <WiwaFormInput
-                        label={resourceState?.admin?.orderFormat.editEntry.label}
+                        label={resourceState?.admin?.orderFormat.csvReplacement.regexLabel}
                         required={true}
-                        placeholder={resourceState?.admin?.orderFormat.editEntry.placeholder}
-                        value={value}
-                        setValue={setValue}
-                        setValid={setValueValid}
+                        placeholder={resourceState?.admin?.orderFormat.csvReplacement.regexPlaceholder}
+                        value={regex}
+                        setValue={setRegex}
+                        setValid={setRegexValid}
                         validate={() => {
-                            if (value.trim().length === 0) {
+                            if (regex.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.admin?.orderFormat.editEntry.required
+                                    message: resourceState?.admin?.orderFormat.csvReplacement.regexRequired
                                 };
                             }
                             return {valid: true};
                         }}
                     />
 
+                    <WiwaFormInput
+                        label={resourceState?.admin?.orderFormat.csvReplacement.replacementLabel}
+                        required={true}
+                        value={replacement}
+                        setValue={setReplacement}
+                    />
+
                     <div className="join pt-5">
                         <WiwaButton
                             className="btn-primary join-item"
-                            disabled={!valueValid}
-                            onClick={okHandler}
+                            disabled={!regexValid}
+                            onClick={() => okHandler({key: regex || '', value: replacement || ''})}
                         >{resourceState?.common?.action.ok}
                         </WiwaButton>
                         <WiwaButton

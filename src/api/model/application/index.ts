@@ -214,16 +214,16 @@ export enum OrderPattern {
 }
 
 export interface OrderProperties {
-    dimensions: Entry<BoardDimension, string>[],
-    boards: Entry<BoardPosition, string>[],
-    edges: Entry<EdgePosition, string>[],
-    corners: Entry<CornerPosition, string>[],
-    pattern: Entry<OrderPattern, string>[],
-    content: Entry<OrderContent, string>[],
-    packageType: Entry<OrderPackageType, string>[],
+    dimensions: Entry<string, string>[],
+    boards: Entry<string, string>[],
+    edges: Entry<string, string>[],
+    corners: Entry<string, string>[],
+    pattern: Entry<string, string>[],
+    content: Entry<string, string>[],
+    packageType: Entry<string, string>[],
     csvSeparator: string,
     csvReplacements: Entry<string, string>[],
-    csvColumns: Entry<CSVColumn, string>[]
+    csvColumns: Entry<string, string>[]
 }
 
 export interface OrderSendMail {
