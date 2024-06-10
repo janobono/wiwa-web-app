@@ -1,11 +1,9 @@
-import { useUiState } from '../../component/state/ui-state-provider';
-import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
+import MdPage from './md-page';
+import { getGdprInfo } from '../../api/controller/ui';
 
 const GdprInfoPage = () => {
-    const uiState = useUiState();
-
     return (
-        <WiwaMarkdownRenderer className="prose container p-5 mx-auto" md={uiState?.gdprInfo}/>
+        <MdPage getData={getGdprInfo}/>
     )
 }
 

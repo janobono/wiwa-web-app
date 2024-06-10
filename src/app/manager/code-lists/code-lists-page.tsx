@@ -3,16 +3,17 @@ import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Edit, List, Plus, Search, Trash } from 'react-feather';
 
+import { CodeList, CodeListChange } from '../../../api/model/code-list';
 import BaseDialog from '../../../component/dialog/base-dialog';
-import { useAuthState } from '../../../component/state/auth-state-provider';
-import { DialogAnswer, DialogType, useDialogState } from '../../../component/state/dialog-state-provider';
-import { useCodeListState } from '../../../component/state/code-list-state-provider.tsx';
-import { useResourceState } from '../../../component/state/resource-state-provider';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInput from '../../../component/ui/wiwa-form-input';
 import WiwaInput from '../../../component/ui/wiwa-input';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
-import { CodeList, CodeListData } from '../../../model/service';
+import { DialogAnswer, DialogType } from '../../../model/ui';
+import { useAuthState } from '../../../state/auth';
+import { useDialogState } from '../../../state/dialog';
+import { useCodeListState } from '../../../state/code-list';
+import { useResourceState } from '../../../state/resource';
 
 const CODE_LIST_DIALOG_ID = 'code-list-dialog-001';
 
@@ -35,19 +36,19 @@ const CodeListsPage = () => {
 
     const fetchData = async () => {
         setError(undefined);
-        const response = await codeListState?.getCodeLists(page, 10, searchField);
+        const response = await codeListState?.getCodeLists({searchField}, {page, size: 10});
         if (response?.error) {
             setError(resourceState?.manager?.codeLists.fetchDataError);
         }
     }
 
-    const okHandler = async (codeListData: CodeListData) => {
+    const okHandler = async (codeListChange: CodeListChange) => {
         setError(undefined);
         let response;
         if (selectedCodeList) {
-            response = await codeListState?.setCodeList(selectedCodeList.id, codeListData);
+            response = await codeListState?.setCodeList(selectedCodeList.id, codeListChange);
         } else {
-            response = await codeListState?.addCodeList(codeListData);
+            response = await codeListState?.addCodeList(codeListChange);
         }
         if (response?.error) {
             if (selectedCodeList) {
@@ -68,7 +69,7 @@ const CodeListsPage = () => {
 
     useEffect(() => {
         fetchData().then();
-    }, [authState?.accessToken]);
+    }, [authState?.authUser]);
 
     useEffect(() => {
         setPrevious(codeListState?.data !== undefined && !codeListState?.data.first);
@@ -213,7 +214,7 @@ export default CodeListsPage;
 const CodeListDataDialog = ({showDialog, codeList, okHandler, cancelHandler, submitting}: {
     showDialog: boolean,
     codeList?: CodeList,
-    okHandler: (codeListData: CodeListData) => void,
+    okHandler: (codeListChange: CodeListChange) => void,
     cancelHandler: () => void,
     submitting: boolean
 }) => {

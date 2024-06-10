@@ -1,118 +1,21 @@
 import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { Edit } from 'react-feather';
 
-import BaseDialog from '../../component/dialog/base-dialog';
-import { useConfigState } from '../../component/state/config-state-provider';
-import { useDialogState } from '../../component/state/dialog-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
-import { useUiState } from '../../component/state/ui-state-provider';
-import WiwaButton from '../../component/ui/wiwa-button.tsx';
+import { setCompanyInfo } from '../../api/controller/config';
+import { getCompanyInfo } from '../../api/controller/ui';
+import { CompanyInfo } from '../../api/model/application';
+import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormTextarea from '../../component/ui/wiwa-form-textarea';
 import { EMAIL_REGEX } from '../../const';
-
-const COMPANY_INFO_DIALOG_ID = 'admin-company-info-dialog-001';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const CompanyInfoPage = () => {
+    const authState = useAuthState();
     const resourceState = useResourceState();
-    const uiState = useUiState();
 
-    const [showDialog, setShowDialog] = useState(false);
-
-    return (
-        <>
-            <div className="flex flex-col p-5 gap-5 w-full">
-                <div className="border border-solid flex flex-col justify-between p-5">
-                    <div className="p-5 flex content-stretch justify-center items-center">
-                        <WiwaButton
-                            className="btn-primary"
-                            title={resourceState?.admin?.companyInfo.title}
-                            onClick={() => setShowDialog(true)}
-                        ><Edit size={18}/></WiwaButton>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                        <table className="table">
-                            <tbody>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.nameLabel}</td>
-                                <td>{uiState?.companyInfo?.name}</td>
-                            </tr>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.streetLabel}</td>
-                                <td>{uiState?.companyInfo?.street}</td>
-                            </tr>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.cityLabel}</td>
-                                <td>{uiState?.companyInfo?.city}</td>
-                            </tr>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.zipCodeLabel}</td>
-                                <td>{uiState?.companyInfo?.zipCode}</td>
-                            </tr>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.stateLabel}</td>
-                                <td>{uiState?.companyInfo?.street}</td>
-                            </tr>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.phoneLabel}</td>
-                                <td>{uiState?.companyInfo?.phone}</td>
-                            </tr>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.mailLabel}</td>
-                                <td>{uiState?.companyInfo?.mail}</td>
-                            </tr>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.businessIdLabel}</td>
-                                <td>{uiState?.companyInfo?.businessId}</td>
-                            </tr>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.taxIdLabel}</td>
-                                <td>{uiState?.companyInfo?.taxId}</td>
-                            </tr>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.vatRegNoLabel}</td>
-                                <td>{uiState?.companyInfo?.vatRegNo}</td>
-                            </tr>
-                            <tr>
-                                <td>{resourceState?.admin?.companyInfo.commercialRegisterInfoLabel}</td>
-                                <td>{uiState?.companyInfo?.commercialRegisterInfo}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <iframe
-                        title="contact-info-frame"
-                        width="100%"
-                        height="380px"
-                        src={uiState?.companyInfo?.mapUrl}
-                        className="border-0">
-                    </iframe>
-                </div>
-            </div>
-            <EditCompanyDialog
-                showDialog={showDialog}
-                okHandler={() => {
-                    setShowDialog(false);
-                }}
-                cancelHandler={() => setShowDialog(false)}
-            />
-        </>
-    )
-}
-
-export default CompanyInfoPage;
-
-const EditCompanyDialog = ({showDialog, okHandler, cancelHandler}: {
-    showDialog: boolean,
-    okHandler: () => void,
-    cancelHandler: () => void
-}) => {
-    const configState = useConfigState();
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
-    const uiState = useUiState();
+    const [busy, setBusy] = useState(false);
+    const [value, setValue] = useState<CompanyInfo>();
 
     const [name, setName] = useState('');
     const [nameValid, setNameValid] = useState(false);
@@ -146,87 +49,89 @@ const EditCompanyDialog = ({showDialog, okHandler, cancelHandler}: {
     const [mapUrl, setMapUrl] = useState('');
     const [mapUrlValid, setMapUrlValid] = useState(false);
 
-    const [formSubmit, setFormSubmit] = useState(false);
     const [formError, setFormError] = useState<string>();
 
     useEffect(() => {
-        if (uiState?.companyInfo) {
-            setName(uiState?.companyInfo.name);
+        getCompanyInfo().then(data => setValue(data.data));
+    }, []);
+
+    useEffect(() => {
+        if (value) {
+            setName(value.name);
             setNameValid(true);
 
-            setStreet(uiState?.companyInfo.street);
+            setStreet(value.street);
             setStreetValid(true);
 
-            setCity(uiState?.companyInfo.city);
+            setCity(value.city);
             setCityValid(true);
 
-            setZipCode(uiState?.companyInfo.zipCode);
+            setZipCode(value.zipCode);
             setZipCodeValid(true);
 
-            setState(uiState?.companyInfo.state);
+            setState(value.state);
             setStateValid(true);
 
-            setPhone(uiState?.companyInfo.phone);
+            setPhone(value.phone);
             setPhoneValid(true);
 
-            setMail(uiState?.companyInfo.mail);
+            setMail(value.mail);
             setMailValid(true);
 
-            setBusinessId(uiState?.companyInfo.businessId);
+            setBusinessId(value.businessId);
 
-            setTaxId(uiState?.companyInfo.taxId);
+            setTaxId(value.taxId);
 
-            setVatRegNo(uiState?.companyInfo.vatRegNo);
+            setVatRegNo(value.vatRegNo);
 
-            setCommercialRegisterInfo(uiState?.companyInfo.commercialRegisterInfo);
+            setCommercialRegisterInfo(value.commercialRegisterInfo);
 
-            setMapUrl(uiState?.companyInfo.mapUrl);
+            setMapUrl(value.mapUrl);
             setMapUrlValid(true);
         }
-    }, [showDialog, uiState?.companyInfo]);
+    }, [value]);
 
     const isFormValid = (): boolean => {
         return nameValid && streetValid && cityValid && zipCodeValid && stateValid && phoneValid && mailValid && mapUrlValid;
     }
 
     const submit = async () => {
-        setFormSubmit(true);
+        setBusy(true);
         setFormError(undefined);
         try {
             if (isFormValid()) {
-                const response = await configState?.setCompanyInfo({
-                    name,
-                    street,
-                    city,
-                    zipCode,
-                    state,
-                    phone,
-                    mail,
-                    businessId,
-                    taxId,
-                    vatRegNo,
-                    commercialRegisterInfo,
-                    mapUrl
-                });
+                const response = await setCompanyInfo({
+                        name,
+                        street,
+                        city,
+                        zipCode,
+                        state,
+                        phone,
+                        mail,
+                        businessId,
+                        taxId,
+                        vatRegNo,
+                        commercialRegisterInfo,
+                        mapUrl
+                    },
+                    authState?.authToken?.accessToken
+                );
                 if (response?.error) {
                     setFormError(resourceState?.admin?.companyInfo.error);
-                } else {
-                    okHandler();
+                }
+                if (response.data) {
+                    setValue(response.data);
                 }
             }
         } finally {
-            setFormSubmit(false);
+            setBusy(false);
         }
     }
 
-    return (!dialogState?.modalRoot ? null : createPortal(
-        <BaseDialog id={COMPANY_INFO_DIALOG_ID} showDialog={showDialog} closeHandler={cancelHandler}>
-            <div className="container p-5 mx-auto">
-                <div className="flex flex-col items-center justify-center">
-                    <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.admin?.companyInfo.title}
-                    </div>
-
+    return (
+        <div className="flex flex-col p-5 gap-5 w-full">
+            <div className="flex flex-col items-center justify-center">
+                <div className="md:grid md:grid-cols-2 md:gap-5 w-full">
                     <WiwaFormInput
                         label={resourceState?.admin?.companyInfo.nameLabel}
                         placeholder={resourceState?.admin?.companyInfo.namePlaceholder}
@@ -260,7 +165,9 @@ const EditCompanyDialog = ({showDialog, okHandler, cancelHandler}: {
                             return {valid: true};
                         }}
                     />
+                </div>
 
+                <div className="md:grid md:grid-cols-3 md:gap-5 w-full">
                     <WiwaFormInput
                         label={resourceState?.admin?.companyInfo.cityLabel}
                         placeholder={resourceState?.admin?.companyInfo.cityPlaceholder}
@@ -311,7 +218,9 @@ const EditCompanyDialog = ({showDialog, okHandler, cancelHandler}: {
                             return {valid: true};
                         }}
                     />
+                </div>
 
+                <div className="md:grid md:grid-cols-2 md:gap-5 w-full">
                     <WiwaFormInput
                         label={resourceState?.admin?.companyInfo.phoneLabel}
                         placeholder={resourceState?.admin?.companyInfo.phonePlaceholder}
@@ -352,7 +261,9 @@ const EditCompanyDialog = ({showDialog, okHandler, cancelHandler}: {
                             return {valid: true};
                         }}
                     />
+                </div>
 
+                <div className="md:grid md:grid-cols-3 md:gap-5 w-full">
                     <WiwaFormInput
                         label={resourceState?.admin?.companyInfo.businessIdLabel}
                         placeholder={resourceState?.admin?.companyInfo.businessIdPlaceholder}
@@ -373,61 +284,57 @@ const EditCompanyDialog = ({showDialog, okHandler, cancelHandler}: {
                         value={vatRegNo}
                         setValue={setVatRegNo}
                     />
-
-                    <WiwaFormTextarea
-                        label={resourceState?.admin?.companyInfo.commercialRegisterInfoLabel}
-                        placeholder={resourceState?.admin?.companyInfo.commercialRegisterInfoPlaceholder}
-                        value={commercialRegisterInfo}
-                        setValue={setCommercialRegisterInfo}
-                    />
-
-                    <div className="flex flex-col w-full">
-                        <WiwaFormTextarea
-                            label={resourceState?.admin?.companyInfo.mapUrlLabel}
-                            placeholder={resourceState?.admin?.companyInfo.mapUrlPlaceholder}
-                            value={mapUrl}
-                            setValue={setMapUrl}
-                            setValid={setMapUrlValid}
-                            validate={() => {
-                                if (mapUrl.trim().length === 0) {
-                                    return {
-                                        valid: false,
-                                        message: resourceState?.admin?.companyInfo.mailRequired
-                                    };
-                                }
-                                return {valid: true};
-                            }}
-                        />
-                        <iframe
-                            title="contact-info-frame"
-                            width="100%"
-                            height="380px"
-                            src={mapUrl}
-                            className="border-0 pt-5">
-                        </iframe>
-                    </div>
-
-                    <div className="join pt-5">
-                        <WiwaButton
-                            className="btn-primary join-item"
-                            disabled={formSubmit || !isFormValid()}
-                            onClick={submit}
-                        >{resourceState?.admin?.companyInfo.submit}
-                        </WiwaButton>
-                        <WiwaButton
-                            className="btn-accent join-item"
-                            disabled={formSubmit}
-                            onClick={cancelHandler}
-                        >{resourceState?.admin?.companyInfo.cancel}
-                        </WiwaButton>
-                    </div>
-                    {formError &&
-                        <label className="label">
-                            <span className="label-text-alt text-error">{formError}</span>
-                        </label>
-                    }
                 </div>
+
+                <WiwaFormInput
+                    label={resourceState?.admin?.companyInfo.commercialRegisterInfoLabel}
+                    placeholder={resourceState?.admin?.companyInfo.commercialRegisterInfoPlaceholder}
+                    value={commercialRegisterInfo}
+                    setValue={setCommercialRegisterInfo}
+                />
+
+                <div className="md:grid md:grid-cols-2 md:gap-5 w-full">
+                    <WiwaFormTextarea
+                        label={resourceState?.admin?.companyInfo.mapUrlLabel}
+                        placeholder={resourceState?.admin?.companyInfo.mapUrlPlaceholder}
+                        value={mapUrl}
+                        setValue={setMapUrl}
+                        setValid={setMapUrlValid}
+                        validate={() => {
+                            if (mapUrl.trim().length === 0) {
+                                return {
+                                    valid: false,
+                                    message: resourceState?.admin?.companyInfo.mailRequired
+                                };
+                            }
+                            return {valid: true};
+                        }}
+                    />
+                    <iframe
+                        title="contact-info-frame"
+                        width="100%"
+                        height="100%"
+                        src={mapUrl}
+                        className="border-0 pt-5">
+                    </iframe>
+                </div>
+
+                <div className="join pt-5">
+                    <WiwaButton
+                        className="btn-primary join-item"
+                        disabled={busy || !isFormValid()}
+                        onClick={submit}
+                    >{resourceState?.common?.action.submit}
+                    </WiwaButton>
+                </div>
+                {formError &&
+                    <label className="label">
+                        <span className="label-text-alt text-error">{formError}</span>
+                    </label>
+                }
             </div>
-        </BaseDialog>
-        , dialogState.modalRoot))
+        </div>
+    )
 }
+
+export default CompanyInfoPage;

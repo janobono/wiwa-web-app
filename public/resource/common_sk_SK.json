@@ -1,10 +1,15 @@
 {
   "action": {
+    "add": "Pridať",
     "cancel": "Zrušiť",
+    "copy": "Kopírovať",
+    "delete": "Zmazať",
     "edit": "Upraviť",
-    "ok": "Potvrdiť"
+    "ok": "Potvrdiť",
+    "submit": "Odoslať"
   },
   "baseNavigation": {
+    "maintenanceSwitch": "Prepnúť režim údržby",
     "localeSwitch": "Prepnúť lokalizáciu na Anglickú",
     "refreshToken": "Obnoviť prihlásenie",
     "authNav": {
@@ -59,7 +64,8 @@
       "contactInfo": "Kontaktné Informácie",
       "cookiesInfo": "Cookies Informácie",
       "gdprInfo": "Gdpr Informácie",
-      "businessConditions": "Obchodné Podmienky"
+      "businessConditions": "Obchodné Podmienky",
+      "orderInfo": "Ako vytvoriť objednávku"
     },
     "contact": {
       "title": "Kontakt"
@@ -82,6 +88,7 @@
     "employee": "Zamestnanec",
     "customer": "Moje objednávky"
   },
+  "maintenance": "Ľutujeme. Prebieha údržba. Skúste neskor prosím.",
   "notFound": "404 Stránka nenájdená",
   "pageable": {
     "previous": "Predchádzajúca",
@@ -125,23 +132,11 @@
     "codeListPlaceholder": "Zvoľte číselník"
   },
   "unitId": {
-    "eur": "Euro",
     "millimeter": "Millimeter",
-    "centimeter": "Centimeter",
     "meter": "Meter",
-    "kilometer": "Kilometer",
     "squareMeter": "Meter štvorcový",
-    "milliliter": "Milliliter",
-    "liter": "Liter",
-    "cubicMeter": "Kubický meter",
-    "second": "Sekunda",
-    "minute": "Minúta",
-    "hour": "Hodina",
-    "day": "Deň",
-    "gram": "Gram",
     "kilogram": "Kilogram",
-    "piece": "Kus",
-    "package": "Balenie"
+    "piece": "Kus"
   },
   "value": {
     "no": "Nie",

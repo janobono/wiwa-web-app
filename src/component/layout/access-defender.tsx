@@ -1,26 +1,36 @@
-import type { ReactNode } from 'react';
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuthState } from '../state/auth-state-provider';
-import { Authority } from '../../model/service';
-import { hasAnyAuthority } from '../../auth.ts';
+import { useAuthState } from '../../state/auth';
+import { Authority } from '../../api/model';
+import { hasAnyAuthority } from '../../model';
+import { useHealthState } from '../../state/health';
 
 const AccessDefender = ({children, authority}: { children?: ReactNode, authority?: Authority }) => {
     const navigate = useNavigate();
     const authState = useAuthState();
+    const healthState = useHealthState();
 
     useEffect(() => {
         if (authState?.accessExpired) {
             navigate('/');
-        } else {
-            if (authority) {
-                if (!hasAnyAuthority(authState?.user, authority)) {
-                    navigate('/');
-                }
+            return;
+        }
+
+        if (authority) {
+            if (!hasAnyAuthority(authState?.authUser, authority)) {
+                navigate('/');
+                return;
             }
         }
-    }, [authState?.accessExpired, authState?.user, authority, navigate]);
+
+        if (healthState?.maintenance) {
+            const hasAuthority = hasAnyAuthority(authState?.authUser, Authority.W_ADMIN, Authority.W_MANAGER);
+            if (!hasAuthority) {
+                navigate('/maintenance');
+            }
+        }
+    }, [authState?.accessExpired, authState?.authUser, authority, navigate, healthState?.maintenance]);
 
     return (
         <>

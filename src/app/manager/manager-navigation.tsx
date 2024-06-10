@@ -1,5 +1,5 @@
-import { useResourceState } from '../../component/state/resource-state-provider';
 import WiwaMenuItem from '../../component/ui/wiwa-menu-item';
+import { useResourceState } from '../../state/resource';
 
 const ManagerNavigation = () => {
     const resourceState = useResourceState();
@@ -11,8 +11,6 @@ const ManagerNavigation = () => {
             </div>
             <ul className="menu menu-vertical md:menu-horizontal">
                 <WiwaMenuItem label={resourceState?.manager?.codeListsTab} to="/manager/code-lists/index"/>
-                <WiwaMenuItem label={resourceState?.manager?.productConfigTab} to="/manager/product-config/index"/>
-                <WiwaMenuItem label={resourceState?.manager?.productsTab} to="/manager/products/index"/>
             </ul>
         </div>
     )

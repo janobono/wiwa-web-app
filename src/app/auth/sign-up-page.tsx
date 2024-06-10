@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
+import { WiwaErrorCode } from '../../api/model';
+import { EMAIL_REGEX } from '../../const';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormCheckBox from '../../component/ui/wiwa-form-check-box';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { WiwaErrorCode } from '../../model/service';
-import { EMAIL_REGEX } from '../../const';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const SignUpPage = () => {
     const navigate = useNavigate();
@@ -46,7 +46,6 @@ const SignUpPage = () => {
     const [captchaToken, setCaptchaToken] = useState('');
     const [captchaValid, setCaptchaValid] = useState(false);
 
-    const [formSubmit, setFormSubmit] = useState(false);
     const [formError, setFormError] = useState<string>();
 
     const isFormValid = (): boolean => {
@@ -54,53 +53,49 @@ const SignUpPage = () => {
     }
 
     const handleSubmit = async () => {
-        setFormSubmit(true);
         setFormError(undefined);
-        try {
-            if (isFormValid()) {
-                const response = await authState?.signUp({
-                    username,
-                    password,
-                    titleBefore,
-                    firstName,
-                    midName,
-                    lastName,
-                    titleAfter,
-                    email,
-                    gdpr,
-                    captchaText,
-                    captchaToken
-                });
-                if (response?.error) {
-                    switch (response?.error.code) {
-                        case WiwaErrorCode.USER_USERNAME_IS_USED:
-                            setFormError(resourceState?.common?.error.userUsernameIsUsed);
-                            break;
-                        case WiwaErrorCode.USER_EMAIL_IS_USED:
-                            setFormError(resourceState?.common?.error.userEmailIsUsed);
-                            break;
-                        case WiwaErrorCode.GDPR:
-                            setFormError(resourceState?.common?.error.gdpr);
-                            break;
-                        case WiwaErrorCode.INVALID_CAPTCHA:
-                            setFormError(resourceState?.common?.error.invalidCaptcha);
-                            break;
-                        default:
-                            setFormError(resourceState?.auth?.signUp.error);
-                            break;
-                    }
+        if (isFormValid()) {
+            const response = await authState?.signUp({
+                username,
+                password,
+                titleBefore,
+                firstName,
+                midName,
+                lastName,
+                titleAfter,
+                email,
+                gdpr,
+                captchaText,
+                captchaToken
+            });
+            if (response?.error) {
+                switch (response?.error.code) {
+                    case WiwaErrorCode.USER_USERNAME_IS_USED:
+                        setFormError(resourceState?.common?.error.userUsernameIsUsed);
+                        break;
+                    case WiwaErrorCode.USER_EMAIL_IS_USED:
+                        setFormError(resourceState?.common?.error.userEmailIsUsed);
+                        break;
+                    case WiwaErrorCode.GDPR:
+                        setFormError(resourceState?.common?.error.gdpr);
+                        break;
+                    case WiwaErrorCode.INVALID_CAPTCHA:
+                        setFormError(resourceState?.common?.error.invalidCaptcha);
+                        break;
+                    default:
+                        setFormError(resourceState?.auth?.signUp.error);
+                        break;
                 }
             }
-        } finally {
-            setFormSubmit(false);
         }
     }
 
     useEffect(() => {
-        if (authState?.user) {
+        const user = authState?.authUser?.user;
+        if (user) {
             navigate('/');
         }
-    }, [authState?.user, navigate]);
+    }, [authState?.authUser, navigate]);
 
     return (
         <div className="container p-5 mx-auto">
@@ -282,7 +277,7 @@ const SignUpPage = () => {
                     <WiwaButton
                         type="submit"
                         className="btn-primary w-full"
-                        disabled={!isFormValid() || formSubmit}
+                        disabled={authState?.busy || !isFormValid()}
                     >{resourceState?.auth?.signUp.submit}</WiwaButton>
                     {formError &&
                         <label className="label">

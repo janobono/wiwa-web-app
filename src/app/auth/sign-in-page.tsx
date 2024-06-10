@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
+import { WiwaErrorCode } from '../../api/model';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
-import { WiwaErrorCode } from '../../model/service';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const SignInPage = () => {
     const navigate = useNavigate();
@@ -19,7 +19,6 @@ const SignInPage = () => {
     const [password, setPassword] = useState('');
     const [passwordValid, setPasswordValid] = useState(false);
 
-    const [formSubmit, setFormSubmit] = useState(false);
     const [formError, setFormError] = useState<string>();
 
     const isFormValid = (): boolean => {
@@ -27,38 +26,34 @@ const SignInPage = () => {
     }
 
     const handleSubmit = async () => {
-        setFormSubmit(true);
         setFormError(undefined);
-        try {
-            if (isFormValid()) {
-                const response = await authState?.signIn({username: username || '', password: password || ''});
-                if (response?.error) {
-                    switch (response?.error.code) {
-                        case WiwaErrorCode.USER_NOT_FOUND:
-                            setFormError(resourceState?.common?.error.userNotFound);
-                            break;
-                        case WiwaErrorCode.USER_IS_DISABLED:
-                            setFormError(resourceState?.common?.error.userIsDisabled);
-                            break;
-                        case WiwaErrorCode.INVALID_CREDENTIALS:
-                            setFormError(resourceState?.common?.error.invalidCredentials);
-                            break;
-                        default:
-                            setFormError(resourceState?.auth?.signIn.error);
-                            break;
-                    }
+        if (isFormValid()) {
+            const response = await authState?.signIn({username: username || '', password: password || ''});
+            if (response?.error) {
+                switch (response?.error.code) {
+                    case WiwaErrorCode.USER_NOT_FOUND:
+                        setFormError(resourceState?.common?.error.userNotFound);
+                        break;
+                    case WiwaErrorCode.USER_IS_DISABLED:
+                        setFormError(resourceState?.common?.error.userIsDisabled);
+                        break;
+                    case WiwaErrorCode.INVALID_CREDENTIALS:
+                        setFormError(resourceState?.common?.error.invalidCredentials);
+                        break;
+                    default:
+                        setFormError(resourceState?.auth?.signIn.error);
+                        break;
                 }
             }
-        } finally {
-            setFormSubmit(false);
         }
     }
 
     useEffect(() => {
-        if (authState?.user) {
+        const user = authState?.authUser?.user;
+        if (user) {
             navigate('/');
         }
-    }, [authState?.user, navigate]);
+    }, [authState?.authUser, navigate]);
 
     return (
         <div className="container p-5 mx-auto">
@@ -125,7 +120,7 @@ const SignInPage = () => {
                     <WiwaButton
                         type="submit"
                         className="btn-primary w-full"
-                        disabled={!isFormValid() || formSubmit}
+                        disabled={authState?.busy || !isFormValid()}
                     >{resourceState?.auth?.signIn.submit}</WiwaButton>
                     {formError &&
                         <label className="label">

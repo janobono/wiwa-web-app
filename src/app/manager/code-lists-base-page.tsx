@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
-import CodeListStateProvider from '../../component/state/code-list-state-provider.tsx';
-import CodeListItemStateProvider from '../../component/state/code-list-item-state-provider.tsx';
+import CodeListStateProvider from '../../state/code-list';
+import CodeListItemStateProvider from '../../state/code-list-item';
 
 const CodeListsBasePage = () => {
     return (

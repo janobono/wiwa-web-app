@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PieChart, Settings, ShoppingCart, Tool, X } from 'react-feather';
 
-import { Authority } from '../../model/service';
-import { containsAuthority } from '../../auth';
+import { Authority, containsAuthority } from '../../api/model';
 
 const WiwaUserAuthorities = ({authorities}: { authorities: Authority[] }) => {
 

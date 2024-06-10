@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import BaseDialog from '../dialog/base-dialog';
-import { useDialogState } from '../state/dialog-state-provider';
-import { useResourceState } from '../state/resource-state-provider';
-import WiwaButton from '../ui/wiwa-button';
 import WiwaSelectCodeList from './wiwa-select-code-list';
 import WiwaSelectCodeListItem from './wiwa-select-code-list-item';
-import { CodeList, CodeListItem } from '../../model/service';
+import BaseDialog from '../dialog/base-dialog';
+import WiwaButton from '../ui/wiwa-button';
+import { CodeList, CodeListItem } from '../../api/model/code-list';
+import { useResourceState } from '../../state/resource';
+import { useDialogState } from '../../state/dialog';
 
 const WiwaSelectCodeListItemDialog = (
     {

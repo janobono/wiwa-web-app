@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { useAppState } from '../state/app-state-provider';
-import { useResourceState } from '../state/resource-state-provider';
+import { useAppState } from '../../state/app';
+import { useResourceState } from '../../state/resource';
 
 const CookiesConsent = () => {
     const appState = useAppState();

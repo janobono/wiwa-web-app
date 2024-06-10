@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { useAuthState } from '../state/auth-state-provider';
-import { useResourceState } from '../state/resource-state-provider';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const RefreshToken = () => {
     const authState = useAuthState();
@@ -11,7 +11,7 @@ const RefreshToken = () => {
 
     useEffect(() => {
         if (authState) {
-            setShow(authState.accessExpired && !authState.refreshExpired && authState.refreshToken !== undefined);
+            setShow(authState.accessExpired && !authState.refreshExpired && authState?.authToken !== undefined);
         } else {
             setShow(false);
         }

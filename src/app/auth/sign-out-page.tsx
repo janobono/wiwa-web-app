@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
 import AccessDefender from '../../component/layout/access-defender';
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const SignOutPage = () => {
     const authState = useAuthState();
@@ -18,6 +18,7 @@ const SignOutPage = () => {
             <div className="container p-5 mx-auto flex flex-row items-center justify-center">
                 <WiwaButton
                     className="btn-primary"
+                    disabled={authState?.busy}
                     onClick={() => authState?.signOut()}
                 >{resourceState?.common?.baseNavigation.authNav.signOut}</WiwaButton>
             </div>

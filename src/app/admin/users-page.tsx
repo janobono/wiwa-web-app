@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { PieChart, Search, Settings, ShoppingCart, Tool, Trash } from 'react-feather';
 
+import { Authority, containsAuthority, User } from '../../api/model';
 import WiwaUserAuthorities from '../../component/app/wiwa-user-authorities';
 import BaseDialog from '../../component/dialog/base-dialog';
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { DialogAnswer, DialogType, useDialogState } from '../../component/state/dialog-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
-import { useUserState } from '../../component/state/user-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaInput from '../../component/ui/wiwa-input';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import { containsAuthority } from '../../auth';
-import { Authority, User } from '../../model/service';
+import { DialogAnswer, DialogType } from '../../model/ui';
+import { useAuthState } from '../../state/auth';
+import { useDialogState } from '../../state/dialog';
+import { useResourceState } from '../../state/resource';
+import { useUserState } from '../../state/user';
 
 const USER_AUTHORITIES_DIALOG_ID = 'admin-users-authorities-dialog-001';
 
@@ -30,7 +30,7 @@ const UsersPage = () => {
 
     const fetchData = async () => {
         setError(undefined);
-        const response = await userState?.getUsers(page, 10, searchField);
+        const response = await userState?.getUsers({searchField}, {page, size: 10});
         if (response?.error) {
             setError(resourceState?.admin?.users.fetchDataError);
         }
@@ -141,7 +141,7 @@ const UsersPage = () => {
                                         <WiwaButton
                                             className="btn-accent md:btn-xs"
                                             title={resourceState?.admin?.users.deleteUser.title}
-                                            disabled={userState?.busy || user.id === authState?.user?.id}
+                                            disabled={userState?.busy || user.id === authState?.authUser?.user.id}
                                             onClick={() => {
                                                 dialogState?.showDialog({
                                                     type: DialogType.YES_NO,
@@ -201,7 +201,7 @@ const UserEnabled = (
             <input
                 type="checkbox"
                 className="checkbox checkbox-accent"
-                disabled={disabled || user.id === authState?.user?.id}
+                disabled={disabled || user.id === authState?.authUser?.user.id}
                 onClick={() => {
                     dialogState?.showDialog({
                         type: DialogType.YES_NO,
@@ -242,7 +242,7 @@ const UserConfirmed = (
             <input
                 type="checkbox"
                 className="checkbox checkbox-warning"
-                disabled={disabled || user.id === authState?.user?.id}
+                disabled={disabled || user.id === authState?.authUser?.user.id}
                 onClick={() => {
                     dialogState?.showDialog({
                         type: DialogType.YES_NO,
@@ -283,7 +283,7 @@ const UserAuthorities = (
             <WiwaButton
                 title={resourceState?.admin?.users.userAuthorities.title}
                 className="btn-ghost md:btn-xs"
-                disabled={disabled || user.id === authState?.user?.id}
+                disabled={disabled || user.id === authState?.authUser?.user.id}
                 onClick={() => {
                     setShow(true);
                 }}
@@ -411,14 +411,14 @@ const AuthoritiesDialog = ({showDialog, authorities, okHandler, cancelHandler}: 
                             <WiwaButton
                                 className="btn-primary join-item"
                                 type="submit"
-                            >{resourceState?.admin?.users.userAuthorities.submit}
+                            >{resourceState?.common?.action.submit}
                             </WiwaButton>
                             <WiwaButton
                                 className="btn-accent join-item"
                                 onClick={() => {
                                     cancelHandler();
                                 }}
-                            >{resourceState?.admin?.users.userAuthorities.cancel}
+                            >{resourceState?.common?.action.cancel}
                             </WiwaButton>
                         </div>
                     </form>

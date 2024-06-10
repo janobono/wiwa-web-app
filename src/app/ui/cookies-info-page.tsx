@@ -1,11 +1,9 @@
-import { useUiState } from '../../component/state/ui-state-provider';
-import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
+import MdPage from './md-page';
+import { getCookiesInfo } from '../../api/controller/ui';
 
 const CookiesInfoPage = () => {
-    const uiState = useUiState();
-
     return (
-        <WiwaMarkdownRenderer className="prose container p-5 mx-auto" md={uiState?.cookiesInfo}/>
+        <MdPage getData={getCookiesInfo}/>
     )
 }
 

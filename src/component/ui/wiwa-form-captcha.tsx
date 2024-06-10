@@ -4,8 +4,8 @@ import { RefreshCw } from 'react-feather';
 import WiwaButton from './wiwa-button';
 import WiwaInput from './wiwa-input';
 import WiwaSpinner from './wiwa-spinner';
-import { useCaptchaState } from '../state/captcha-state-provider';
-import { useResourceState } from '../state/resource-state-provider';
+import { getCaptcha } from '../../api/controller/ui';
+import { useResourceState } from '../../state/resource';
 
 const WiwaFormCaptcha = (
     {
@@ -27,10 +27,10 @@ const WiwaFormCaptcha = (
         setToken: (value: string) => void,
         setValid?: (valid: boolean) => void,
     }) => {
-    const captchaState = useCaptchaState();
     const resourceState = useResourceState();
 
     const didMount = useRef(false);
+    const [busy, setBusy] = useState(false);
     const [message, setMessage] = useState<string>();
     const [error, setError] = useState(true);
     const [image, setImage] = useState('');
@@ -62,9 +62,10 @@ const WiwaFormCaptcha = (
     }, []);
 
     const reFetch = useCallback(async () => {
+        setBusy(true);
         setError(false);
         try {
-            const response = await captchaState?.getCaptcha();
+            const response = await getCaptcha();
             if (response?.data) {
                 if (setToken) {
                     setToken(response.data.captchaToken);
@@ -75,8 +76,10 @@ const WiwaFormCaptcha = (
             }
         } catch (error) {
             setError(true);
+        } finally {
+            setBusy(false);
         }
-    }, [captchaState, setToken])
+    }, [setToken])
 
     return (
         <div className="form-control w-full pb-2">
@@ -96,7 +99,7 @@ const WiwaFormCaptcha = (
                     }
                 }}
             />
-            {captchaState?.busy ?
+            {busy ?
                 <WiwaSpinner/>
                 :
                 <div className="flex-1 flex flex-wrap pt-1.5">

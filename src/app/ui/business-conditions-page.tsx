@@ -1,11 +1,9 @@
-import { useUiState } from '../../component/state/ui-state-provider';
-import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
+import MdPage from './md-page';
+import { getBusinessConditions } from '../../api/controller/ui';
 
 const BusinessConditionsPage = () => {
-    const uiState = useUiState();
-
     return (
-        <WiwaMarkdownRenderer className="prose container p-5 mx-auto" md={uiState?.businessConditions}/>
+        <MdPage getData={getBusinessConditions}/>
     )
 }
 

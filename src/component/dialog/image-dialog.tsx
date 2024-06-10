@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import BaseDialog from './base-dialog';
-import { useResourceState } from '../state/resource-state-provider';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaFormFileInput from '../ui/wiwa-form-file-input';
-import { ValidationResult } from '../../model/ui/validation-result';
+import { ValidationResult } from '../../model/ui';
+import { useResourceState } from '../../state/resource';
 
 const ImageDialog = (
     {

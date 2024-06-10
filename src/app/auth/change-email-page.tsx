@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { WiwaErrorCode } from '../../api/model';
+import { EMAIL_REGEX } from '../../const';
 import AccessDefender from '../../component/layout/access-defender';
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { WiwaErrorCode } from '../../model/service';
-import { EMAIL_REGEX } from '../../const';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const ChangeEmailPage = () => {
     const navigate = useNavigate();
@@ -26,7 +26,6 @@ const ChangeEmailPage = () => {
     const [captchaToken, setCaptchaToken] = useState('');
     const [captchaValid, setCaptchaValid] = useState(false);
 
-    const [formSubmit, setFormSubmit] = useState(false);
     const [formError, setFormError] = useState<string>();
 
     const isFormValid = (): boolean => {
@@ -34,48 +33,44 @@ const ChangeEmailPage = () => {
     }
 
     const handleSubmit = async () => {
-        setFormSubmit(true);
         setFormError(undefined);
-        try {
-            if (isFormValid()) {
-                const response = await authState?.changeEmail({
-                    email,
-                    password,
-                    captchaText,
-                    captchaToken
-                });
-                if (response?.error) {
-                    switch (response?.error.code) {
-                        case WiwaErrorCode.USER_IS_DISABLED:
-                            setFormError(resourceState?.common?.error.userIsDisabled);
-                            break;
-                        case WiwaErrorCode.INVALID_CREDENTIALS:
-                            setFormError(resourceState?.common?.error.invalidCredentials);
-                            break;
-                        case WiwaErrorCode.INVALID_CAPTCHA:
-                            setFormError(resourceState?.common?.error.invalidCaptcha);
-                            break;
-                        case WiwaErrorCode.USER_EMAIL_IS_USED:
-                            setFormError(resourceState?.common?.error.userEmailIsUsed);
-                            break;
-                        default:
-                            setFormError(resourceState?.auth?.changeEmail.error);
-                            break;
-                    }
-                } else {
-                    navigate('/');
+        if (isFormValid()) {
+            const response = await authState?.changeEmail({
+                email,
+                password,
+                captchaText,
+                captchaToken
+            });
+            if (response?.error) {
+                switch (response?.error.code) {
+                    case WiwaErrorCode.USER_IS_DISABLED:
+                        setFormError(resourceState?.common?.error.userIsDisabled);
+                        break;
+                    case WiwaErrorCode.INVALID_CREDENTIALS:
+                        setFormError(resourceState?.common?.error.invalidCredentials);
+                        break;
+                    case WiwaErrorCode.INVALID_CAPTCHA:
+                        setFormError(resourceState?.common?.error.invalidCaptcha);
+                        break;
+                    case WiwaErrorCode.USER_EMAIL_IS_USED:
+                        setFormError(resourceState?.common?.error.userEmailIsUsed);
+                        break;
+                    default:
+                        setFormError(resourceState?.auth?.changeEmail.error);
+                        break;
                 }
+            } else {
+                navigate('/');
             }
-        } finally {
-            setFormSubmit(false);
         }
     }
 
     useEffect(() => {
-        if (authState?.user) {
-            setEmail(authState.user.email);
+        const user = authState?.authUser?.user;
+        if (user) {
+            setEmail(user.email);
         }
-    }, [authState?.user]);
+    }, [authState?.authUser]);
 
     return (
         <AccessDefender>
@@ -143,7 +138,7 @@ const ChangeEmailPage = () => {
                         <WiwaButton
                             type="submit"
                             className="btn-primary w-full"
-                            disabled={!isFormValid() || formSubmit}
+                            disabled={authState?.busy || !isFormValid()}
                         >{resourceState?.auth?.changeEmail.submit}</WiwaButton>
                         {formError &&
                             <label className="label">

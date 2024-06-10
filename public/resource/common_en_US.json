@@ -1,10 +1,15 @@
 {
   "action": {
+    "add": "Add",
     "cancel": "Cancel",
+    "copy": "Copy",
+    "delete": "Delete",
     "edit": "Edit",
-    "ok": "Ok"
+    "ok": "Ok",
+    "submit": "Submit"
   },
   "baseNavigation": {
+    "maintenanceSwitch": "Switch maintenance",
     "localeSwitch": "Switch locale to Slovak",
     "refreshToken": "Refresh login",
     "authNav": {
@@ -59,7 +64,8 @@
       "contactInfo": "Contact Info",
       "cookiesInfo": "Cookies Info",
       "gdprInfo": "Gdpr Info",
-      "businessConditions": "Business Conditions"
+      "businessConditions": "Business Conditions",
+      "orderInfo": "How to create order"
     },
     "contact": {
       "title": "Contact"
@@ -82,6 +88,7 @@
     "employee": "Employee",
     "customer": "My orders"
   },
+  "maintenance": "We are sorry. Maintenance is in progress. Please try again later.",
   "notFound": "404 Page not found",
   "pageable": {
     "next": "Next",
@@ -125,23 +132,11 @@
     "codeListPlaceholder": "Select code list"
   },
   "unitId": {
-    "eur": "Euro",
     "millimeter": "Millimeter",
-    "centimeter": "Centimeter",
     "meter": "Meter",
-    "kilometer": "Kilometer",
     "squareMeter": "Square meter",
-    "milliliter": "Milliliter",
-    "liter": "Liter",
-    "cubicMeter": "Cubic meter",
-    "second": "Second",
-    "minute": "Minute",
-    "hour": "Hour",
-    "day": "Day",
-    "gram": "Gram",
     "kilogram": "Kilogram",
-    "piece": "Piece",
-    "package": "Package"
+    "piece": "Piece"
   },
   "value": {
     "no": "No",

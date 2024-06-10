@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useResourceState } from '../state/resource-state-provider';
+import { useResourceState } from '../../state/resource';
 
 const WiwaValue = ({value}: { value?: string }) => {
     const resourceState = useResourceState();

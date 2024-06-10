@@ -1,18 +1,14 @@
 {
   "title": "Admin",
+  "applicationImagesTab": "Application images",
   "baseInfoTab": "Base info",
-  "appImagesTab": "App images",
-  "appInfoTab": "App info",
   "companyInfoTab": "Company info",
-  "businessConditionsTab": "Business conditions",
-  "cookiesInfoTab": "Cookies info",
-  "gdprInfoTab": "Gdpr info",
-  "workingHoursTab": "Working hours",
+  "textInfoTab": "Text info",
+  "mailFormatTab": "Mail format",
+  "orderFormatTab": "Order format",
   "unitsTab": "Units",
   "usersTab": "Users",
-  "appImages": {
-    "addImage": "Add image",
-    "deleteImage": "Delete image",
+  "applicationImages": {
     "deleteImageQuestionMessage": "Do you really want to delete image?",
     "deleteImageQuestionTitle": "Delete image",
     "loadImagesError": "Application images loading failed",
@@ -25,27 +21,6 @@
       "fileFormat": "Supported file format is JPG or PNG",
       "fileRequired": "File is required",
       "error": "Application image submitting failed"
-    }
-  },
-  "applicationInfo": {
-    "title": "Application info item",
-    "valueLabel": "Application info item",
-    "valuePlaceholder": "Enter application info item",
-    "valueRequired": "Application info item is required",
-    "add": "Add application info item",
-    "edit": "Edit application info item",
-    "delete": "Delete application info item",
-    "confirm": "Confirm application info changes",
-    "deleteItemQuestionTitle": "Delete application info item",
-    "deleteItemQuestionMessage": "Do you really want to delete item?",
-    "error": "Application info changes confirmation failed",
-    "submit": "Submit",
-    "cancel": "Cancel",
-    "editItemDialog": {
-      "title": "Application info item dialog",
-      "valueLabel": "Application info item",
-      "valuePlaceholder": "Enter application info item",
-      "valueRequired": "Application info item is required"
     }
   },
   "baseInfo": {
@@ -62,8 +37,6 @@
       "titleLabel": "Title",
       "titlePlaceholder": "Enter title",
       "titleRequired": "Title is required",
-      "submit": "Submit",
-      "cancel": "Cancel",
       "error": "Title submitting failed"
     },
     "welcomeText": {
@@ -72,6 +45,25 @@
       "valuePlaceholder": "Enter welcome text",
       "valueRequired": "Welcome text is required",
       "error": "Welcome text submitting failed"
+    },
+    "applicationInfo": {
+      "title": "Application info",
+      "valueLabel": "Application info item",
+      "valuePlaceholder": "Enter application info item",
+      "valueRequired": "Application info item is required",
+      "add": "Add application info item",
+      "edit": "Edit application info item",
+      "delete": "Delete application info item",
+      "confirm": "Confirm application info changes",
+      "deleteItemQuestionTitle": "Delete application info item",
+      "deleteItemQuestionMessage": "Do you really want to delete item?",
+      "error": "Application info changes confirmation failed",
+      "editItemDialog": {
+        "title": "Application info item dialog",
+        "valueLabel": "Application info item",
+        "valuePlaceholder": "Enter application info item",
+        "valueRequired": "Application info item is required"
+      }
     }
   },
   "companyInfo": {
@@ -109,36 +101,199 @@
     "mapUrlLabel": "Map",
     "mapUrlPlaceholder": "Enter map",
     "mapUrlRequired": "Map is required",
-    "submit": "Submit",
-    "cancel": "Cancel",
     "error": "Company info submitting failed"
   },
-  "businessConditions": {
-    "title": "Edit business conditions",
-    "valueLabel": "Business conditions",
-    "valuePlaceholder": "Enter business conditions",
-    "valueRequired": "Business conditions are required",
-    "submit": "Submit",
-    "cancel": "Cancel",
-    "error": "Business conditions submitting failed"
+  "mailFormat": {
+    "option": {
+      "select": "Format",
+      "signUpMail": "Sign up",
+      "resetPasswordMail": "Reset password",
+      "orderCommentMail": "Order comment",
+      "orderSendMail": "Order send",
+      "orderStatusMail": "Order status"
+    },
+    "signUp": {
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "Enter subject",
+      "subjectRequired": "Subject is required",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Enter title",
+      "titleRequired": "Title is required",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Enter message",
+      "messageRequired": "Message is required",
+      "linkLabel": "Link",
+      "linkPlaceholder": "Enter link",
+      "linkRequired": "Link is required",
+      "error": "Sign up mail format submitting error"
+    },
+    "resetPassword": {
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "Enter subject",
+      "subjectRequired": "Subject is required",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Enter title",
+      "titleRequired": "Title is required",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Enter message",
+      "messageRequired": "Message is required",
+      "passwordMessageLabel": "Password message",
+      "passwordMessagePlaceholder": "Enter password message",
+      "passwordMessageRequired": "Password message is required",
+      "linkLabel": "Link",
+      "linkPlaceholder": "Enter link",
+      "linkRequired": "Link is required",
+      "error": "Sign up mail format submitting error"
+    },
+    "orderComment": {
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "Enter subject",
+      "subjectRequired": "Subject is required",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Enter title",
+      "titleRequired": "Title is required",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Enter message",
+      "messageRequired": "Message is required",
+      "linkLabel": "Link",
+      "linkPlaceholder": "Enter link",
+      "linkRequired": "Link is required",
+      "error": "Order comment mail format submitting error"
+    },
+    "orderSend": {
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "Enter subject",
+      "subjectRequired": "Subject is required",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Enter title",
+      "titleRequired": "Title is required",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Enter message",
+      "messageRequired": "Message is required",
+      "linkLabel": "Link",
+      "linkPlaceholder": "Enter link",
+      "linkRequired": "Link is required",
+      "attachmentLabel": "Attachment",
+      "attachmentPlaceholder": "Enter attachment",
+      "attachmentRequired": "Attachment is required",
+      "error": "Order send mail format submitting error"
+    },
+    "orderStatus": {
+      "productionSubjectLabel": "Production subject",
+      "productionSubjectPlaceholder": "Enter production subject",
+      "productionSubjectRequired": "Production subject is required",
+      "productionTitleLabel": "Production title",
+      "productionTitlePlaceholder": "Enter production title",
+      "productionTitleRequired": "Production title is required",
+      "productionMessageLabel": "Production message",
+      "productionMessagePlaceholder": "Enter production message",
+      "productionMessageRequired": "Production message is required",
+      "readySubjectLabel": "Ready subject",
+      "readySubjectPlaceholder": "Enter ready subject",
+      "readySubjectRequired": "Ready subject is required",
+      "readyTitleLabel": "Ready title",
+      "readyTitlePlaceholder": "Enter ready title",
+      "readyTitleRequired": "Ready title is required",
+      "readyMessageLabel": "Ready message",
+      "readyMessagePlaceholder": "Enter ready message",
+      "readyMessageRequired": "Ready message is required",
+      "finishedSubjectLabel": "Finished subject",
+      "finishedSubjectPlaceholder": "Enter finished subject",
+      "finishedSubjectRequired": "Finished subject is required",
+      "finishedTitleLabel": "Finished title",
+      "finishedTitlePlaceholder": "Enter finished title",
+      "finishedTitleRequired": "Finished title is required",
+      "finishedMessageLabel": "Finished message",
+      "finishedMessagePlaceholder": "Enter finished message",
+      "finishedMessageRequired": "Finished message is required",
+      "cancelledSubjectLabel": "Cancelled subject",
+      "cancelledSubjectPlaceholder": "Enter cancelled subject",
+      "cancelledSubjectRequired": "Cancelled subject is required",
+      "cancelledTitleLabel": "Cancelled title",
+      "cancelledTitlePlaceholder": "Enter cancelled title",
+      "cancelledTitleRequired": "Cancelled title is required",
+      "cancelledMessageLabel": "Cancelled message",
+      "cancelledMessagePlaceholder": "Enter cancelled message",
+      "cancelledMessageRequired": "Cancelled message is required",
+      "linkLabel": "Link",
+      "linkPlaceholder": "Enter link",
+      "linkRequired": "Link is required",
+      "attachmentLabel": "Attachment",
+      "attachmentPlaceholder": "Enter attachment",
+      "attachmentRequired": "Attachment is required",
+      "error": "Order status mail format submitting error"
+    }
   },
-  "cookiesInfo": {
-    "title": "Edit cookies info",
-    "valueLabel": "Cookies info",
-    "valuePlaceholder": "Enter cookies info",
-    "valueRequired": "Cookies info is required",
-    "submit": "Submit",
-    "cancel": "Cancel",
-    "error": "Cookies info submitting failed"
+  "orderFormat": {
+    "option": {
+      "select": "Format",
+      "dimensions": "Dimensions",
+      "boards": "Boards",
+      "edges": "Edges",
+      "corners": "Corners",
+      "pattern": "Pattern",
+      "content": "Content",
+      "packageType": "Package type",
+      "csvSeparator": "CSV separator",
+      "csvReplacements": "CSV replacements",
+      "csvColumns": "CSV columns"
+    }
   },
-  "gdprInfo": {
-    "title": "Edit gdpr info",
-    "valueLabel": "Gdpr info",
-    "valuePlaceholder": "Enter gdpr info",
-    "valueRequired": "Gdpr info is required",
-    "submit": "Submit",
-    "cancel": "Cancel",
-    "error": "Gdpr info submitting failed"
+  "textInfo": {
+    "option": {
+      "select": "Text info",
+      "businessConditions": "Business conditions",
+      "cookiesInfo": "Cookies info",
+      "gdprInfo": "Gdpr info",
+      "orderInfo": "Order info",
+      "workingHours": "Working hours"
+    },
+    "businessConditions": {
+      "title": "Edit business conditions",
+      "valueLabel": "Business conditions",
+      "valuePlaceholder": "Enter business conditions",
+      "valueRequired": "Business conditions are required",
+      "error": "Business conditions submitting failed"
+    },
+    "cookiesInfo": {
+      "title": "Edit cookies info",
+      "valueLabel": "Cookies info",
+      "valuePlaceholder": "Enter cookies info",
+      "valueRequired": "Cookies info is required",
+      "error": "Cookies info submitting failed"
+    },
+    "gdprInfo": {
+      "title": "Edit gdpr info",
+      "valueLabel": "Gdpr info",
+      "valuePlaceholder": "Enter gdpr info",
+      "valueRequired": "Gdpr info is required",
+      "error": "Gdpr info submitting failed"
+    },
+    "orderInfo": {
+      "title": "Edit how to create order",
+      "valueLabel": "How to create order",
+      "valuePlaceholder": "Enter how to create order",
+      "valueRequired": "How to create order is required",
+      "error": "How to create order submitting failed"
+    },
+    "workingHours": {
+      "title": "Edit working hours",
+      "valueLabel": "Working hours",
+      "valuePlaceholder": "Enter working hours",
+      "valueRequired": "Working hours are required",
+      "error": "Working hours submitting failed"
+    }
+  },
+  "units": {
+    "title": "Units",
+    "id": "Id",
+    "value": "Value",
+    "editUnit": {
+      "title": "Edit unit",
+      "valuePlaceholder": "Enter unit",
+      "valueRequired": "Unit is required",
+      "error": "Unit value submitting failed"
+    }
   },
   "users": {
     "fetchDataError": "Users loading failed",
@@ -158,8 +313,6 @@
       "employee": "Employee",
       "manager": "Manager",
       "admin": "Admin",
-      "submit": "Submit",
-      "cancel": "Cancel",
       "error": "User authorities change failed"
     },
     "userEnabled": {
@@ -185,26 +338,6 @@
       "authorities": "Authorities",
       "confirmed": "Confirmed",
       "enabled": "Enabled"
-    }
-  },
-  "workingHours": {
-    "title": "Edit working hours",
-    "valueLabel": "Working hours",
-    "valuePlaceholder": "Enter working hours",
-    "valueRequired": "Working hours are required",
-    "submit": "Submit",
-    "cancel": "Cancel",
-    "error": "Working hours submitting failed"
-  },
-  "units": {
-    "title": "Units",
-    "id": "Id",
-    "value": "Value",
-    "editUnit": {
-      "title": "Edit unit",
-      "valuePlaceholder": "Enter unit",
-      "valueRequired": "Unit is required",
-      "error": "Unit value submitting failed"
     }
   }
 }

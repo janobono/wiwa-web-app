@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
+import { WiwaErrorCode } from '../../api/model';
 import WiwaSpinner from '../../component/ui/wiwa-spinner';
-import { WiwaErrorCode } from '../../model/service';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const ConfirmPage = () => {
     const {token} = useParams();

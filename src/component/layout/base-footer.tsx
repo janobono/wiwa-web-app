@@ -1,27 +1,32 @@
-import type { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { ExternalLink } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 
-import { useUiState } from '../state/ui-state-provider';
+import { getLogoPath, getTitle } from '../../api/controller/ui';
 
 const BaseFooter = ({children}: { children?: ReactNode }) => {
-    const uiState = useUiState();
+
+    const [title, setTitle] = useState<string>();
+
+    useEffect(() => {
+        getTitle().then(data => setTitle(data.data?.value));
+    }, []);
 
     return (
         <>
             <footer className="footer p-10 bg-base-300 text-base-content">
                 <aside className="flex-col justify-center items-center">
                     <NavLink
-                        title={uiState?.title}
+                        title={title}
                         to="/"
                     >
                         <img
                             className="flex-none w-24 h-24 object-scale-down object-center"
-                            src={uiState?.logoUrl}
+                            src={getLogoPath()}
                             alt="Logo"
                         />
                     </NavLink>
-                    <p>{uiState?.title}</p>
+                    <p>{title}</p>
                 </aside>
                 {children}
             </footer>

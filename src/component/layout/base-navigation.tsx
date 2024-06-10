@@ -1,20 +1,26 @@
-import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
-import { LogIn, RefreshCw, User } from 'react-feather';
+import { ReactNode, useEffect, useState } from 'react';
+import { Lock, LogIn, RefreshCw, Unlock, User } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 
-import { LOCALE_EN, useAppState } from '../state/app-state-provider';
-import { useAuthState } from '../state/auth-state-provider';
-import { useResourceState } from '../state/resource-state-provider';
-import { useUiState } from '../state/ui-state-provider';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaMenuItem from '../ui/wiwa-menu-item';
 import FlagSk from '../ui/icon/flag-sk';
 import FlagUs from '../ui/icon/flag-us';
+import { getApplicationProperties, getTitle } from '../../api/controller/ui';
+import { ApplicationProperties } from '../../api/model/application';
+import { LOCALE_EN, useAppState } from '../../state/app';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
+import { useHealthState } from '../../state/health';
 
 const BaseNavigation = ({children}: { children?: ReactNode }) => {
     const authState = useAuthState();
-    const uiState = useUiState();
+
+    const [title, setTitle] = useState<string>();
+
+    useEffect(() => {
+        getTitle().then(data => setTitle(data.data?.value))
+    }, []);
 
     return (
         <nav className="flex flex-col w-full text-base-content">
@@ -22,18 +28,21 @@ const BaseNavigation = ({children}: { children?: ReactNode }) => {
                 <NavLink
                     className="btn btn-ghost normal-case text-base md:text-xl font-bold"
                     to="/"
-                >{uiState?.title}
+                >{title}
                 </NavLink>
                 <div className="grow"/>
                 <AuthNav/>
                 <LocaleSwitch/>
             </div>
-            <div className={`flex flex-row w-full p-1 ${authState?.user ? 'visible' : 'invisible'}`}>
+            <div className={`flex flex-row w-full p-1 ${authState?.authUser ? 'visible' : 'invisible'}`}>
+                {(authState?.adminAuthority || authState?.managerAuthority) &&
+                    <NavidationSwitch/>
+                }
                 <div className="grow"/>
                 {children}
                 <UserCard/>
             </div>
-            <hr className={`h-px bg-gray-200 border-0 dark:bg-gray-700 ${authState?.user ? 'visible' : 'invisible'}`}/>
+            <hr className={`h-px bg-gray-200 border-0 dark:bg-gray-700 ${authState?.authUser ? 'visible' : 'invisible'}`}/>
         </nav>
     )
 }
@@ -111,6 +120,27 @@ const AuthNav = () => {
     )
 }
 
+const NavidationSwitch = () => {
+    const authState = useAuthState();
+    const healthState = useHealthState();
+    const resourceState = useResourceState();
+
+    return (
+        <div className="flex flex-row pl-2 items-center justify-center">
+            <WiwaButton
+                className="btn-ghost btn-circle"
+                title={resourceState?.common?.baseNavigation.maintenanceSwitch}
+                onClick={() => healthState?.setMaintenance(!healthState?.maintenance, authState?.authToken?.accessToken)}
+            >
+                {healthState?.maintenance
+                    ? <Lock/>
+                    : <Unlock/>
+                }
+            </WiwaButton>
+        </div>
+    )
+}
+
 const LocaleSwitch = () => {
     const appState = useAppState();
     const resourceState = useResourceState();
@@ -133,14 +163,18 @@ const LocaleSwitch = () => {
 
 const UserCard = () => {
     const authState = useAuthState();
-    const uiState = useUiState();
     const resourceState = useResourceState();
 
+    const [applicationProperties, setApplicationProperties] = useState<ApplicationProperties>();
     const [value, setValue] = useState(0);
 
     useEffect(() => {
+        getApplicationProperties().then(data => setApplicationProperties(data.data));
+    }, []);
+
+    useEffect(() => {
         if (!authState?.accessExpired && authState?.timeToAccessExpiration) {
-            const MAX_TIME = (uiState?.applicationProperties?.tokenExpiresIn || 0) * 60 * 1000;
+            const MAX_TIME = (applicationProperties?.tokenExpiresIn || 0) * 60 * 1000;
             if (authState.timeToAccessExpiration > MAX_TIME) {
                 setValue(100);
             } else {
@@ -150,11 +184,11 @@ const UserCard = () => {
         } else {
             setValue(0);
         }
-    }, [uiState?.applicationProperties?.tokenExpiresIn, authState?.accessExpired, authState?.timeToAccessExpiration]);
+    }, [applicationProperties?.tokenExpiresIn, authState?.accessExpired, authState?.timeToAccessExpiration]);
 
     return (
         <div
-            className={`flex flex-col gap-1 justify-center items-center px-1 ${authState?.user ? 'visible' : 'invisible'}`}>
+            className={`flex flex-col gap-1 justify-center items-center px-1 ${authState?.authUser ? 'visible' : 'invisible'}`}>
             <button
                 className="btn btn-xs w-16"
                 title={resourceState?.common?.baseNavigation.refreshToken}

@@ -1,18 +1,14 @@
 {
   "title": "Správca",
+  "applicationImagesTab": "Aplikačné obrázky",
   "baseInfoTab": "Základné informácie",
-  "appImagesTab": "Aplikačné obrázky",
-  "appInfoTab": "Aplikačné informácie",
   "companyInfoTab": "Informácie o spoločnosti",
-  "businessConditionsTab": "Obchodné podmienky",
-  "cookiesInfoTab": "Cookies informácie",
-  "gdprInfoTab": "Gdpr informácie",
-  "workingHoursTab": "Pracovné hodiny",
+  "textInfoTab": "Textové informácie",
+  "mailFormatTab": "Formát mailov",
+  "orderFormatTab": "Formát objednávky",
   "unitsTab": "Jednotky",
   "usersTab": "Používatelia",
-  "appImages": {
-    "addImage": "Pridať obrázok",
-    "deleteImage": "Zmazať obrázok",
+  "applicationImages": {
     "deleteImageQuestionMessage": "Naozaj si želáte zmazať obrázok?",
     "deleteImageQuestionTitle": "Zmazať obrázok",
     "loadImagesError": "Chyba načítania aplikačných obrázkov",
@@ -25,27 +21,6 @@
       "fileFormat": "Podporovaný formát súborov je PNG a JPG",
       "fileRequired": "Vyžaduje sa súbor",
       "error": "Odoslanie súboru neúspešné"
-    }
-  },
-  "applicationInfo": {
-    "title": "Položka aplikačných informácií",
-    "valueLabel": "Položka aplikačných informácií",
-    "valuePlaceholder": "Zadajte položku aplikačných informácií",
-    "valueRequired": "Vyžaduje sa položka aplikačných informácií",
-    "add": "Pridať položku aplikačných informácií",
-    "edit": "Upraviť položku aplikačných informácií",
-    "delete": "Zmazať položku aplikačných informácií",
-    "confirm": "Potvrdiť zmenu aplikačných informácií",
-    "deleteItemQuestionTitle": "Zmazať položku aplikačných informácií",
-    "deleteItemQuestionMessage": "Naozaj si želáte zmazať položku?",
-    "error": "Zmena aplikačných informácií neúspešná",
-    "submit": "Potvrdiť",
-    "cancel": "Zrušiť",
-    "editItemDialog": {
-      "title": "Dialóg položky aplikačných informácií",
-      "valueLabel": "Položka aplikačných informácií",
-      "valuePlaceholder": "Zadajte položku aplikačných informácií",
-      "valueRequired": "Vyžaduje sa položka aplikačných informácií"
     }
   },
   "baseInfo": {
@@ -62,8 +37,6 @@
       "titleLabel": "Názov aplikácie",
       "titlePlaceholder": "Zadajte názov aplikácie",
       "titleRequired": "Vyžaduje sa názov aplikácie",
-      "submit": "Odoslať",
-      "cancel": "Zrušiť",
       "error": "Odoslanie názvu aplikácie neúspešné"
     },
     "welcomeText": {
@@ -72,6 +45,21 @@
       "valuePlaceholder": "Zadajte uvítací text",
       "valueRequired": "Vyžaduje sa uvítací text",
       "error": "Odoslanie uvítacieho textu neúspešné"
+    },
+    "applicationInfo": {
+      "title": "Aplikačné informácie",
+      "valueLabel": "Položka aplikačných informácií",
+      "valuePlaceholder": "Zadajte položku aplikačných informácií",
+      "valueRequired": "Vyžaduje sa položka aplikačných informácií",
+      "deleteItemQuestionTitle": "Zmazať položku aplikačných informácií",
+      "deleteItemQuestionMessage": "Naozaj si želáte zmazať položku?",
+      "error": "Zmena aplikačných informácií neúspešná",
+      "editItemDialog": {
+        "title": "Dialóg položky aplikačných informácií",
+        "valueLabel": "Položka aplikačných informácií",
+        "valuePlaceholder": "Zadajte položku aplikačných informácií",
+        "valueRequired": "Vyžaduje sa položka aplikačných informácií"
+      }
     }
   },
   "companyInfo": {
@@ -109,36 +97,199 @@
     "mapUrlLabel": "Mapa",
     "mapUrlPlaceholder": "Zadajte mapu",
     "mapUrlRequired": "Vyžaduje sa mapa",
-    "submit": "Odoslať",
-    "cancel": "Zrušiť",
     "error": "Odoslanie informácií o spoločnosti neúspešné"
   },
-  "businessConditions": {
-    "title": "Upraviť obchodné podmienky",
-    "valueLabel": "Obchodné podmienky",
-    "valuePlaceholder": "Zadajte obchodné podmienky",
-    "valueRequired": "Vyžadujú sa obchodné podmienky",
-    "submit": "Odoslať",
-    "cancel": "Zrušiť",
-    "error": "Odoslanie obchodných podmienok neúspešné"
+  "mailFormat": {
+    "option": {
+      "select": "Formát",
+      "signUpMail": "Registrácia",
+      "resetPasswordMail": "Zabudnuté heslo",
+      "orderCommentMail": "Komentár objednávky",
+      "orderSendMail": "Odoslanie objednávky",
+      "orderStatusMail": "Zmena stavu objednávky"
+    },
+    "signUp": {
+      "subjectLabel": "Subjekt",
+      "subjectPlaceholder": "Zadajte subjekt",
+      "subjectRequired": "Vyžaduje sa subjekt",
+      "titleLabel": "Titulka",
+      "titlePlaceholder": "Zadajte titulku",
+      "titleRequired": "Vyžaduje sa titulka",
+      "messageLabel": "Správa",
+      "messagePlaceholder": "Zadajte správu",
+      "messageRequired": "Vyžaduje sa správa",
+      "linkLabel": "Odkaz",
+      "linkPlaceholder": "Zadajte odkaz",
+      "linkRequired": "Vyžaduje sa odkaz",
+      "error": "Odoslanie formátu registračného mailu neúspešné"
+    },
+    "resetPassword": {
+      "subjectLabel": "Subjekt",
+      "subjectPlaceholder": "Zadajte subjekt",
+      "subjectRequired": "Vyžaduje sa subjekt",
+      "titleLabel": "Titulka",
+      "titlePlaceholder": "Zadajte titulku",
+      "titleRequired": "Vyžaduje sa titulka",
+      "messageLabel": "Správa",
+      "messagePlaceholder": "Zadajte správu",
+      "messageRequired": "Vyžaduje sa správa",
+      "passwordMessageLabel": "Správa o hesle",
+      "passwordMessagePlaceholder": "Zadajte správu o hesle",
+      "passwordMessageRequired": "Vyžaduje sa správa o hesle",
+      "linkLabel": "Odkaz",
+      "linkPlaceholder": "Zadajte odkaz",
+      "linkRequired": "Vyžaduje sa odkaz",
+      "error": "Odoslanie formátu registračného mailu neúspešné"
+    },
+    "orderComment": {
+      "subjectLabel": "Subjekt",
+      "subjectPlaceholder": "Zadajte subjekt",
+      "subjectRequired": "Vyžaduje sa subjekt",
+      "titleLabel": "Titulka",
+      "titlePlaceholder": "Zadajte titulku",
+      "titleRequired": "Vyžaduje sa titulka",
+      "messageLabel": "Správa",
+      "messagePlaceholder": "Zadajte správu",
+      "messageRequired": "Vyžaduje sa správa",
+      "linkLabel": "Odkaz",
+      "linkPlaceholder": "Zadajte odkaz",
+      "linkRequired": "Vyžaduje sa odkaz",
+      "error": "Odoslanie formátu mailu komentára objednávky neúspešné"
+    },
+    "orderSend": {
+      "subjectLabel": "Subjekt",
+      "subjectPlaceholder": "Zadajte subjekt",
+      "subjectRequired": "Vyžaduje sa subjekt",
+      "titleLabel": "Titulka",
+      "titlePlaceholder": "Zadajte titulku",
+      "titleRequired": "Vyžaduje sa titulka",
+      "messageLabel": "Správa",
+      "messagePlaceholder": "Zadajte správu",
+      "messageRequired": "Vyžaduje sa správa",
+      "linkLabel": "Odkaz",
+      "linkPlaceholder": "Zadajte odkaz",
+      "linkRequired": "Vyžaduje sa odkaz",
+      "attachmentLabel": "Príloha",
+      "attachmentPlaceholder": "Zadajte prílohu",
+      "attachmentRequired": "Vyžaduje sa príloha",
+      "error": "Odoslanie formátu mailu odoslania objednávky neúspešné"
+    },
+    "orderStatus": {
+      "productionSubjectLabel": "Subjekt vo výrobe",
+      "productionSubjectPlaceholder": "Zadajte subjekt vo výrobe",
+      "productionSubjectRequired": "Vyžaduje sa subjekt vo výrobe",
+      "productionTitleLabel": "Titulka vo výrobe",
+      "productionTitlePlaceholder": "Zadajte titulku vo výrobe",
+      "productionTitleRequired": "Vyžaduje sa titulka vo výrobe",
+      "productionMessageLabel": "Správa titulka vo výrobe",
+      "productionMessagePlaceholder": "Zadajte titulku vo výrobe",
+      "productionMessageRequired": "Vyžaduje sa titulku vo výrobe",
+      "readySubjectLabel": "Subjekt pripravená",
+      "readySubjectPlaceholder": "Zadajte subjekt pripravená",
+      "readySubjectRequired": "Vyžaduje sa subjekt pripravená",
+      "readyTitleLabel": "Titulka pripravená",
+      "readyTitlePlaceholder": "Zadajte titulku pripravená",
+      "readyTitleRequired": "Vyžaduje sa zadajte titulku pripravená",
+      "readyMessageLabel": "Správa pripravená",
+      "readyMessagePlaceholder": "Zadajte správu pripravená",
+      "readyMessageRequired": "Vyžaduje sa správa pripravená",
+      "finishedSubjectLabel": "Subjekt vyzdvihnutá",
+      "finishedSubjectPlaceholder": "Zadajte subjekt vyzdvihnutá",
+      "finishedSubjectRequired": "Vyžaduje sa subjekt vyzdvihnutá",
+      "finishedTitleLabel": "Titulka vyzdvihnutá",
+      "finishedTitlePlaceholder": "Zadajte titulku vyzdvihnutá",
+      "finishedTitleRequired": "Vyžaduje sa titulka vyzdvihnutá",
+      "finishedMessageLabel": "Správa vyzdvihnutá",
+      "finishedMessagePlaceholder": "Zadajte správu vyzdvihnutá",
+      "finishedMessageRequired": "Vyžaduje sa správa vyzdvihnutá",
+      "cancelledSubjectLabel": "Subjekt zrušená",
+      "cancelledSubjectPlaceholder": "Zadajte subjekt zrušená",
+      "cancelledSubjectRequired": "Vyžaduje sa subjekt zrušená",
+      "cancelledTitleLabel": "Titulka zrušená",
+      "cancelledTitlePlaceholder": "Zadajte titulka zrušená",
+      "cancelledTitleRequired": "Vyžaduje sa titulka zrušená",
+      "cancelledMessageLabel": "Správa zrušená",
+      "cancelledMessagePlaceholder": "Zadajte správu zrušená",
+      "cancelledMessageRequired": "Vyžaduje sa správa zrušená",
+      "linkLabel": "Odkaz",
+      "linkPlaceholder": "Zadajte odkaz",
+      "linkRequired": "Vyžaduje sa odkaz",
+      "attachmentLabel": "Príloha",
+      "attachmentPlaceholder": "Zadajte prílohu",
+      "attachmentRequired": "Vyžaduje sa príloha",
+      "error": "Odoslanie formátu mailu stavu objednávky neúspešné"
+    }
   },
-  "cookiesInfo": {
-    "title": "Upraviť cookies informáciu",
-    "valueLabel": "Cookies informácie",
-    "valuePlaceholder": "Zadajte cookies informácie",
-    "valueRequired": "Vyžadujú sa cookies informácie",
-    "submit": "Odoslať",
-    "cancel": "Zrušiť",
-    "error": "Odoslanie cookies informácií neúspešné"
+  "orderFormat": {
+    "option": {
+      "select": "Formát",
+      "dimensions": "Rozmery",
+      "boards": "Dosky",
+      "edges": "Hrany",
+      "corners": "Rohy",
+      "pattern": "Šablóna",
+      "content": "Obsah",
+      "packageType": "Typ balenia",
+      "csvSeparator": "CSV oddeľovač",
+      "csvReplacements": "CSV text filtre",
+      "csvColumns": "CSV stĺpce"
+    }
   },
-  "gdprInfo": {
-    "title": "Upraviť gdpr informáciu",
-    "valueLabel": "Gdpr informácia",
-    "valuePlaceholder": "Zadajte gdpr informáciu",
-    "valueRequired": "Vyžadujú sa gdpr informácie",
-    "submit": "Odoslať",
-    "cancel": "Zrušiť",
-    "error": "Odoslanie gdpr informácií neúspešné"
+  "textInfo": {
+    "option": {
+      "select": "Informácia",
+      "businessConditions": "Obchodné podmienky",
+      "cookiesInfo": "Cookies",
+      "gdprInfo": "Gdpr",
+      "orderInfo": "Ako vytvoriť objednávku",
+      "workingHours": "Pracovné hodiny"
+    },
+    "businessConditions": {
+      "title": "Upraviť obchodné podmienky",
+      "valueLabel": "Obchodné podmienky",
+      "valuePlaceholder": "Zadajte obchodné podmienky",
+      "valueRequired": "Vyžadujú sa obchodné podmienky",
+      "error": "Odoslanie obchodných podmienok neúspešné"
+    },
+    "cookiesInfo": {
+      "title": "Upraviť cookies informáciu",
+      "valueLabel": "Cookies informácie",
+      "valuePlaceholder": "Zadajte cookies informácie",
+      "valueRequired": "Vyžadujú sa cookies informácie",
+      "error": "Odoslanie cookies informácií neúspešné"
+    },
+    "gdprInfo": {
+      "title": "Upraviť ako vytvoriť objednávku",
+      "valueLabel": "Ako vytvoriť objednávku",
+      "valuePlaceholder": "Zadajte ako vytvoriť objednávku",
+      "valueRequired": "Vyžaduje sa ako vytvoriť objednávku",
+      "error": "Odoslanie ako vytvoriť objednávku neúspešné"
+    },
+    "orderInfo": {
+      "title": "Upraviť ako vytvoriť objednávku",
+      "valueLabel": "Ako vytvoriť objednávku",
+      "valuePlaceholder": "Zadajte ako vytvoriť objednávku",
+      "valueRequired": "Vyžaduje sa ako vytvoriť objednávku",
+      "error": "Odoslanie ako vytvoriť objednávku neúspešné"
+    },
+    "workingHours": {
+      "title": "Upraviť pracovné hodiny",
+      "valueLabel": "Pracovné hodiny",
+      "valuePlaceholder": "Zadajte pracovné hodiny",
+      "valueRequired": "Vyžadujú sa pracovné hodiny",
+      "error": "Odoslanie pracovných hodín neúspešné"
+    }
+  },
+  "units": {
+    "title": "Jednotky",
+    "id": "Id",
+    "value": "Hodnota",
+    "editUnit": {
+      "title": "Upraviť jednotku",
+      "valuePlaceholder": "Zadajte jednotku",
+      "valueRequired": "Vyžaduje sa jednotka",
+      "error": "Odoslanie jednotky neúspešné"
+    }
   },
   "users": {
     "fetchDataError": "Chyba načítania používateľov",
@@ -158,8 +309,6 @@
       "employee": "Zamestnanec",
       "manager": "Manažér",
       "admin": "Správca",
-      "submit": "Odoslať",
-      "cancel": "Zrušiť",
       "error": "Zmena povolení neúspešná"
     },
     "userEnabled": {
@@ -185,26 +334,6 @@
       "authorities": "Povolenia",
       "confirmed": "Potvrdený",
       "enabled": "Odblokovaný"
-    }
-  },
-  "workingHours": {
-    "title": "Upraviť pracovné hodiny",
-    "valueLabel": "Pracovné hodiny",
-    "valuePlaceholder": "Zadajte pracovné hodiny",
-    "valueRequired": "Vyžadujú sa pracovné hodiny",
-    "submit": "Odoslať",
-    "cancel": "Zrušiť",
-    "error": "Odoslanie pracovných hodín neúspešné"
-  },
-  "units": {
-    "title": "Jednotky",
-    "id": "Id",
-    "value": "Hodnota",
-    "editUnit": {
-      "title": "Upraviť jednotku",
-      "valuePlaceholder": "Zadajte jednotku",
-      "valueRequired": "Vyžaduje sa jednotka",
-      "error": "Odoslanie jednotky neúspešné"
     }
   }
 }

@@ -2,8 +2,8 @@ import { NavLink } from 'react-router-dom';
 import { PieChart, Settings, ShoppingCart, Tool } from 'react-feather';
 
 import BaseNavigation from './base-navigation';
-import { useAuthState } from '../state/auth-state-provider';
-import { useResourceState } from '../state/resource-state-provider';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const Navigation = () => {
     const resourceState = useResourceState();

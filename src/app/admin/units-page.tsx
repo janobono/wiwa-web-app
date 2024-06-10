@@ -2,32 +2,54 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit } from 'react-feather';
 
+import { getUnits } from '../../api/controller/ui';
+import { Unit, UnitId } from '../../api/model/application';
 import WiwaUnitId from '../../component/app/wiwa-unit-id';
 import BaseDialog from '../../component/dialog/base-dialog';
-import { useConfigState } from '../../component/state/config-state-provider';
-import { useDialogState } from '../../component/state/dialog-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
-import { useUiState } from '../../component/state/ui-state-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
-import { getUnitIdName, Unit, UnitId } from '../../model/service';
+import { getUnitIdName } from '../../model';
+import { useAuthState } from '../../state/auth';
+import { useDialogState } from '../../state/dialog';
+import { useResourceState } from '../../state/resource';
+import { setUnits } from '../../api/controller/config';
 
 const UNIT_VALUE_DIALOG_ID = 'admin-unit-value-dialog-001';
 
 const UnitsPage = () => {
-    const configState = useConfigState();
+    const authState = useAuthState();
     const resourceState = useResourceState();
-    const uiState = useUiState();
+
+    const [busy, setBusy] = useState(false);
+    const [data, setData] = useState<Unit[]>();
 
     const [showDialog, setShowDialog] = useState(false);
     const [selectedUnitId, setSelectedUnitId] = useState<UnitId>();
     const [error, setError] = useState<string>();
 
+    useEffect(() => {
+        getUnits().then(data => setData(data.data));
+    }, []);
+
     const okHandler = async (unit: Unit) => {
         setError(undefined);
-        const response = await configState?.setUnits([unit]);
-        if (response?.error) {
-            setError(resourceState?.admin?.units.editUnit.error);
+        setBusy(true);
+        try {
+            if (data) {
+                const newData = [...data];
+                const index = newData.findIndex(item => item.id === unit.id);
+                if (index !== -1) {
+                    newData[index] = unit;
+                    const response = await setUnits(newData, authState?.authToken?.accessToken);
+                    if (response?.error) {
+                        setError(resourceState?.admin?.units.editUnit.error);
+                    } else {
+                        setData(response.data);
+                    }
+                }
+            }
+        } finally {
+            setBusy(false);
         }
     }
 
@@ -48,7 +70,7 @@ const UnitsPage = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {uiState?.units?.map((unit) =>
+                            {data?.map((unit) =>
                                 <tr key={unit.id} className="hover">
                                     <td><WiwaUnitId unitId={unit.id}/></td>
                                     <td>{unit.value}</td>
@@ -56,7 +78,7 @@ const UnitsPage = () => {
                                         <WiwaButton
                                             className="btn-primary md:btn-xs"
                                             title={resourceState?.admin?.units.editUnit.title}
-                                            disabled={configState?.busy}
+                                            disabled={busy}
                                             onClick={() => {
                                                 setSelectedUnitId(unit.id);
                                                 setShowDialog(true);
@@ -93,16 +115,21 @@ const UnitDialog = ({showDialog, unitId, okHandler, cancelHandler}: {
 }) => {
     const dialogState = useDialogState();
     const resourceState = useResourceState();
-    const uiState = useUiState();
+
+    const [data, setData] = useState<Unit[]>();
 
     const [value, setValue] = useState('');
     const [valueValid, setValueValid] = useState(false);
 
     useEffect(() => {
-        if (unitId) {
-            setValue(uiState?.units?.find(unit => unit.id === unitId)?.value || '');
+        getUnits().then(data => setData(data.data));
+    }, [showDialog]);
+
+    useEffect(() => {
+        if (data && unitId) {
+            setValue(data?.find(unit => unit.id === unitId)?.value || '');
         }
-    }, [showDialog, uiState?.units, unitId]);
+    }, [data, unitId]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <BaseDialog id={UNIT_VALUE_DIALOG_ID} showDialog={showDialog} closeHandler={cancelHandler}>

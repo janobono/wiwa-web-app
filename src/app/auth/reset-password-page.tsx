@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
+import { WiwaErrorCode } from '../../api/model';
+import { EMAIL_REGEX } from '../../const';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { WiwaErrorCode } from '../../model/service';
-import { EMAIL_REGEX } from '../../const';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const ResetPasswordPage = () => {
     const navigate = useNavigate();
@@ -22,7 +22,6 @@ const ResetPasswordPage = () => {
     const [captchaToken, setCaptchaToken] = useState('');
     const [captchaValid, setCaptchaValid] = useState(false);
 
-    const [formSubmit, setFormSubmit] = useState(false);
     const [formError, setFormError] = useState<string>();
     const [message, setMessage] = useState<string>();
 
@@ -32,44 +31,40 @@ const ResetPasswordPage = () => {
 
     const handleSubmit = async () => {
         setMessage(undefined);
-        setFormSubmit(true);
         setFormError(undefined);
-        try {
-            if (isFormValid()) {
-                const response = await authState?.resetPassword({
-                    email,
-                    captchaText,
-                    captchaToken
-                });
-                if (response?.error) {
-                    switch (response?.error.code) {
-                        case WiwaErrorCode.USER_NOT_FOUND:
-                            setFormError(resourceState?.common?.error.userNotFound);
-                            break;
-                        case WiwaErrorCode.USER_IS_DISABLED:
-                            setFormError(resourceState?.common?.error.userIsDisabled);
-                            break;
-                        case WiwaErrorCode.INVALID_CAPTCHA:
-                            setFormError(resourceState?.common?.error.invalidCaptcha);
-                            break;
-                        default:
-                            setFormError(resourceState?.auth?.resetPassword.error);
-                            break;
-                    }
-                } else {
-                    setMessage(resourceState?.auth?.resetPassword.message);
+        if (isFormValid()) {
+            const response = await authState?.resetPassword({
+                email,
+                captchaText,
+                captchaToken
+            });
+            if (response?.error) {
+                switch (response?.error.code) {
+                    case WiwaErrorCode.USER_NOT_FOUND:
+                        setFormError(resourceState?.common?.error.userNotFound);
+                        break;
+                    case WiwaErrorCode.USER_IS_DISABLED:
+                        setFormError(resourceState?.common?.error.userIsDisabled);
+                        break;
+                    case WiwaErrorCode.INVALID_CAPTCHA:
+                        setFormError(resourceState?.common?.error.invalidCaptcha);
+                        break;
+                    default:
+                        setFormError(resourceState?.auth?.resetPassword.error);
+                        break;
                 }
+            } else {
+                setMessage(resourceState?.auth?.resetPassword.message);
             }
-        } finally {
-            setFormSubmit(false);
         }
     }
 
     useEffect(() => {
-        if (authState?.user) {
+        const user = authState?.authUser?.user;
+        if (user) {
             navigate('/');
         }
-    }, [authState?.user, navigate]);
+    }, [authState?.authUser, navigate]);
 
     return (
         <div className="container p-5 mx-auto">
@@ -120,7 +115,7 @@ const ResetPasswordPage = () => {
                         <WiwaButton
                             type="submit"
                             className="btn-primary w-full"
-                            disabled={!isFormValid() || formSubmit}
+                            disabled={authState?.busy || !isFormValid()}
                         >{resourceState?.auth?.resetPassword.submit}</WiwaButton>
                         {formError &&
                             <label className="label">

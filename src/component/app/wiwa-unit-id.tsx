@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { useResourceState } from '../state/resource-state-provider';
-import { getUnitIdName, UnitId } from '../../model/service';
+import { UnitId } from '../../api/model/application';
+import { getUnitIdName } from '../../model';
+import { useResourceState } from '../../state/resource';
 
 const WiwaUnitId = ({unitId}: { unitId?: UnitId }) => {
     const resourceState = useResourceState();

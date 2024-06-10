@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useAppState } from '../state/app-state-provider';
+import { useAppState } from '../../state/app';
 
 const WiwaValueDate = ({value}: { value?: string }) => {
     const appState = useAppState();

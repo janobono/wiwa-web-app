@@ -1,13 +1,19 @@
+import { useEffect, useState } from 'react';
 import { Globe, Mail, Phone } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 
 import BaseFooter from './base-footer';
-import { useResourceState } from '../state/resource-state-provider';
-import { useUiState } from '../state/ui-state-provider';
+import { getCompanyInfo } from '../../api/controller/ui';
+import { CompanyInfo } from '../../api/model/application';
+import { useResourceState } from '../../state/resource';
 
 const Footer = () => {
     const resourceState = useResourceState();
-    const uiState = useUiState();
+    const [companyInfo, setCompanyInfo] = useState<CompanyInfo>();
+
+    useEffect(() => {
+        getCompanyInfo().then(data => setCompanyInfo(data.data));
+    }, []);
 
     return (
         <BaseFooter>
@@ -29,30 +35,34 @@ const Footer = () => {
                     className="link"
                     to="/ui/business-conditions"
                 >{resourceState?.common?.footer.links.businessConditions}</NavLink>
+                <NavLink
+                    className="link"
+                    to="/ui/order-info"
+                >{resourceState?.common?.footer.links.orderInfo}</NavLink>
             </nav>
-            {uiState?.companyInfo &&
+            {companyInfo &&
                 <nav>
                     <header className="footer-title">{resourceState?.common?.footer.contact.title}</header>
                     <ul>
                         <li className="mb-2 leading-6">
                             <div className="flex gap-1 text-gray-500 items-center">
                                 <Globe size="18"/>
-                                <span>{uiState.companyInfo.name + ', ' + uiState.companyInfo.street}</span>
+                                <span>{companyInfo.name + ', ' + companyInfo.street}</span>
                             </div>
                             <div className="flex gap-1 text-gray-500 items-center">
-                                <span>{uiState.companyInfo.zipCode + ' ' + uiState.companyInfo.city + ', ' + uiState.companyInfo.state}</span>
+                                <span>{companyInfo.zipCode + ' ' + companyInfo.city + ', ' + companyInfo.state}</span>
                             </div>
                         </li>
                         <li className="mb-2 leading-6">
                             <div className="flex gap-1 text-gray-500 items-center">
                                 <Mail size="18"/>
-                                <span>{uiState.companyInfo.mail}</span>
+                                <span>{companyInfo.mail}</span>
                             </div>
                         </li>
                         <li className="mb-2 leading-6">
                             <div className="flex gap-1 text-gray-500 items-center">
                                 <Phone size="18"/>
-                                <span>{uiState.companyInfo.phone}</span>
+                                <span>{companyInfo.phone}</span>
                             </div>
                         </li>
                     </ul>

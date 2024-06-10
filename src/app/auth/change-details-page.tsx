@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { WiwaErrorCode } from '../../api/model';
 import AccessDefender from '../../component/layout/access-defender';
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { WiwaErrorCode } from '../../model/service';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const ChangeDetailsPage = () => {
     const navigate = useNavigate();
@@ -15,23 +15,22 @@ const ChangeDetailsPage = () => {
     const authState = useAuthState();
     const resourceState = useResourceState();
 
-    const [titleBefore, setTitleBefore] = useState('');
+    const [titleBefore, setTitleBefore] = useState<string>();
 
     const [firstName, setFirstName] = useState('');
     const [firstNameValid, setFirstNameValid] = useState(false);
 
-    const [midName, setMidName] = useState('');
+    const [midName, setMidName] = useState<string>();
 
     const [lastName, setLastName] = useState('');
     const [lastNameValid, setLastNameValid] = useState(false);
 
-    const [titleAfter, setTitleAfter] = useState('');
+    const [titleAfter, setTitleAfter] = useState<string>();
 
     const [captchaText, setCaptchaText] = useState('');
     const [captchaToken, setCaptchaToken] = useState('');
     const [captchaValid, setCaptchaValid] = useState(false);
 
-    const [formSubmit, setFormSubmit] = useState(false);
     const [formError, setFormError] = useState<string>();
 
     const isFormValid = (): boolean => {
@@ -39,51 +38,46 @@ const ChangeDetailsPage = () => {
     }
 
     const handleSubmit = async () => {
-        setFormSubmit(true);
         setFormError(undefined);
-        try {
-            if (isFormValid()) {
-                const response = await authState?.changeUserDetails({
-                    titleBefore,
-                    firstName,
-                    midName,
-                    lastName,
-                    titleAfter,
-                    gdpr: true,
-                    captchaText,
-                    captchaToken
-                });
-                if (response?.error) {
-                    switch (response?.error.code) {
-                        case WiwaErrorCode.USER_IS_DISABLED:
-                            setFormError(resourceState?.common?.error.userIsDisabled);
-                            break;
-                        case WiwaErrorCode.INVALID_CAPTCHA:
-                            setFormError(resourceState?.common?.error.invalidCaptcha);
-                            break;
-                        default:
-                            setFormError(resourceState?.auth?.changeDetails.error);
-                            break;
-                    }
-                } else {
-                    navigate('/');
+        if (isFormValid()) {
+            const response = await authState?.changeUserDetails({
+                titleBefore,
+                firstName,
+                midName,
+                lastName,
+                titleAfter,
+                gdpr: true,
+                captchaText,
+                captchaToken
+            });
+            if (response?.error) {
+                switch (response?.error.code) {
+                    case WiwaErrorCode.USER_IS_DISABLED:
+                        setFormError(resourceState?.common?.error.userIsDisabled);
+                        break;
+                    case WiwaErrorCode.INVALID_CAPTCHA:
+                        setFormError(resourceState?.common?.error.invalidCaptcha);
+                        break;
+                    default:
+                        setFormError(resourceState?.auth?.changeDetails.error);
+                        break;
                 }
+            } else {
+                navigate('/');
             }
-        } finally {
-            setFormSubmit(false);
         }
     }
 
     useEffect(() => {
-        if (authState?.user) {
-            setTitleBefore(authState.user.titleBefore);
-            setFirstName(authState.user.firstName);
-            setMidName(authState.user.midName);
-            setLastName(authState.user.lastName);
-            setTitleAfter(authState.user.titleAfter);
+        const user = authState?.authUser?.user;
+        if (user) {
+            setTitleBefore(user.titleBefore);
+            setFirstName(user.firstName);
+            setMidName(user.midName);
+            setLastName(user.lastName);
+            setTitleAfter(user.titleAfter);
         }
-    }, [authState?.user]);
-
+    }, [authState?.authUser]);
 
     return (
         <AccessDefender>
@@ -163,7 +157,7 @@ const ChangeDetailsPage = () => {
                         <WiwaButton
                             type="submit"
                             className="btn-primary w-full"
-                            disabled={!isFormValid() || formSubmit}
+                            disabled={authState?.busy || !isFormValid()}
                         >{resourceState?.auth?.changeDetails.submit}</WiwaButton>
                         {formError &&
                             <label className="label">

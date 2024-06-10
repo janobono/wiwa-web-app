@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import BaseDialog from './base-dialog';
-import { useResourceState } from '../state/resource-state-provider';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaFormTextarea from '../ui/wiwa-form-textarea';
 import WiwaMarkdownRenderer from '../ui/wiwa-markdown-renderer';
-import { ValidationResult } from '../../model/ui/validation-result';
+import { ValidationResult } from '../../model/ui';
+import { useResourceState } from '../../state/resource';
 
 const MdDialog = (
     {

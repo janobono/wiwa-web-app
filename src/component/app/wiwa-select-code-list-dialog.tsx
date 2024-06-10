@@ -3,13 +3,13 @@ import { createPortal } from 'react-dom';
 import { Search } from 'react-feather';
 
 import BaseDialog from '../dialog/base-dialog';
-import { useCodeListState } from '../state/code-list-state-provider';
-import { useDialogState } from '../state/dialog-state-provider';
-import { useResourceState } from '../state/resource-state-provider';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaInput from '../ui/wiwa-input';
 import WiwaPageable from '../ui/wiwa-pageable';
-import { CodeList } from '../../model/service';
+import { CodeList } from '../../api/model/code-list';
+import { useCodeListState } from '../../state/code-list';
+import { useDialogState } from '../../state/dialog';
+import { useResourceState } from '../../state/resource';
 
 const WiwaSelectCodeListDialog = (
     {
@@ -38,7 +38,7 @@ const WiwaSelectCodeListDialog = (
 
     const fetchData = async () => {
         setError(undefined);
-        const response = await codeListState?.getCodeLists(page, 10, searchField);
+        const response = await codeListState?.getCodeLists({searchField}, {page, size: 10});
         if (response?.error) {
             setError(resourceState?.common?.selectCodeListDialog.error);
         }

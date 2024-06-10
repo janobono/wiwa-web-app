@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { useAuthState } from '../state/auth-state-provider';
-import { useResourceState } from '../state/resource-state-provider';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const ConfirmAccount = () => {
     const authState = useAuthState();
@@ -11,12 +11,12 @@ const ConfirmAccount = () => {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        if (authState?.user) {
-            setShow(!authState.user.confirmed);
+        if (authState?.authUser) {
+            setShow(!authState.authUser.user.confirmed);
         } else {
             setShow(false);
         }
-    }, [authState?.user]);
+    }, [authState?.authUser]);
 
     return (!show ? null :
         <div className="alert alert-warning text-xs md:text-base">

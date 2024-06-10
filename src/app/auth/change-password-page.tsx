@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { WiwaErrorCode } from '../../api/model';
 import AccessDefender from '../../component/layout/access-defender';
-import { useAuthState } from '../../component/state/auth-state-provider';
-import { useResourceState } from '../../component/state/resource-state-provider';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { WiwaErrorCode } from '../../model/service';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const ChangePasswordPage = () => {
     const navigate = useNavigate();
@@ -28,7 +28,6 @@ const ChangePasswordPage = () => {
     const [captchaToken, setCaptchaToken] = useState('');
     const [captchaValid, setCaptchaValid] = useState(false);
 
-    const [formSubmit, setFormSubmit] = useState(false);
     const [formError, setFormError] = useState<string>();
 
     const isFormValid = (): boolean => {
@@ -36,37 +35,32 @@ const ChangePasswordPage = () => {
     }
 
     const handleSubmit = async () => {
-        setFormSubmit(true);
         setFormError(undefined);
-        try {
-            if (isFormValid()) {
-                const response = await authState?.changePassword({
-                    oldPassword,
-                    newPassword,
-                    captchaText,
-                    captchaToken
-                });
-                if (response?.error) {
-                    switch (response?.error.code) {
-                        case WiwaErrorCode.USER_IS_DISABLED:
-                            setFormError(resourceState?.common?.error.userIsDisabled);
-                            break;
-                        case WiwaErrorCode.INVALID_CREDENTIALS:
-                            setFormError(resourceState?.common?.error.invalidCredentials);
-                            break;
-                        case WiwaErrorCode.INVALID_CAPTCHA:
-                            setFormError(resourceState?.common?.error.invalidCaptcha);
-                            break;
-                        default:
-                            setFormError(resourceState?.auth?.changePassword.error);
-                            break;
-                    }
-                } else {
-                    navigate('/');
+        if (isFormValid()) {
+            const response = await authState?.changePassword({
+                oldPassword,
+                newPassword,
+                captchaText,
+                captchaToken
+            });
+            if (response?.error) {
+                switch (response?.error.code) {
+                    case WiwaErrorCode.USER_IS_DISABLED:
+                        setFormError(resourceState?.common?.error.userIsDisabled);
+                        break;
+                    case WiwaErrorCode.INVALID_CREDENTIALS:
+                        setFormError(resourceState?.common?.error.invalidCredentials);
+                        break;
+                    case WiwaErrorCode.INVALID_CAPTCHA:
+                        setFormError(resourceState?.common?.error.invalidCaptcha);
+                        break;
+                    default:
+                        setFormError(resourceState?.auth?.changePassword.error);
+                        break;
                 }
+            } else {
+                navigate('/');
             }
-        } finally {
-            setFormSubmit(false);
         }
     }
 
@@ -155,7 +149,7 @@ const ChangePasswordPage = () => {
                         <WiwaButton
                             type="submit"
                             className="btn-primary w-full"
-                            disabled={!isFormValid() || formSubmit}
+                            disabled={authState?.busy || !isFormValid()}
                         >{resourceState?.auth?.changePassword.submit}</WiwaButton>
                         {formError &&
                             <label className="label">

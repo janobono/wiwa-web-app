@@ -3,15 +3,16 @@ import { createPortal } from 'react-dom';
 import { useParams } from 'react-router-dom';
 import { ArrowDown, ArrowUp, Edit, Plus, Trash } from 'react-feather';
 
+import { CodeListItem, CodeListItemChange } from '../../../api/model/code-list';
 import WiwaSelectCodeListItem from '../../../component/app/wiwa-select-code-list-item';
 import BaseDialog from '../../../component/dialog/base-dialog';
-import { useAuthState } from '../../../component/state/auth-state-provider';
-import { DialogAnswer, DialogType, useDialogState } from '../../../component/state/dialog-state-provider';
-import { useCodeListItemState } from '../../../component/state/code-list-item-state-provider';
-import { useResourceState } from '../../../component/state/resource-state-provider';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInput from '../../../component/ui/wiwa-form-input';
-import { CodeListItem, CodeListItemData } from '../../../model/service';
+import { DialogAnswer, DialogType } from '../../../model/ui';
+import { useAuthState } from '../../../state/auth';
+import { useDialogState } from '../../../state/dialog';
+import { useCodeListItemState } from '../../../state/code-list-item';
+import { useResourceState } from '../../../state/resource';
 
 const CODE_LIST_ITEM_DIALOG_ID = 'code-list-item-dialog-001';
 
@@ -31,23 +32,26 @@ const CodeListItemsPage = () => {
 
     useEffect(() => {
         fetchData().then();
-    }, [authState?.accessToken, parentItem]);
+    }, [authState?.authUser, parentItem]);
 
     const fetchData = async () => {
         setError(undefined);
-        const response = await codeListItemState?.getCodeListItems(Number(codeListId), parentItem?.id);
+        const response = await codeListItemState?.getCodeListItems({
+            codeListId: Number(codeListId),
+            parentId: parentItem?.id
+        });
         if (response?.error) {
             setError(resourceState?.manager?.codeLists.codeListItems.fetchDataError);
         }
     }
 
-    const okHandler = async (codeListItemData: CodeListItemData) => {
+    const okHandler = async (codeListItemChange: CodeListItemChange) => {
         setError(undefined);
         let response;
         if (selectedItem) {
-            response = await codeListItemState?.setCodeListItem(selectedItem.id, codeListItemData);
+            response = await codeListItemState?.setCodeListItem(selectedItem.id, codeListItemChange);
         } else {
-            response = await codeListItemState?.addCodeListItem(codeListItemData);
+            response = await codeListItemState?.addCodeListItem(codeListItemChange);
         }
         if (response?.error) {
             if (selectedItem) {
@@ -225,7 +229,7 @@ const CodeListItemDataDialog = (
         codeListId: number,
         parent?: CodeListItem,
         codeList?: CodeListItem,
-        okHandler: (codeListItemData: CodeListItemData) => void,
+        okHandler: (codeListItemChange: CodeListItemChange) => void,
         cancelHandler: () => void,
         error?: string,
         submitting: boolean

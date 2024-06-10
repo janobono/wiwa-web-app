@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from 'react-feather';
 
-import { useResourceState } from '../state/resource-state-provider';
 import WiwaButton from './wiwa-button';
+import { useResourceState } from '../../state/resource';
 
 const WiwaPageable = (
     {
