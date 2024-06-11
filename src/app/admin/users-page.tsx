@@ -3,11 +3,11 @@ import { createPortal } from 'react-dom';
 import { PieChart, Search, Settings, ShoppingCart, Tool, Trash } from 'react-feather';
 
 import { Authority, containsAuthority, User } from '../../api/model';
-import WiwaUserAuthorities from '../../component/app/wiwa-user-authorities';
 import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaInput from '../../component/ui/wiwa-input';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
+import WiwaUserAuthorities from '../../component/ui/wiwa-user-authorities';
 import { DialogAnswer, DialogType } from '../../model/ui';
 import { useAuthState } from '../../state/auth';
 import { useDialogState } from '../../state/dialog';

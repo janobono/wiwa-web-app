@@ -4,14 +4,14 @@ import { useParams } from 'react-router-dom';
 import { ArrowDown, ArrowUp, Edit, Plus, Trash } from 'react-feather';
 
 import { CodeListItem, CodeListItemChange } from '../../../api/model/code-list';
-import WiwaSelectCodeListItem from '../../../component/app/wiwa-select-code-list-item';
+import SelectCodeListItem from '../../../component/app/select-code-list-item';
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInput from '../../../component/ui/wiwa-form-input';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
 import { useCodeListItemState } from '../../../state/code-list-item';
+import { useDialogState } from '../../../state/dialog';
 import { useResourceState } from '../../../state/resource';
 
 const CODE_LIST_ITEM_DIALOG_ID = 'code-list-item-dialog-001';
@@ -20,9 +20,9 @@ const CodeListItemsPage = () => {
     const {codeListId} = useParams();
 
     const authState = useAuthState();
+    const codeListItemState = useCodeListItemState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
-    const codeListItemState = useCodeListItemState();
 
     const [showDialog, setShowDialog] = useState(false);
     const [parentItem, setParentItem] = useState<CodeListItem>();
@@ -96,7 +96,7 @@ const CodeListItemsPage = () => {
             :
             <>
                 <div className="flex flex-col p-5 w-full">
-                    <WiwaSelectCodeListItem codeListId={Number(codeListId)} itemSelectedHandler={setParentItem}/>
+                    <SelectCodeListItem codeListId={Number(codeListId)} itemSelectedHandler={setParentItem}/>
                     <div className="overflow-x-auto">
                         <table className="table table-zebra">
                             <thead>

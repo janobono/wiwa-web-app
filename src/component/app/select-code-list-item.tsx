@@ -7,7 +7,7 @@ import { useResourceState } from '../../state/resource';
 import { useCodeListState } from '../../state/code-list';
 import { useCodeListItemState } from '../../state/code-list-item';
 
-const WiwaSelectCodeListItem = (
+const SelectCodeListItem = (
     {
         codeListId,
         codeListItemId,
@@ -124,4 +124,4 @@ const WiwaSelectCodeListItem = (
     )
 }
 
-export default WiwaSelectCodeListItem;
+export default SelectCodeListItem;

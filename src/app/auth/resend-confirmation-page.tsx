@@ -75,7 +75,7 @@ const ResendConfirmationPage = () => {
                             type="submit"
                             className="btn-primary w-full"
                             disabled={authState?.busy || !isFormValid()}
-                        >{resourceState?.auth?.resendConfirmation.submit}</WiwaButton>
+                        >{resourceState?.common?.action.submit}</WiwaButton>
                         {formError &&
                             <label className="label">
                                 <span className="label-text-alt text-error">{formError}</span>

@@ -14,7 +14,6 @@ export interface ResourceAuth {
         titleAfterLabel: string,
         titleAfterPlaceholder: string,
         gdprLabel: string,
-        submit: string,
         error: string
     },
     changeEmail: {
@@ -26,7 +25,6 @@ export interface ResourceAuth {
         passwordLabel: string,
         passwordPlaceholder: string,
         passwordRequired: string,
-        submit: string,
         error: string
     },
     changePassword: {
@@ -41,12 +39,10 @@ export interface ResourceAuth {
         passwordConfirmationPlaceholder: string,
         passwordConfirmationRequired: string,
         passwordConfirmationNotEquals: string,
-        submit: string,
         error: string
     },
     resendConfirmation: {
         title: string,
-        submit: string,
         message: string,
         error: string
     },
@@ -56,7 +52,6 @@ export interface ResourceAuth {
         emailPlaceholder: string,
         emailRequired: string,
         emailFormat: string,
-        submit: string,
         message: string,
         error: string
     },
@@ -71,7 +66,6 @@ export interface ResourceAuth {
         passwordPlaceholder: string,
         passwordRequired: string,
         forgottenPasswordLink: string,
-        submit: string,
         error: string
     },
     signUp: {
@@ -105,7 +99,6 @@ export interface ResourceAuth {
         titleAfterLabel: string,
         titleAfterPlaceholder: string,
         gdprLabel: string,
-        submit: string,
         error: string
     }
 }

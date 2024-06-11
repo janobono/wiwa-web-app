@@ -4,10 +4,10 @@ import { Edit } from 'react-feather';
 
 import { getUnits } from '../../api/controller/ui';
 import { Unit, UnitId } from '../../api/model/application';
-import WiwaUnitId from '../../component/app/wiwa-unit-id';
 import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
+import WiwaUnitId from '../../component/ui/wiwa-unit-id';
 import { getUnitIdName } from '../../model';
 import { useAuthState } from '../../state/auth';
 import { useDialogState } from '../../state/dialog';

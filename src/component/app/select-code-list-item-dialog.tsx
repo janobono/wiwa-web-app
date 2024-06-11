@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import WiwaSelectCodeList from './wiwa-select-code-list';
-import WiwaSelectCodeListItem from './wiwa-select-code-list-item';
+import SelectCodeList from './select-code-list.tsx';
+import SelectCodeListItem from './select-code-list-item.tsx';
 import BaseDialog from '../dialog/base-dialog';
 import WiwaButton from '../ui/wiwa-button';
 import { CodeList, CodeListItem } from '../../api/model/code-list';
 import { useResourceState } from '../../state/resource';
 import { useDialogState } from '../../state/dialog';
 
-const WiwaSelectCodeListItemDialog = (
+const SelectCodeListItemDialog = (
     {
         dialogId,
         codeLists,
@@ -39,7 +39,7 @@ const WiwaSelectCodeListItemDialog = (
                             {resourceState?.common?.selectCodeListItemDialog.title}
                         </div>
                         <div className="flex flex-col p-5 w-full">
-                            <WiwaSelectCodeList
+                            <SelectCodeList
                                 placeholder={resourceState?.common?.selectCodeListItemDialog.codeListPlaceholder}
                                 setValue={(codeList) => {
                                     setSelectedCodeList(codeList);
@@ -48,7 +48,7 @@ const WiwaSelectCodeListItemDialog = (
                                 codeLists={codeLists}
                             />
                             {selectedCodeList &&
-                                <WiwaSelectCodeListItem
+                                <SelectCodeListItem
                                     codeListId={selectedCodeList.id}
                                     itemSelectedHandler={setSelectedCodeListItem}
                                 />
@@ -81,4 +81,4 @@ const WiwaSelectCodeListItemDialog = (
     )
 }
 
-export default WiwaSelectCodeListItemDialog;
+export default SelectCodeListItemDialog;

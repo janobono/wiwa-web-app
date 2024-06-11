@@ -14,7 +14,6 @@
     "titleAfterLabel": "Titul za",
     "titleAfterPlaceholder": "Zadajte titul za",
     "gdprLabel": "GDPR súhlas",
-    "submit": "Zmeniť",
     "error": "Zmena údajov používateľa neúspešná"
   },
   "changeEmail": {
@@ -26,7 +25,6 @@
     "passwordLabel": "Heslo",
     "passwordPlaceholder": "Zadajte heslo",
     "passwordRequired": "Vyžaduje sa heslo",
-    "submit": "Zmeniť email",
     "error": "Zmena emailu neúspešná"
   },
   "changePassword": {
@@ -41,12 +39,10 @@
     "passwordConfirmationPlaceholder": "Zadajte potvrdenie hesla",
     "passwordConfirmationRequired": "Vyžaduje sa potvrdenie hesla",
     "passwordConfirmationNotEquals": "Potvrdenie hesla sa nezhoduje s heslom",
-    "submit": "Zmeniť heslo",
     "error": "Zmena hesla neúspešná"
   },
   "resendConfirmation": {
     "title": "Preposlať aktivačný email",
-    "submit": "Preposlať",
     "message": "Aktivačná správa bola odoslaná na Váš email.",
     "error": "Nepodarilo sa odoslať aktivačnú správu."
   },
@@ -56,7 +52,6 @@
     "emailPlaceholder": "Zadajte email",
     "emailRequired": "Vyžaduje sa email",
     "emailFormat": "Neplatný email",
-    "submit": "Vygenerovať heslo",
     "message": "Na Váš používateľský email sme odoslali odkaz na aktiváciu hesla.",
     "error": "Vygenerovanie hesla neúspešné"
   },
@@ -71,7 +66,6 @@
     "passwordPlaceholder": "Zadajte heslo",
     "passwordRequired": "Vyžaduje sa heslo",
     "forgottenPasswordLink": "Zabudnuté heslo?",
-    "submit": "Prihlásiť",
     "error": "Prihlásenie neúspešné"
   },
   "signUp": {
@@ -105,7 +99,6 @@
     "titleAfterLabel": "Titul za",
     "titleAfterPlaceholder": "Zadajte titul za",
     "gdprLabel": "GDPR súhlas",
-    "submit": "Zaregistrovať sa",
     "error": "Zaregistrovanie neúspešné"
   }
 }

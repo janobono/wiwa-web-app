@@ -11,7 +11,7 @@ import { useCodeListState } from '../../state/code-list';
 import { useDialogState } from '../../state/dialog';
 import { useResourceState } from '../../state/resource';
 
-const WiwaSelectCodeListDialog = (
+const SelectCodeListDialog = (
     {
         dialogId,
         showDialog,
@@ -153,4 +153,4 @@ const WiwaSelectCodeListDialog = (
     )
 }
 
-export default WiwaSelectCodeListDialog;
+export default SelectCodeListDialog;

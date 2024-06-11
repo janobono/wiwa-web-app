@@ -3,7 +3,7 @@ import { FormEvent } from 'react';
 import WiwaSelect from '../ui/wiwa-select';
 import { CodeList } from '../../api/model/code-list';
 
-const WiwaSelectCodeList = (
+const SelectCodeList = (
     {
         placeholder,
         value,
@@ -39,4 +39,4 @@ const WiwaSelectCodeList = (
     )
 }
 
-export default WiwaSelectCodeList;
+export default SelectCodeList;

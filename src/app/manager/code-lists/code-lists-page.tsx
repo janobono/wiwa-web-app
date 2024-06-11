@@ -11,8 +11,8 @@ import WiwaInput from '../../../component/ui/wiwa-input';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
 import { useCodeListState } from '../../../state/code-list';
+import { useDialogState } from '../../../state/dialog';
 import { useResourceState } from '../../../state/resource';
 
 const CODE_LIST_DIALOG_ID = 'code-list-dialog-001';
@@ -21,9 +21,9 @@ const CodeListsPage = () => {
     const navigate = useNavigate();
 
     const authState = useAuthState();
+    const codeListState = useCodeListState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
-    const codeListState = useCodeListState();
 
     const [showDialog, setShowDialog] = useState(false);
     const [selectedCodeList, setSelectedCodeList] = useState<CodeList>();
