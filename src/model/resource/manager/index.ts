@@ -1,6 +1,10 @@
 export interface ResourceManager {
     title: string,
     codeListsTab: string,
+    boardsTab: string,
+    edgesTab: string,
+    orderInputsTab: string,
+    ordersTab: string,
     fetchDataError: string,
     codeLists: {
         id: string,
@@ -8,15 +12,12 @@ export interface ResourceManager {
         name: string,
         fetchDataError: string,
         searchCodeList: {
-            title: string,
             placeholder: string
         },
         addCodeList: {
-            title: string,
             error: string
         },
         editCodeList: {
-            title: string,
             error: string
         },
         deleteCodeList: {
@@ -40,19 +41,15 @@ export interface ResourceManager {
             value: string,
             fetchDataError: string,
             addCodeListItem: {
-                title: string,
                 error: string
             },
             editCodeListItem: {
-                title: string,
                 error: string
             },
             moveUpCodeListItem: {
-                title: string,
                 error: string
             },
             moveDownCodeListItem: {
-                title: string,
                 error: string
             },
             deleteCodeListItem: {

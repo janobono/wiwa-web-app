@@ -1,8 +1,10 @@
 {
   "title": "Manažér",
   "codeListsTab": "Číselníky",
-  "productConfigTab": "Konfigurácia produktov",
-  "productsTab": "Produkty",
+  "boardsTab": "Dosky",
+  "edgesTab": "Hrany",
+  "orderInputsTab": "Vstupy objednávok",
+  "ordersTab": "Objednávky",
   "codeLists": {
     "id": "Id",
     "code": "Kód",
@@ -70,159 +72,6 @@
         "valuePlaceholder": "Zadajte hodnotu",
         "valueRequired": "Vyžaduje sa hodnota"
       }
-    }
-  },
-  "productConfig": {
-    "vatRate": {
-      "title": "Sadzba DPH",
-      "required": "Vyžaduje sa sadzba DPH",
-      "error": "Chyba zmeny sadzby DPH"
-    },
-    "productCategories": {
-      "title": "Kategórie produktov",
-      "id": "Id",
-      "code": "Kód",
-      "name": "Názov",
-      "confirm": "Potvrdiť zmeny kategórií produktov",
-      "back": "Späť na konfiguráciu produktov",
-      "error": "Chyba potvrdenia zmien kategórií produktov",
-      "addProductCategory": {
-        "title": "Pridať kategóriu produktov"
-      },
-      "deleteProductCategory": {
-        "title": "Odstrániť kategóriu produktov",
-        "message": "Naozaj si želáte zmazať kategóriu produktu?"
-      }
-    },
-    "boardCategory": {
-      "title": "Kategória veľkoplošných materiálov"
-    },
-    "edgeCategory": {
-      "title": "Kategória hrán"
-    },
-    "serviceCategory": {
-      "title": "Kategória služieb"
-    },
-    "searchItems": {
-      "title": "Položky kategórií vyhľadávania",
-      "id": "Id",
-      "code": "Kód",
-      "name": "Názov",
-      "categoryId": "Id kategórie",
-      "categoryCode": "Kód kategórie",
-      "categoryName": "Názov kategórie",
-      "confirm": "Potvrdiť zmeny položiek kategórií vyhľadávania",
-      "back": "Späť na konfiguráciu produktov",
-      "error": "Chyba potvrdenia zmien položiek kategórií vyhľadávania",
-      "addSearchItem": {
-        "title": "Pridať položku kategórie vyhľadávania"
-      },
-      "deleteSearchItem": {
-        "title": "Odstrániť položku kategórie vyhľadávania",
-        "message": "Naozaj si želáte zmazať položku kategórie vyhľadávania?"
-      }
-    }
-  },
-  "products": {
-    "id": "Id",
-    "code": "Kód",
-    "name": "Názov",
-    "stockStatus": "Stav",
-    "fetchDataError": "Chyba načítania produktov",
-    "addProduct": "Pridať produkt",
-    "editProduct": "Upraviť produkt",
-    "searchProduct": {
-      "title": "Vyhľadať produkt",
-      "placeholder": "Názov alebo kód"
-    },
-    "deleteProduct": {
-      "title": "Zmazať produkt",
-      "message": "Naozaj si želáte zmazať produkt?",
-      "error": "Chyba zmazania produktu"
-    },
-    "product": {
-      "title": "Produkt",
-      "codeLabel": "Kód",
-      "codePlaceholder": "Zadajte kód",
-      "codeRequired": "Vyžaduje sa kód",
-      "nameLabel": "Názov",
-      "namePlaceholder": "Zadajte názov",
-      "nameRequired": "Vyžaduje sa názov",
-      "stockStatusLabel": "Stav na sklade",
-      "stockStatusPlaceholder": "Zvoľte stav na sklade",
-      "stockStatusRequired": "Vyžaduje sa stav na sklade",
-      "descriptionLabel": "Popis",
-      "descriptionPlaceholder": "Zadajte popis",
-      "confirm": "Potvrdiť zmeny produktu",
-      "back": "Späť na produkt",
-      "attributes": {
-        "title": "Atribúty produktu"
-      },
-      "quantities": {
-        "title": "Množstevné parametre produktu",
-        "salePlaceholder": "Zvoľte predajnú jednotku",
-        "weightPlaceholder": "Zvoľte hmotnostnú jednotku",
-        "netWeightPlaceholder": "Zvoľte jednotku čistej hmotnosťi",
-        "lengthPlaceholder": "Zvoľte jednotku dĺžky",
-        "widthPlaceholder": "Zvoľte jednotku šírky",
-        "thicknessPlaceholder": "Zvoľte jednotku hrúbky"
-      },
-      "unitPrices": {
-        "title": "Jednotkové ceny produktu",
-        "validFrom": "Platná od",
-        "price": "Jednotková cena",
-        "confirm": "Potvrdiť zmeny jednotkových cien produktu",
-        "confirmDataError": "Chyba potvrdenia zmien jednotkových cien produktu",
-        "addPrice": {
-          "title": "Pridať jednotkovú cenu",
-          "validFrom": "Platnosť od",
-          "validFromRequired": "Vyžaduje sa platnosť od",
-          "value": "Hodnota",
-          "valueRequired": "Vyžaduje sa hodnota",
-          "unit": "Mena",
-          "unitPlaceholder": "Zvoľte jednotku meny"
-        },
-        "deletePrice": {
-          "title": "Zmazať jednotkovú cenu",
-          "message": "Naozaj si želáte zmazať jednotkovú cenu?"
-        }
-      },
-      "images": {
-        "title": "Obrázky produktu",
-        "addImage": {
-          "title": "Pridať obrázok produktu",
-          "fileLabel": "Súbor",
-          "filePlaceholder": "Zvoľte súbor",
-          "fileFormat": "Podporovaný formát súborov je PNG a JPG",
-          "fileRequired": "Vyžaduje sa súbor",
-          "error": "Chyba pridania obrázku produktu"
-        },
-        "deleteImage": {
-          "title": "Zmazať obrázok produktu",
-          "message": "Naozaj si želáte zmazať obrázok produktu?",
-          "error": "Chyba zmazania obrázku produktu"
-        }
-      },
-      "categoryItems": {
-        "title": "Položky kategorií produktu",
-        "id": "Id",
-        "code": "Kód",
-        "name": "Názov",
-        "categoryId": "Id kategórie",
-        "categoryCode": "Kód kategórie",
-        "categoryName": "Názov kategórie",
-        "confirm": "Potvrdiť zmeny položiek kategórií produktu",
-        "back": "Späť na produkt",
-        "error": "Chyba potvrdenia zmien položiek kategórií produktu",
-        "addItem": {
-          "title": "Pridať položku kategórie produktu"
-        },
-        "deleteItem": {
-          "title": "Odstrániť položku kategórií produktu",
-          "message": "Naozaj si želáte zmazať položku kategórií produktu?"
-        }
-      },
-      "fetchDataError": "Chyba načítania produktu"
     }
   }
 }

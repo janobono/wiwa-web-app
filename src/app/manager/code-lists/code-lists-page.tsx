@@ -98,7 +98,7 @@ const CodeListsPage = () => {
                                 }}
                             />
                             <WiwaButton
-                                title={resourceState?.manager?.codeLists.searchCodeList.title}
+                                title={resourceState?.common?.action.search}
                                 className="join-item"
                                 onClick={fetchData}
                             ><Search size={18}/></WiwaButton>
@@ -114,7 +114,7 @@ const CodeListsPage = () => {
                                 <th>{resourceState?.manager?.codeLists.name}</th>
                                 <th>
                                     <WiwaButton
-                                        title={resourceState?.manager?.codeLists.addCodeList.title}
+                                        title={resourceState?.common?.action.add}
                                         className="btn-primary btn-xs"
                                         disabled={codeListState?.busy}
                                         onClick={() => {
@@ -136,7 +136,7 @@ const CodeListsPage = () => {
                                     <th>
                                         <div className="join">
                                             <WiwaButton
-                                                title={resourceState?.manager?.codeLists.editCodeList.title}
+                                                title={resourceState?.common?.action.edit}
                                                 className="btn-primary btn-xs join-item"
                                                 disabled={codeListState?.busy}
                                                 onClick={() => {
@@ -147,7 +147,7 @@ const CodeListsPage = () => {
                                                 <Edit size={18}/>
                                             </WiwaButton>
                                             <WiwaButton
-                                                title={resourceState?.manager?.codeLists.codeListItems.title}
+                                                title={resourceState?.common?.action.items}
                                                 className="btn-secondary btn-xs join-item"
                                                 disabled={codeListState?.busy}
                                                 onClick={() => navigate('/manager/code-lists/' + codeList.id + '/items')}
@@ -156,7 +156,7 @@ const CodeListsPage = () => {
                                             </WiwaButton>
                                             <WiwaButton
                                                 className="btn-accent btn-xs join-item"
-                                                title={resourceState?.manager?.codeLists.deleteCodeList.title}
+                                                title={resourceState?.common?.action.delete}
                                                 disabled={codeListState?.busy}
                                                 onClick={() => {
                                                     dialogState?.showDialog({

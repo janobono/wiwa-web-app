@@ -5,7 +5,11 @@
     "copy": "Kopírovať",
     "delete": "Zmazať",
     "edit": "Upraviť",
+    "items": "Položky",
     "ok": "Potvrdiť",
+    "moveUp": "Presunúť hore",
+    "moveDown": "Presunúť dole",
+    "search": "Vyhľadať",
     "submit": "Odoslať"
   },
   "baseNavigation": {

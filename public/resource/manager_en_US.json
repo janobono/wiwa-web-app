@@ -1,8 +1,10 @@
 {
   "title": "Manager",
   "codeListsTab": "Code Lists",
-  "productConfigTab": "Product config",
-  "productsTab": "Products",
+  "boardsTab": "Boards",
+  "edgesTab": "Edges",
+  "orderInputsTab": "Order inputs",
+  "ordersTab": "Orders",
   "codeLists": {
     "id": "Id",
     "code": "Code",
@@ -70,159 +72,6 @@
         "valuePlaceholder": "Enter value",
         "valueRequired": "Value is required"
       }
-    }
-  },
-  "productConfig": {
-    "vatRate": {
-      "title": "Vat rate",
-      "required": "Vat rate is required",
-      "error": "Vat rate change failed"
-    },
-    "productCategories": {
-      "title": "Product categories",
-      "id": "Id",
-      "code": "Code",
-      "name": "Name",
-      "confirm": "Confirm product categories changes",
-      "back": "Back to product config",
-      "error": "Product categories confirmation failed",
-      "addProductCategory": {
-        "title": "Add product category"
-      },
-      "deleteProductCategory": {
-        "title": "Delete product category",
-        "message": "Do you really want to delete product category?"
-      }
-    },
-    "boardCategory": {
-      "title": "Board category"
-    },
-    "edgeCategory": {
-      "title": "Edge category"
-    },
-    "serviceCategory": {
-      "title": "Service category"
-    },
-    "searchItems": {
-      "title": "Search category items",
-      "id": "Id",
-      "code": "Code",
-      "name": "Name",
-      "categoryId": "Category Id",
-      "categoryCode": "Category code",
-      "categoryName": "Category name",
-      "confirm": "Confirm search category items changes",
-      "back": "Back to product config",
-      "error": "Search category items confirmation failed",
-      "addSearchItem": {
-        "title": "Add search category item"
-      },
-      "deleteSearchItem": {
-        "title": "Delete search category item",
-        "message": "Do you really want to delete search category item?"
-      }
-    }
-  },
-  "products": {
-    "id": "Id",
-    "code": "Code",
-    "name": "Name",
-    "stockStatus": "Stock status",
-    "fetchDataError": "Products loading failed",
-    "addProduct": "Add product",
-    "editProduct": "Edit product",
-    "searchProduct": {
-      "title": "Search product",
-      "placeholder": "Name or code"
-    },
-    "deleteProduct": {
-      "title": "Delete product",
-      "message": "Do you really want to delete product?",
-      "error": "Delete product failed"
-    },
-    "product": {
-      "title": "Product",
-      "codeLabel": "Code",
-      "codePlaceholder": "Enter code",
-      "codeRequired": "Code is required",
-      "nameLabel": "Name",
-      "namePlaceholder": "Enter name",
-      "nameRequired": "Name is required",
-      "stockStatusLabel": "Stock status",
-      "stockStatusPlaceholder": "Select stock status",
-      "stockStatusRequired": "Stock status is required",
-      "descriptionLabel": "Description",
-      "descriptionPlaceholder": "Enter description",
-      "confirm": "Confirm product changes",
-      "back": "Back to product",
-      "attributes": {
-        "title": "Product attributes"
-      },
-      "quantities": {
-        "title": "Product quantities",
-        "salePlaceholder": "Select sale unit",
-        "weightPlaceholder": "Select weight unit",
-        "netWeightPlaceholder": "Select net weight unit",
-        "lengthPlaceholder": "Select length unit",
-        "widthPlaceholder": "Select width unit",
-        "thicknessPlaceholder": "Select thickness unit"
-      },
-      "unitPrices": {
-        "title": "Product unit prices",
-        "validFrom": "Valid from",
-        "price": "Unit price",
-        "confirm": "Confirm product unit prices changes",
-        "confirmDataError": "Product unit prices confirmation failed",
-        "addPrice": {
-          "title": "Add price",
-          "validFrom": "Valid from",
-          "validFromRequired": "Valid from is required",
-          "value": "Value",
-          "valueRequired": "Value and currency is required",
-          "unit": "Currency",
-          "unitPlaceholder": "Select currency unit"
-        },
-        "deletePrice": {
-          "title": "Delete unit price",
-          "message": "Do you really want to delete unit price?"
-        }
-      },
-      "images": {
-        "title": "Product images",
-        "addImage": {
-          "title": "Add product image",
-          "fileLabel": "File",
-          "filePlaceholder": "Select file",
-          "fileFormat": "Supported file format is JPG or PNG",
-          "fileRequired": "File is required",
-          "error": "Add product image failed"
-        },
-        "deleteImage": {
-          "title": "Delete product image",
-          "message": "Do you really want to delete product image?",
-          "error": "Delete product image failed"
-        }
-      },
-      "categoryItems": {
-        "title": "Product category items",
-        "id": "Id",
-        "code": "Code",
-        "name": "Name",
-        "categoryId": "Category Id",
-        "categoryCode": "Category code",
-        "categoryName": "Category name",
-        "confirm": "Confirm product category items changes",
-        "back": "Back to product",
-        "error": "Product category items confirmation failed",
-        "addItem": {
-          "title": "Add product category item"
-        },
-        "deleteItem": {
-          "title": "Delete product category item",
-          "message": "Do you really want to delete product category item?"
-        }
-      },
-      "fetchDataError": "Product loading failed"
     }
   }
 }

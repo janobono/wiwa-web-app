@@ -5,7 +5,11 @@ export interface ResourceCommon {
         copy: string,
         delete: string,
         edit: string,
+        items: string,
         ok: string,
+        moveUp: string,
+        moveDown: string,
+        search: string,
         submit: string
     },
     baseNavigation: {

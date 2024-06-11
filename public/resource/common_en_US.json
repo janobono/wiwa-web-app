@@ -5,7 +5,11 @@
     "copy": "Copy",
     "delete": "Delete",
     "edit": "Edit",
+    "items": "Items",
     "ok": "Ok",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "search": "Search",
     "submit": "Submit"
   },
   "baseNavigation": {
