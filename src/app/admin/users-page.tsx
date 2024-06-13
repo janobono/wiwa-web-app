@@ -14,43 +14,36 @@ import {
     UserX
 } from 'react-feather';
 
-import { Authority, containsAuthority, User } from '../../api/model';
+import { ClientResponse } from '../../api/controller';
+import { deleteUser, getUsers, setAuthorities, setConfirmed, setEnabled } from '../../api/controller/user';
+import { Authority, containsAuthority, Page, User } from '../../api/model';
+import { UserField } from '../../api/model/user';
 import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaInput from '../../component/ui/wiwa-input';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
+import UserTable from '../../component/user/user-table';
 import { DialogAnswer, DialogType } from '../../model/ui';
 import { useAuthState } from '../../state/auth';
 import { useDialogState } from '../../state/dialog';
 import { useResourceState } from '../../state/resource';
-import UserProvider, { useUserState } from '../../state/user';
-import UserTable from '../../component/user/user-table.tsx';
-import { UserField } from '../../api/model/user';
 
 const USER_AUTHORITIES_DIALOG_ID = 'admin-users-authorities-dialog-001';
 
 const UsersPage = () => {
-    return (
-        <UserProvider>
-            <Users/>
-        </UserProvider>
-    )
-}
-
-export default UsersPage;
-
-const Users = () => {
     const authState = useAuthState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
-    const userState = useUserState();
 
+    const [busy, setBusy] = useState(false);
+    const [data, setData] = useState<Page<User>>();
+    const [selected, setSelected] = useState<User>();
+    const [error, setError] = useState<string>();
+
+    const [searchField, setSearchField] = useState('');
+    const [page, setPage] = useState(0);
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
-    const [page, setPage] = useState(0);
-    const [selected, setSelected] = useState<User>();
-    const [searchField, setSearchField] = useState('');
-    const [error, setError] = useState<string>();
 
     const [showDialog, setShowDialog] = useState(false);
 
@@ -59,52 +52,105 @@ const Users = () => {
     }, []);
 
     useEffect(() => {
-        setPrevious(userState?.data !== undefined && !userState?.data.first);
-        setNext(userState?.data !== undefined && !userState?.data.last);
+        setPrevious(data !== undefined && !data.first);
+        setNext(data !== undefined && !data.last);
 
-        if (selected && userState?.data) {
-            const index = userState.data.content.findIndex(item => item.id === selected.id);
+        if (selected && data) {
+            const index = data.content.findIndex(item => item.id === selected.id);
             if (index !== -1) {
-                setSelected(userState.data.content[index]);
+                setSelected(data.content[index]);
             }
         } else {
             setSelected(undefined);
         }
-    }, [userState?.data, selected]);
+    }, [data, selected]);
 
     const fetchData = async () => {
         setError(undefined);
-        const response = await userState?.getUsers({searchField}, {page, size: 10});
-        if (response?.error) {
-            setError(resourceState?.admin?.users.fetchDataError);
+        setBusy(true);
+        try {
+            const response = await getUsers({searchField}, {page, size: 10}, authState?.authToken?.accessToken);
+            setData(response?.data);
+            if (response?.error) {
+                setError(resourceState?.admin?.users.fetchDataError);
+            }
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const handleResponse = (response: ClientResponse<User>) => {
+        if (response?.data) {
+            if (data) {
+                const newData = {...data};
+                const index = newData.content.findIndex(item => item.id === response.data?.id);
+                if (index !== -1) {
+                    newData.content[index] = response.data;
+                }
+                setData(newData);
+            } else {
+                setData(undefined);
+            }
         }
     }
 
     const authoritiesHandler = async (id: number, authorities: Authority[]) => {
-        const response = await userState?.setAuthorities(id, authorities);
-        if (response?.error) {
-            setError(resourceState?.admin?.users.userAuthorities.error);
+        setBusy(true);
+        try {
+            const response = await setAuthorities(id, authorities, authState?.authToken?.accessToken);
+            handleResponse(response);
+            if (response?.error) {
+                setError(resourceState?.admin?.users.userAuthorities.error);
+            }
+        } finally {
+            setBusy(false);
         }
     }
 
     const userEnabledHandler = async (id: number, enabled: boolean) => {
-        const response = await userState?.setEnabled(id, enabled);
-        if (response?.error) {
-            setError(resourceState?.admin?.users.userEnabled.error);
+        setBusy(true);
+        try {
+            const response = await setEnabled(id, enabled, authState?.authToken?.accessToken);
+            handleResponse(response);
+            if (response?.error) {
+                setError(resourceState?.admin?.users.userEnabled.error);
+            }
+        } finally {
+            setBusy(false);
         }
     }
 
     const userConfirmedHandler = async (id: number, confirmed: boolean) => {
-        const response = await userState?.setConfirmed(id, confirmed);
-        if (response?.error) {
-            setError(resourceState?.admin?.users.userConfirmed.error);
+        setBusy(true);
+        try {
+            const response = await setConfirmed(id, confirmed, authState?.authToken?.accessToken);
+            handleResponse(response);
+            if (response?.error) {
+                setError(resourceState?.admin?.users.userConfirmed.error);
+            }
+        } finally {
+            setBusy(false);
         }
     }
 
     const deleteHandler = async (id: number) => {
-        const response = await userState?.deleteUser(id);
-        if (response?.error) {
-            setError(resourceState?.admin?.users.deleteUser.error);
+        setBusy(true);
+        try {
+            const response = await deleteUser(id, authState?.authToken?.accessToken);
+            setSelected(undefined);
+            if (data) {
+                const newData = {...data};
+                const index = newData.content.findIndex(item => item.id === id);
+                if (index !== -1) {
+                    newData.content.splice(index, 1);
+                }
+                setData(newData);
+            }
+            if (response?.error) {
+                setError(resourceState?.admin?.users.deleteUser.error);
+            }
+        } finally {
+            setBusy(false);
         }
     }
 
@@ -140,7 +186,7 @@ const Users = () => {
                             <WiwaButton
                                 title={resourceState?.admin?.users.userAuthorities.title}
                                 className="btn-primary join-item"
-                                disabled={userState?.busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
+                                disabled={busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
                                 onClick={() => {
                                     setShowDialog(true);
                                 }}
@@ -151,7 +197,7 @@ const Users = () => {
                             <WiwaButton
                                 className="btn-warning join-item"
                                 title={resourceState?.admin?.users.userConfirmed.dialogTitle}
-                                disabled={userState?.busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
+                                disabled={busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
                                 onClick={() => {
                                     dialogState?.showDialog({
                                         type: DialogType.YES_NO,
@@ -179,7 +225,7 @@ const Users = () => {
                             <WiwaButton
                                 className="btn-error join-item"
                                 title={resourceState?.admin?.users.userEnabled.dialogTitle}
-                                disabled={userState?.busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
+                                disabled={busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
                                 onClick={() => {
                                     dialogState?.showDialog({
                                         type: DialogType.YES_NO,
@@ -207,7 +253,7 @@ const Users = () => {
                             <WiwaButton
                                 className="btn-accent join-item"
                                 title={resourceState?.common?.action.delete}
-                                disabled={userState?.busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
+                                disabled={busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
                                 onClick={() => {
                                     dialogState?.showDialog({
                                         type: DialogType.YES_NO,
@@ -230,7 +276,7 @@ const Users = () => {
                     <div className="overflow-x-auto">
                         <UserTable
                             fields={Object.values(UserField)}
-                            users={userState?.data?.content}
+                            users={data?.content}
                             selected={selected}
                             setSelected={setSelected}
                         />
@@ -244,7 +290,7 @@ const Users = () => {
                             pageHandler={() => fetchData()}
                             isNext={next}
                             nextHandler={() => setPage(page - 1)}
-                            disabled={userState?.busy}
+                            disabled={busy}
                         />
                     </div>
                 </div>
@@ -266,6 +312,8 @@ const Users = () => {
             </>
     )
 }
+
+export default UsersPage;
 
 const AuthoritiesDialog = ({showDialog, authorities, okHandler, cancelHandler}: {
     showDialog: boolean,

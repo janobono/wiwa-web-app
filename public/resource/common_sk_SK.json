@@ -139,9 +139,6 @@
     "title": "Výber číselníka",
     "searchTitle": "Vyhľadať číselník",
     "searchPlaceholder": "Názov alebo kód",
-    "id": "Id",
-    "code": "Kód",
-    "name": "Názov",
     "error": "Chyba načítania číselníkov"
   },
   "selectCodeListItemDialog": {

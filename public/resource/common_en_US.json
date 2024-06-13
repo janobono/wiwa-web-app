@@ -139,9 +139,6 @@
     "title": "Select code list",
     "searchTitle": "Search code list",
     "searchPlaceholder": "Name or code",
-    "id": "Id",
-    "code": "Code",
-    "name": "Name",
     "error": "Code lists loading failed"
   },
   "selectCodeListItemDialog": {

@@ -139,9 +139,6 @@ export interface ResourceCommon {
         title: string,
         searchTitle: string,
         searchPlaceholder: string,
-        id: string,
-        code: string,
-        name: string,
         error: string
     },
     selectCodeListItemDialog: {

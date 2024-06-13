@@ -6,52 +6,63 @@ import BaseDialog from '../dialog/base-dialog';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaInput from '../ui/wiwa-input';
 import WiwaPageable from '../ui/wiwa-pageable';
-import { CodeList } from '../../api/model/code-list';
-import { useCodeListState } from '../../state/code-list';
+import { getCodeLists } from '../../api/controller/code-list';
+import { Page } from '../../api/model';
+import { CodeList, CodeListField } from '../../api/model/code-list';
+import { useAuthState } from '../../state/auth';
 import { useDialogState } from '../../state/dialog';
 import { useResourceState } from '../../state/resource';
+import CodeListTable from './code-list-table.tsx';
 
 const SelectCodeListDialog = (
     {
         dialogId,
         showDialog,
         setShowDialog,
-        onSelectCodeList
+        selectedCodeListHandler
     }: {
         dialogId: string,
         showDialog: boolean,
         setShowDialog: (showDialog: boolean) => void,
-        onSelectCodeList: (codeList: CodeList) => void
+        selectedCodeListHandler: (codeList: CodeList) => void
     }
 ) => {
+    const authState = useAuthState();
     const dialogState = useDialogState();
-    const codeListState = useCodeListState();
     const resourceState = useResourceState();
 
-    const [selectedCodeList, setSelectedCodeList] = useState<CodeList>();
-
-    const [previous, setPrevious] = useState(false);
-    const [next, setNext] = useState(false);
-    const [page, setPage] = useState(0);
-    const [searchField, setSearchField] = useState('');
+    const [busy, setBusy] = useState(false);
+    const [data, setData] = useState<Page<CodeList>>();
+    const [selected, setSelected] = useState<CodeList>();
     const [error, setError] = useState<string>();
 
-    const fetchData = async () => {
-        setError(undefined);
-        const response = await codeListState?.getCodeLists({searchField}, {page, size: 10});
-        if (response?.error) {
-            setError(resourceState?.common?.selectCodeListDialog.error);
-        }
-    }
+    const [searchField, setSearchField] = useState('');
+    const [page, setPage] = useState(0);
+    const [previous, setPrevious] = useState(false);
+    const [next, setNext] = useState(false);
 
     useEffect(() => {
         fetchData().then();
     }, []);
 
     useEffect(() => {
-        setPrevious(codeListState?.data !== undefined && !codeListState?.data.first);
-        setNext(codeListState?.data !== undefined && !codeListState?.data.last);
-    }, [codeListState?.data]);
+        setPrevious(data !== undefined && !data.first);
+        setNext(data !== undefined && !data.last);
+    }, [data]);
+
+    const fetchData = async () => {
+        setError(undefined);
+        setBusy(true);
+        try {
+            const response = await getCodeLists({searchField}, {page, size: 10}, authState?.authToken?.accessToken);
+            setData(response?.data);
+            if (response?.error) {
+                setError(resourceState?.common?.selectCodeListDialog.error);
+            }
+        } finally {
+            setBusy(false);
+        }
+    }
 
     return (!dialogState?.modalRoot ? null : createPortal(
             <BaseDialog id={dialogId} showDialog={showDialog}
@@ -90,28 +101,14 @@ const SelectCodeListDialog = (
                                     </div>
 
                                     <div className="overflow-x-auto">
-                                        <table className="table">
-                                            <thead>
-                                            <tr>
-                                                <th>{resourceState?.common?.selectCodeListDialog.id}</th>
-                                                <th>{resourceState?.common?.selectCodeListDialog.code}</th>
-                                                <th>{resourceState?.common?.selectCodeListDialog.name}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {codeListState?.data?.content.map(codeList =>
-                                                <tr key={codeList.id}
-                                                    className={'hover ' + (codeList.id === selectedCodeList?.id ? 'bg-primary-content' : '')}
-                                                    onClick={() => setSelectedCodeList(codeList)}
-                                                >
-                                                    <td>{codeList.id}</td>
-                                                    <td>{codeList.code}</td>
-                                                    <td>{codeList.name}</td>
-                                                </tr>
-                                            )}
-                                            </tbody>
-                                        </table>
+                                        <CodeListTable
+                                            fields={Object.values(CodeListField)}
+                                            codeLists={data?.content}
+                                            selected={selected}
+                                            setSelected={setSelected}
+                                        />
                                     </div>
+
                                     <div className="w-full flex justify-center pt-5">
                                         <WiwaPageable
                                             isPrevious={previous}
@@ -120,7 +117,7 @@ const SelectCodeListDialog = (
                                             pageHandler={() => fetchData()}
                                             isNext={next}
                                             nextHandler={() => setPage(page - 1)}
-                                            disabled={codeListState?.busy}
+                                            disabled={busy}
                                         />
                                     </div>
                                 </div>
@@ -129,10 +126,10 @@ const SelectCodeListDialog = (
                         <div className="join pt-5">
                             <WiwaButton
                                 className="btn-primary join-item"
-                                disabled={selectedCodeList === undefined}
+                                disabled={selected === undefined}
                                 onClick={() => {
-                                    if (selectedCodeList) {
-                                        onSelectCodeList(selectedCodeList);
+                                    if (selected) {
+                                        selectedCodeListHandler(selected);
                                         setShowDialog(false);
                                     }
                                 }}

@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 
 import WiwaButton from '../ui/wiwa-button';
 import WiwaSpinner from '../ui/wiwa-spinner';
+import { getCodeList } from '../../api/controller/code-list';
+import { getCodeListItem, getCodeListItems } from '../../api/controller/code-list-item';
 import { CodeListItem, CodeListItemField } from '../../api/model/code-list';
+import { useAuthState } from '../../state/auth';
 import { useResourceState } from '../../state/resource';
-import { useCodeListState } from '../../state/code-list';
-import { useCodeListItemState } from '../../state/code-list-item';
 
 const SelectCodeListItem = (
     {
@@ -17,24 +18,25 @@ const SelectCodeListItem = (
         codeListItemId?: number,
         itemSelectedHandler: (item?: CodeListItem) => void
     }) => {
+    const authState = useAuthState();
     const resourceState = useResourceState();
-    const codeListState = useCodeListState();
-    const codeListItemState = useCodeListItemState();
+
+    const [busy, setBusy] = useState(true);
+    const [data, setData] = useState<CodeListItem[]>();
+    const [error, setError] = useState<string>();
 
     const [home, setHome] = useState<{ name: string, item?: CodeListItem }>();
     const [menu, setMenu] = useState<CodeListItem[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string>();
 
     useEffect(() => {
         const fetchHome = async () => {
             if (codeListItemId) {
-                const response = await codeListItemState?.getCodeListItem(codeListItemId);
+                const response = await getCodeListItem(codeListItemId, authState?.authToken?.accessToken);
                 if (response?.data) {
                     setHome({name: response.data.value, item: response.data});
                 }
             } else {
-                const response = await codeListState?.getCodeList(codeListId);
+                const response = await getCodeList(codeListId, authState?.authToken?.accessToken);
                 if (response?.data) {
                     setHome({name: response.data.name});
                 }
@@ -51,21 +53,30 @@ const SelectCodeListItem = (
 
     const fetchData = async (parentId?: number) => {
         setError(undefined);
-        setLoading(true);
+        setBusy(true);
         try {
-            const response = await codeListItemState?.getCodeListItems({codeListId, parentId}, {
-                page: 0,
-                size: 10000,
-                sort: {
-                    field: CodeListItemField.sortNum,
-                    asc: true
-                }
-            });
+            const response = await getCodeListItems(
+                {
+                    codeListId,
+                    root: !parentId,
+                    parentId
+                },
+                {
+                    page: 0,
+                    size: 10000,
+                    sort: {
+                        field: CodeListItemField.sortNum,
+                        asc: true
+                    }
+                },
+                authState?.authToken?.accessToken
+            );
+            setData(response?.data?.content);
             if (response?.error) {
                 setError(resourceState?.common?.error.unknown);
             }
         } finally {
-            setLoading(false);
+            setBusy(false);
         }
     }
 
@@ -94,7 +105,7 @@ const SelectCodeListItem = (
                 <div className="font-mono text-xl">{error}</div>
             </div>
             :
-            loading ?
+            busy ?
                 <WiwaSpinner/>
                 :
                 <>
@@ -117,7 +128,7 @@ const SelectCodeListItem = (
                         </ul>
                     </div>
                     <div className="w-full flex flex-row">
-                        {codeListItemState?.data?.map(item =>
+                        {data?.map(item =>
                             <WiwaButton
                                 className="btn-ghost"
                                 key={item.id}

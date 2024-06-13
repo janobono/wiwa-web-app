@@ -3,7 +3,10 @@ import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Edit, List, Plus, Search, Trash } from 'react-feather';
 
+import { addCodeList, deleteCodeList, getCodeLists, setCodeList } from '../../../api/controller/code-list';
+import { Page } from '../../../api/model';
 import { CodeList, CodeListChange, CodeListField } from '../../../api/model/code-list';
+import CodeListTable from '../../../component/code-list/code-list-table';
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInput from '../../../component/ui/wiwa-form-input';
@@ -11,10 +14,8 @@ import WiwaInput from '../../../component/ui/wiwa-input';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
-import { useCodeListState } from '../../../state/code-list';
 import { useDialogState } from '../../../state/dialog';
 import { useResourceState } from '../../../state/resource';
-import CodeListTable from '../../../component/code-list/code-list-table.tsx';
 
 const CODE_LIST_DIALOG_ID = 'code-list-dialog-001';
 
@@ -22,80 +23,118 @@ const CodeListsPage = () => {
     const navigate = useNavigate();
 
     const authState = useAuthState();
-    const codeListState = useCodeListState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
 
-    const [editMode, setEditMode] = useState(false);
-    const [previous, setPrevious] = useState(false);
-    const [next, setNext] = useState(false);
-    const [page, setPage] = useState(0);
+    const [busy, setBusy] = useState(false);
+    const [data, setData] = useState<Page<CodeList>>();
     const [selected, setSelected] = useState<CodeList>();
-    const [searchField, setSearchField] = useState('');
     const [error, setError] = useState<string>();
 
+    const [searchField, setSearchField] = useState('');
+    const [page, setPage] = useState(0);
+    const [previous, setPrevious] = useState(false);
+    const [next, setNext] = useState(false);
+
+    const [editMode, setEditMode] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
         fetchData().then();
-    }, [authState?.authUser]);
+    }, []);
 
     useEffect(() => {
-        setPrevious(codeListState?.data !== undefined && !codeListState?.data.first);
-        setNext(codeListState?.data !== undefined && !codeListState?.data.last);
+        setPrevious(data !== undefined && !data.first);
+        setNext(data !== undefined && !data.last);
 
-        if (selected && codeListState?.data) {
-            const index = codeListState.data.content.findIndex(item => item.id === selected.id);
+        if (selected && data) {
+            const index = data.content.findIndex(item => item.id === selected.id);
             if (index !== -1) {
-                setSelected(codeListState.data.content[index]);
+                setSelected(data.content[index]);
             }
         } else {
             setSelected(undefined);
         }
-    }, [codeListState?.data, selected]);
+    }, [data, selected]);
 
     const fetchData = async () => {
         setError(undefined);
-        const response = await codeListState?.getCodeLists({searchField}, {
-            page, size: 10
-        });
-        if (response?.error) {
-            setError(resourceState?.manager?.codeLists.fetchDataError);
+        setBusy(true);
+        try {
+            const response = await getCodeLists(
+                {searchField},
+                {page, size: 10},
+                authState?.authToken?.accessToken
+            );
+            setData(response?.data);
+            if (response?.error) {
+                setError(resourceState?.manager?.codeLists.fetchDataError);
+            }
+        } finally {
+            setBusy(false);
         }
     }
 
     const okHandler = async (codeListChange: CodeListChange) => {
         setError(undefined);
-        let response;
-        if (editMode) {
-            if (selected) {
-                response = await codeListState?.setCodeList(selected.id, codeListChange);
-            }
-        } else {
-            response = await codeListState?.addCodeList(codeListChange);
-        }
-
-        if (response?.data) {
-            setSelected(response?.data);
-        }
-
-        if (response?.error) {
+        setBusy(true);
+        try {
+            let response;
             if (editMode) {
-                setError(resourceState?.manager?.codeLists.editCodeList.error);
+                if (selected) {
+                    response = await setCodeList(selected.id, codeListChange, authState?.authToken?.accessToken);
+                }
             } else {
-                setError(resourceState?.manager?.codeLists.addCodeList.error);
+                response = await addCodeList(codeListChange, authState?.authToken?.accessToken);
             }
+
+            if (data && response?.data) {
+                const newData = {...data};
+                const index = newData.content.findIndex(item => item.id === response.data.id);
+                if (index !== -1) {
+                    newData.content[index] = response.data;
+                } else {
+                    newData.content.push(response.data);
+                }
+                setData(newData);
+            }
+
+            if (response?.error) {
+                if (editMode) {
+                    setError(resourceState?.manager?.codeLists.editCodeList.error);
+                } else {
+                    setError(resourceState?.manager?.codeLists.addCodeList.error);
+                }
+            }
+        } finally {
+            setBusy(false);
         }
     }
 
     const deleteHandler = async (id: number) => {
         setError(undefined);
-        const response = await codeListState?.deleteCodeList(id);
-        if (response?.error) {
-            setError(resourceState?.manager?.codeLists.deleteCodeList.error);
+        setBusy(true);
+        try {
+            const response = await deleteCodeList(id, authState?.authToken?.accessToken);
+
+            setSelected(undefined);
+
+            if (data) {
+                const newData = {...data};
+                const index = newData.content.findIndex(item => item.id === id);
+                if (index !== -1) {
+                    newData.content.splice(index, 1);
+                }
+                setData(newData);
+            }
+
+            if (response?.error) {
+                setError(resourceState?.manager?.codeLists.deleteCodeList.error);
+            }
+        } finally {
+            setBusy(false);
         }
     }
-
 
     return (
         error ?
@@ -129,7 +168,7 @@ const CodeListsPage = () => {
                             <WiwaButton
                                 title={resourceState?.common?.action.add}
                                 className="btn-primary join-item"
-                                disabled={codeListState?.busy}
+                                disabled={busy}
                                 onClick={() => {
                                     setEditMode(false);
                                     setShowDialog(true);
@@ -140,7 +179,7 @@ const CodeListsPage = () => {
                             <WiwaButton
                                 title={resourceState?.common?.action.edit}
                                 className="btn-secondary join-item"
-                                disabled={codeListState?.busy || selected === undefined}
+                                disabled={busy || selected === undefined}
                                 onClick={() => {
                                     setEditMode(true);
                                     setShowDialog(true);
@@ -151,7 +190,7 @@ const CodeListsPage = () => {
                             <WiwaButton
                                 title={resourceState?.common?.action.items}
                                 className="btn-ghost join-item"
-                                disabled={codeListState?.busy || selected === undefined}
+                                disabled={busy || selected === undefined}
                                 onClick={() => {
                                     if (selected) {
                                         navigate('/manager/code-lists/' + selected.id + '/items');
@@ -163,7 +202,7 @@ const CodeListsPage = () => {
                             <WiwaButton
                                 className="btn-accent join-item"
                                 title={resourceState?.common?.action.delete}
-                                disabled={codeListState?.busy || selected === undefined}
+                                disabled={busy || selected === undefined}
                                 onClick={() => {
                                     dialogState?.showDialog({
                                         type: DialogType.YES_NO,
@@ -174,7 +213,6 @@ const CodeListsPage = () => {
                                                 if (selected) {
                                                     deleteHandler(selected.id).then();
                                                 }
-                                                setSelected(undefined);
                                             }
                                         }
                                     });
@@ -187,7 +225,7 @@ const CodeListsPage = () => {
                     <div className="overflow-x-auto">
                         <CodeListTable
                             fields={Object.values(CodeListField)}
-                            codeLists={codeListState?.data?.content}
+                            codeLists={data?.content}
                             selected={selected}
                             setSelected={setSelected}
                         />
@@ -201,7 +239,7 @@ const CodeListsPage = () => {
                             pageHandler={() => fetchData()}
                             isNext={next}
                             nextHandler={() => setPage(page - 1)}
-                            disabled={codeListState?.busy}
+                            disabled={busy}
                         />
                     </div>
                 </div>
@@ -217,7 +255,7 @@ const CodeListsPage = () => {
                         setError(undefined);
                         setShowDialog(false);
                     }}
-                    submitting={codeListState?.busy || false}
+                    submitting={busy || false}
                 />
             </>
     )

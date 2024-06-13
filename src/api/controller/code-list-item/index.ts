@@ -9,18 +9,18 @@ import {
     setQueryParam
 } from '../';
 import { Page, Pageable } from '../../model';
-import { CodeListItem, CodeListItemChange, CodeListItemSearchCriteria } from '../../model/code-list';
+import { CodeListItem, CodeListItemChange, CodeListItemField, CodeListItemSearchCriteria } from '../../model/code-list';
 
 const PATH = CONTEXT_PATH + 'code-list-items';
 
-export const getCodeListItems = (criteria?: CodeListItemSearchCriteria, pageable?: Pageable, accessToken?: string) => {
+export const getCodeListItems = (criteria?: CodeListItemSearchCriteria, pageable?: Pageable<CodeListItemField>, accessToken?: string) => {
     const queryParams = new URLSearchParams();
     setPageableQueryParams(queryParams, pageable);
     if (criteria) {
         if (criteria.codeListId) {
             setQueryParam(queryParams, 'codeListId', criteria.codeListId);
         }
-        if (criteria.root) {
+        if (criteria.root !== undefined) {
             setQueryParam(queryParams, 'root', criteria.root);
         }
         if (criteria.parentId) {
