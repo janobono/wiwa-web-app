@@ -33,6 +33,19 @@
     "placeholder": "Enter captcha",
     "required": "Captcha is required"
   },
+  "codeListTable": {
+    "id": "Id",
+    "code": "Code",
+    "name": "Name"
+  },
+  "codeListItemTable": {
+    "id": "Id",
+    "codeListId": "Code list id",
+    "sortNum": "Sort num",
+    "code": "Code",
+    "value": "Value",
+    "leafNode": "Leaf node"
+  },
   "confirmAccount": {
     "action": "Resend activation email",
     "text": "Check your email and confirm your account, please."
@@ -141,6 +154,16 @@
     "squareMeter": "Square meter",
     "kilogram": "Kilogram",
     "piece": "Piece"
+  },
+  "userTable": {
+    "id": "Id",
+    "username": "Username",
+    "email": "Email",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "authorities": "Authorities",
+    "confirmed": "Confirmed",
+    "enabled": "Enabled"
   },
   "value": {
     "no": "No",

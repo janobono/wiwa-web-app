@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import SelectCodeList from './select-code-list.tsx';
-import SelectCodeListItem from './select-code-list-item.tsx';
+import SelectCodeList from './select-code-list';
+import SelectCodeListItem from './select-code-list-item';
 import BaseDialog from '../dialog/base-dialog';
 import WiwaButton from '../ui/wiwa-button';
 import { CodeList, CodeListItem } from '../../api/model/code-list';

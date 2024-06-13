@@ -27,3 +27,18 @@ export interface UserSearchCriteria {
     username?: string,
     email?: string
 }
+
+export enum UserField {
+    id = 'id',
+    username = 'username',
+    titleBefore = 'titleBefore',
+    firstName = 'firstName',
+    midName = 'midName',
+    lastName = 'lastName',
+    titleAfter = 'titleAfter',
+    email = 'email',
+    gdpr = 'gdpr',
+    confirmed = 'confirmed',
+    enabled = 'enabled',
+    authorities = 'authorities'
+}

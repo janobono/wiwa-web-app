@@ -10,12 +10,12 @@ import {
 } from '../../api/controller/user';
 import { Authority, Page, Pageable, User } from '../../api/model';
 import { useAuthState } from '../auth';
-import { UserSearchCriteria } from '../../api/model/user';
+import { UserField, UserSearchCriteria } from '../../api/model/user';
 
 export interface UserState {
     busy: boolean,
     data?: Page<User>,
-    getUsers: (criteria?: UserSearchCriteria, pageable?: Pageable) => Promise<ClientResponse<Page<User>>>,
+    getUsers: (criteria?: UserSearchCriteria, pageable?: Pageable<UserField>) => Promise<ClientResponse<Page<User>>>,
     setAuthorities: (id: number, authorities: Authority[]) => Promise<ClientResponse<User>>,
     setConfirmed: (id: number, confirmed: boolean) => Promise<ClientResponse<User>>,
     setEnabled: (id: number, enabled: boolean) => Promise<ClientResponse<User>>,
@@ -41,7 +41,7 @@ const UserProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const getUsers = async (criteria?: UserSearchCriteria, pageable?: Pageable) => {
+    const getUsers = async (criteria?: UserSearchCriteria, pageable?: Pageable<UserField>) => {
         setBusy(true);
         try {
             const response = await apiGetUsers(criteria, pageable, authState?.authToken?.accessToken);

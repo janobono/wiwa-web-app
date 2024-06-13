@@ -30,7 +30,7 @@ const LogoEditor = () => {
                 <div className="p-5 flex content-stretch justify-center items-center">
                     <WiwaButton
                         className="btn-primary"
-                        title={resourceState?.admin?.baseInfo.logo.title}
+                        title={resourceState?.common?.action.edit}
                         onClick={() => setShowLogoDialog(true)}
                     ><Edit size={18}/></WiwaButton>
                 </div>

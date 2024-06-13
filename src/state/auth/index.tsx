@@ -81,6 +81,13 @@ const AuthStateProvider = ({children}: { children: ReactNode }) => {
 
     const [refreshCounter, setRefreshCounter] = useState(0);
 
+    const cleanState = () => {
+        localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(REFRESH_TOKEN);
+        setAuthToken(undefined);
+        setAuthUser(undefined);
+    }
+
     useEffect(() => {
         if (appState?.cookiesEnabled) {
             const _accessToken = localStorage.getItem(ACCESS_TOKEN) || undefined;
@@ -100,6 +107,8 @@ const AuthStateProvider = ({children}: { children: ReactNode }) => {
                 const response = await apiGetUserDetail(authToken?.accessToken);
                 if (response.data) {
                     setAuthUser({jwtPayload, user: response.data});
+                } else {
+                    cleanState();
                 }
             }
             fetchUser().then();
@@ -174,9 +183,7 @@ const AuthStateProvider = ({children}: { children: ReactNode }) => {
     const signOut = async () => {
         setBusy(true);
         try {
-            localStorage.removeItem(ACCESS_TOKEN);
-            localStorage.removeItem(REFRESH_TOKEN);
-            setAuthToken(undefined);
+            cleanState();
         } finally {
             setBusy(false);
         }

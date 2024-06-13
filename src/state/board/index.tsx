@@ -12,13 +12,13 @@ import {
     setBoardImage as apiSetBoardImage
 } from '../../api/controller/board';
 import { Page, Pageable } from '../../api/model';
-import { Board, BoardCategoryItemChange, BoardChange, BoardSearchCriteria } from '../../api/model/board';
+import { Board, BoardCategoryItemChange, BoardChange, BoardField, BoardSearchCriteria } from '../../api/model/board';
 import { useAuthState } from '../auth';
 
 export interface BoardState {
     busy: boolean,
     data?: Page<Board>,
-    getBoards: (criteria?: BoardSearchCriteria, pageable?: Pageable) => Promise<ClientResponse<Page<Board>>>,
+    getBoards: (criteria?: BoardSearchCriteria, pageable?: Pageable<BoardField>) => Promise<ClientResponse<Page<Board>>>,
     getBoard: (id: number) => Promise<ClientResponse<Board>>,
     addBoard: (boardChange: BoardChange) => Promise<ClientResponse<Board>>,
     setBoard: (id: number, boardChange: BoardChange) => Promise<ClientResponse<Board>>,
@@ -49,7 +49,7 @@ const BoardStateProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const getBoards = async (criteria?: BoardSearchCriteria, pageable?: Pageable) => {
+    const getBoards = async (criteria?: BoardSearchCriteria, pageable?: Pageable<BoardField>) => {
         setBusy(true);
         try {
             return await apiGetBoards(criteria, pageable, authState?.authToken?.accessToken);

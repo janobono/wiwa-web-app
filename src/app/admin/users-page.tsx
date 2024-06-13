@@ -1,22 +1,45 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { PieChart, Search, Settings, ShoppingCart, Tool, Trash } from 'react-feather';
+import {
+    Lock,
+    PieChart,
+    Search,
+    Settings,
+    ShoppingCart,
+    Tool,
+    Trash,
+    Unlock,
+    UserCheck,
+    Users as FeatherUsers,
+    UserX
+} from 'react-feather';
 
 import { Authority, containsAuthority, User } from '../../api/model';
 import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaInput from '../../component/ui/wiwa-input';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import WiwaUserAuthorities from '../../component/ui/wiwa-user-authorities';
 import { DialogAnswer, DialogType } from '../../model/ui';
 import { useAuthState } from '../../state/auth';
 import { useDialogState } from '../../state/dialog';
 import { useResourceState } from '../../state/resource';
-import { useUserState } from '../../state/user';
+import UserProvider, { useUserState } from '../../state/user';
+import UserTable from '../../component/user/user-table.tsx';
+import { UserField } from '../../api/model/user';
 
 const USER_AUTHORITIES_DIALOG_ID = 'admin-users-authorities-dialog-001';
 
 const UsersPage = () => {
+    return (
+        <UserProvider>
+            <Users/>
+        </UserProvider>
+    )
+}
+
+export default UsersPage;
+
+const Users = () => {
     const authState = useAuthState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
@@ -25,8 +48,29 @@ const UsersPage = () => {
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
     const [page, setPage] = useState(0);
+    const [selected, setSelected] = useState<User>();
     const [searchField, setSearchField] = useState('');
     const [error, setError] = useState<string>();
+
+    const [showDialog, setShowDialog] = useState(false);
+
+    useEffect(() => {
+        fetchData().then();
+    }, []);
+
+    useEffect(() => {
+        setPrevious(userState?.data !== undefined && !userState?.data.first);
+        setNext(userState?.data !== undefined && !userState?.data.last);
+
+        if (selected && userState?.data) {
+            const index = userState.data.content.findIndex(item => item.id === selected.id);
+            if (index !== -1) {
+                setSelected(userState.data.content[index]);
+            }
+        } else {
+            setSelected(undefined);
+        }
+    }, [userState?.data, selected]);
 
     const fetchData = async () => {
         setError(undefined);
@@ -64,15 +108,6 @@ const UsersPage = () => {
         }
     }
 
-    useEffect(() => {
-        fetchData().then();
-    }, []);
-
-    useEffect(() => {
-        setPrevious(userState?.data !== undefined && !userState?.data.first);
-        setNext(userState?.data !== undefined && !userState?.data.last);
-    }, [userState?.data]);
-
     return (
         error ?
             <div className="flex  flex-col justify-center items-center w-full">
@@ -100,70 +135,107 @@ const UsersPage = () => {
                                 onClick={fetchData}
                             ><Search size={18}/></WiwaButton>
                         </div>
+
+                        <div className="join pb-5 px-5">
+                            <WiwaButton
+                                title={resourceState?.admin?.users.userAuthorities.title}
+                                className="btn-primary join-item"
+                                disabled={userState?.busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
+                                onClick={() => {
+                                    setShowDialog(true);
+                                }}
+                            >
+                                <FeatherUsers size={18}/>
+                            </WiwaButton>
+
+                            <WiwaButton
+                                className="btn-warning join-item"
+                                title={resourceState?.admin?.users.userConfirmed.dialogTitle}
+                                disabled={userState?.busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
+                                onClick={() => {
+                                    dialogState?.showDialog({
+                                        type: DialogType.YES_NO,
+                                        title: resourceState?.admin?.users.userConfirmed.dialogTitle,
+                                        message: selected?.confirmed ?
+                                            resourceState?.admin?.users.userConfirmed.denyQuestion :
+                                            resourceState?.admin?.users.userConfirmed.confirmQuestion,
+                                        callback: (answer: DialogAnswer) => {
+                                            if (answer === DialogAnswer.YES) {
+                                                if (selected !== undefined) {
+                                                    userConfirmedHandler(selected.id, !selected.confirmed).then();
+                                                }
+                                            }
+                                        }
+                                    });
+                                }}
+                            >
+                                {selected?.confirmed ?
+                                    <UserX size={18}/>
+                                    :
+                                    <UserCheck size={18}/>
+                                }
+                            </WiwaButton>
+
+                            <WiwaButton
+                                className="btn-error join-item"
+                                title={resourceState?.admin?.users.userEnabled.dialogTitle}
+                                disabled={userState?.busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
+                                onClick={() => {
+                                    dialogState?.showDialog({
+                                        type: DialogType.YES_NO,
+                                        title: resourceState?.admin?.users.userEnabled.dialogTitle,
+                                        message: selected?.enabled ?
+                                            resourceState?.admin?.users.userEnabled.disableQuestion :
+                                            resourceState?.admin?.users.userEnabled.enableQuestion,
+                                        callback: (answer: DialogAnswer) => {
+                                            if (answer === DialogAnswer.YES) {
+                                                if (selected !== undefined) {
+                                                    userEnabledHandler(selected.id, !selected.enabled).then();
+                                                }
+                                            }
+                                        }
+                                    });
+                                }}
+                            >
+                                {selected?.enabled ?
+                                    <Lock size={18}/>
+                                    :
+                                    <Unlock size={18}/>
+                                }
+                            </WiwaButton>
+
+                            <WiwaButton
+                                className="btn-accent join-item"
+                                title={resourceState?.common?.action.delete}
+                                disabled={userState?.busy || selected === undefined || selected?.id === authState?.authUser?.user.id}
+                                onClick={() => {
+                                    dialogState?.showDialog({
+                                        type: DialogType.YES_NO,
+                                        title: resourceState?.admin?.users.deleteUser.title,
+                                        message: resourceState?.admin?.users.deleteUser.message,
+                                        callback: (answer: DialogAnswer) => {
+                                            if (answer === DialogAnswer.YES) {
+                                                if (selected !== undefined) {
+                                                    deleteHandler(selected.id).then();
+                                                }
+                                            }
+                                        }
+                                    });
+                                }}
+                            ><Trash size={18}/>
+                            </WiwaButton>
+                        </div>
                     </div>
 
                     <div className="overflow-x-auto">
-                        <table className="table table-zebra">
-                            <thead>
-                            <tr>
-                                <th>{resourceState?.admin?.users.userTable.id}</th>
-                                <th>{resourceState?.admin?.users.userTable.username}</th>
-                                <th>{resourceState?.admin?.users.userTable.email}</th>
-                                <th>{resourceState?.admin?.users.userTable.firstName}</th>
-                                <th>{resourceState?.admin?.users.userTable.lastName}</th>
-                                <th>{resourceState?.admin?.users.userTable.authorities}</th>
-                                <th>{resourceState?.admin?.users.userTable.confirmed}</th>
-                                <th>{resourceState?.admin?.users.userTable.enabled}</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {userState?.data?.content.map(user =>
-                                <tr key={user.id} className="hover">
-                                    <td>{user.id}</td>
-                                    <td>{user.username}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.firstName}</td>
-                                    <td>{user.lastName}</td>
-                                    <th>
-                                        <UserAuthorities user={user} disabled={userState?.busy}
-                                                         authoritiesHandler={authoritiesHandler}/>
-                                    </th>
-                                    <th>
-                                        <UserConfirmed user={user} disabled={userState?.busy}
-                                                       userConfirmedHandler={userConfirmedHandler}/>
-                                    </th>
-                                    <th>
-                                        <UserEnabled user={user} disabled={userState?.busy}
-                                                     userEnabledHandler={userEnabledHandler}/>
-                                    </th>
-                                    <th>
-                                        <WiwaButton
-                                            className="btn-accent md:btn-xs"
-                                            title={resourceState?.admin?.users.deleteUser.title}
-                                            disabled={userState?.busy || user.id === authState?.authUser?.user.id}
-                                            onClick={() => {
-                                                dialogState?.showDialog({
-                                                    type: DialogType.YES_NO,
-                                                    title: resourceState?.admin?.users.deleteUser.title,
-                                                    message: resourceState?.admin?.users.deleteUser.message,
-                                                    callback: (answer: DialogAnswer) => {
-                                                        if (answer === DialogAnswer.YES) {
-                                                            if (user.id !== undefined) {
-                                                                deleteHandler(user.id).then();
-                                                            }
-                                                        }
-                                                    }
-                                                });
-                                            }}
-                                        ><Trash size={18}/>
-                                        </WiwaButton>
-                                    </th>
-                                </tr>
-                            )}
-                            </tbody>
-                        </table>
+                        <UserTable
+                            fields={Object.values(UserField)}
+                            users={userState?.data?.content}
+                            selected={selected}
+                            setSelected={setSelected}
+                        />
                     </div>
+
                     <div className="w-full flex justify-center pt-5">
                         <WiwaPageable
                             isPrevious={previous}
@@ -176,134 +248,22 @@ const UsersPage = () => {
                         />
                     </div>
                 </div>
+
+                <AuthoritiesDialog
+                    showDialog={showDialog}
+                    authorities={selected?.authorities || []}
+                    cancelHandler={() => setShowDialog(false)}
+                    okHandler={(authorities) => {
+                        if (selected) {
+                            try {
+                                authoritiesHandler(selected.id, authorities).then();
+                            } finally {
+                                setShowDialog(false);
+                            }
+                        }
+                    }}
+                />
             </>
-    )
-}
-
-export default UsersPage;
-
-const UserEnabled = (
-    {
-        user,
-        disabled,
-        userEnabledHandler
-    }: {
-        user: User,
-        disabled: boolean,
-        userEnabledHandler: (id: number, enabled: boolean) => void
-    }) => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
-
-    return (
-        <div className="flex flex-row w-full items-center justify-center">
-            <input
-                type="checkbox"
-                className="checkbox checkbox-accent"
-                disabled={disabled || user.id === authState?.authUser?.user.id}
-                onClick={() => {
-                    dialogState?.showDialog({
-                        type: DialogType.YES_NO,
-                        title: resourceState?.admin?.users.userEnabled.dialogTitle,
-                        message: user.enabled ?
-                            resourceState?.admin?.users.userEnabled.disableQuestion :
-                            resourceState?.admin?.users.userEnabled.enableQuestion,
-                        callback: (answer: DialogAnswer) => {
-                            if (answer === DialogAnswer.YES) {
-                                userEnabledHandler(user.id, !user.enabled);
-                            }
-                        }
-                    });
-                }}
-                checked={user.enabled}
-                readOnly={true}
-            />
-        </div>
-    )
-}
-
-const UserConfirmed = (
-    {
-        user,
-        disabled,
-        userConfirmedHandler
-    }: {
-        user: User,
-        disabled: boolean,
-        userConfirmedHandler: (id: number, confirmed: boolean) => void
-    }) => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
-
-    return (
-        <div className="flex flex-row w-full items-center justify-center">
-            <input
-                type="checkbox"
-                className="checkbox checkbox-warning"
-                disabled={disabled || user.id === authState?.authUser?.user.id}
-                onClick={() => {
-                    dialogState?.showDialog({
-                        type: DialogType.YES_NO,
-                        title: resourceState?.admin?.users.userConfirmed.dialogTitle,
-                        message: user.confirmed ?
-                            resourceState?.admin?.users.userConfirmed.denyQuestion :
-                            resourceState?.admin?.users.userConfirmed.confirmQuestion,
-                        callback: (answer: DialogAnswer) => {
-                            if (answer === DialogAnswer.YES) {
-                                userConfirmedHandler(user.id, !user.confirmed);
-                            }
-                        }
-                    });
-                }}
-                checked={user.confirmed}
-                readOnly={true}
-            />
-        </div>
-    )
-}
-
-const UserAuthorities = (
-    {
-        user,
-        disabled,
-        authoritiesHandler
-    }: {
-        user: User,
-        disabled: boolean,
-        authoritiesHandler: (id: number, userAuthorities: Authority[]) => void
-    }) => {
-    const authState = useAuthState();
-    const resourceState = useResourceState();
-    const [show, setShow] = useState(false);
-
-    return (
-        <>
-            <WiwaButton
-                title={resourceState?.admin?.users.userAuthorities.title}
-                className="btn-ghost md:btn-xs"
-                disabled={disabled || user.id === authState?.authUser?.user.id}
-                onClick={() => {
-                    setShow(true);
-                }}
-            >
-                <WiwaUserAuthorities authorities={user.authorities}/>
-            </WiwaButton>
-
-            <AuthoritiesDialog
-                showDialog={show}
-                authorities={user.authorities}
-                cancelHandler={() => setShow(false)}
-                okHandler={(authorities) => {
-                    try {
-                        authoritiesHandler(user.id, authorities);
-                    } finally {
-                        setShow(false);
-                    }
-                }}
-            />
-        </>
     )
 }
 

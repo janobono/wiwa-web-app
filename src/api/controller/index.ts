@@ -33,7 +33,7 @@ export const setQueryParam = (queryParams: URLSearchParams, name: string, value?
     }
 }
 
-export const setPageableQueryParams = (queryParams: URLSearchParams, pageable?: Pageable) => {
+export const setPageableQueryParams = (queryParams: URLSearchParams, pageable?: Pageable<any>) => {
     if (pageable) {
         setQueryParam(queryParams, 'page', pageable.page);
         setQueryParam(queryParams, 'size', pageable.size);

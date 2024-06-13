@@ -13,9 +13,19 @@ export interface CodeListItemChange {
 export interface CodeListItem {
     id: number,
     codeListId: number,
+    sortNum: number,
     code: string,
     value: string,
     leafNode: boolean
+}
+
+export enum CodeListItemField {
+    id = 'id',
+    codeListId = 'codeListId',
+    sortNum = 'sortNum',
+    code = 'code',
+    value = 'value',
+    leafNode = 'leafNode'
 }
 
 export interface CodeListItemSearchCriteria {
@@ -32,6 +42,12 @@ export interface CodeList {
     id: number,
     code: string,
     name: string
+}
+
+export enum CodeListField {
+    id = 'id',
+    code = 'code',
+    name = 'name'
 }
 
 export interface CodeListSearchCriteria {

@@ -51,6 +51,7 @@ export default BaseNavigation;
 
 const AuthNav = () => {
     const authState = useAuthState();
+    const healthState = useHealthState();
     const resourceState = useResourceState();
 
     const [menuDisplay, setMenuDisplay] = useState(true);
@@ -84,10 +85,12 @@ const AuthNav = () => {
                                 label={resourceState?.common?.baseNavigation.authNav.signIn}
                                 to="/auth/sign-in"
                             />
-                            <WiwaMenuItem
-                                label={resourceState?.common?.baseNavigation.authNav.signUp}
-                                to="/auth/sign-up"
-                            />
+                            {!healthState?.maintenance &&
+                                <WiwaMenuItem
+                                    label={resourceState?.common?.baseNavigation.authNav.signUp}
+                                    to="/auth/sign-up"
+                                />
+                            }
                         </>
                     }
                     {!authState?.accessExpired &&

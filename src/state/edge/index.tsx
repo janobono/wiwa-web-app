@@ -12,13 +12,13 @@ import {
     setEdgeImage as apiSetEdgeImage
 } from '../../api/controller/edge';
 import { Page, Pageable } from '../../api/model';
-import { Edge, EdgeCategoryItemChange, EdgeChange, EdgeSearchCriteria } from '../../api/model/edge';
+import { Edge, EdgeCategoryItemChange, EdgeChange, EdgeField, EdgeSearchCriteria } from '../../api/model/edge';
 import { useAuthState } from '../auth';
 
 export interface EdgeState {
     busy: boolean,
     data?: Page<Edge>,
-    getEdges: (criteria?: EdgeSearchCriteria, pageable?: Pageable) => Promise<ClientResponse<Page<Edge>>>,
+    getEdges: (criteria?: EdgeSearchCriteria, pageable?: Pageable<EdgeField>) => Promise<ClientResponse<Page<Edge>>>,
     getEdge: (id: number) => Promise<ClientResponse<Edge>>,
     addEdge: (edgeChange: EdgeChange) => Promise<ClientResponse<Edge>>,
     setEdge: (id: number, edgeChange: EdgeChange) => Promise<ClientResponse<Edge>>,
@@ -49,7 +49,7 @@ const EdgeStateProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const getEdges = async (criteria?: EdgeSearchCriteria, pageable?: Pageable) => {
+    const getEdges = async (criteria?: EdgeSearchCriteria, pageable?: Pageable<EdgeField>) => {
         setBusy(true);
         try {
             return await apiGetEdges(criteria, pageable, authState?.authToken?.accessToken);

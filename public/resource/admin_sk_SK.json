@@ -339,16 +339,6 @@
       "denyQuestion": "Naozaj si želáte nepotvrdiť používateľa?",
       "confirmQuestion": "Naozaj si želáte potvrdiť používateľa?",
       "error": "Potvrdenie/nepotvrdenie používateľa neúspešné"
-    },
-    "userTable": {
-      "id": "Id",
-      "username": "Používateľské meno",
-      "email": "Email",
-      "firstName": "Meno",
-      "lastName": "Priezvisko",
-      "authorities": "Povolenia",
-      "confirmed": "Potvrdený",
-      "enabled": "Odblokovaný"
     }
   }
 }

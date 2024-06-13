@@ -32,7 +32,7 @@ const TitleEditor = () => {
                 <div className="p-5 flex content-stretch justify-center items-center">
                     <WiwaButton
                         className="btn-primary"
-                        title={resourceState?.admin?.baseInfo.title.title}
+                        title={resourceState?.common?.action.edit}
                         onClick={() => setShowTitleDialog(true)}
                     ><Edit size={18}/></WiwaButton>
                 </div>

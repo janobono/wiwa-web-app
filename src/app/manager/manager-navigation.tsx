@@ -14,7 +14,7 @@ const ManagerNavigation = () => {
                 <WiwaMenuItem label={resourceState?.manager?.boardsTab} to="/manager/boards"/>
                 <WiwaMenuItem label={resourceState?.manager?.edgesTab} to="/manager/edges"/>
                 <WiwaMenuItem label={resourceState?.manager?.orderInputsTab} to="/manager/order-inputs"/>
-                <WiwaMenuItem label={resourceState?.manager?.ordersTab} to="/manager/orders"/>
+                <WiwaMenuItem label={resourceState?.manager?.ordersTab} to="/manager/orders/index"/>
             </ul>
         </div>
     )

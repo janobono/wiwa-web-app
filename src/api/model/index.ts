@@ -16,7 +16,7 @@ export interface User {
     firstName: string,
     midName?: string,
     lastName: string,
-    titleAfter?: string
+    titleAfter?: string,
     email: string,
     gdpr: boolean,
     confirmed: boolean,
@@ -45,11 +45,11 @@ export interface Page<T> {
     empty: boolean
 }
 
-export interface Pageable {
+export interface Pageable<T> {
     page: number,
     size: number,
     sort?: {
-        field: string,
+        field: T,
         asc: boolean
     }
 }

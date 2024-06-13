@@ -33,6 +33,19 @@
     "placeholder": "Zadajte kontrolný text",
     "required": "Zadajte kontrolný text"
   },
+  "codeListTable": {
+    "id": "Id",
+    "code": "Kód",
+    "name": "Názov"
+  },
+  "codeListItemTable": {
+    "id": "Id",
+    "codeListId": "Id číselníka",
+    "sortNum": "Poradové číslo",
+    "code": "Kód",
+    "value": "Hodnota",
+    "leafNode": "Koncový uzol"
+  },
   "confirmAccount": {
     "action": "Preposlať aktivačný email",
     "text": "Prosím skontrolujte svoj e-mail a potvrďte svoj účet."
@@ -141,6 +154,16 @@
     "squareMeter": "Meter štvorcový",
     "kilogram": "Kilogram",
     "piece": "Kus"
+  },
+  "userTable": {
+    "id": "Id",
+    "username": "Používateľské meno",
+    "email": "Email",
+    "firstName": "Meno",
+    "lastName": "Priezvisko",
+    "authorities": "Povolenia",
+    "confirmed": "Potvrdený",
+    "enabled": "Odblokovaný"
   },
   "value": {
     "no": "Nie",

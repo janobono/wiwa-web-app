@@ -343,16 +343,6 @@
       "denyQuestion": "Do you really want to deny user?",
       "confirmQuestion": "Do you really want to confirm user?",
       "error": "Confirm/deny user failed"
-    },
-    "userTable": {
-      "id": "Id",
-      "username": "Username",
-      "email": "Email",
-      "firstName": "First name",
-      "lastName": "Last name",
-      "authorities": "Authorities",
-      "confirmed": "Confirmed",
-      "enabled": "Enabled"
     }
   }
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import WiwaButton from '../ui/wiwa-button';
 import WiwaSpinner from '../ui/wiwa-spinner';
-import { CodeListItem } from '../../api/model/code-list';
+import { CodeListItem, CodeListItemField } from '../../api/model/code-list';
 import { useResourceState } from '../../state/resource';
 import { useCodeListState } from '../../state/code-list';
 import { useCodeListItemState } from '../../state/code-list-item';
@@ -53,7 +53,14 @@ const SelectCodeListItem = (
         setError(undefined);
         setLoading(true);
         try {
-            const response = await codeListItemState?.getCodeListItems({codeListId, parentId});
+            const response = await codeListItemState?.getCodeListItems({codeListId, parentId}, {
+                page: 0,
+                size: 10000,
+                sort: {
+                    field: CodeListItemField.sortNum,
+                    asc: true
+                }
+            });
             if (response?.error) {
                 setError(resourceState?.common?.error.unknown);
             }

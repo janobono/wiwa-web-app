@@ -32,7 +32,7 @@ const WelcomeTextEditor = () => {
                 <div className="p-5 flex content-stretch justify-center items-center">
                     <WiwaButton
                         className="btn-primary"
-                        title={resourceState?.admin?.baseInfo.welcomeText.title}
+                        title={resourceState?.common?.action.edit}
                         onClick={() => setShowWelcomeTextDialog(true)}
                     ><Edit size={18}/></WiwaButton>
                 </div>

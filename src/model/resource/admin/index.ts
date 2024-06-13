@@ -339,16 +339,6 @@ export interface ResourceAdmin {
             denyQuestion: string,
             confirmQuestion: string,
             error: string
-        },
-        userTable: {
-            id: string,
-            username: string,
-            email: string,
-            firstName: string,
-            lastName: string,
-            authorities: string,
-            confirmed: string,
-            enabled: string
         }
     }
 }

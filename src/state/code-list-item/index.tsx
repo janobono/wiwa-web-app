@@ -11,13 +11,18 @@ import {
     setCodeListItem as apiSetCodeListItem
 } from '../../api/controller/code-list-item';
 import { Page, Pageable } from '../../api/model';
-import { CodeListItem, CodeListItemChange, CodeListItemSearchCriteria } from '../../api/model/code-list';
+import {
+    CodeListItem,
+    CodeListItemChange,
+    CodeListItemField,
+    CodeListItemSearchCriteria
+} from '../../api/model/code-list';
 import { useAuthState } from '../auth';
 
 export interface CodeListItemState {
     busy: boolean,
     data?: CodeListItem[],
-    getCodeListItems: (criteria?: CodeListItemSearchCriteria, pageable?: Pageable) => Promise<ClientResponse<Page<CodeListItem>>>,
+    getCodeListItems: (criteria?: CodeListItemSearchCriteria, pageable?: Pageable<CodeListItemField>) => Promise<ClientResponse<Page<CodeListItem>>>,
     getCodeListItem: (id: number) => Promise<ClientResponse<CodeListItem>>,
     addCodeListItem: (codeListItemChange: CodeListItemChange) => Promise<ClientResponse<CodeListItem>>,
     setCodeListItem: (id: number, codeListItemChange: CodeListItemChange) => Promise<ClientResponse<CodeListItem>>,
@@ -34,7 +39,7 @@ const CodeListItemStateProvider = ({children}: { children: ReactNode }) => {
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<CodeListItem[]>();
 
-    const getCodeListItems = async (criteria?: CodeListItemSearchCriteria, pageable?: Pageable) => {
+    const getCodeListItems = async (criteria?: CodeListItemSearchCriteria, pageable?: Pageable<CodeListItemField>) => {
         setBusy(true);
         try {
             const response = await apiGetCodeListItems(criteria, pageable, authState?.authToken?.accessToken);
@@ -62,7 +67,7 @@ const CodeListItemStateProvider = ({children}: { children: ReactNode }) => {
             const response = await apiAddCodeListItem(codeListItemChange, authState?.authToken?.accessToken);
             if (response.data) {
                 if (data) {
-                    const newData = [response.data, ...data];
+                    const newData = [...data, response.data];
                     setData(newData);
                 }
             }

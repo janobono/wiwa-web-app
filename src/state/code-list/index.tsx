@@ -9,13 +9,13 @@ import {
     setCodeList as apiSetCodeList,
 } from '../../api/controller/code-list';
 import { Page, Pageable } from '../../api/model';
-import { CodeList, CodeListChange, CodeListSearchCriteria } from '../../api/model/code-list';
+import { CodeList, CodeListChange, CodeListField, CodeListSearchCriteria } from '../../api/model/code-list';
 import { useAuthState } from '../auth';
 
 export interface CodeListState {
     busy: boolean,
     data?: Page<CodeList>,
-    getCodeLists: (criteria?: CodeListSearchCriteria, pageable?: Pageable) => Promise<ClientResponse<Page<CodeList>>>,
+    getCodeLists: (criteria?: CodeListSearchCriteria, pageable?: Pageable<CodeListField>) => Promise<ClientResponse<Page<CodeList>>>,
     getCodeList: (id: number) => Promise<ClientResponse<CodeList>>,
     addCodeList: (codeListChange: CodeListChange) => Promise<ClientResponse<CodeList>>,
     setCodeList: (id: number, codeListChange: CodeListChange) => Promise<ClientResponse<CodeList>>,
@@ -30,7 +30,7 @@ const CodeListStateProvider = ({children}: { children: ReactNode }) => {
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<CodeList>>();
 
-    const getCodeLists = async (criteria?: CodeListSearchCriteria, pageable?: Pageable) => {
+    const getCodeLists = async (criteria?: CodeListSearchCriteria, pageable?: Pageable<CodeListField>) => {
         setBusy(true);
         try {
             const response = await apiGetCodeLists(criteria, pageable, authState?.authToken?.accessToken);

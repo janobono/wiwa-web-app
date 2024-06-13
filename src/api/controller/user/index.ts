@@ -9,12 +9,12 @@ import {
     setQueryParam
 } from '../';
 import { Authority, Page, Pageable, User } from '../../model';
-import { UserCreate, UserProfile, UserSearchCriteria } from '../../model/user';
+import { UserCreate, UserField, UserProfile, UserSearchCriteria } from '../../model/user';
 
 
 const PATH = CONTEXT_PATH + 'users';
 
-export const getUsers = (criteria?: UserSearchCriteria, pageable?: Pageable, accessToken?: string) => {
+export const getUsers = (criteria?: UserSearchCriteria, pageable?: Pageable<UserField>, accessToken?: string) => {
     const queryParams = new URLSearchParams();
     setPageableQueryParams(queryParams, pageable);
     if (criteria) {

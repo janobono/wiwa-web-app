@@ -3,8 +3,9 @@ import { createPortal } from 'react-dom';
 import { useParams } from 'react-router-dom';
 import { ArrowDown, ArrowUp, Edit, Plus, Trash } from 'react-feather';
 
-import { CodeListItem, CodeListItemChange } from '../../../api/model/code-list';
-import SelectCodeListItem from '../../../component/app/select-code-list-item';
+import { CodeListItem, CodeListItemChange, CodeListItemField } from '../../../api/model/code-list';
+import CodeListItemTable from '../../../component/code-list/code-list-item-table';
+import SelectCodeListItem from '../../../component/code-list/select-code-list-item';
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInput from '../../../component/ui/wiwa-form-input';
@@ -24,21 +25,42 @@ const CodeListItemsPage = () => {
     const dialogState = useDialogState();
     const resourceState = useResourceState();
 
-    const [showDialog, setShowDialog] = useState(false);
+    const [editMode, setEditMode] = useState(false);
     const [parentItem, setParentItem] = useState<CodeListItem>();
-    const [selectedItem, setSelectedItem] = useState<CodeListItem>();
+    const [selected, setSelected] = useState<CodeListItem>();
 
     const [error, setError] = useState<string>();
+
+    const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
         fetchData().then();
     }, [authState?.authUser, parentItem]);
 
+    useEffect(() => {
+        if (selected && codeListItemState?.data) {
+            const index = codeListItemState.data.findIndex(item => item.id === selected.id);
+            if (index !== -1) {
+                setSelected(codeListItemState.data[index]);
+            }
+        } else {
+            setSelected(undefined);
+        }
+    }, [codeListItemState?.data, selected]);
+
     const fetchData = async () => {
         setError(undefined);
         const response = await codeListItemState?.getCodeListItems({
             codeListId: Number(codeListId),
-            parentId: parentItem?.id
+            parentId: parentItem?.id,
+            root: parentItem === undefined
+        }, {
+            page: 0,
+            size: 10000,
+            sort: {
+                field: CodeListItemField.sortNum,
+                asc: true
+            }
         });
         if (response?.error) {
             setError(resourceState?.manager?.codeLists.codeListItems.fetchDataError);
@@ -48,13 +70,20 @@ const CodeListItemsPage = () => {
     const okHandler = async (codeListItemChange: CodeListItemChange) => {
         setError(undefined);
         let response;
-        if (selectedItem) {
-            response = await codeListItemState?.setCodeListItem(selectedItem.id, codeListItemChange);
+        if (editMode) {
+            if (selected) {
+                response = await codeListItemState?.setCodeListItem(selected.id, codeListItemChange);
+            }
         } else {
             response = await codeListItemState?.addCodeListItem(codeListItemChange);
         }
+
+        if (response?.data) {
+            setSelected(response.data);
+        }
+
         if (response?.error) {
-            if (selectedItem) {
+            if (editMode) {
                 setError(resourceState?.manager?.codeLists.codeListItems.editCodeListItem.error);
             } else {
                 setError(resourceState?.manager?.codeLists.codeListItems.addCodeListItem.error);
@@ -97,98 +126,92 @@ const CodeListItemsPage = () => {
             <>
                 <div className="flex flex-col p-5 w-full">
                     <SelectCodeListItem codeListId={Number(codeListId)} itemSelectedHandler={setParentItem}/>
+
+                    <div className="flex flex-row w-full items-center justify-center">
+                        <div className="join pb-5 px-5">
+                            <WiwaButton
+                                title={resourceState?.common?.action.add}
+                                className="btn-primary join-item"
+                                disabled={codeListItemState?.busy}
+                                onClick={() => {
+                                    setEditMode(false);
+                                    setShowDialog(true);
+                                }}
+                            >
+                                <Plus size={18}/>
+                            </WiwaButton>
+
+                            <WiwaButton
+                                title={resourceState?.common?.action.edit}
+                                className="btn-secondary join-item"
+                                disabled={codeListItemState?.busy || selected === undefined}
+                                onClick={() => {
+                                    if (selected) {
+                                        setEditMode(true);
+                                        setShowDialog(true);
+                                    }
+                                }}
+                            >
+                                <Edit size={18}/>
+                            </WiwaButton>
+
+                            <WiwaButton
+                                title={resourceState?.common?.action.moveUp}
+                                className="btn-ghost join-item"
+                                disabled={codeListItemState?.busy || selected === undefined}
+                                onClick={() => {
+                                    if (selected) {
+                                        moveUpHandler(selected.id).then();
+                                    }
+                                }}
+                            >
+                                <ArrowUp size={18}/>
+                            </WiwaButton>
+
+                            <WiwaButton
+                                title={resourceState?.common?.action.moveDown}
+                                className="btn-ghost join-item"
+                                disabled={codeListItemState?.busy || selected === undefined}
+                                onClick={() => {
+                                    if (selected) {
+                                        moveDownHandler(selected.id).then();
+                                    }
+                                }}
+                            >
+                                <ArrowDown size={18}/>
+                            </WiwaButton>
+
+                            <WiwaButton
+                                className="btn-accent join-item"
+                                title={resourceState?.common?.action.delete}
+                                disabled={codeListItemState?.busy || selected === undefined}
+                                onClick={() => {
+                                    dialogState?.showDialog({
+                                        type: DialogType.YES_NO,
+                                        title: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.title,
+                                        message: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.message,
+                                        callback: (answer: DialogAnswer) => {
+                                            if (answer === DialogAnswer.YES) {
+                                                if (selected) {
+                                                    deleteHandler(selected.id).then();
+                                                }
+                                                setSelected(undefined);
+                                            }
+                                        }
+                                    });
+                                }}
+                            ><Trash size={18}/>
+                            </WiwaButton>
+                        </div>
+                    </div>
+
                     <div className="overflow-x-auto">
-                        <table className="table table-zebra">
-                            <thead>
-                            <tr>
-                                <th>{resourceState?.manager?.codeLists.codeListItems.id}</th>
-                                <th>{resourceState?.manager?.codeLists.codeListItems.code}</th>
-                                <th>{resourceState?.manager?.codeLists.codeListItems.value}</th>
-                                <th>
-                                    <WiwaButton
-                                        title={resourceState?.common?.action.add}
-                                        className="btn-primary btn-xs"
-                                        disabled={codeListItemState?.busy}
-                                        onClick={() => {
-                                            setSelectedItem(undefined);
-                                            setShowDialog(true);
-                                        }}
-                                    >
-                                        <Plus size={18}/>
-                                    </WiwaButton>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {codeListItemState?.data?.map(item =>
-                                <tr key={item.id} className="hover">
-                                    <td>{item.id}</td>
-                                    <td>{item.code}</td>
-                                    <td>{item.value}</td>
-                                    <th>
-                                        <div className="join">
-                                            <WiwaButton
-                                                title={resourceState?.common?.action.edit}
-                                                className="btn-primary btn-xs join-item"
-                                                disabled={codeListItemState?.busy}
-                                                onClick={() => {
-                                                    setSelectedItem(item);
-                                                    setShowDialog(true);
-                                                }}
-                                            >
-                                                <Edit size={18}/>
-                                            </WiwaButton>
-
-                                            <WiwaButton
-                                                title={resourceState?.common?.action.moveUp}
-                                                className="btn-primary btn-xs join-item"
-                                                disabled={codeListItemState?.busy}
-                                                onClick={() => {
-                                                    if (item.id !== undefined) {
-                                                        moveUpHandler(item.id).then();
-                                                    }
-                                                }}
-                                            >
-                                                <ArrowUp size={18}/>
-                                            </WiwaButton>
-
-                                            <WiwaButton
-                                                title={resourceState?.common?.action.moveDown}
-                                                className="btn-primary btn-xs join-item"
-                                                disabled={codeListItemState?.busy}
-                                                onClick={() => {
-                                                    if (item.id !== undefined) {
-                                                        moveDownHandler(item.id).then();
-                                                    }
-                                                }}
-                                            >
-                                                <ArrowDown size={18}/>
-                                            </WiwaButton>
-
-                                            <WiwaButton
-                                                className="btn-accent btn-xs join-item"
-                                                title={resourceState?.common?.action.delete}
-                                                disabled={codeListItemState?.busy}
-                                                onClick={() => {
-                                                    dialogState?.showDialog({
-                                                        type: DialogType.YES_NO,
-                                                        title: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.title,
-                                                        message: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.message,
-                                                        callback: (answer: DialogAnswer) => {
-                                                            if (answer === DialogAnswer.YES) {
-                                                                deleteHandler(item.id).then();
-                                                            }
-                                                        }
-                                                    });
-                                                }}
-                                            ><Trash size={18}/>
-                                            </WiwaButton>
-                                        </div>
-                                    </th>
-                                </tr>
-                            )}
-                            </tbody>
-                        </table>
+                        <CodeListItemTable
+                            fields={Object.values(CodeListItemField)}
+                            codeListItems={codeListItemState?.data}
+                            selected={selected}
+                            setSelected={setSelected}
+                        />
                     </div>
                 </div>
 
@@ -196,7 +219,7 @@ const CodeListItemsPage = () => {
                     showDialog={showDialog}
                     codeListId={Number(codeListId)}
                     parent={parentItem}
-                    codeList={selectedItem}
+                    codeList={editMode ? selected : undefined}
                     okHandler={(data) => {
                         okHandler(data).then();
                         setShowDialog(false);

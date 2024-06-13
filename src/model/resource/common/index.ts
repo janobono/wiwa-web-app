@@ -33,6 +33,19 @@ export interface ResourceCommon {
         placeholder: string,
         required: string
     },
+    codeListTable: {
+        id: string,
+        code: string,
+        name: string
+    },
+    codeListItemTable: {
+        id: string,
+        codeListId: string,
+        sortNum: string,
+        code: string,
+        value: string,
+        leafNode: string
+    },
     confirmAccount: {
         action: string,
         text: string
@@ -141,7 +154,17 @@ export interface ResourceCommon {
         squareMeter: string,
         kilogram: string,
         piece: string
-    }
+    },
+    userTable: {
+        id: string,
+        username: string,
+        email: string,
+        firstName: string,
+        lastName: string,
+        authorities: string,
+        confirmed: string,
+        enabled: string
+    },
     value: {
         no: string,
         yes: string
