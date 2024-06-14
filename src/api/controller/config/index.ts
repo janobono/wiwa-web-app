@@ -2,6 +2,7 @@ import { CONTEXT_PATH, deleteData, getData, postData, postFile, setPageableQuery
 import { Page, Pageable, SingleValueBody } from '../../model';
 import {
     ApplicationImageInfo,
+    ApplicationImageInfoField,
     CompanyInfo,
     FreeDay,
     ManufactureProperties,
@@ -20,7 +21,7 @@ import { BoardCategory } from '../../model/board';
 
 const PATH = CONTEXT_PATH + 'config';
 
-export const getApplicationImages = (pageable?: Pageable, accessToken?: string) => {
+export const getApplicationImages = (pageable?: Pageable<ApplicationImageInfoField>, accessToken?: string) => {
     const queryParams = new URLSearchParams();
     setPageableQueryParams(queryParams, pageable);
     return getData<Page<ApplicationImageInfo>>(PATH + '/application-images', queryParams, accessToken);

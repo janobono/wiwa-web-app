@@ -46,11 +46,20 @@ const TableHead = ({fields}: { fields: UserField[] }) => {
             {fields?.find(item => item === UserField.email) &&
                 <th>{resourceState?.common?.userTable.email}</th>
             }
+            {fields?.find(item => item === UserField.titleBefore) &&
+                <th>{resourceState?.common?.userTable.titleBefore}</th>
+            }
             {fields?.find(item => item === UserField.firstName) &&
                 <th>{resourceState?.common?.userTable.firstName}</th>
             }
+            {fields?.find(item => item === UserField.midName) &&
+                <th>{resourceState?.common?.userTable.midName}</th>
+            }
             {fields?.find(item => item === UserField.lastName) &&
                 <th>{resourceState?.common?.userTable.lastName}</th>
+            }
+            {fields?.find(item => item === UserField.titleAfter) &&
+                <th>{resourceState?.common?.userTable.titleAfter}</th>
             }
             {fields?.find(item => item === UserField.authorities) &&
                 <th>{resourceState?.common?.userTable.authorities}</th>
@@ -87,11 +96,20 @@ const TableRow = ({fields, user, selected, setSelected}: {
             {fields?.find(item => item === UserField.email) &&
                 <td>{user.email}</td>
             }
+            {fields?.find(item => item === UserField.titleBefore) &&
+                <td>{user.titleBefore}</td>
+            }
             {fields?.find(item => item === UserField.firstName) &&
                 <td>{user.firstName}</td>
             }
+            {fields?.find(item => item === UserField.midName) &&
+                <td>{user.midName}</td>
+            }
             {fields?.find(item => item === UserField.lastName) &&
                 <td>{user.lastName}</td>
+            }
+            {fields?.find(item => item === UserField.titleAfter) &&
+                <td>{user.titleAfter}</td>
             }
             {fields?.find(item => item === UserField.authorities) &&
                 <td><WiwaUserAuthorities authorities={user.authorities}/></td>

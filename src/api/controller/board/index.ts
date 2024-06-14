@@ -9,11 +9,11 @@ import {
     setQueryParam
 } from '../';
 import { Page, Pageable } from '../../model';
-import { Board, BoardCategoryItemChange, BoardChange, BoardSearchCriteria } from '../../model/board';
+import { Board, BoardCategoryItemChange, BoardChange, BoardField, BoardSearchCriteria } from '../../model/board';
 
 const PATH = CONTEXT_PATH + 'boards';
 
-export const getBoards = (criteria?: BoardSearchCriteria, pageable?: Pageable, accessToken?: string) => {
+export const getBoards = (criteria?: BoardSearchCriteria, pageable?: Pageable<BoardField>, accessToken?: string) => {
     const queryParams = new URLSearchParams();
     setPageableQueryParams(queryParams, pageable);
     if (criteria) {

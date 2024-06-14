@@ -300,9 +300,6 @@
     }
   },
   "units": {
-    "title": "Units",
-    "id": "Id",
-    "value": "Value",
     "editUnit": {
       "title": "Edit unit",
       "valuePlaceholder": "Enter unit",
@@ -312,10 +309,6 @@
   },
   "users": {
     "fetchDataError": "Users loading failed",
-    "searchUser": {
-      "title": "Search user",
-      "placeholder": "Username, first name, middle name, last name or email"
-    },
     "deleteUser": {
       "title": "Delete user",
       "message": "Do you really want to delete user?",

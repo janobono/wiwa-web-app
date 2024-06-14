@@ -5,12 +5,17 @@
     "copy": "Copy",
     "delete": "Delete",
     "edit": "Edit",
+    "extendedSearch": "Extended search",
     "items": "Items",
     "ok": "Ok",
     "moveUp": "Move up",
     "moveDown": "Move down",
     "search": "Search",
     "submit": "Submit"
+  },
+  "applicationImageInfoTable": {
+    "fileName": "File name",
+    "thumbnail": "Thumbnail"
   },
   "baseNavigation": {
     "maintenanceSwitch": "Switch maintenance",
@@ -25,6 +30,24 @@
       "changeEmail": "Change email",
       "changePassword": "Change password"
     }
+  },
+  "boardTable": {
+    "id": "Id",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "boardCode": "Board code",
+    "structureCode": "Structure code",
+    "orientation": "Orientation",
+    "sale": "Sale",
+    "weight": "Weight",
+    "length": "Length",
+    "width": "Width",
+    "thickness": "Thickness",
+    "price": "Price",
+    "vatPrice": "Vat price",
+    "codeListItems": "Code list items",
+    "image": "Image"
   },
   "captcha": {
     "action": "Reload captcha",
@@ -116,24 +139,10 @@
     "action": "Refresh",
     "text": "Login expired."
   },
-  "productAttributeKey": {
-    "boardCode": "Board code",
-    "structureCode": "Structure code",
-    "orientation": "Orientation"
-  },
-  "productStockStatus": {
-    "onStock": "On stock",
-    "outOfStock": "Out of stock",
-    "toOrder": "To order",
-    "onInquire": "On inquire"
-  },
-  "productQuantityKey": {
-    "sale": "Sale",
-    "weight": "Weight",
-    "netWeight": "Net weight",
-    "length": "Length",
-    "width": "Width",
-    "thickness": "Thickness"
+  "searchUserCriteria": {
+    "searchPlaceholder": "Username, first name, middle name, last name or email",
+    "usernamePlaceholder": "Username",
+    "emailPlaceholder": "Email"
   },
   "selectCodeListDialog": {
     "title": "Select code list",
@@ -152,12 +161,19 @@
     "kilogram": "Kilogram",
     "piece": "Piece"
   },
+  "unitTable": {
+    "id": "Id",
+    "value": "Value"
+  },
   "userTable": {
     "id": "Id",
     "username": "Username",
     "email": "Email",
+    "titleBefore": "Title before",
     "firstName": "First name",
+    "midName": "Mid name",
     "lastName": "Last name",
+    "titleAfter": "Title after",
     "authorities": "Authorities",
     "confirmed": "Confirmed",
     "enabled": "Enabled"

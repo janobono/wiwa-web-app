@@ -79,5 +79,8 @@ export enum BoardField {
     length = 'length',
     width = 'width',
     thickness = 'thickness',
-    price = 'price'
+    price = 'price',
+    vatPrice = 'vatPrice',
+    codeListItems = 'codeListItems',
+    image = 'image'
 }

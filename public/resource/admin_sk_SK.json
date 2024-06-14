@@ -296,9 +296,6 @@
     }
   },
   "units": {
-    "title": "Jednotky",
-    "id": "Id",
-    "value": "Hodnota",
     "editUnit": {
       "title": "Upraviť jednotku",
       "valuePlaceholder": "Zadajte jednotku",
@@ -308,10 +305,6 @@
   },
   "users": {
     "fetchDataError": "Chyba načítania používateľov",
-    "searchUser": {
-      "title": "Vyhľadať používateľa",
-      "placeholder": "Používateľské meno, meno, stredné meno, priezvisko alebo email"
-    },
     "deleteUser": {
       "title": "Zmazať používateľa",
       "message": "Naozaj si želáte zmazať používateľa?",

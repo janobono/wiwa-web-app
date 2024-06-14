@@ -296,9 +296,6 @@ export interface ResourceAdmin {
         },
     },
     units: {
-        title: string,
-        id: string,
-        value: string,
         editUnit: {
             title: string,
             valuePlaceholder: string,
@@ -308,10 +305,6 @@ export interface ResourceAdmin {
     },
     users: {
         fetchDataError: string,
-        searchUser: {
-            title: string,
-            placeholder: string
-        },
         deleteUser: {
             title: string,
             message: string,

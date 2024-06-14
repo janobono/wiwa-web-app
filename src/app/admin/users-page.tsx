@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 import {
     Lock,
     PieChart,
-    Search,
     Settings,
     ShoppingCart,
     Tool,
@@ -17,12 +16,12 @@ import {
 import { ClientResponse } from '../../api/controller';
 import { deleteUser, getUsers, setAuthorities, setConfirmed, setEnabled } from '../../api/controller/user';
 import { Authority, containsAuthority, Page, User } from '../../api/model';
-import { UserField } from '../../api/model/user';
+import { UserField, UserSearchCriteria } from '../../api/model/user';
 import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaButton from '../../component/ui/wiwa-button';
-import WiwaInput from '../../component/ui/wiwa-input';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
 import UserTable from '../../component/user/user-table';
+import UserSearchCriteriaForm from '../../component/user/user-search-criteria-form';
 import { DialogAnswer, DialogType } from '../../model/ui';
 import { useAuthState } from '../../state/auth';
 import { useDialogState } from '../../state/dialog';
@@ -40,7 +39,7 @@ const UsersPage = () => {
     const [selected, setSelected] = useState<User>();
     const [error, setError] = useState<string>();
 
-    const [searchField, setSearchField] = useState('');
+    const [criteria, setCriteria] = useState<UserSearchCriteria>();
     const [page, setPage] = useState(0);
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
@@ -49,7 +48,7 @@ const UsersPage = () => {
 
     useEffect(() => {
         fetchData().then();
-    }, []);
+    }, [criteria]);
 
     useEffect(() => {
         setPrevious(data !== undefined && !data.first);
@@ -69,7 +68,7 @@ const UsersPage = () => {
         setError(undefined);
         setBusy(true);
         try {
-            const response = await getUsers({searchField}, {page, size: 10}, authState?.authToken?.accessToken);
+            const response = await getUsers(criteria, {page, size: 10}, authState?.authToken?.accessToken);
             setData(response?.data);
             if (response?.error) {
                 setError(resourceState?.admin?.users.fetchDataError);
@@ -162,27 +161,8 @@ const UsersPage = () => {
             :
             <>
                 <div className="flex flex-col p-5 w-full">
-                    <div className="flex flex-row w-full items-center justify-center">
-                        <div className="join pb-5 w-2/3">
-                            <WiwaInput
-                                className="join-item"
-                                placeholder={resourceState?.admin?.users.searchUser.placeholder}
-                                value={searchField}
-                                onChange={event => setSearchField(event.target.value)}
-                                onKeyUp={(event) => {
-                                    if (event.key === 'Enter') {
-                                        fetchData().then();
-                                    }
-                                }}
-                            />
-                            <WiwaButton
-                                title={resourceState?.admin?.users.searchUser.title}
-                                className="join-item"
-                                onClick={fetchData}
-                            ><Search size={18}/></WiwaButton>
-                        </div>
-
-                        <div className="join pb-5 px-5">
+                    <UserSearchCriteriaForm searchHandler={setCriteria}>
+                        <div className="join pl-5">
                             <WiwaButton
                                 title={resourceState?.admin?.users.userAuthorities.title}
                                 className="btn-primary join-item"
@@ -271,7 +251,7 @@ const UsersPage = () => {
                             ><Trash size={18}/>
                             </WiwaButton>
                         </div>
-                    </div>
+                    </UserSearchCriteriaForm>
 
                     <div className="overflow-x-auto">
                         <UserTable

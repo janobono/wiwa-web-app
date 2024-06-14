@@ -48,6 +48,18 @@ export interface OrderContact {
     taxId?: string
 }
 
+export enum OrderContactField {
+    name = 'name',
+    street = 'street',
+    zipCode = 'zipCode',
+    city = 'city',
+    state = 'state',
+    phone = 'phone',
+    email = 'email',
+    businessId = 'businessId',
+    taxId = 'taxId'
+}
+
 export interface OrderEdge {
     id: number,
     code: string,

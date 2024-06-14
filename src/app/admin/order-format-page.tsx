@@ -1,6 +1,9 @@
 import { useAuthState } from '../../state/auth';
 import { useResourceState } from '../../state/resource';
 import { useEffect, useState } from 'react';
+
+import { setOrderProperties } from '../../api/controller/config';
+import { getOrderProperties } from '../../api/controller/ui';
 import {
     BoardDimension,
     BoardPosition,
@@ -12,11 +15,9 @@ import {
     OrderPattern,
     OrderProperties
 } from '../../api/model/application';
-import { getOrderProperties } from '../../api/controller/ui';
-import EntryListEditor from '../../component/app/admin/entry-list-editor.tsx';
-import { setOrderProperties } from '../../api/controller/config';
-import CsvReplacementsEditor from '../../component/app/admin/csv-replacements-editor.tsx';
-import CsvSeparatorEditor from '../../component/app/admin/csv-separator-editor.tsx';
+import EntryListEditor from '../../component/app/admin/entry-list-editor';
+import CsvReplacementsEditor from '../../component/app/admin/csv-replacements-editor';
+import CsvSeparatorEditor from '../../component/app/admin/csv-separator-editor';
 
 const ORDER_FORMAT_DIALOG_ID = 'order-format-dialog-';
 
@@ -52,7 +53,7 @@ const OrderFormatPage = () => {
     }
 
     return (
-        <div className="flex flex-col p-5 w-full">
+        <div className="flex flex-col p-5 gap-5 w-full">
             <select
                 defaultValue="0"
                 className="select select-bordered w-full"
@@ -71,168 +72,170 @@ const OrderFormatPage = () => {
                 <option value="10">{resourceState?.admin?.orderFormat.option.csvColumns}</option>
             </select>
 
-            {index == 1 &&
-                <EntryListEditor
-                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
-                    busy={busy}
-                    keys={Object.values(BoardDimension)}
-                    entries={value?.dimensions || []}
-                    submitHandler={async (entries) => {
-                        if (value) {
-                            const newData = {...value};
-                            newData.dimensions = entries;
-                            await saveValue(newData);
-                        }
-                    }}
-                />
-            }
+            <div>
+                {index == 1 &&
+                    <EntryListEditor
+                        dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                        busy={busy}
+                        keys={Object.values(BoardDimension)}
+                        entries={value?.dimensions || []}
+                        submitHandler={async (entries) => {
+                            if (value) {
+                                const newData = {...value};
+                                newData.dimensions = entries;
+                                await saveValue(newData);
+                            }
+                        }}
+                    />
+                }
 
-            {index == 2 &&
-                <EntryListEditor
-                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
-                    busy={busy}
-                    keys={Object.values(BoardPosition)}
-                    entries={value?.boards || []}
-                    submitHandler={async (entries) => {
-                        if (value) {
-                            const newData = {...value};
-                            newData.boards = entries;
-                            await saveValue(newData);
-                        }
-                    }}
-                />
-            }
+                {index == 2 &&
+                    <EntryListEditor
+                        dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                        busy={busy}
+                        keys={Object.values(BoardPosition)}
+                        entries={value?.boards || []}
+                        submitHandler={async (entries) => {
+                            if (value) {
+                                const newData = {...value};
+                                newData.boards = entries;
+                                await saveValue(newData);
+                            }
+                        }}
+                    />
+                }
 
-            {index == 3 &&
-                <EntryListEditor
-                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
-                    busy={busy}
-                    keys={Object.values(EdgePosition)}
-                    entries={value?.edges || []}
-                    submitHandler={async (entries) => {
-                        if (value) {
-                            const newData = {...value};
-                            newData.edges = entries;
-                            await saveValue(newData);
-                        }
-                    }}
-                />
-            }
+                {index == 3 &&
+                    <EntryListEditor
+                        dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                        busy={busy}
+                        keys={Object.values(EdgePosition)}
+                        entries={value?.edges || []}
+                        submitHandler={async (entries) => {
+                            if (value) {
+                                const newData = {...value};
+                                newData.edges = entries;
+                                await saveValue(newData);
+                            }
+                        }}
+                    />
+                }
 
-            {index == 4 &&
-                <EntryListEditor
-                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
-                    busy={busy}
-                    keys={Object.values(CornerPosition)}
-                    entries={value?.corners || []}
-                    submitHandler={async (entries) => {
-                        if (value) {
-                            const newData = {...value};
-                            newData.corners = entries;
-                            await saveValue(newData);
-                        }
-                    }}
-                />
-            }
+                {index == 4 &&
+                    <EntryListEditor
+                        dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                        busy={busy}
+                        keys={Object.values(CornerPosition)}
+                        entries={value?.corners || []}
+                        submitHandler={async (entries) => {
+                            if (value) {
+                                const newData = {...value};
+                                newData.corners = entries;
+                                await saveValue(newData);
+                            }
+                        }}
+                    />
+                }
 
-            {index == 5 &&
-                <EntryListEditor
-                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
-                    busy={busy}
-                    keys={Object.values(OrderPattern)}
-                    entries={value?.pattern || []}
-                    submitHandler={async (entries) => {
-                        if (value) {
-                            const newData = {...value};
-                            newData.pattern = entries;
-                            await saveValue(newData);
-                        }
-                    }}
-                />
-            }
+                {index == 5 &&
+                    <EntryListEditor
+                        dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                        busy={busy}
+                        keys={Object.values(OrderPattern)}
+                        entries={value?.pattern || []}
+                        submitHandler={async (entries) => {
+                            if (value) {
+                                const newData = {...value};
+                                newData.pattern = entries;
+                                await saveValue(newData);
+                            }
+                        }}
+                    />
+                }
 
-            {index == 6 &&
-                <EntryListEditor
-                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
-                    busy={busy}
-                    keys={Object.values(OrderContent)}
-                    entries={value?.content || []}
-                    submitHandler={async (entries) => {
-                        if (value) {
-                            const newData = {...value};
-                            newData.content = entries;
-                            await saveValue(newData);
-                        }
-                    }}
-                />
-            }
+                {index == 6 &&
+                    <EntryListEditor
+                        dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                        busy={busy}
+                        keys={Object.values(OrderContent)}
+                        entries={value?.content || []}
+                        submitHandler={async (entries) => {
+                            if (value) {
+                                const newData = {...value};
+                                newData.content = entries;
+                                await saveValue(newData);
+                            }
+                        }}
+                    />
+                }
 
-            {index == 7 &&
-                <EntryListEditor
-                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
-                    busy={busy}
-                    keys={Object.values(OrderPackageType)}
-                    entries={value?.packageType || []}
-                    submitHandler={async (entries) => {
-                        if (value) {
-                            const newData = {...value};
-                            newData.packageType = entries;
-                            await saveValue(newData);
-                        }
-                    }}
-                />
-            }
+                {index == 7 &&
+                    <EntryListEditor
+                        dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                        busy={busy}
+                        keys={Object.values(OrderPackageType)}
+                        entries={value?.packageType || []}
+                        submitHandler={async (entries) => {
+                            if (value) {
+                                const newData = {...value};
+                                newData.packageType = entries;
+                                await saveValue(newData);
+                            }
+                        }}
+                    />
+                }
 
-            {index == 8 &&
-                <CsvSeparatorEditor
-                    busy={busy}
-                    separator={value?.csvSeparator || ''}
-                    submitHandler={async (separator) => {
-                        if (value) {
-                            const newData = {...value};
-                            newData.csvSeparator = separator;
-                            await saveValue(newData);
-                        }
-                    }}
-                />
-            }
+                {index == 8 &&
+                    <CsvSeparatorEditor
+                        busy={busy}
+                        separator={value?.csvSeparator || ''}
+                        submitHandler={async (separator) => {
+                            if (value) {
+                                const newData = {...value};
+                                newData.csvSeparator = separator;
+                                await saveValue(newData);
+                            }
+                        }}
+                    />
+                }
 
-            {index == 9 &&
-                <CsvReplacementsEditor
-                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
-                    busy={busy}
-                    entries={value?.csvReplacements || []}
-                    submitHandler={async (entries) => {
-                        if (value) {
-                            const newData = {...value};
-                            newData.csvReplacements = entries;
-                            await saveValue(newData);
-                        }
-                    }}
-                />
-            }
+                {index == 9 &&
+                    <CsvReplacementsEditor
+                        dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                        busy={busy}
+                        entries={value?.csvReplacements || []}
+                        submitHandler={async (entries) => {
+                            if (value) {
+                                const newData = {...value};
+                                newData.csvReplacements = entries;
+                                await saveValue(newData);
+                            }
+                        }}
+                    />
+                }
 
-            {index == 10 &&
-                <EntryListEditor
-                    dialogId={ORDER_FORMAT_DIALOG_ID + index}
-                    busy={busy}
-                    keys={Object.values(CSVColumn)}
-                    entries={value?.csvColumns || []}
-                    submitHandler={async (entries) => {
-                        if (value) {
-                            const newData = {...value};
-                            newData.csvColumns = entries;
-                            await saveValue(newData);
-                        }
-                    }}
-                />
-            }
+                {index == 10 &&
+                    <EntryListEditor
+                        dialogId={ORDER_FORMAT_DIALOG_ID + index}
+                        busy={busy}
+                        keys={Object.values(CSVColumn)}
+                        entries={value?.csvColumns || []}
+                        submitHandler={async (entries) => {
+                            if (value) {
+                                const newData = {...value};
+                                newData.csvColumns = entries;
+                                await saveValue(newData);
+                            }
+                        }}
+                    />
+                }
 
-            {error &&
-                <label className="label">
-                    <span className="label-text-alt text-error">{error}</span>
-                </label>
-            }
+                {error &&
+                    <label className="label">
+                        <span className="label-text-alt text-error">{error}</span>
+                    </label>
+                }
+            </div>
         </div>
     )
 }

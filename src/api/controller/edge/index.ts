@@ -9,11 +9,11 @@ import {
     setQueryParam
 } from '../';
 import { Page, Pageable } from '../../model';
-import { Edge, EdgeCategoryItemChange, EdgeChange, EdgeSearchCriteria } from '../../model/edge';
+import { Edge, EdgeCategoryItemChange, EdgeChange, EdgeField, EdgeSearchCriteria } from '../../model/edge';
 
 const PATH = CONTEXT_PATH + 'edges';
 
-export const getEdges = (criteria?: EdgeSearchCriteria, pageable?: Pageable, accessToken?: string) => {
+export const getEdges = (criteria?: EdgeSearchCriteria, pageable?: Pageable<EdgeField>, accessToken?: string) => {
     const queryParams = new URLSearchParams();
     setPageableQueryParams(queryParams, pageable);
     if (criteria) {

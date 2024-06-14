@@ -1,10 +1,10 @@
 import { CONTEXT_PATH, deleteData, getData, postData, putData, setPageableQueryParams, setQueryParam } from '../';
 import { Page, Pageable } from '../../model';
-import { CodeList, CodeListChange, CodeListSearchCriteria } from '../../model/code-list';
+import { CodeList, CodeListChange, CodeListField, CodeListSearchCriteria } from '../../model/code-list';
 
 const PATH = CONTEXT_PATH + 'code-lists';
 
-export const getCodeLists = (criteria?: CodeListSearchCriteria, pageable?: Pageable, accessToken?: string) => {
+export const getCodeLists = (criteria?: CodeListSearchCriteria, pageable?: Pageable<CodeListField>, accessToken?: string) => {
     const queryParams = new URLSearchParams();
     setPageableQueryParams(queryParams, pageable);
     if (criteria) {

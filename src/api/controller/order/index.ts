@@ -12,7 +12,7 @@ import { Page, Pageable } from '../../model';
 import {
     Order,
     OrderCommentChange,
-    OrderContact,
+    OrderContact, OrderContactField, OrderField,
     OrderItemChange,
     OrderItemImage,
     OrderSearchCriteria,
@@ -22,7 +22,7 @@ import {
 
 const PATH = CONTEXT_PATH + 'orders';
 
-export const getOrders = (criteria?: OrderSearchCriteria, pageable?: Pageable, accessToken?: string) => {
+export const getOrders = (criteria?: OrderSearchCriteria, pageable?: Pageable<OrderField>, accessToken?: string) => {
     const queryParams = new URLSearchParams();
     setPageableQueryParams(queryParams, pageable);
     if (criteria) {
@@ -48,7 +48,7 @@ export const getOrders = (criteria?: OrderSearchCriteria, pageable?: Pageable, a
     return getData<Page<Order>>(PATH, queryParams, accessToken);
 }
 
-export const getOrderContacts = (pageable?: Pageable, accessToken?: string) => {
+export const getOrderContacts = (pageable?: Pageable<OrderContactField>, accessToken?: string) => {
     const queryParams = new URLSearchParams();
     setPageableQueryParams(queryParams, pageable);
     return getData<Page<OrderContact>>(PATH + '/contacts', queryParams, accessToken);

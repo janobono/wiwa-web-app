@@ -5,12 +5,17 @@
     "copy": "Kopírovať",
     "delete": "Zmazať",
     "edit": "Upraviť",
+    "extendedSearch": "Rozšírené vyhľadávanie",
     "items": "Položky",
     "ok": "Potvrdiť",
     "moveUp": "Presunúť hore",
     "moveDown": "Presunúť dole",
     "search": "Vyhľadať",
     "submit": "Odoslať"
+  },
+  "applicationImageInfoTable": {
+    "fileName": "Názov súboru",
+    "thumbnail": "Miniatúra"
   },
   "baseNavigation": {
     "maintenanceSwitch": "Prepnúť režim údržby",
@@ -25,6 +30,24 @@
       "changeEmail": "Zmeniť email",
       "changePassword": "Zmeniť heslo"
     }
+  },
+  "boardTable": {
+    "id": "Id",
+    "code": "Kód",
+    "name": "Názov",
+    "description": "Popis",
+    "boardCode": "Kód dosky",
+    "structureCode": "Kód štruktúry",
+    "orientation": "Orientácia",
+    "sale": "Predajná jednotka",
+    "weight": "Hmotnosť",
+    "length": "Dĺžka",
+    "width": "Šírka",
+    "thickness": "Hrúbka",
+    "price": "Cena",
+    "vatPrice": "Cena s DPH",
+    "codeListItems": "Položky číselníka",
+    "image": "Obrázok"
   },
   "captcha": {
     "action": "Načítať kontrolný text",
@@ -116,24 +139,10 @@
     "action": "Obnoviť",
     "text": "Platnosť prihlásenia vypršala."
   },
-  "productAttributeKey": {
-    "boardCode": "Kód dosky",
-    "structureCode": "Kód štruktúry",
-    "orientation": "Orientácia"
-  },
-  "productStockStatus": {
-    "onStock": "Skladom",
-    "outOfStock": "Nie je skladom",
-    "toOrder": "Na objednávku",
-    "onInquire": "Na dotaz"
-  },
-  "productQuantityKey": {
-    "sale": "Predajná jednotka",
-    "weight": "Hmotnosť",
-    "netWeight": "Čistá hmotnosť",
-    "length": "Dĺžka",
-    "width": "Šírka",
-    "thickness": "Hrúbka"
+  "searchUserCriteria": {
+    "searchPlaceholder": "Používateľské meno, meno, stredné meno, priezvisko alebo email",
+    "usernamePlaceholder": "Používateľské meno",
+    "emailPlaceholder": "Email"
   },
   "selectCodeListDialog": {
     "title": "Výber číselníka",
@@ -152,12 +161,19 @@
     "kilogram": "Kilogram",
     "piece": "Kus"
   },
+  "unitTable": {
+    "id": "Id",
+    "value": "Hodnota"
+  },
   "userTable": {
     "id": "Id",
     "username": "Používateľské meno",
     "email": "Email",
+    "titleBefore": "Titul pred",
     "firstName": "Meno",
+    "midName": "Stredné meno",
     "lastName": "Priezvisko",
+    "titleAfter": "Titul za",
     "authorities": "Povolenia",
     "confirmed": "Potvrdený",
     "enabled": "Odblokovaný"

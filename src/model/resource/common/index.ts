@@ -5,12 +5,17 @@ export interface ResourceCommon {
         copy: string,
         delete: string,
         edit: string,
+        extendedSearch: string,
         items: string,
         ok: string,
         moveUp: string,
         moveDown: string,
         search: string,
         submit: string
+    },
+    applicationImageInfoTable: {
+        fileName: string,
+        thumbnail: string
     },
     baseNavigation: {
         maintenanceSwitch: string,
@@ -25,6 +30,24 @@ export interface ResourceCommon {
             changePassword: string,
             signOut: string
         }
+    },
+    boardTable: {
+        id: string,
+        code: string,
+        name: string,
+        description: string,
+        boardCode: string,
+        structureCode: string,
+        orientation: string,
+        sale: string,
+        weight: string,
+        length: string,
+        width: string,
+        thickness: string,
+        price: string,
+        vatPrice: string,
+        codeListItems: string,
+        image: string
     },
     captcha: {
         action: string,
@@ -135,6 +158,11 @@ export interface ResourceCommon {
         width: string,
         thickness: string
     },
+    searchUserCriteria: {
+        searchPlaceholder: string,
+        usernamePlaceholder: string,
+        emailPlaceholder: string
+    },
     selectCodeListDialog: {
         title: string,
         searchTitle: string,
@@ -152,12 +180,19 @@ export interface ResourceCommon {
         kilogram: string,
         piece: string
     },
+    unitTable: {
+        id: string,
+        value: string
+    },
     userTable: {
         id: string,
         username: string,
         email: string,
+        titleBefore: string,
         firstName: string,
+        midName: string,
         lastName: string,
+        titleAfter: string,
         authorities: string,
         confirmed: string,
         enabled: string

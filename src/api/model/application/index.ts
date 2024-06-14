@@ -5,6 +5,11 @@ export interface ApplicationImageInfo {
     thumbnail: string
 }
 
+export enum ApplicationImageInfoField {
+    fileName = 'fileName',
+    thumbnail = 'thumbnail'
+}
+
 export interface ApplicationProperties {
     defaultLocale: string,
     appTitle: string,
@@ -291,4 +296,9 @@ export enum UnitId {
 export interface Unit {
     id: UnitId,
     value: string
+}
+
+export enum UnitField {
+    id = 'id',
+    value = 'value'
 }

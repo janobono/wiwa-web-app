@@ -3,16 +3,16 @@ import { createPortal } from 'react-dom';
 import { Edit } from 'react-feather';
 
 import { getUnits } from '../../api/controller/ui';
-import { Unit, UnitId } from '../../api/model/application';
+import { Unit, UnitField } from '../../api/model/application';
 import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
-import WiwaUnitId from '../../component/ui/wiwa-unit-id';
 import { getUnitIdName } from '../../model';
 import { useAuthState } from '../../state/auth';
 import { useDialogState } from '../../state/dialog';
 import { useResourceState } from '../../state/resource';
 import { setUnits } from '../../api/controller/config';
+import UnitTable from '../../component/app/admin/unit-table.tsx';
 
 const UNIT_VALUE_DIALOG_ID = 'admin-unit-value-dialog-001';
 
@@ -22,10 +22,10 @@ const UnitsPage = () => {
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Unit[]>();
+    const [selected, setSelected] = useState<Unit>();
+    const [error, setError] = useState<string>();
 
     const [showDialog, setShowDialog] = useState(false);
-    const [selectedUnitId, setSelectedUnitId] = useState<UnitId>();
-    const [error, setError] = useState<string>();
 
     useEffect(() => {
         getUnits().then(data => setData(data.data));
@@ -41,10 +41,11 @@ const UnitsPage = () => {
                 if (index !== -1) {
                     newData[index] = unit;
                     const response = await setUnits(newData, authState?.authToken?.accessToken);
+
+                    setData(response.data);
+
                     if (response?.error) {
                         setError(resourceState?.admin?.units.editUnit.error);
-                    } else {
-                        setData(response.data);
                     }
                 }
             }
@@ -60,41 +61,32 @@ const UnitsPage = () => {
             :
             <>
                 <div className="flex flex-col p-5 w-full">
+                    <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
+                        <div className="join">
+                            <WiwaButton
+                                className="btn-primary"
+                                title={resourceState?.common?.action.edit}
+                                disabled={busy || selected === undefined}
+                                onClick={() => {
+                                    setShowDialog(true);
+                                }}
+                            ><Edit size={18}/>
+                            </WiwaButton>
+                        </div>
+                    </div>
                     <div className="overflow-x-auto">
-                        <table className="table table-zebra">
-                            <thead>
-                            <tr>
-                                <th>{resourceState?.admin?.units.id}</th>
-                                <th>{resourceState?.admin?.units.value}</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {data?.map((unit) =>
-                                <tr key={unit.id} className="hover">
-                                    <td><WiwaUnitId unitId={unit.id}/></td>
-                                    <td>{unit.value}</td>
-                                    <th>
-                                        <WiwaButton
-                                            className="btn-primary md:btn-xs"
-                                            title={resourceState?.common?.action.edit}
-                                            disabled={busy}
-                                            onClick={() => {
-                                                setSelectedUnitId(unit.id);
-                                                setShowDialog(true);
-                                            }}
-                                        ><Edit size={18}/>
-                                        </WiwaButton>
-                                    </th>
-                                </tr>
-                            )}
-                            </tbody>
-                        </table>
+                        <UnitTable
+                            fields={Object.values(UnitField)}
+                            units={data}
+                            selected={selected}
+                            setSelected={setSelected}
+                        />
                     </div>
                 </div>
+
                 <UnitDialog
                     showDialog={showDialog}
-                    unitId={selectedUnitId}
+                    unit={selected}
                     okHandler={(data) => {
                         okHandler(data).then();
                         setShowDialog(false);
@@ -107,29 +99,23 @@ const UnitsPage = () => {
 
 export default UnitsPage;
 
-const UnitDialog = ({showDialog, unitId, okHandler, cancelHandler}: {
+const UnitDialog = ({showDialog, unit, okHandler, cancelHandler}: {
     showDialog: boolean,
-    unitId?: UnitId,
+    unit?: Unit,
     okHandler: (unit: Unit) => void,
     cancelHandler: () => void
 }) => {
     const dialogState = useDialogState();
     const resourceState = useResourceState();
 
-    const [data, setData] = useState<Unit[]>();
-
     const [value, setValue] = useState('');
     const [valueValid, setValueValid] = useState(false);
 
     useEffect(() => {
-        getUnits().then(data => setData(data.data));
-    }, [showDialog]);
-
-    useEffect(() => {
-        if (data && unitId) {
-            setValue(data?.find(unit => unit.id === unitId)?.value || '');
+        if (unit) {
+            setValue(unit.value);
         }
-    }, [data, unitId]);
+    }, [unit]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <BaseDialog id={UNIT_VALUE_DIALOG_ID} showDialog={showDialog} closeHandler={cancelHandler}>
@@ -140,7 +126,7 @@ const UnitDialog = ({showDialog, unitId, okHandler, cancelHandler}: {
                     </div>
 
                     <WiwaFormInput
-                        label={unitId ? getUnitIdName(unitId) : ''}
+                        label={unit ? getUnitIdName(unit.id) : ''}
                         required={true}
                         placeholder={resourceState?.admin?.units.editUnit.valuePlaceholder}
                         value={value}
@@ -162,8 +148,8 @@ const UnitDialog = ({showDialog, unitId, okHandler, cancelHandler}: {
                             className="btn-primary join-item"
                             disabled={!valueValid}
                             onClick={() => {
-                                if (unitId) {
-                                    okHandler({id: unitId, value});
+                                if (unit) {
+                                    okHandler({id: unit.id, value});
                                 }
                             }}
                         >{resourceState?.common?.action.ok}
