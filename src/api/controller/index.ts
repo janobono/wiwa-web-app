@@ -179,7 +179,10 @@ export const postFile = async <T>(path: string, file: File, token?: string): Pro
 
     let resultData, error;
     if (response.ok) {
-        resultData = await response.json() as T;
+        const text = await response.text();
+        if (text.length > 0) {
+            resultData = await JSON.parse(text) as T;
+        }
     } else {
         error = await toWiwaError(response);
     }

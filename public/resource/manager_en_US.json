@@ -51,6 +51,17 @@
       "priceLabel": "Price",
       "pricePlaceholder": "Enter price",
       "priceRequired": "Price is required"
+    },
+    "boardImage": {
+      "editTitle": "Board image",
+      "editFileLabel": "File",
+      "editFilePlaceholder": "Select file",
+      "editFileRequired": "File is required",
+      "editFileFormat": "Supported file format is JPG or PNG",
+      "editError": "Board image submitting failed",
+      "deleteTitle": "Delete board image",
+      "deleteMessage": "Do you really want to delete board image?",
+      "deleteError": "Delete board image failed"
     }
   },
   "categories": {

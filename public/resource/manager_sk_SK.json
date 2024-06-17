@@ -45,6 +45,17 @@
       "priceLabel": "Cena",
       "pricePlaceholder": "Zadajte cenu",
       "priceRequired": "Vyžaduje sa cena"
+    },
+    "boardImage": {
+      "editTitle": "Obrázok dosky",
+      "editFileLabel": "Súbor",
+      "editFilePlaceholder": "Zvoľte súbor",
+      "editFileRequired": "Vyžaduje sa súbor",
+      "editFileFormat": "Podporovaný formát súbory je JPG alebo PNG",
+      "editError": "Chyba odoslania obrázku dosky",
+      "deleteTitle": "Zmazať obrázok dosky",
+      "deleteMessage": "Naozaj si želáte zmazať obrázok dosky?",
+      "deleteError": "Chyba mazania obrázku"
     }
   },
   "categories": {
