@@ -2,10 +2,12 @@
   "action": {
     "add": "Add",
     "cancel": "Cancel",
+    "categories": "Categories",
     "copy": "Copy",
     "delete": "Delete",
     "edit": "Edit",
     "extendedSearch": "Extended search",
+    "image": "Image",
     "items": "Items",
     "ok": "Ok",
     "moveUp": "Move up",
@@ -31,6 +33,22 @@
       "changePassword": "Change password"
     }
   },
+  "boardCriteria": {
+    "searchPlaceholder": "Code, board code, structure code or name",
+    "codePlaceholder": "Code",
+    "namePlaceholder": "Name",
+    "boardCodePlaceholder": "Board code",
+    "structureCodePlaceholder": "Structure code",
+    "orientationPlaceholder": "Orientation",
+    "lengthFromPlaceholder": "Length from",
+    "lengthToPlaceholder": "Length to",
+    "widthFromPlaceholder": "Width from",
+    "widthToPlaceholder": "Width to",
+    "thicknessFromPlaceholder": "Thickness from",
+    "thicknessToPlaceholder": "Thickness to",
+    "priceFromPlaceholder": "Price from",
+    "priceToPlaceholder": "Price to"
+  },
   "boardTable": {
     "id": "Id",
     "code": "Code",
@@ -46,7 +64,7 @@
     "thickness": "Thickness",
     "price": "Price",
     "vatPrice": "Vat price",
-    "codeListItems": "Code list items",
+    "codeListItems": "Categories",
     "image": "Image"
   },
   "captcha": {
@@ -55,6 +73,11 @@
     "label": "Captcha",
     "placeholder": "Enter captcha",
     "required": "Captcha is required"
+  },
+  "categoryTable": {
+    "id": "Id",
+    "code": "Code",
+    "name": "Name"
   },
   "codeListTable": {
     "id": "Id",
@@ -139,11 +162,6 @@
     "action": "Refresh",
     "text": "Login expired."
   },
-  "searchUserCriteria": {
-    "searchPlaceholder": "Username, first name, middle name, last name or email",
-    "usernamePlaceholder": "Username",
-    "emailPlaceholder": "Email"
-  },
   "selectCodeListDialog": {
     "title": "Select code list",
     "searchTitle": "Search code list",
@@ -164,6 +182,11 @@
   "unitTable": {
     "id": "Id",
     "value": "Value"
+  },
+  "userCriteria": {
+    "searchPlaceholder": "Username, first name, middle name, last name or email",
+    "usernamePlaceholder": "Username",
+    "emailPlaceholder": "Email"
   },
   "userTable": {
     "id": "Id",

@@ -1,11 +1,70 @@
 export interface ResourceManager {
     title: string,
     codeListsTab: string,
+    categoriesTab: string,
     boardsTab: string,
     edgesTab: string,
     orderInputsTab: string,
     ordersTab: string,
-    fetchDataError: string,
+    boards: {
+        fetchDataError: string,
+        addBoard: {
+            error: string
+        },
+        editBoard: {
+            error: string
+        },
+        deleteBoard: {
+            title: string,
+            message: string,
+            error: string
+        },
+        boardDialog: {
+            title: string,
+            codeLabel: string,
+            codePlaceholder: string,
+            codeRequired: string,
+            nameLabel: string,
+            namePlaceholder: string,
+            nameRequired: string,
+            descriptionLabel: string,
+            descriptionPlaceholder: string,
+            boardCodeLabel: string,
+            boardCodePlaceholder: string,
+            boardCodeRequired: string,
+            structureCodeLabel: string,
+            structureCodePlaceholder: string,
+            structureCodeRequired: string,
+            orientationLabel: string,
+            weightLabel: string,
+            weightPlaceholder: string,
+            weightRequired: string,
+            lengthLabel: string,
+            lengthPlaceholder: string,
+            lengthRequired: string,
+            widthLabel: string,
+            widthPlaceholder: string,
+            widthRequired: string,
+            thicknessLabel: string,
+            thicknessPlaceholder: string,
+            thicknessRequired: string,
+            priceLabel: string,
+            pricePlaceholder: string,
+            priceRequired: string
+        }
+    },
+    categories: {
+        option: {
+            select: string,
+            board: string,
+            edge: string,
+            material: string
+        },
+        setCategoryError: string,
+        setCategoriesError: string,
+        deleteCategoryQuestionTitle: string,
+        deleteCategoryQuestionMessage: string
+    },
     codeLists: {
         id: string,
         code: string,

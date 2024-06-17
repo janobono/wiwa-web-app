@@ -3,9 +3,9 @@ import WiwaValue from '../ui/wiwa-value';
 import { useResourceState } from '../../state/resource';
 import { CodeListItem, CodeListItemField } from '../../api/model/code-list';
 
-const CodeListItemTable = ({fields, codeListItems, selected, setSelected}: {
+const CodeListItemTable = ({fields, rows, selected, setSelected}: {
     fields: CodeListItemField[],
-    codeListItems?: CodeListItem[],
+    rows?: CodeListItem[],
     selected?: CodeListItem,
     setSelected: (codeListItem?: CodeListItem) => void
 }) => {
@@ -13,11 +13,11 @@ const CodeListItemTable = ({fields, codeListItems, selected, setSelected}: {
         <table className="table table-zebra">
             <TableHead fields={fields}/>
             <tbody>
-            {codeListItems?.map(codeListItem =>
+            {rows?.map(row =>
                 <TableRow
-                    key={codeListItem.id}
+                    key={row.id}
                     fields={fields}
-                    codeListItem={codeListItem}
+                    row={row}
                     selected={selected}
                     setSelected={setSelected}
                 />)
@@ -59,39 +59,39 @@ const TableHead = ({fields}: { fields: CodeListItemField[] }) => {
     )
 }
 
-const TableRow = ({fields, codeListItem, selected, setSelected}: {
+const TableRow = ({fields, row, selected, setSelected}: {
     fields: CodeListItemField[],
-    codeListItem: CodeListItem,
+    row: CodeListItem,
     selected?: CodeListItem,
     setSelected: (codeListItem?: CodeListItem) => void
 }) => {
     return (
         <tr
             className="hover"
-            onClick={() => setSelected(codeListItem)}
+            onClick={() => setSelected(row)}
         >
             {fields?.find(item => item === CodeListItemField.id) &&
-                <td>{codeListItem.id}</td>
+                <td>{row.id}</td>
             }
             {fields?.find(item => item === CodeListItemField.codeListId) &&
-                <td>{codeListItem.codeListId}</td>
+                <td>{row.codeListId}</td>
             }
             {fields?.find(item => item === CodeListItemField.sortNum) &&
-                <td>{codeListItem.sortNum + 1}</td>
+                <td>{row.sortNum + 1}</td>
             }
             {fields?.find(item => item === CodeListItemField.code) &&
-                <td>{codeListItem.code}</td>
+                <td>{row.code}</td>
             }
             {fields?.find(item => item === CodeListItemField.value) &&
-                <td>{codeListItem.value}</td>
+                <td>{row.value}</td>
             }
             {fields?.find(item => item === CodeListItemField.leafNode) &&
-                <td><WiwaValue value={`${codeListItem.leafNode}`}/></td>
+                <td><WiwaValue value={`${row.leafNode}`}/></td>
             }
             <td>
-                <WiwaFormCheckBox value={codeListItem.id === selected?.id} setValue={(value) => {
+                <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {
-                        setSelected(codeListItem);
+                        setSelected(row);
                     }
                 }}/>
             </td>

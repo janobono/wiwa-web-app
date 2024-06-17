@@ -256,7 +256,7 @@ const UsersPage = () => {
                     <div className="overflow-x-auto">
                         <UserTable
                             fields={Object.values(UserField)}
-                            users={data?.content}
+                            rows={data?.content}
                             selected={selected}
                             setSelected={setSelected}
                         />

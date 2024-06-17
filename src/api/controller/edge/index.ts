@@ -8,8 +8,8 @@ import {
     setPageableQueryParams,
     setQueryParam
 } from '../';
-import { Page, Pageable } from '../../model';
-import { Edge, EdgeCategoryItemChange, EdgeChange, EdgeField, EdgeSearchCriteria } from '../../model/edge';
+import { CategoryItemChange, Page, Pageable } from '../../model';
+import { Edge, EdgeChange, EdgeField, EdgeSearchCriteria } from '../../model/edge';
 
 const PATH = CONTEXT_PATH + 'edges';
 
@@ -75,6 +75,6 @@ export const deleteEdgeImage = (id: number, accessToken?: string) => {
     return deleteData<void>(PATH + '/' + id + '/images', accessToken);
 }
 
-export const setEdgeCategoryItems = (id: number, edgeCategoryItems: EdgeCategoryItemChange[], accessToken?: string) => {
-    return postData<Edge>(PATH + '/' + id + '/category-items', edgeCategoryItems, accessToken);
+export const setEdgeCategoryItems = (id: number, categoryItems: CategoryItemChange[], accessToken?: string) => {
+    return postData<Edge>(PATH + '/' + id + '/category-items', categoryItems, accessToken);
 }

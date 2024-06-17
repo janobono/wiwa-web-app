@@ -1,10 +1,70 @@
 {
   "title": "Manager",
   "codeListsTab": "Code Lists",
+  "categoriesTab": "Categories",
   "boardsTab": "Boards",
   "edgesTab": "Edges",
   "orderInputsTab": "Order inputs",
   "ordersTab": "Orders",
+  "boards": {
+    "fetchDataError": "Boards loading failed",
+    "addBoard": {
+      "error": "Add board failed"
+    },
+    "editBoard": {
+      "error": "Edit board failed"
+    },
+    "deleteBoard": {
+      "title": "Delete board",
+      "message": "Do you really want to delete board?",
+      "error": "Delete board failed"
+    },
+    "boardDialog": {
+      "title": "Board",
+      "codeLabel": "Code",
+      "codePlaceholder": "Enter code",
+      "codeRequired": "Code is required",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter name",
+      "nameRequired": "Name is required",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Enter description",
+      "boardCodeLabel": "Board code",
+      "boardCodePlaceholder": "Enter board code",
+      "boardCodeRequired": "Board code is required",
+      "structureCodeLabel": "Structure code",
+      "structureCodePlaceholder": "Enter structure code",
+      "structureCodeRequired": "Structure code is required",
+      "orientationLabel": "Orientation",
+      "weightLabel": "Weight",
+      "weightPlaceholder": "Enter weight",
+      "weightRequired": "Weight is required",
+      "lengthLabel": "Length",
+      "lengthPlaceholder": "Enter length",
+      "lengthRequired": "Length is required",
+      "widthLabel": "Width",
+      "widthPlaceholder": "Enter width",
+      "widthRequired": "Width is required",
+      "thicknessLabel": "Thickness",
+      "thicknessPlaceholder": "Enter thickness",
+      "thicknessRequired": "Thickness is required",
+      "priceLabel": "Price",
+      "pricePlaceholder": "Enter price",
+      "priceRequired": "Price is required"
+    }
+  },
+  "categories": {
+    "option": {
+      "select": "Categories",
+      "board": "Board",
+      "edge": "Edge",
+      "material": "Board material"
+    },
+    "setCategoryError": "Category change failed",
+    "setCategoriesError": "Categories change failed",
+    "deleteCategoryQuestionTitle": "Delete category",
+    "deleteCategoryQuestionMessage": "Do you really want to delete category?"
+  },
   "codeLists": {
     "id": "Id",
     "code": "Code",
@@ -15,11 +75,9 @@
       "placeholder": "Name or code"
     },
     "addCodeList": {
-      "title": "Add code list",
       "error": "Add code list failed"
     },
     "editCodeList": {
-      "title": "Edit code list",
       "error": "Edit code list failed"
     },
     "deleteCodeList": {
@@ -43,19 +101,15 @@
       "value": "Value",
       "fetchDataError": "Code list items loading failed",
       "addCodeListItem": {
-        "title": "Add code list item",
         "error": "Add code list item failed"
       },
       "editCodeListItem": {
-        "title": "Edit code list item",
         "error": "Edit code list item failed"
       },
       "moveUpCodeListItem": {
-        "title": "Move code list item up",
         "error": "Move code list item up failed"
       },
       "moveDownCodeListItem": {
-        "title": "Move code list item down",
         "error": "Move code list item down failed"
       },
       "deleteCodeListItem": {

@@ -1,9 +1,7 @@
 import { CONTEXT_PATH, getData } from '../';
-import { SingleValueBody } from '../../model';
+import { Category, SingleValueBody } from '../../model';
 import { ApplicationProperties, CompanyInfo, FreeDay, OrderProperties, Unit } from '../../model/application';
 import { Captcha } from '../../model/captcha';
-import { BoardCategory } from '../../model/board';
-import { EdgeCategory } from '../../model/edge';
 
 const PATH = CONTEXT_PATH + 'ui';
 
@@ -80,11 +78,11 @@ export const getFreeDays = () => {
 }
 
 export const getBoardCategories = () => {
-    return getData<BoardCategory[]>(PATH + '/board-categories');
+    return getData<Category[]>(PATH + '/board-categories');
 }
 
 export const getEdgeCategories = () => {
-    return getData<EdgeCategory[]>(PATH + '/edge-categories');
+    return getData<Category[]>(PATH + '/edge-categories');
 }
 
 export const getOrderProperties = () => {

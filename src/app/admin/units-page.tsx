@@ -77,7 +77,7 @@ const UnitsPage = () => {
                     <div className="overflow-x-auto">
                         <UnitTable
                             fields={Object.values(UnitField)}
-                            units={data}
+                            rows={data}
                             selected={selected}
                             setSelected={setSelected}
                         />

@@ -3,6 +3,14 @@ import { createPortal } from 'react-dom';
 import { useParams } from 'react-router-dom';
 import { ArrowDown, ArrowUp, Edit, Plus, Trash } from 'react-feather';
 
+import {
+    addCodeListItem,
+    deleteCodeListItem,
+    getCodeListItems,
+    moveCodeListItemDown,
+    moveCodeListItemUp,
+    setCodeListItem
+} from '../../../api/controller/code-list-item';
 import { CodeListItem, CodeListItemChange, CodeListItemField } from '../../../api/model/code-list';
 import CodeListItemTable from '../../../component/code-list/code-list-item-table';
 import SelectCodeListItem from '../../../component/code-list/select-code-list-item';
@@ -13,14 +21,6 @@ import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
 import { useResourceState } from '../../../state/resource';
-import {
-    addCodeListItem,
-    deleteCodeListItem,
-    getCodeListItems,
-    moveCodeListItemDown,
-    moveCodeListItemUp,
-    setCodeListItem
-} from '../../../api/controller/code-list-item';
 
 const CODE_LIST_ITEM_DIALOG_ID = 'code-list-item-dialog-001';
 
@@ -98,8 +98,15 @@ const CodeListItemsPage = () => {
                 response = await addCodeListItem(codeListItemChange, authState?.authToken?.accessToken);
             }
 
-            if (response?.data) {
-                setSelected(response.data);
+            if (data && response?.data) {
+                const newData = [...data];
+                const index = newData.findIndex(item => item.id === response.data.id);
+                if (index !== -1) {
+                    newData[index] = response.data;
+                } else {
+                    newData.push(response.data);
+                }
+                setData(newData);
             }
 
             if (response?.error) {
@@ -255,7 +262,7 @@ const CodeListItemsPage = () => {
                     <div className="overflow-x-auto">
                         <CodeListItemTable
                             fields={Object.values(CodeListItemField)}
-                            codeListItems={data}
+                            rows={data}
                             selected={selected}
                             setSelected={setSelected}
                         />

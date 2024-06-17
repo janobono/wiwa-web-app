@@ -225,7 +225,7 @@ const CodeListsPage = () => {
                     <div className="overflow-x-auto">
                         <CodeListTable
                             fields={Object.values(CodeListField)}
-                            codeLists={data?.content}
+                            rows={data?.content}
                             selected={selected}
                             setSelected={setSelected}
                         />

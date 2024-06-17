@@ -19,12 +19,12 @@ const SelectCodeListDialog = (
         dialogId,
         showDialog,
         setShowDialog,
-        selectedCodeListHandler
+        okHandler
     }: {
         dialogId: string,
         showDialog: boolean,
         setShowDialog: (showDialog: boolean) => void,
-        selectedCodeListHandler: (codeList: CodeList) => void
+        okHandler: (codeList: CodeList) => void
     }
 ) => {
     const authState = useAuthState();
@@ -103,7 +103,7 @@ const SelectCodeListDialog = (
                                     <div className="overflow-x-auto">
                                         <CodeListTable
                                             fields={Object.values(CodeListField)}
-                                            codeLists={data?.content}
+                                            rows={data?.content}
                                             selected={selected}
                                             setSelected={setSelected}
                                         />
@@ -129,7 +129,7 @@ const SelectCodeListDialog = (
                                 disabled={selected === undefined}
                                 onClick={() => {
                                     if (selected) {
-                                        selectedCodeListHandler(selected);
+                                        okHandler(selected);
                                         setShowDialog(false);
                                     }
                                 }}

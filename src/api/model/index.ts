@@ -9,24 +9,38 @@ export const containsAuthority = (authorities: Authority[], authority: Authority
     return authorities.some(a => a === authority);
 };
 
-export interface User {
+export interface CategoryItemChange {
+    categoryId: number,
+    itemId: number
+}
+
+export interface CategoryItem {
+    id: string,
+    code: string,
+    name: string,
+    category: Category
+}
+
+export interface Category {
     id: number,
-    username: string,
-    titleBefore?: string,
-    firstName: string,
-    midName?: string,
-    lastName: string,
-    titleAfter?: string,
-    email: string,
-    gdpr: boolean,
-    confirmed: boolean,
-    enabled: boolean,
-    authorities: Authority[]
+    code: string,
+    name: string
+}
+
+export enum CategoryField {
+    id = 'id',
+    code = 'code',
+    name = 'name'
 }
 
 export interface Dimensions {
     x: number,
     y: number
+}
+
+export interface Entry<K, V> {
+    key: K,
+    value: V
 }
 
 export interface HealthStatus {
@@ -58,9 +72,19 @@ export interface SingleValueBody<T> {
     value: T
 }
 
-export interface Entry<K, V> {
-    key: K,
-    value: V
+export interface User {
+    id: number,
+    username: string,
+    titleBefore?: string,
+    firstName: string,
+    midName?: string,
+    lastName: string,
+    titleAfter?: string,
+    email: string,
+    gdpr: boolean,
+    confirmed: boolean,
+    enabled: boolean,
+    authorities: Authority[]
 }
 
 export enum WiwaErrorCode {

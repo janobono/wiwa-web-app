@@ -2,10 +2,12 @@
   "action": {
     "add": "Pridať",
     "cancel": "Zrušiť",
+    "categories": "Kategórie",
     "copy": "Kopírovať",
     "delete": "Zmazať",
     "edit": "Upraviť",
     "extendedSearch": "Rozšírené vyhľadávanie",
+    "image": "Obrázok",
     "items": "Položky",
     "ok": "Potvrdiť",
     "moveUp": "Presunúť hore",
@@ -31,6 +33,22 @@
       "changePassword": "Zmeniť heslo"
     }
   },
+  "boardCriteria": {
+    "searchPlaceholder": "Kód, názov, kód dosky alebo kód štruktúry",
+    "codePlaceholder": "Kód",
+    "namePlaceholder": "Názov",
+    "boardCodePlaceholder": "Kód dosky",
+    "structureCodePlaceholder": "Kód štruktúry",
+    "orientationPlaceholder": "Orientácia",
+    "lengthFromPlaceholder": "Dĺžka od",
+    "lengthToPlaceholder": "Dĺžka do",
+    "widthFromPlaceholder": "Šírka od",
+    "widthToPlaceholder": "Šírka do",
+    "thicknessFromPlaceholder": "Hrúbka od",
+    "thicknessToPlaceholder": "Hrúbka do",
+    "priceFromPlaceholder": "Cena od",
+    "priceToPlaceholder": "Cena do"
+  },
   "boardTable": {
     "id": "Id",
     "code": "Kód",
@@ -46,7 +64,7 @@
     "thickness": "Hrúbka",
     "price": "Cena",
     "vatPrice": "Cena s DPH",
-    "codeListItems": "Položky číselníka",
+    "codeListItems": "Kategórie",
     "image": "Obrázok"
   },
   "captcha": {
@@ -55,6 +73,11 @@
     "label": "Kontrolný text",
     "placeholder": "Zadajte kontrolný text",
     "required": "Zadajte kontrolný text"
+  },
+  "categoryTable": {
+    "id": "Id",
+    "code": "Kód",
+    "name": "Názov"
   },
   "codeListTable": {
     "id": "Id",
@@ -139,11 +162,6 @@
     "action": "Obnoviť",
     "text": "Platnosť prihlásenia vypršala."
   },
-  "searchUserCriteria": {
-    "searchPlaceholder": "Používateľské meno, meno, stredné meno, priezvisko alebo email",
-    "usernamePlaceholder": "Používateľské meno",
-    "emailPlaceholder": "Email"
-  },
   "selectCodeListDialog": {
     "title": "Výber číselníka",
     "searchTitle": "Vyhľadať číselník",
@@ -164,6 +182,11 @@
   "unitTable": {
     "id": "Id",
     "value": "Hodnota"
+  },
+  "userCriteria": {
+    "searchPlaceholder": "Používateľské meno, meno, stredné meno, priezvisko alebo email",
+    "usernamePlaceholder": "Používateľské meno",
+    "emailPlaceholder": "Email"
   },
   "userTable": {
     "id": "Id",

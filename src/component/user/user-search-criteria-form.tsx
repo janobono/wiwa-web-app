@@ -31,7 +31,7 @@ const UserSearchCriteriaForm = ({searchHandler, children}: {
                 <div className="join w-full">
                     <WiwaInput
                         className="join-item w-full"
-                        placeholder={resourceState?.common?.searchUserCriteria.searchPlaceholder}
+                        placeholder={resourceState?.common?.userCriteria.searchPlaceholder}
                         value={searchField}
                         onChange={event => setSearchField(event.target.value)}
                         onKeyUp={(event) => {
@@ -61,13 +61,13 @@ const UserSearchCriteriaForm = ({searchHandler, children}: {
             {extended &&
                 <div className="flex flex-row gap-5 w-2/3">
                     <WiwaFormInput
-                        placeholder={resourceState?.common?.searchUserCriteria.usernamePlaceholder}
+                        placeholder={resourceState?.common?.userCriteria.usernamePlaceholder}
                         value={username}
                         setValue={setUsername}
                     />
 
                     <WiwaFormInput
-                        placeholder={resourceState?.common?.searchUserCriteria.emailPlaceholder}
+                        placeholder={resourceState?.common?.userCriteria.emailPlaceholder}
                         value={email}
                         setValue={setEmail}
                     />

@@ -37,7 +37,16 @@ const ApplicationImagesPage = () => {
     useEffect(() => {
         setPrevious(data !== undefined && !data.first);
         setNext(data !== undefined && !data.last);
-    }, [data]);
+
+        if (selected && data) {
+            const index = data.content.findIndex(item => item.fileName === selected.fileName);
+            if (index !== -1) {
+                setSelected(data.content[index]);
+            }
+        } else {
+            setSelected(undefined);
+        }
+    }, [data, selected]);
 
     const fetchData = async (page: number) => {
         setError(undefined);
@@ -165,7 +174,7 @@ const ApplicationImagesPage = () => {
                     <div className="overflow-x-auto">
                         <ApplicationImageInfoTable
                             fields={Object.values(ApplicationImageInfoField)}
-                            applicationImageInfos={data?.content}
+                            rows={data?.content}
                             selected={selected}
                             setSelected={setSelected}
                         />

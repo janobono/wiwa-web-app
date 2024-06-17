@@ -2,10 +2,12 @@ export interface ResourceCommon {
     action: {
         add: string,
         cancel: string,
+        categories: string,
         copy: string,
         delete: string,
         edit: string,
         extendedSearch: string,
+        image: string,
         items: string,
         ok: string,
         moveUp: string,
@@ -31,6 +33,22 @@ export interface ResourceCommon {
             signOut: string
         }
     },
+    boardCriteria: {
+        searchPlaceholder: string,
+        codePlaceholder: string,
+        namePlaceholder: string,
+        boardCodePlaceholder: string,
+        structureCodePlaceholder: string,
+        orientationPlaceholder: string,
+        lengthFromPlaceholder: string,
+        lengthToPlaceholder: string,
+        widthFromPlaceholder: string,
+        widthToPlaceholder: string,
+        thicknessFromPlaceholder: string,
+        thicknessToPlaceholder: string,
+        priceFromPlaceholder: string,
+        priceToPlaceholder: string
+    },
     boardTable: {
         id: string,
         code: string,
@@ -55,6 +73,11 @@ export interface ResourceCommon {
         label: string,
         placeholder: string,
         required: string
+    },
+    categoryTable: {
+        id: string,
+        code: string,
+        name: string
     },
     codeListTable: {
         id: string,
@@ -139,30 +162,6 @@ export interface ResourceCommon {
         action: string,
         text: string
     },
-    productAttributeKey: {
-        boardCode: string,
-        structureCode: string,
-        orientation: string
-    },
-    productStockStatus: {
-        onStock: string,
-        outOfStock: string,
-        toOrder: string,
-        onInquire: string
-    },
-    productQuantityKey: {
-        sale: string,
-        weight: string,
-        netWeight: string,
-        length: string,
-        width: string,
-        thickness: string
-    },
-    searchUserCriteria: {
-        searchPlaceholder: string,
-        usernamePlaceholder: string,
-        emailPlaceholder: string
-    },
     selectCodeListDialog: {
         title: string,
         searchTitle: string,
@@ -183,6 +182,11 @@ export interface ResourceCommon {
     unitTable: {
         id: string,
         value: string
+    },
+    userCriteria: {
+        searchPlaceholder: string,
+        usernamePlaceholder: string,
+        emailPlaceholder: string
     },
     userTable: {
         id: string,

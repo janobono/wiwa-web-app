@@ -5,9 +5,9 @@ import { User } from '../../api/model';
 import { UserField } from '../../api/model/user';
 import { useResourceState } from '../../state/resource';
 
-const UserTable = ({fields, users, selected, setSelected}: {
+const UserTable = ({fields, rows, selected, setSelected}: {
     fields: UserField[],
-    users?: User[],
+    rows?: User[],
     selected?: User,
     setSelected: (user?: User) => void
 }) => {
@@ -15,11 +15,11 @@ const UserTable = ({fields, users, selected, setSelected}: {
         <table className="table table-zebra">
             <TableHead fields={fields}/>
             <tbody>
-            {users?.map(user =>
+            {rows?.map(row =>
                 <TableRow
-                    key={user.id}
+                    key={row.id}
                     fields={fields}
-                    user={user}
+                    row={row}
                     selected={selected}
                     setSelected={setSelected}
                 />)
@@ -76,54 +76,54 @@ const TableHead = ({fields}: { fields: UserField[] }) => {
     )
 }
 
-const TableRow = ({fields, user, selected, setSelected}: {
+const TableRow = ({fields, row, selected, setSelected}: {
     fields: UserField[],
-    user: User,
+    row: User,
     selected?: User,
     setSelected: (user?: User) => void
 }) => {
     return (
         <tr
             className="hover"
-            onClick={() => setSelected(user)}
+            onClick={() => setSelected(row)}
         >
             {fields?.find(item => item === UserField.id) &&
-                <td>{user.id}</td>
+                <td>{row.id}</td>
             }
             {fields?.find(item => item === UserField.username) &&
-                <td>{user.username}</td>
+                <td>{row.username}</td>
             }
             {fields?.find(item => item === UserField.email) &&
-                <td>{user.email}</td>
+                <td>{row.email}</td>
             }
             {fields?.find(item => item === UserField.titleBefore) &&
-                <td>{user.titleBefore}</td>
+                <td>{row.titleBefore}</td>
             }
             {fields?.find(item => item === UserField.firstName) &&
-                <td>{user.firstName}</td>
+                <td>{row.firstName}</td>
             }
             {fields?.find(item => item === UserField.midName) &&
-                <td>{user.midName}</td>
+                <td>{row.midName}</td>
             }
             {fields?.find(item => item === UserField.lastName) &&
-                <td>{user.lastName}</td>
+                <td>{row.lastName}</td>
             }
             {fields?.find(item => item === UserField.titleAfter) &&
-                <td>{user.titleAfter}</td>
+                <td>{row.titleAfter}</td>
             }
             {fields?.find(item => item === UserField.authorities) &&
-                <td><WiwaUserAuthorities authorities={user.authorities}/></td>
+                <td><WiwaUserAuthorities authorities={row.authorities}/></td>
             }
             {fields?.find(item => item === UserField.confirmed) &&
-                <td><WiwaValue value={`${user.confirmed}`}/></td>
+                <td><WiwaValue value={`${row.confirmed}`}/></td>
             }
             {fields?.find(item => item === UserField.enabled) &&
-                <td><WiwaValue value={`${user.enabled}`}/></td>
+                <td><WiwaValue value={`${row.enabled}`}/></td>
             }
             <td>
-                <WiwaFormCheckBox value={user.id === selected?.id} setValue={(value) => {
+                <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {
-                        setSelected(user);
+                        setSelected(row);
                     }
                 }}/>
             </td>

@@ -2,9 +2,9 @@ import WiwaFormCheckBox from '../../ui/wiwa-form-check-box';
 import { Unit, UnitField } from '../../../api/model/application';
 import { useResourceState } from '../../../state/resource';
 
-const UnitTable = ({fields, units, selected, setSelected}: {
+const UnitTable = ({fields, rows, selected, setSelected}: {
     fields: UnitField[],
-    units?: Unit[],
+    rows?: Unit[],
     selected?: Unit,
     setSelected: (unit?: Unit) => void
 }) => {
@@ -12,11 +12,11 @@ const UnitTable = ({fields, units, selected, setSelected}: {
         <table className="table table-zebra">
             <TableHead fields={fields}/>
             <tbody>
-            {units?.map(unit =>
+            {rows?.map(row =>
                 <TableRow
-                    key={unit.id}
+                    key={row.id}
                     fields={fields}
-                    unit={unit}
+                    row={row}
                     selected={selected}
                     setSelected={setSelected}
                 />)
@@ -46,27 +46,27 @@ const TableHead = ({fields}: { fields: UnitField[] }) => {
     )
 }
 
-const TableRow = ({fields, unit, selected, setSelected}: {
+const TableRow = ({fields, row, selected, setSelected}: {
     fields: UnitField[],
-    unit: Unit,
+    row: Unit,
     selected?: Unit,
     setSelected: (unit?: Unit) => void
 }) => {
     return (
         <tr
             className="hover"
-            onClick={() => setSelected(unit)}
+            onClick={() => setSelected(row)}
         >
             {fields?.find(item => item === UnitField.id) &&
-                <td>{unit.id}</td>
+                <td>{row.id}</td>
             }
             {fields?.find(item => item === UnitField.value) &&
-                <td>{unit.value}</td>
+                <td>{row.value}</td>
             }
             <td>
-                <WiwaFormCheckBox value={unit.id === selected?.id} setValue={(value) => {
+                <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {
-                        setSelected(unit);
+                        setSelected(row);
                     }
                 }}/>
             </td>

@@ -15,6 +15,7 @@ import {
     getWorkingHours
 } from '../../api/controller/ui';
 import MdEditor from '../../component/app/admin/md-editor';
+import WiwaSelect from '../../component/ui/wiwa-select';
 import { useResourceState } from '../../state/resource';
 
 const TEXT_INFO_DIALOG_ID = 'admin-text-info-dialog-';
@@ -26,10 +27,9 @@ const TextInfoPage = () => {
 
     return (
         <div className="flex flex-col p-5 gap-5 w-full">
-            <select
+            <WiwaSelect
                 defaultValue="0"
-                className="select select-bordered w-full"
-                onChange={event => setIndex(Number(event.target.value))}
+                onChange={event => setIndex(Number(event.currentTarget.value))}
             >
                 <option disabled value="0">{resourceState?.admin?.textInfo.option.select}</option>
                 <option value="1">{resourceState?.admin?.textInfo.option.businessConditions}</option>
@@ -37,7 +37,7 @@ const TextInfoPage = () => {
                 <option value="3">{resourceState?.admin?.textInfo.option.gdprInfo}</option>
                 <option value="4">{resourceState?.admin?.textInfo.option.orderInfo}</option>
                 <option value="5">{resourceState?.admin?.textInfo.option.workingHours}</option>
-            </select>
+            </WiwaSelect>
 
             <div>
                 {index == 1 &&

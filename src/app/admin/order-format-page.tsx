@@ -1,5 +1,3 @@
-import { useAuthState } from '../../state/auth';
-import { useResourceState } from '../../state/resource';
 import { useEffect, useState } from 'react';
 
 import { setOrderProperties } from '../../api/controller/config';
@@ -18,6 +16,9 @@ import {
 import EntryListEditor from '../../component/app/admin/entry-list-editor';
 import CsvReplacementsEditor from '../../component/app/admin/csv-replacements-editor';
 import CsvSeparatorEditor from '../../component/app/admin/csv-separator-editor';
+import WiwaSelect from '../../component/ui/wiwa-select';
+import { useAuthState } from '../../state/auth';
+import { useResourceState } from '../../state/resource';
 
 const ORDER_FORMAT_DIALOG_ID = 'order-format-dialog-';
 
@@ -54,10 +55,9 @@ const OrderFormatPage = () => {
 
     return (
         <div className="flex flex-col p-5 gap-5 w-full">
-            <select
+            <WiwaSelect
                 defaultValue="0"
-                className="select select-bordered w-full"
-                onChange={event => setIndex(Number(event.target.value))}
+                onChange={event => setIndex(Number(event.currentTarget.value))}
             >
                 <option disabled value="0">{resourceState?.admin?.orderFormat.option.select}</option>
                 <option value="1">{resourceState?.admin?.orderFormat.option.dimensions}</option>
@@ -70,7 +70,7 @@ const OrderFormatPage = () => {
                 <option value="8">{resourceState?.admin?.orderFormat.option.csvSeparator}</option>
                 <option value="9">{resourceState?.admin?.orderFormat.option.csvReplacements}</option>
                 <option value="10">{resourceState?.admin?.orderFormat.option.csvColumns}</option>
-            </select>
+            </WiwaSelect>
 
             <div>
                 {index == 1 &&

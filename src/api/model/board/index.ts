@@ -1,20 +1,4 @@
-export interface BoardCategoryItemChange {
-    categoryId: number,
-    itemId: number
-}
-
-export interface BoardCategoryItem {
-    id: string,
-    code: string,
-    name: string,
-    category: BoardCategory
-}
-
-export interface BoardCategory {
-    id: number,
-    code: string,
-    name: string
-}
+import { CategoryItem } from '../';
 
 export interface BoardChange {
     code: string,
@@ -45,7 +29,7 @@ export interface Board {
     thickness: number,
     price: number,
     vatPrice: number,
-    categoryItems: BoardCategoryItem[]
+    categoryItems: CategoryItem[]
 }
 
 export interface BoardSearchCriteria {

@@ -28,8 +28,13 @@ import ManagerPage from './manager/manager-page';
 import ManagerCodeListsBasePage from './manager/code-lists-base-page';
 import ManagerCodeListsPage from './manager/code-lists/code-lists-page';
 import ManagerCodeListItemsPage from './manager/code-lists/code-list-items-page';
-import ManagerBoardsPage from './manager/boards-page';
-import ManagerEdgesPage from './manager/edges-page';
+import ManagerCategoriesPage from './manager/categories-page';
+import ManagerBoardsBasePage from './manager/boards-base-page';
+import ManagerBoardsPage from './manager/boards/boards-page';
+import ManagerBoardCategoriesPage from './manager/boards/board-categories-page';
+import ManagerBoardImagePage from './manager/boards/board-image-page';
+import ManagerEdgesBasePage from './manager/edges-base-page';
+import ManagerEdgesPage from './manager/edges/edges-page';
 import ManagerOrderInputsPage from './manager/order-inputs-page';
 import ManagerOrdersBasePage from './manager/orders-base-page';
 import ManagerOrdersPage from './manager/orders/orders-page';
@@ -77,8 +82,17 @@ const AppPage = () => {
                     <Route path="index" element={<ManagerCodeListsPage/>}/>
                     <Route path=":codeListId/items" element={<ManagerCodeListItemsPage/>}/>
                 </Route>
-                <Route path="boards" element={<ManagerBoardsPage/>}/>
-                <Route path="edges" element={<ManagerEdgesPage/>}/>
+                <Route path="categories" element={<ManagerCategoriesPage/>}/>
+                <Route path="boards" element={<ManagerBoardsBasePage/>}>
+                    <Route index element={<Navigate to="index" replace/>}/>
+                    <Route path="index" element={<ManagerBoardsPage/>}/>
+                    <Route path=":boardId/categories" element={<ManagerBoardCategoriesPage/>}/>
+                    <Route path=":boardId/image" element={<ManagerBoardImagePage/>}/>
+                </Route>
+                <Route path="edges" element={<ManagerEdgesBasePage/>}>
+                    <Route index element={<Navigate to="index" replace/>}/>
+                    <Route path="index" element={<ManagerEdgesPage/>}/>
+                </Route>
                 <Route path="order-inputs" element={<ManagerOrderInputsPage/>}/>
                 <Route path="orders" element={<ManagerOrdersBasePage/>}>
                     <Route index element={<Navigate to="index" replace/>}/>

@@ -1,25 +1,76 @@
 {
   "title": "Manažér",
   "codeListsTab": "Číselníky",
+  "categoriesTab": "Kategórie",
   "boardsTab": "Dosky",
   "edgesTab": "Hrany",
   "orderInputsTab": "Vstupy objednávok",
   "ordersTab": "Objednávky",
+  "boards": {
+    "fetchDataError": "Chyba načítania dosiek",
+    "deleteBoard": {
+      "title": "Zmazať dosku",
+      "message": "Naozaj si želáte zmazať dosku?",
+      "error": "Chyba zmazania dosky"
+    },
+    "boardDialog": {
+      "title": "Board",
+      "codeLabel": "Kód",
+      "codePlaceholder": "Zadajte kód",
+      "codeRequired": "Vyžaduje sa kód",
+      "nameLabel": "Názov",
+      "namePlaceholder": "Zadajte názov",
+      "nameRequired": "Vyžaduje sa názov",
+      "descriptionLabel": "Popis",
+      "descriptionPlaceholder": "Zadajte popis",
+      "boardCodeLabel": "Kód dosky",
+      "boardCodePlaceholder": "Zadajte kód dosky",
+      "boardCodeRequired": "Vyžaduje sa kód dosky",
+      "structureCodeLabel": "Kód štruktúry",
+      "structureCodePlaceholder": "Zadajte kód štruktúry",
+      "structureCodeRequired": "Vyžaduje sa kód štruktúry",
+      "orientationLabel": "Orientácia",
+      "weightLabel": "Hmotnosť",
+      "weightPlaceholder": "Zadajte hmotnosť",
+      "weightRequired": "Vyžaduje sa hmotnosť",
+      "lengthLabel": "Dĺžka",
+      "lengthPlaceholder": "Zadajte dĺžku",
+      "lengthRequired": "Vyžaduje sa dĺžka",
+      "widthLabel": "Šírka",
+      "widthPlaceholder": "Zadajte šírku",
+      "widthRequired": "Vyžaduje sa šírka",
+      "thicknessLabel": "Hrúbka",
+      "thicknessPlaceholder": "Zadajte hrúbku",
+      "thicknessRequired": "Vyžaduje sa hrúbka",
+      "priceLabel": "Cena",
+      "pricePlaceholder": "Zadajte cenu",
+      "priceRequired": "Vyžaduje sa cena"
+    }
+  },
+  "categories": {
+    "option": {
+      "select": "Kategórie",
+      "board": "Dosky",
+      "edge": "Hrany",
+      "material": "Materiál dosky"
+    },
+    "setCategoryError": "Zmena kategórie neúspešná",
+    "setCategoriesError": "Zmena kategórií neúspešná",
+    "deleteCategoryQuestionTitle": "Zmazať kategóriu",
+    "deleteCategoryQuestionMessage": "Naozaj si želáte zmazať kategóriu?"
+  },
   "codeLists": {
     "id": "Id",
     "code": "Kód",
     "name": "Názov",
     "fetchDataError": "Chyba načítania číselníkov",
     "searchCodeList": {
-      "title": "Vyhľadať číselník",
       "placeholder": "Názov alebo kód"
     },
     "addCodeList": {
-      "title": "Pridať číselník",
       "error": "Chyba pridania číselníka"
     },
     "editCodeList": {
-      "title": "Upraviť číselník",
       "error": "Chyba úpravy číselníka"
     },
     "deleteCodeList": {
@@ -43,19 +94,15 @@
       "value": "Hodnota",
       "fetchDataError": "Chyba načítania položiek číselníkov",
       "addCodeListItem": {
-        "title": "Pridať položku číselníka",
         "error": "Chyba pridania položky číselníka"
       },
       "editCodeListItem": {
-        "title": "Upraviť položku číselníka",
         "error": "Chyba úpravy položky číselníka"
       },
       "moveUpCodeListItem": {
-        "title": "Presunúť položku číselníka nahor",
         "error": "Chyba presunu položky číselníka nahor"
       },
       "moveDownCodeListItem": {
-        "title": "Presunúť položku číselníka nadol",
         "error": "Chyba presunu položky číselníka nadol"
       },
       "deleteCodeListItem": {

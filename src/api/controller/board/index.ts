@@ -8,8 +8,8 @@ import {
     setPageableQueryParams,
     setQueryParam
 } from '../';
-import { Page, Pageable } from '../../model';
-import { Board, BoardCategoryItemChange, BoardChange, BoardField, BoardSearchCriteria } from '../../model/board';
+import { CategoryItemChange, Page, Pageable } from '../../model';
+import { Board, BoardChange, BoardField, BoardSearchCriteria } from '../../model/board';
 
 const PATH = CONTEXT_PATH + 'boards';
 
@@ -90,6 +90,6 @@ export const deleteBoardImage = (id: number, accessToken?: string) => {
     return deleteData<void>(PATH + '/' + id + '/images', accessToken);
 }
 
-export const setBoardCategoryItems = (id: number, boardCategoryItems: BoardCategoryItemChange[], accessToken?: string) => {
-    return postData<Board>(PATH + '/' + id + '/category-items', boardCategoryItems, accessToken);
+export const setBoardCategoryItems = (id: number, categoryItems: CategoryItemChange[], accessToken?: string) => {
+    return postData<Board>(PATH + '/' + id + '/category-items', categoryItems, accessToken);
 }

@@ -2,9 +2,9 @@ import WiwaFormCheckBox from '../../ui/wiwa-form-check-box';
 import { ApplicationImageInfo, ApplicationImageInfoField } from '../../../api/model/application';
 import { useResourceState } from '../../../state/resource';
 
-const ApplicationImageInfoTable = ({fields, applicationImageInfos, selected, setSelected}: {
+const ApplicationImageInfoTable = ({fields, rows, selected, setSelected}: {
     fields: ApplicationImageInfoField[],
-    applicationImageInfos?: ApplicationImageInfo[],
+    rows?: ApplicationImageInfo[],
     selected?: ApplicationImageInfo,
     setSelected: (applicationImageInfo?: ApplicationImageInfo) => void
 }) => {
@@ -12,11 +12,11 @@ const ApplicationImageInfoTable = ({fields, applicationImageInfos, selected, set
         <table className="table table-zebra">
             <TableHead fields={fields}/>
             <tbody>
-            {applicationImageInfos?.map(applicationImageInfo =>
+            {rows?.map(row =>
                 <TableRow
-                    key={applicationImageInfo.fileName}
+                    key={row.fileName}
                     fields={fields}
-                    applicationImageInfo={applicationImageInfo}
+                    row={row}
                     selected={selected}
                     setSelected={setSelected}
                 />)
@@ -46,33 +46,33 @@ const TableHead = ({fields}: { fields: ApplicationImageInfoField[] }) => {
     )
 }
 
-const TableRow = ({fields, applicationImageInfo, selected, setSelected}: {
+const TableRow = ({fields, row, selected, setSelected}: {
     fields: ApplicationImageInfoField[],
-    applicationImageInfo: ApplicationImageInfo,
+    row: ApplicationImageInfo,
     selected?: ApplicationImageInfo,
     setSelected: (applicationImageInfo?: ApplicationImageInfo) => void
 }) => {
     return (
         <tr
             className="hover"
-            onClick={() => setSelected(applicationImageInfo)}
+            onClick={() => setSelected(row)}
         >
             {fields?.find(item => item === ApplicationImageInfoField.fileName) &&
-                <td>{applicationImageInfo.fileName}</td>
+                <td>{row.fileName}</td>
             }
             {fields?.find(item => item === ApplicationImageInfoField.thumbnail) &&
                 <td>
                     <img
                         className="flex-none w-48 h-48 object-scale-down object-center"
-                        src={applicationImageInfo.thumbnail}
-                        alt={applicationImageInfo.fileName}
+                        src={row.thumbnail}
+                        alt={row.fileName}
                     />
                 </td>
             }
             <td>
-                <WiwaFormCheckBox value={applicationImageInfo.fileName === selected?.fileName} setValue={(value) => {
+                <WiwaFormCheckBox value={row.fileName === selected?.fileName} setValue={(value) => {
                     if (value) {
-                        setSelected(applicationImageInfo);
+                        setSelected(row);
                     }
                 }}/>
             </td>

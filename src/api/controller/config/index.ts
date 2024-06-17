@@ -1,5 +1,5 @@
 import { CONTEXT_PATH, deleteData, getData, postData, postFile, setPageableQueryParams } from '../';
-import { Page, Pageable, SingleValueBody } from '../../model';
+import { Category, Page, Pageable, SingleValueBody } from '../../model';
 import {
     ApplicationImageInfo,
     ApplicationImageInfoField,
@@ -17,7 +17,6 @@ import {
     SignUpMail,
     Unit
 } from '../../model/application';
-import { BoardCategory } from '../../model/board';
 
 const PATH = CONTEXT_PATH + 'config';
 
@@ -168,19 +167,19 @@ export const setOrderStatusMail = (orderStatusMail: OrderStatusMail, accessToken
 }
 
 export const getBoardMaterialCategory = (accessToken?: string) => {
-    return getData<BoardCategory>(PATH + '/board-material-category', undefined, accessToken);
+    return getData<Category>(PATH + '/board-material-category', undefined, accessToken);
 }
 
 export const setBoardMaterialCategory = (categoryId: number, accessToken?: string) => {
-    return postData<BoardCategory>(PATH + '/board-material-category', {value: categoryId}, accessToken);
+    return postData<Category>(PATH + '/board-material-category', {value: categoryId}, accessToken);
 }
 
 export const setBoardCategories = (categoryIds: number[], accessToken?: string) => {
-    return postData<BoardCategory[]>(PATH + '/board-categories', categoryIds, accessToken);
+    return postData<Category[]>(PATH + '/board-categories', categoryIds, accessToken);
 }
 
 export const setEdgeCategories = (categoryIds: number[], accessToken?: string) => {
-    return postData<BoardCategory[]>(PATH + '/edge-categories', categoryIds, accessToken);
+    return postData<Category[]>(PATH + '/edge-categories', categoryIds, accessToken);
 }
 
 export const setOrderProperties = (orderProperties: OrderProperties, accessToken?: string) => {

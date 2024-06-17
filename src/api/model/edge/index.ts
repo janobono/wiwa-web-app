@@ -1,20 +1,4 @@
-export interface EdgeCategoryItemChange {
-    categoryId: number,
-    itemId: number
-}
-
-export interface EdgeCategoryItem {
-    id: string,
-    code: string,
-    name: string,
-    category: EdgeCategory
-}
-
-export interface EdgeCategory {
-    id: number,
-    code: string,
-    name: string
-}
+import { CategoryItem } from '../';
 
 export interface EdgeChange {
     code: string,
@@ -37,7 +21,7 @@ export interface Edge {
     thickness: number,
     price: number,
     vatPrice: number,
-    categoryItems: EdgeCategoryItem[]
+    categoryItems: CategoryItem[]
 }
 
 export interface EdgeSearchCriteria {

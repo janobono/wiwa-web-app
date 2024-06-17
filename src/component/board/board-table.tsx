@@ -1,16 +1,17 @@
-import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
-import { Board, BoardField } from '../../api/model/board';
-import { useResourceState } from '../../state/resource';
-import { UnitId } from '../../api/model/application';
-import { getUnitIdName } from '../../model';
 import { useEffect, useState } from 'react';
-import { getApplicationProperties, getBoardImagePath } from '../../api/controller/ui';
-import WiwaValue from '../ui/wiwa-value.tsx';
-import WiwaValueNumber from '../ui/wiwa-value-number.tsx';
 
-const BoardTable = ({fields, boards, selected, setSelected}: {
+import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
+import WiwaValue from '../ui/wiwa-value';
+import WiwaValueNumber from '../ui/wiwa-value-number';
+import { getApplicationProperties, getBoardImagePath } from '../../api/controller/ui';
+import { UnitId } from '../../api/model/application';
+import { Board, BoardField } from '../../api/model/board';
+import { getUnitIdName } from '../../model';
+import { useResourceState } from '../../state/resource';
+
+const BoardTable = ({fields, rows, selected, setSelected}: {
     fields: BoardField[],
-    boards?: Board[],
+    rows?: Board[],
     selected?: Board,
     setSelected: (board?: Board) => void
 }) => {
@@ -18,11 +19,11 @@ const BoardTable = ({fields, boards, selected, setSelected}: {
         <table className="table table-zebra">
             <TableHead fields={fields}/>
             <tbody>
-            {boards?.map(board =>
+            {rows?.map(row =>
                 <TableRow
-                    key={board.id}
+                    key={row.id}
                     fields={fields}
-                    board={board}
+                    row={row}
                     selected={selected}
                     setSelected={setSelected}
                 />)
@@ -111,65 +112,65 @@ const TableHead = ({fields}: { fields: BoardField[] }) => {
     )
 }
 
-const TableRow = ({fields, board, selected, setSelected}: {
+const TableRow = ({fields, row, selected, setSelected}: {
     fields: BoardField[],
-    board: Board,
+    row: Board,
     selected?: Board,
     setSelected: (board?: Board) => void
 }) => {
     return (
         <tr
             className="hover"
-            onClick={() => setSelected(board)}
+            onClick={() => setSelected(row)}
         >
             {fields?.find(item => item === BoardField.id) &&
-                <td>{board.id}</td>
+                <td>{row.id}</td>
             }
             {fields?.find(item => item === BoardField.code) &&
-                <td>{board.code}</td>
+                <td>{row.code}</td>
             }
             {fields?.find(item => item === BoardField.name) &&
-                <td>{board.name}</td>
+                <td>{row.name}</td>
             }
             {fields?.find(item => item === BoardField.description) &&
-                <td>{board.description}</td>
+                <td>{row.description}</td>
             }
             {fields?.find(item => item === BoardField.boardCode) &&
-                <td>{board.boardCode}</td>
+                <td>{row.boardCode}</td>
             }
             {fields?.find(item => item === BoardField.structureCode) &&
-                <td>{board.structureCode}</td>
+                <td>{row.structureCode}</td>
             }
             {fields?.find(item => item === BoardField.orientation) &&
-                <td><WiwaValue value={`${board.orientation}`}/></td>
+                <td><WiwaValue value={`${row.orientation}`}/></td>
             }
             {fields?.find(item => item === BoardField.sale) &&
-                <td><WiwaValueNumber value={board.sale}/></td>
+                <td><WiwaValueNumber value={row.sale}/></td>
             }
             {fields?.find(item => item === BoardField.weight) &&
-                <td><WiwaValueNumber value={board.weight}/></td>
+                <td><WiwaValueNumber value={row.weight}/></td>
             }
             {fields?.find(item => item === BoardField.length) &&
-                <td><WiwaValueNumber value={board.length}/></td>
+                <td><WiwaValueNumber value={row.length}/></td>
             }
             {fields?.find(item => item === BoardField.width) &&
-                <td><WiwaValueNumber value={board.width}/></td>
+                <td><WiwaValueNumber value={row.width}/></td>
             }
             {fields?.find(item => item === BoardField.thickness) &&
-                <td><WiwaValueNumber value={board.thickness}/></td>
+                <td><WiwaValueNumber value={row.thickness}/></td>
             }
             {fields?.find(item => item === BoardField.price) &&
-                <td><WiwaValueNumber value={board.price}/></td>
+                <td><WiwaValueNumber value={row.price}/></td>
             }
             {fields?.find(item => item === BoardField.vatPrice) &&
-                <td><WiwaValueNumber value={board.vatPrice}/></td>
+                <td><WiwaValueNumber value={row.vatPrice}/></td>
             }
             {fields?.find(item => item === BoardField.codeListItems) &&
                 <td>
-                    {board.categoryItems?.map(categoryItem =>
+                    {row.categoryItems?.map(categoryItem =>
                         <WiwaValue
                             key={categoryItem.id}
-                            value={`${categoryItem.code} ${categoryItem.name}`}
+                            value={`${categoryItem.code}:${categoryItem.name}`}
                         />
                     )}
                 </td>
@@ -178,15 +179,15 @@ const TableRow = ({fields, board, selected, setSelected}: {
                 <td>
                     <img
                         className="flex-none w-24 h-24 object-scale-down object-center"
-                        src={getBoardImagePath(board.id)}
+                        src={getBoardImagePath(row.id)}
                         alt="Logo"
                     />
                 </td>
             }
             <td>
-                <WiwaFormCheckBox value={board.id === selected?.id} setValue={(value) => {
+                <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {
-                        setSelected(board);
+                        setSelected(row);
                     }
                 }}/>
             </td>
