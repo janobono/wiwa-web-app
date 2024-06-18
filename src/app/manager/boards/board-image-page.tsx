@@ -1,24 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import { Edit, Trash } from 'react-feather';
-import WiwaButton from '../../../component/ui/wiwa-button.tsx';
+
+import { useBoardState } from '../boards-base-page';
+import { deleteBoardImage, setBoardImage } from '../../../api/controller/board';
+import { getBoardImagePath } from '../../../api/controller/ui';
+import ImageDialog from '../../../component/dialog/image-dialog';
+import WiwaButton from '../../../component/ui/wiwa-button';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
 import { useResourceState } from '../../../state/resource';
-import { deleteBoardImage, setBoardImage } from '../../../api/controller/board';
-import { getBoardImagePath } from '../../../api/controller/ui';
-import ImageDialog from '../../../component/dialog/image-dialog.tsx';
-import { createPortal } from 'react-dom';
 
 const BOARD_IMAGE_DIALOG_ID = 'board-image-dialog-001';
 
 const BoardImagePage = () => {
-    const {boardId} = useParams();
-
     const authState = useAuthState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
+
+    const boardState = useBoardState();
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<string>();
@@ -27,12 +28,12 @@ const BoardImagePage = () => {
     const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
-        if (!busy && boardId !== undefined) {
-            setData(getBoardImagePath(Number(boardId)));
+        if (!busy && boardState?.selected !== undefined) {
+            setData(getBoardImagePath(boardState.selected.id));
         } else {
             setData(undefined);
         }
-    }, [boardId, busy]);
+    }, [boardState?.selected, busy]);
 
     const cancelHandler = async () => {
         setShowDialog(false);
@@ -42,8 +43,8 @@ const BoardImagePage = () => {
         setError(undefined);
         setBusy(true);
         try {
-            if (boardId) {
-                const response = await setBoardImage(Number(boardId), file, authState?.authToken?.accessToken);
+            if (boardState?.selected) {
+                const response = await setBoardImage(boardState.selected.id, file, authState?.authToken?.accessToken);
                 if (response?.error) {
                     setError(resourceState?.manager?.boards.boardImage.editError);
                 }
@@ -58,8 +59,8 @@ const BoardImagePage = () => {
         setError(undefined);
         setBusy(true);
         try {
-            if (boardId) {
-                const response = await deleteBoardImage(Number(boardId), authState?.authToken?.accessToken);
+            if (boardState?.selected) {
+                const response = await deleteBoardImage(boardState.selected.id, authState?.authToken?.accessToken);
                 if (response?.error) {
                     setError(resourceState?.manager?.boards.boardImage.deleteError);
                 }
@@ -112,7 +113,7 @@ const BoardImagePage = () => {
                         <img
                             className="flex-none w-48 h-48 object-scale-down object-center"
                             src={data}
-                            alt={boardId}
+                            alt={boardState?.selected?.name}
                         />
                     </div>
                 </div>

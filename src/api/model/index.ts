@@ -15,10 +15,17 @@ export interface CategoryItemChange {
 }
 
 export interface CategoryItem {
-    id: string,
+    id: number,
     code: string,
     name: string,
     category: Category
+}
+
+export enum CategoryItemField {
+    id = 'id',
+    code = 'code',
+    name = 'name',
+    category = 'category'
 }
 
 export interface Category {

@@ -79,6 +79,12 @@
     "code": "Kód",
     "name": "Názov"
   },
+  "categoryItemTable": {
+    "id": "Id",
+    "code": "Kód",
+    "name": "Názov",
+    "category": "Kategória"
+  },
   "codeListTable": {
     "id": "Id",
     "code": "Kód",

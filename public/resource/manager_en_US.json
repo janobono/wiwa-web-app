@@ -52,6 +52,11 @@
       "pricePlaceholder": "Enter price",
       "priceRequired": "Price is required"
     },
+    "boardCategories": {
+      "error": "Submit board category items failed",
+      "deleteTitle": "Delete board category item",
+      "deleteMessage": "Do you really want to delete board category item?"
+    },
     "boardImage": {
       "editTitle": "Board image",
       "editFileLabel": "File",

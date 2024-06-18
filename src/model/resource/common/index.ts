@@ -79,6 +79,12 @@ export interface ResourceCommon {
         code: string,
         name: string
     },
+    categoryItemTable: {
+        id: string,
+        code: string,
+        name: string,
+        category: string
+    },
     codeListTable: {
         id: string,
         code: string,

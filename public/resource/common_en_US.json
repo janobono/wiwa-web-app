@@ -79,6 +79,12 @@
     "code": "Code",
     "name": "Name"
   },
+  "categoryItemTable": {
+    "id": "Id",
+    "code": "Code",
+    "name": "Name",
+    "category": "Category"
+  },
   "codeListTable": {
     "id": "Id",
     "code": "Code",

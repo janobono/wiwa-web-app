@@ -86,8 +86,8 @@ const AppPage = () => {
                 <Route path="boards" element={<ManagerBoardsBasePage/>}>
                     <Route index element={<Navigate to="index" replace/>}/>
                     <Route path="index" element={<ManagerBoardsPage/>}/>
-                    <Route path=":boardId/categories" element={<ManagerBoardCategoriesPage/>}/>
-                    <Route path=":boardId/image" element={<ManagerBoardImagePage/>}/>
+                    <Route path="categories" element={<ManagerBoardCategoriesPage/>}/>
+                    <Route path="image" element={<ManagerBoardImagePage/>}/>
                 </Route>
                 <Route path="edges" element={<ManagerEdgesBasePage/>}>
                     <Route index element={<Navigate to="index" replace/>}/>

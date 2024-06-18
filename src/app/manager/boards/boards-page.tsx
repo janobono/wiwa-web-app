@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import { Edit, Image, List, Plus, Trash } from 'react-feather';
 
+import { useBoardState } from '../boards-base-page';
 import { addBoard, deleteBoard, getBoards, setBoard } from '../../../api/controller/board';
 import { getApplicationProperties } from '../../../api/controller/ui';
-import { Page } from '../../../api/model';
 import { UnitId } from '../../../api/model/application';
 import { Board, BoardChange, BoardField, BoardSearchCriteria } from '../../../api/model/board';
 import BoardTable from '../../../component/board/board-table';
@@ -31,9 +31,8 @@ const BoardsPage = () => {
     const dialogState = useDialogState();
     const resourceState = useResourceState();
 
-    const [busy, setBusy] = useState(false);
-    const [data, setData] = useState<Page<Board>>();
-    const [selected, setSelected] = useState<Board>();
+    const boardState = useBoardState();
+
     const [error, setError] = useState<string>();
 
     const [criteria, setCriteria] = useState<BoardSearchCriteria>();
@@ -49,55 +48,55 @@ const BoardsPage = () => {
     }, [criteria]);
 
     useEffect(() => {
-        setPrevious(data !== undefined && !data.first);
-        setNext(data !== undefined && !data.last);
+        setPrevious(boardState?.data !== undefined && !boardState.data.first);
+        setNext(boardState?.data !== undefined && !boardState.data.last);
 
-        if (selected && data) {
-            const index = data.content.findIndex(item => item.id === selected.id);
+        if (boardState?.selected && boardState?.data) {
+            const index = boardState.data.content.findIndex(item => item.id === boardState.selected?.id);
             if (index !== -1) {
-                setSelected(data.content[index]);
+                boardState.setSelected(boardState.data.content[index]);
             }
         } else {
-            setSelected(undefined);
+            boardState?.setSelected(undefined);
         }
-    }, [data, selected]);
+    }, [boardState?.data, boardState?.selected]);
 
     const fetchData = async () => {
         setError(undefined);
-        setBusy(true);
+        boardState?.setBusy(true);
         try {
             const response = await getBoards(criteria, {page, size: 10}, authState?.authToken?.accessToken);
-            setData(response?.data);
+            boardState?.setData(response?.data);
             if (response?.error) {
                 setError(resourceState?.manager?.boards.fetchDataError);
             }
         } finally {
-            setBusy(false);
+            boardState?.setBusy(false);
         }
     }
 
     const okHandler = async (boardChange: BoardChange) => {
         setError(undefined);
-        setBusy(true);
+        boardState?.setBusy(true);
         try {
             let response;
             if (editMode) {
-                if (selected) {
-                    response = await setBoard(selected.id, boardChange, authState?.authToken?.accessToken);
+                if (boardState?.selected) {
+                    response = await setBoard(boardState?.selected.id, boardChange, authState?.authToken?.accessToken);
                 }
             } else {
                 response = await addBoard(boardChange, authState?.authToken?.accessToken);
             }
 
-            if (data && response?.data) {
-                const newData = {...data};
+            if (boardState?.data && response?.data) {
+                const newData = {...boardState?.data};
                 const index = newData.content.findIndex(item => item.id === response.data.id);
                 if (index !== -1) {
                     newData.content[index] = response.data;
                 } else {
                     newData.content.push(response.data);
                 }
-                setData(newData);
+                boardState?.setData(newData);
             }
 
             if (response?.error) {
@@ -108,32 +107,32 @@ const BoardsPage = () => {
                 }
             }
         } finally {
-            setBusy(false);
+            boardState?.setBusy(false);
         }
     }
 
     const deleteHandler = async (id: number) => {
         setError(undefined);
-        setBusy(true);
+        boardState?.setBusy(true);
         try {
             const response = await deleteBoard(id, authState?.authToken?.accessToken);
 
-            setSelected(undefined);
+            boardState?.setSelected(undefined);
 
-            if (data) {
-                const newData = {...data};
+            if (boardState?.data) {
+                const newData = {...boardState?.data};
                 const index = newData.content.findIndex(item => item.id === id);
                 if (index !== -1) {
                     newData.content.splice(index, 1);
                 }
-                setData(newData);
+                boardState?.setData(newData);
             }
 
             if (response?.error) {
                 setError(resourceState?.manager?.boards.deleteBoard.error);
             }
         } finally {
-            setBusy(false);
+            boardState?.setBusy(false);
         }
     }
 
@@ -149,7 +148,7 @@ const BoardsPage = () => {
                             <WiwaButton
                                 title={resourceState?.common?.action.add}
                                 className="btn-primary join-item"
-                                disabled={busy}
+                                disabled={boardState?.busy}
                                 onClick={() => {
                                     setEditMode(false);
                                     setShowDialog(true);
@@ -160,7 +159,7 @@ const BoardsPage = () => {
                             <WiwaButton
                                 title={resourceState?.common?.action.edit}
                                 className="btn-secondary join-item"
-                                disabled={busy || selected === undefined}
+                                disabled={boardState?.busy || boardState?.selected === undefined}
                                 onClick={() => {
                                     setEditMode(true);
                                     setShowDialog(true);
@@ -171,10 +170,10 @@ const BoardsPage = () => {
                             <WiwaButton
                                 title={resourceState?.common?.action.categories}
                                 className="btn-ghost join-item"
-                                disabled={busy || selected === undefined}
+                                disabled={boardState?.busy || boardState?.selected === undefined}
                                 onClick={() => {
-                                    if (selected) {
-                                        navigate('/manager/boards/' + selected.id + '/categories');
+                                    if (boardState?.selected) {
+                                        navigate('/manager/boards/categories');
                                     }
                                 }}
                             >
@@ -183,10 +182,10 @@ const BoardsPage = () => {
                             <WiwaButton
                                 title={resourceState?.common?.action.image}
                                 className="btn-ghost join-item"
-                                disabled={busy || selected === undefined}
+                                disabled={boardState?.busy || boardState?.selected === undefined}
                                 onClick={() => {
-                                    if (selected) {
-                                        navigate('/manager/boards/' + selected.id + '/image');
+                                    if (boardState?.selected) {
+                                        navigate('/manager/boards/image');
                                     }
                                 }}
                             >
@@ -195,7 +194,7 @@ const BoardsPage = () => {
                             <WiwaButton
                                 className="btn-accent join-item"
                                 title={resourceState?.common?.action.delete}
-                                disabled={busy || selected === undefined}
+                                disabled={boardState?.busy || boardState?.selected === undefined}
                                 onClick={() => {
                                     dialogState?.showDialog({
                                         type: DialogType.YES_NO,
@@ -203,8 +202,8 @@ const BoardsPage = () => {
                                         message: resourceState?.manager?.boards.deleteBoard.message,
                                         callback: (answer: DialogAnswer) => {
                                             if (answer === DialogAnswer.YES) {
-                                                if (selected) {
-                                                    deleteHandler(selected.id).then();
+                                                if (boardState?.selected) {
+                                                    deleteHandler(boardState?.selected.id).then();
                                                 }
                                             }
                                         }
@@ -218,9 +217,9 @@ const BoardsPage = () => {
                     <div className="overflow-x-auto">
                         <BoardTable
                             fields={Object.values(BoardField)}
-                            rows={data?.content}
-                            selected={selected}
-                            setSelected={setSelected}
+                            rows={boardState?.data?.content}
+                            selected={boardState?.selected}
+                            setSelected={(selected) => boardState?.setSelected(selected)}
                         />
                     </div>
 
@@ -232,14 +231,14 @@ const BoardsPage = () => {
                             pageHandler={() => fetchData()}
                             isNext={next}
                             nextHandler={() => setPage(page - 1)}
-                            disabled={busy}
+                            disabled={boardState?.busy}
                         />
                     </div>
                 </div>
 
                 <BoardDataDialog
                     showDialog={showDialog}
-                    board={editMode ? selected : undefined}
+                    board={editMode ? boardState?.selected : undefined}
                     okHandler={(data) => {
                         okHandler(data).then();
                         setShowDialog(false);
@@ -248,7 +247,7 @@ const BoardsPage = () => {
                         setError(undefined);
                         setShowDialog(false);
                     }}
-                    submitting={busy}
+                    submitting={boardState?.busy || false}
                 />
             </>
     )

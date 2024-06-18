@@ -46,6 +46,11 @@
       "pricePlaceholder": "Zadajte cenu",
       "priceRequired": "Vyžaduje sa cena"
     },
+    "boardCategories": {
+      "error": "Chyba odoslania položiek kategórií dosky",
+      "deleteTitle": "Zmazať položku kategórie dosky",
+      "deleteMessage": "Naozaj si želáte zmazať položku kategórie dosky?"
+    },
     "boardImage": {
       "editTitle": "Obrázok dosky",
       "editFileLabel": "Súbor",

@@ -52,6 +52,11 @@ export interface ResourceManager {
             pricePlaceholder: string,
             priceRequired: string
         },
+        boardCategories: {
+            error: string,
+            deleteTitle: string,
+            deleteMessage: string
+        },
         boardImage: {
             editTitle: string,
             editFileLabel: string,
