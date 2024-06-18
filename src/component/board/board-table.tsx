@@ -6,7 +6,6 @@ import WiwaValueNumber from '../ui/wiwa-value-number';
 import { getApplicationProperties, getBoardImagePath } from '../../api/controller/ui';
 import { UnitId } from '../../api/model/application';
 import { Board, BoardField } from '../../api/model/board';
-import { getUnitIdName } from '../../model';
 import { useResourceState } from '../../state/resource';
 
 const BoardTable = ({fields, rows, selected, setSelected}: {
@@ -51,7 +50,7 @@ const TableHead = ({fields}: { fields: BoardField[] }) => {
     }, [resourceState]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${getUnitIdName(unitId, resourceState?.common)}]`;
+        return `[${resourceState?.getUnit(unitId)}]`;
     }
 
     return (

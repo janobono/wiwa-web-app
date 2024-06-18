@@ -110,8 +110,8 @@ export const getManufactureProperties = (accessToken?: string) => {
     return getData<ManufactureProperties>(PATH + '/manufacture-properties', undefined, accessToken);
 }
 
-export const setManufactureProperties = (resetPasswordMail: ResetPasswordMail, accessToken?: string) => {
-    return postData<ResetPasswordMail>(PATH + '/manufacture-properties', resetPasswordMail, accessToken);
+export const setManufactureProperties = (manufactureProperties: ManufactureProperties, accessToken?: string) => {
+    return postData<ManufactureProperties>(PATH + '/manufacture-properties', manufactureProperties, accessToken);
 }
 
 export const getPriceForGluingLayer = (accessToken?: string) => {

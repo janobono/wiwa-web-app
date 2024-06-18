@@ -8,6 +8,7 @@ import { CategoryItem, CategoryItemChange, CategoryItemField } from '../../../ap
 import { CodeList, CodeListItem } from '../../../api/model/code-list';
 import CategoryItemTable from '../../../component/category/category-item-table';
 import SelectCodeListItemDialog from '../../../component/code-list/select-code-list-item-dialog';
+import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
@@ -100,6 +101,19 @@ const EdgeCategoriesPage = () => {
             </div>
             :
             <>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.common?.navigation.managerNav.edges || '',
+                        to: '/manager/edges'
+                    },
+                    {
+                        key: 2,
+                        label: resourceState?.common?.navigation.managerNav.edgeCategories || '',
+                        to: '/manager/edges/categories'
+                    }
+                ]}/>
                 <div className="flex flex-col p-5 w-full">
                     <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
                         <div className="join">

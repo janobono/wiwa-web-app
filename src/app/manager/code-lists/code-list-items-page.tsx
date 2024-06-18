@@ -15,6 +15,7 @@ import { CodeListItem, CodeListItemChange, CodeListItemField } from '../../../ap
 import CodeListItemTable from '../../../component/code-list/code-list-item-table';
 import SelectCodeListItem from '../../../component/code-list/select-code-list-item';
 import BaseDialog from '../../../component/dialog/base-dialog';
+import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInput from '../../../component/ui/wiwa-form-input';
 import { DialogAnswer, DialogType } from '../../../model/ui';
@@ -178,6 +179,19 @@ const CodeListItemsPage = () => {
             </div>
             :
             <>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.common?.navigation.managerNav.codeLists || '',
+                        to: '/manager/code-lists'
+                    },
+                    {
+                        key: 2,
+                        label: resourceState?.common?.navigation.managerNav.codeListItems || '',
+                        to: `/manager/code-lists/${codeListId}/items`
+                    }
+                ]}/>
                 <div className="flex flex-col p-5 w-full">
                     <SelectCodeListItem codeListId={Number(codeListId)} itemSelectedHandler={setParentItem}/>
 

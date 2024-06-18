@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
 
 import BaseFooter from '../../component/layout/base-footer';
-import BaseNavigation from '../../component/layout/base-navigation';
+import Navigation from '../../component/layout/navigation';
 
 const AuthPage = () => {
     return (
         <>
-            <BaseNavigation/>
+            <Navigation/>
             <main className="w-full bg-base text-base-content">
                 <Outlet/>
             </main>

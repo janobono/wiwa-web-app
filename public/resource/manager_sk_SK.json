@@ -1,11 +1,4 @@
 {
-  "title": "Manažér",
-  "codeListsTab": "Číselníky",
-  "categoriesTab": "Kategórie",
-  "boardsTab": "Dosky",
-  "edgesTab": "Hrany",
-  "orderInputsTab": "Vstupy objednávok",
-  "ordersTab": "Objednávky",
   "boards": {
     "fetchDataError": "Chyba načítania dosiek",
     "deleteBoard": {
@@ -182,6 +175,16 @@
       "deleteTitle": "Zmazať obrázok hrany",
       "deleteMessage": "Naozaj si želáte zmazať obrázok hrany?",
       "deleteError": "Chyba mazania obrázku"
+    }
+  },
+  "orderInputs": {
+    "option": {
+      "select": "Vstup",
+      "manufactureProperties": "Výrobné parametre",
+      "priceForGluingLayer": "Cena lepenia vrstvy",
+      "pricesForGluingEdge": "Ceny lepenia hrany",
+      "pricesForCutting": "Ceny rezania",
+      "freeDays": "Voľné dni"
     }
   }
 }

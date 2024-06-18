@@ -1,13 +1,4 @@
 {
-  "title": "Admin",
-  "applicationImagesTab": "Application images",
-  "baseInfoTab": "Base info",
-  "companyInfoTab": "Company info",
-  "textInfoTab": "Text info",
-  "mailFormatTab": "Mail format",
-  "orderFormatTab": "Order format",
-  "unitsTab": "Units",
-  "usersTab": "Users",
   "applicationImages": {
     "deleteImageQuestionMessage": "Do you really want to delete image?",
     "deleteImageQuestionTitle": "Delete image",

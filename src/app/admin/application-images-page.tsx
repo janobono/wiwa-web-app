@@ -7,6 +7,7 @@ import { Page } from '../../api/model';
 import { ApplicationImageInfo, ApplicationImageInfoField } from '../../api/model/application';
 import ApplicationImageInfoTable from '../../component/app/admin/application-image-table';
 import ImageDialog from '../../component/dialog/image-dialog';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
 import { DialogAnswer, DialogType } from '../../model/ui';
@@ -125,6 +126,14 @@ const ApplicationImagesPage = () => {
             </div>
             :
             <>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.common?.navigation.adminNav.applicationImages || '',
+                        to: '/admin/application-images'
+                    }
+                ]}/>
                 <div className="flex flex-col p-5 w-full">
                     <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
                         <div className="join">

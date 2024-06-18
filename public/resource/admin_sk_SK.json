@@ -1,13 +1,4 @@
 {
-  "title": "Správca",
-  "applicationImagesTab": "Aplikačné obrázky",
-  "baseInfoTab": "Základné informácie",
-  "companyInfoTab": "Informácie o spoločnosti",
-  "textInfoTab": "Textové informácie",
-  "mailFormatTab": "Formát mailov",
-  "orderFormatTab": "Formát objednávky",
-  "unitsTab": "Jednotky",
-  "usersTab": "Používatelia",
   "applicationImages": {
     "deleteImageQuestionMessage": "Naozaj si želáte zmazať obrázok?",
     "deleteImageQuestionTitle": "Zmazať obrázok",

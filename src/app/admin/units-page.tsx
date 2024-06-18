@@ -4,15 +4,15 @@ import { Edit } from 'react-feather';
 
 import { getUnits } from '../../api/controller/ui';
 import { Unit, UnitField } from '../../api/model/application';
+import UnitTable from '../../component/app/admin/unit-table';
 import BaseDialog from '../../component/dialog/base-dialog';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
-import { getUnitIdName } from '../../model';
 import { useAuthState } from '../../state/auth';
 import { useDialogState } from '../../state/dialog';
 import { useResourceState } from '../../state/resource';
 import { setUnits } from '../../api/controller/config';
-import UnitTable from '../../component/app/admin/unit-table.tsx';
 
 const UNIT_VALUE_DIALOG_ID = 'admin-unit-value-dialog-001';
 
@@ -60,6 +60,14 @@ const UnitsPage = () => {
             </div>
             :
             <>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.common?.navigation.adminNav.units || '',
+                        to: '/admin/units'
+                    }
+                ]}/>
                 <div className="flex flex-col p-5 w-full">
                     <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
                         <div className="join">
@@ -126,7 +134,7 @@ const UnitDialog = ({showDialog, unit, okHandler, cancelHandler}: {
                     </div>
 
                     <WiwaFormInput
-                        label={unit ? getUnitIdName(unit.id) : ''}
+                        label={unit ? resourceState?.getUnitIdName(unit.id) : ''}
                         required={true}
                         placeholder={resourceState?.admin?.units.editUnit.valuePlaceholder}
                         value={value}

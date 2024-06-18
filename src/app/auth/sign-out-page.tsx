@@ -10,7 +10,9 @@ const SignOutPage = () => {
     const resourceState = useResourceState();
 
     useEffect(() => {
-        authState?.signOut();
+        if (authState) {
+            authState.signOut().then();
+        }
     }, [authState]);
 
     return (
@@ -20,7 +22,7 @@ const SignOutPage = () => {
                     className="btn-primary"
                     disabled={authState?.busy}
                     onClick={() => authState?.signOut()}
-                >{resourceState?.common?.baseNavigation.authNav.signOut}</WiwaButton>
+                >{resourceState?.common?.navigation.authNav.signOut}</WiwaButton>
             </div>
         </AccessDefender>
     )

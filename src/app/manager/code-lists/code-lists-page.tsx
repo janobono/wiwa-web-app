@@ -8,6 +8,7 @@ import { Page } from '../../../api/model';
 import { CodeList, CodeListChange, CodeListField } from '../../../api/model/code-list';
 import CodeListTable from '../../../component/code-list/code-list-table';
 import BaseDialog from '../../../component/dialog/base-dialog';
+import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInput from '../../../component/ui/wiwa-form-input';
 import WiwaInput from '../../../component/ui/wiwa-input';
@@ -143,6 +144,14 @@ const CodeListsPage = () => {
             </div>
             :
             <>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.common?.navigation.managerNav.codeLists || '',
+                        to: '/manager/code-lists'
+                    }
+                ]}/>
                 <div className="flex flex-col p-5 w-full">
                     <div className="flex flex-row w-full items-center justify-center">
                         <div className="join pb-5 w-2/3">

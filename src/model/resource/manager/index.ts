@@ -1,11 +1,4 @@
 export interface ResourceManager {
-    title: string,
-    codeListsTab: string,
-    categoriesTab: string,
-    boardsTab: string,
-    edgesTab: string,
-    orderInputsTab: string,
-    ordersTab: string,
     boards: {
         fetchDataError: string,
         addBoard: {
@@ -194,6 +187,16 @@ export interface ResourceManager {
             deleteTitle: string,
             deleteMessage: string,
             deleteError: string
+        }
+    },
+    orderInputs: {
+        option: {
+            select: string,
+            manufactureProperties: string,
+            priceForGluingLayer: string,
+            pricesForGluingEdge: string,
+            pricesForCutting: string,
+            freeDays: string
         }
     }
 }

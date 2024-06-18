@@ -6,7 +6,6 @@ import WiwaValueNumber from '../ui/wiwa-value-number';
 import { getApplicationProperties, getEdgeImagePath } from '../../api/controller/ui';
 import { UnitId } from '../../api/model/application';
 import { Edge, EdgeField } from '../../api/model/edge';
-import { getUnitIdName } from '../../model';
 import { useResourceState } from '../../state/resource';
 
 const EdgeTable = ({fields, rows, selected, setSelected}: {
@@ -51,7 +50,7 @@ const TableHead = ({fields}: { fields: EdgeField[] }) => {
     }, [resourceState]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${getUnitIdName(unitId, resourceState?.common)}]`;
+        return `[${resourceState?.getUnit(unitId)}]`;
     }
 
     return (

@@ -19,20 +19,6 @@
     "fileName": "File name",
     "thumbnail": "Thumbnail"
   },
-  "baseNavigation": {
-    "maintenanceSwitch": "Switch maintenance",
-    "localeSwitch": "Switch locale to Slovak",
-    "refreshToken": "Refresh login",
-    "authNav": {
-      "title": "User",
-      "signIn": "Sign in",
-      "signOut": "Sign out",
-      "signUp": "Sign up",
-      "changeDetails": "Account details",
-      "changeEmail": "Change email",
-      "changePassword": "Change password"
-    }
-  },
   "boardCriteria": {
     "searchPlaceholder": "Code, board code, structure code or name",
     "codePlaceholder": "Code",
@@ -176,13 +162,53 @@
     "ok": "Ok",
     "cancel": "Cancel"
   },
-  "navigation": {
-    "admin": "Admin",
-    "manager": "Manager",
-    "employee": "Employee",
-    "customer": "My orders"
-  },
   "maintenance": "We are sorry. Maintenance is in progress. Please try again later.",
+  "navigation": {
+    "maintenanceSwitch": "Switch maintenance",
+    "localeSwitch": "Switch locale to Slovak",
+    "refreshToken": "Refresh login",
+    "authNav": {
+      "title": "User",
+      "signIn": "Sign in",
+      "signOut": "Sign out",
+      "signUp": "Sign up",
+      "changeDetails": "Account details",
+      "changeEmail": "Change email",
+      "changePassword": "Change password"
+    },
+    "adminNav": {
+      "title": "Admin",
+      "applicationImages": "Application images",
+      "baseInfo": "Base info",
+      "companyInfo": "Company info",
+      "textInfo": "Text info",
+      "mailFormat": "Mail format",
+      "orderFormat": "Order format",
+      "units": "Units",
+      "users": "Users"
+    },
+    "managerNav": {
+      "title": "Manager",
+      "codeLists": "Code Lists",
+      "codeListItems": "Code list items",
+      "categoriesTab": "Categories",
+      "boards": "Boards",
+      "boardCategories": "Board categories",
+      "boardImage": "Board image",
+      "edges": "Edges",
+      "edgeCategories": "Edge categories",
+      "edgeImage": "Edge image",
+      "orderInputs": "Order inputs",
+      "orders": "Orders"
+    },
+    "employeeNav": {
+      "title": "Employee",
+      "orders": "Orders"
+    },
+    "customerNav": {
+      "title": "My orders"
+    }
+  },
   "notFound": "404 Page not found",
   "pageable": {
     "next": "Next",

@@ -18,6 +18,7 @@ import { deleteUser, getUsers, setAuthorities, setConfirmed, setEnabled } from '
 import { Authority, containsAuthority, Page, User } from '../../api/model';
 import { UserField, UserSearchCriteria } from '../../api/model/user';
 import BaseDialog from '../../component/dialog/base-dialog';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
 import UserTable from '../../component/user/user-table';
@@ -160,6 +161,14 @@ const UsersPage = () => {
             </div>
             :
             <>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.common?.navigation.adminNav.users || '',
+                        to: '/admin/users'
+                    }
+                ]}/>
                 <div className="flex flex-col p-5 w-full">
                     <UserSearchCriteriaForm searchHandler={setCriteria}>
                         <div className="join pl-5">

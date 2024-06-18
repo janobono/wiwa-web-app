@@ -1,13 +1,4 @@
 export interface ResourceAdmin {
-    title: string,
-    applicationImagesTab: string,
-    baseInfoTab: string,
-    companyInfoTab: string,
-    textInfoTab: string,
-    mailFormatTab: string,
-    orderFormatTab: string,
-    unitsTab: string,
-    usersTab: string,
     applicationImages: {
         deleteImageQuestionMessage: string,
         deleteImageQuestionTitle: string,

@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { WiwaErrorCode } from '../../api/model';
 import { EMAIL_REGEX } from '../../const';
 import AccessDefender from '../../component/layout/access-defender';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
+import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
-import WiwaButton from '../../component/ui/wiwa-button';
 import { useAuthState } from '../../state/auth';
 import { useResourceState } from '../../state/resource';
 
@@ -74,11 +75,16 @@ const ChangeEmailPage = () => {
 
     return (
         <AccessDefender>
+            <WiwaBreadcrumb breadcrumbs={[
+                {key: 0, label: resourceState?.common?.navigation.authNav.title || ''},
+                {
+                    key: 1,
+                    label: resourceState?.auth?.changeEmail.title || '',
+                    to: '/auth/change-email'
+                }
+            ]}/>
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
-                    <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.auth?.changeEmail.title}
-                    </div>
                     <form className="max-w-sm" onSubmit={(event) => {
                         event.preventDefault();
                         handleSubmit().then();

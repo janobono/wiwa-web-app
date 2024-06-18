@@ -11,11 +11,11 @@ import { Edge, EdgeChange, EdgeField, EdgeSearchCriteria } from '../../../api/mo
 import EdgeTable from '../../../component/edge/edge-table';
 import EdgeSearchCriteriaForm from '../../../component/edge/edge-search-criteria-form';
 import BaseDialog from '../../../component/dialog/base-dialog';
+import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInput from '../../../component/ui/wiwa-form-input';
 import WiwaFormTextarea from '../../../component/ui/wiwa-form-textarea';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
-import { getUnitIdName } from '../../../model';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
@@ -141,6 +141,14 @@ const EdgesPage = () => {
             </div>
             :
             <>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.common?.navigation.managerNav.edges || '',
+                        to: '/manager/edges'
+                    }
+                ]}/>
                 <div className="flex flex-col p-5 w-full">
                     <EdgeSearchCriteriaForm searchHandler={setCriteria}>
                         <div className="join pl-5">
@@ -345,7 +353,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
     }, [codeValid, nameValid, weightValid, widthValid, thicknessValid, priceValid]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${getUnitIdName(unitId, resourceState?.common)}]`;
+        return `[${resourceState?.getUnit(unitId)}]`;
     }
 
     return (!dialogState?.modalRoot ? null : createPortal(

@@ -6,6 +6,7 @@ import { useEdgeState } from '../edges-base-page';
 import { deleteEdgeImage, setEdgeImage } from '../../../api/controller/edge';
 import { getEdgeImagePath } from '../../../api/controller/ui';
 import ImageDialog from '../../../component/dialog/image-dialog';
+import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
@@ -76,6 +77,19 @@ const EdgeImagePage = () => {
             </div>
             :
             <>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.common?.navigation.managerNav.edges || '',
+                        to: '/manager/edges'
+                    },
+                    {
+                        key: 2,
+                        label: resourceState?.common?.navigation.managerNav.edgeImage || '',
+                        to: '/manager/edges/image'
+                    }
+                ]}/>
                 <div className="flex flex-col p-5 w-full">
                     <div className="flex flex-row w-full items-center justify-center pb-5">
                         <div className="join">

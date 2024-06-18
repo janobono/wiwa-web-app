@@ -24,6 +24,12 @@ import AuthSignInPage from './auth/sign-in-page';
 import AuthSignOutPage from './auth/sign-out-page';
 import AuthSignUpPage from './auth/sign-up-page';
 
+import CustomerPage from './customer/customer-page';
+import CustomerOrdersPage from './customer/orders-page';
+
+import EmployeePage from './employee/employee-page';
+import EmployeeOrdersPage from './employee/orders-page';
+
 import ManagerPage from './manager/manager-page';
 import ManagerCodeListsBasePage from './manager/code-lists-base-page';
 import ManagerCodeListsPage from './manager/code-lists/code-lists-page';
@@ -75,6 +81,16 @@ const AppPage = () => {
                 <Route path="sign-in" element={<AuthSignInPage/>}/>
                 <Route path="sign-out" element={<AuthSignOutPage/>}/>
                 <Route path="sign-up" element={<AuthSignUpPage/>}/>
+            </Route>
+
+            <Route path="/customer" element={<CustomerPage/>}>
+                <Route index element={<Navigate to="index" replace/>}/>
+                <Route path="index" element={<CustomerOrdersPage/>}/>
+            </Route>
+
+            <Route path="/employee" element={<EmployeePage/>}>
+                <Route index element={<Navigate to="index" replace/>}/>
+                <Route path="index" element={<EmployeeOrdersPage/>}/>
             </Route>
 
             <Route path="/manager" element={<ManagerPage/>}>

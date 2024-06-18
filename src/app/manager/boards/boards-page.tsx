@@ -11,12 +11,12 @@ import { Board, BoardChange, BoardField, BoardSearchCriteria } from '../../../ap
 import BoardTable from '../../../component/board/board-table';
 import BoardSearchCriteriaForm from '../../../component/board/board-search-criteria-form';
 import BaseDialog from '../../../component/dialog/base-dialog';
+import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInput from '../../../component/ui/wiwa-form-input';
 import WiwaFormTextarea from '../../../component/ui/wiwa-form-textarea';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
 import WiwaSelect from '../../../component/ui/wiwa-select';
-import { getUnitIdName } from '../../../model';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
@@ -142,6 +142,14 @@ const BoardsPage = () => {
             </div>
             :
             <>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.common?.navigation.managerNav.boards || '',
+                        to: '/manager/boards'
+                    }
+                ]}/>
                 <div className="flex flex-col p-5 w-full">
                     <BoardSearchCriteriaForm searchHandler={setCriteria}>
                         <div className="join pl-5">
@@ -380,7 +388,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
     }, [codeValid, nameValid, boardCodeValid, structureCodeValid, weightValid, lengthValid, widthValid, thicknessValid, priceValid]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${getUnitIdName(unitId, resourceState?.common)}]`;
+        return `[${resourceState?.getUnit(unitId)}]`;
     }
 
     return (!dialogState?.modalRoot ? null : createPortal(
@@ -593,7 +601,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                                 okHandler({
                                     code,
                                     name,
-                                    description,
+                                    description: description.length === 0 ? undefined : description,
                                     boardCode,
                                     structureCode,
                                     orientation,

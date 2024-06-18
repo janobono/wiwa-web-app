@@ -8,6 +8,7 @@ import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
 import { useAuthState } from '../../state/auth';
 import { useResourceState } from '../../state/resource';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb.tsx';
 
 const ChangePasswordPage = () => {
     const navigate = useNavigate();
@@ -66,11 +67,16 @@ const ChangePasswordPage = () => {
 
     return (
         <AccessDefender>
+            <WiwaBreadcrumb breadcrumbs={[
+                {key: 0, label: resourceState?.common?.navigation.authNav.title || ''},
+                {
+                    key: 1,
+                    label: resourceState?.auth?.changePassword.title || '',
+                    to: '/auth/change-password'
+                }
+            ]}/>
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
-                    <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.auth?.changePassword.title}
-                    </div>
                     <form className="max-w-sm" onSubmit={(event) => {
                         event.preventDefault();
                         handleSubmit().then();

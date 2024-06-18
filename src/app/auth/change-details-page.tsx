@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
 import AccessDefender from '../../component/layout/access-defender';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
@@ -15,17 +16,17 @@ const ChangeDetailsPage = () => {
     const authState = useAuthState();
     const resourceState = useResourceState();
 
-    const [titleBefore, setTitleBefore] = useState<string>();
+    const [titleBefore, setTitleBefore] = useState('');
 
     const [firstName, setFirstName] = useState('');
     const [firstNameValid, setFirstNameValid] = useState(false);
 
-    const [midName, setMidName] = useState<string>();
+    const [midName, setMidName] = useState('');
 
     const [lastName, setLastName] = useState('');
     const [lastNameValid, setLastNameValid] = useState(false);
 
-    const [titleAfter, setTitleAfter] = useState<string>();
+    const [titleAfter, setTitleAfter] = useState('');
 
     const [captchaText, setCaptchaText] = useState('');
     const [captchaToken, setCaptchaToken] = useState('');
@@ -41,11 +42,11 @@ const ChangeDetailsPage = () => {
         setFormError(undefined);
         if (isFormValid()) {
             const response = await authState?.changeUserDetails({
-                titleBefore,
+                titleBefore: titleBefore.length === 0 ? undefined : titleBefore,
                 firstName,
-                midName,
+                midName: midName.length === 0 ? undefined : midName,
                 lastName,
-                titleAfter,
+                titleAfter: titleAfter.length === 0 ? undefined : titleAfter,
                 gdpr: true,
                 captchaText,
                 captchaToken
@@ -71,21 +72,26 @@ const ChangeDetailsPage = () => {
     useEffect(() => {
         const user = authState?.authUser?.user;
         if (user) {
-            setTitleBefore(user.titleBefore);
+            setTitleBefore(user.titleBefore || '');
             setFirstName(user.firstName);
-            setMidName(user.midName);
+            setMidName(user.midName || '');
             setLastName(user.lastName);
-            setTitleAfter(user.titleAfter);
+            setTitleAfter(user.titleAfter || '');
         }
     }, [authState?.authUser]);
 
     return (
         <AccessDefender>
+            <WiwaBreadcrumb breadcrumbs={[
+                {key: 0, label: resourceState?.common?.navigation.authNav.title || ''},
+                {
+                    key: 1,
+                    label: resourceState?.auth?.changeDetails.title || '',
+                    to: '/auth/change-details'
+                }
+            ]}/>
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
-                    <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.auth?.changeDetails.title}
-                    </div>
                     <form className="max-w-sm" onSubmit={(event) => {
                         event.preventDefault();
                         handleSubmit().then();

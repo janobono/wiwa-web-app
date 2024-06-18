@@ -1,6 +1,8 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 import { useAppState } from '../app';
+import { useAuthState } from '../auth';
+import { Unit, UnitId } from '../../api/model/application';
 import { ResourceAdmin } from '../../model/resource/admin';
 import { ResourceAuth } from '../../model/resource/auth';
 import { ResourceCommon } from '../../model/resource/common';
@@ -8,6 +10,7 @@ import { ResourceCustomer } from '../../model/resource/customer';
 import { ResourceEmployee } from '../../model/resource/employee';
 import { ResourceManager } from '../../model/resource/manager';
 import { ResourceUi } from '../../model/resource/ui';
+import { getUnits } from '../../api/controller/ui';
 
 const RESOURCE_ADMIN = 'admin';
 const RESOURCE_AUTH = 'auth';
@@ -35,13 +38,16 @@ export interface ResourceState {
     customer?: ResourceCustomer,
     employee?: ResourceEmployee,
     manager?: ResourceManager,
-    ui?: ResourceUi
+    ui?: ResourceUi,
+    getUnitIdName: (unitId: UnitId) => string | undefined,
+    getUnit: (unitId: UnitId) => string | undefined
 }
 
 const resourceStateContext = createContext<ResourceState | undefined>(undefined);
 
 const ResourceStateProvider = ({children}: { children: ReactNode }) => {
     const appState = useAppState();
+    const authState = useAuthState();
 
     const [admin, setAdmin] = useState<ResourceAdmin>();
     const [auth, setAuth] = useState<ResourceAuth>();
@@ -50,6 +56,8 @@ const ResourceStateProvider = ({children}: { children: ReactNode }) => {
     const [employee, setEmployee] = useState<ResourceEmployee>();
     const [manager, setManager] = useState<ResourceManager>();
     const [ui, setUi] = useState<ResourceUi>();
+
+    const [units, setUnits] = useState<Unit[]>();
 
     useEffect(() => {
         if (appState?.locale) {
@@ -63,6 +71,31 @@ const ResourceStateProvider = ({children}: { children: ReactNode }) => {
         }
     }, [appState?.locale]);
 
+    useEffect(() => {
+        getUnits().then(data => setUnits(data.data));
+    }, [authState?.authToken]);
+
+    const getUnitIdName = (unitId: UnitId) => {
+        switch (unitId) {
+            case UnitId.MILLIMETER:
+                return common?.unitId.millimeter;
+            case UnitId.METER:
+                return common?.unitId.meter;
+            case UnitId.SQUARE_METER:
+                return common?.unitId.squareMeter;
+            case UnitId.KILOGRAM:
+                return common?.unitId.kilogram;
+            case UnitId.PIECE:
+                return common?.unitId.piece;
+        }
+    }
+
+    const getUnit = (unitId: UnitId) => {
+        if (units) {
+            return units.find(item => item.id === unitId)?.value;
+        }
+    }
+
     return (
         <resourceStateContext.Provider
             value={
@@ -73,7 +106,9 @@ const ResourceStateProvider = ({children}: { children: ReactNode }) => {
                     customer,
                     employee,
                     manager,
-                    ui
+                    ui,
+                    getUnitIdName,
+                    getUnit
                 }
             }
         >{children}

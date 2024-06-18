@@ -19,20 +19,6 @@ export interface ResourceCommon {
         fileName: string,
         thumbnail: string
     },
-    baseNavigation: {
-        maintenanceSwitch: string,
-        localeSwitch: string,
-        refreshToken: string,
-        authNav: {
-            title: string,
-            signIn: string,
-            signUp: string,
-            changeDetails: string,
-            changeEmail: string,
-            changePassword: string,
-            signOut: string
-        }
-    },
     boardCriteria: {
         searchPlaceholder: string,
         codePlaceholder: string,
@@ -116,7 +102,7 @@ export interface ResourceCommon {
     disabledAccount: {
         text: string
     },
-    edgeCriteria:{
+    edgeCriteria: {
         searchPlaceholder: string,
         codePlaceholder: string,
         namePlaceholder: string,
@@ -176,13 +162,53 @@ export interface ResourceCommon {
         ok: string,
         cancel: string
     },
-    navigation: {
-        admin: string,
-        manager: string,
-        employee: string,
-        customer: string
-    },
     maintenance: string,
+    navigation: {
+        maintenanceSwitch: string,
+        localeSwitch: string,
+        refreshToken: string,
+        authNav: {
+            title: string,
+            signIn: string,
+            signUp: string,
+            changeDetails: string,
+            changeEmail: string,
+            changePassword: string,
+            signOut: string
+        },
+        adminNav: {
+            title: string,
+            applicationImages: string,
+            baseInfo: string,
+            companyInfo: string,
+            textInfo: string,
+            mailFormat: string,
+            orderFormat: string,
+            units: string,
+            users: string,
+        },
+        managerNav: {
+            title: string,
+            codeLists: string,
+            codeListItems: string,
+            categories: string,
+            boards: string,
+            boardCategories: string,
+            boardImage: string,
+            edges: string,
+            edgeCategories: string,
+            edgeImage: string,
+            orderInputs: string,
+            orders: string,
+        },
+        employeeNav: {
+            title: string,
+            orders: string
+        },
+        customerNav: {
+            title: string
+        },
+    },
     notFound: string,
     pageable: {
         next: string,

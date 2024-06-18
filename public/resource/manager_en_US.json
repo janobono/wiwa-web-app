@@ -1,11 +1,4 @@
 {
-  "title": "Manager",
-  "codeListsTab": "Code Lists",
-  "categoriesTab": "Categories",
-  "boardsTab": "Boards",
-  "edgesTab": "Edges",
-  "orderInputsTab": "Order inputs",
-  "ordersTab": "Orders",
   "boards": {
     "fetchDataError": "Boards loading failed",
     "addBoard": {
@@ -195,6 +188,16 @@
       "deleteTitle": "Delete edge image",
       "deleteMessage": "Do you really want to delete edge image?",
       "deleteError": "Delete edge image failed"
+    }
+  },
+  "orderInputs": {
+    "option": {
+      "select": "Input",
+      "manufactureProperties": "Manufacture properties",
+      "priceForGluingLayer": "Layer gluing price",
+      "pricesForGluingEdge": "Edge gluing prices",
+      "pricesForCutting": "Cutting prices",
+      "freeDays": "Free days"
     }
   }
 }

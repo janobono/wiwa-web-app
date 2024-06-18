@@ -19,20 +19,6 @@
     "fileName": "Názov súboru",
     "thumbnail": "Miniatúra"
   },
-  "baseNavigation": {
-    "maintenanceSwitch": "Prepnúť režim údržby",
-    "localeSwitch": "Prepnúť lokalizáciu na Anglickú",
-    "refreshToken": "Obnoviť prihlásenie",
-    "authNav": {
-      "title": "Používateľ",
-      "signIn": "Prihlásiť",
-      "signOut": "Odhlásiť",
-      "signUp": "Zaregistrovať",
-      "changeDetails": "Detaily účtu",
-      "changeEmail": "Zmeniť email",
-      "changePassword": "Zmeniť heslo"
-    }
-  },
   "boardCriteria": {
     "searchPlaceholder": "Kód, názov, kód dosky alebo kód štruktúry",
     "codePlaceholder": "Kód",
@@ -176,13 +162,53 @@
     "ok": "Potvrdiť",
     "cancel": "Zrušiť"
   },
-  "navigation": {
-    "admin": "Správca",
-    "manager": "Manažér",
-    "employee": "Zamestnanec",
-    "customer": "Moje objednávky"
-  },
   "maintenance": "Ľutujeme. Prebieha údržba. Skúste neskor prosím.",
+  "navigation": {
+    "maintenanceSwitch": "Prepnúť režim údržby",
+    "localeSwitch": "Prepnúť lokalizáciu na Anglickú",
+    "refreshToken": "Obnoviť prihlásenie",
+    "authNav": {
+      "title": "Používateľ",
+      "signIn": "Prihlásiť",
+      "signOut": "Odhlásiť",
+      "signUp": "Zaregistrovať",
+      "changeDetails": "Detaily účtu",
+      "changeEmail": "Zmeniť email",
+      "changePassword": "Zmeniť heslo"
+    },
+    "adminNav": {
+      "title": "Správca",
+      "applicationImages": "Aplikačné obrázky",
+      "baseInfo": "Základné informácie",
+      "companyInfo": "Informácie o spoločnosti",
+      "textInfo": "Textové informácie",
+      "mailFormat": "Formát mailov",
+      "orderFormat": "Formát objednávky",
+      "units": "Jednotky",
+      "users": "Používatelia"
+    },
+    "managerNav": {
+      "title": "Manažér",
+      "codeLists": "Číselníky",
+      "codeListItems": "Položky číselníka",
+      "categories": "Kategórie",
+      "boards": "Dosky",
+      "boardCategories": "Kategórie dosky",
+      "boardImage": "Obrázok dosky",
+      "edges": "Hrany",
+      "edgeCategories": "Kategórie hrany",
+      "edgeImage": "Obrázok hrany",
+      "orderInputs": "Vstupy objednávok",
+      "orders": "Objednávky"
+    },
+    "employeeNav": {
+      "title": "Zamestnanec",
+      "orders": "Objednávky"
+    },
+    "customerNav": {
+      "title": "Moje objednávky"
+    }
+  },
   "notFound": "404 Stránka nenájdená",
   "pageable": {
     "previous": "Predchádzajúca",

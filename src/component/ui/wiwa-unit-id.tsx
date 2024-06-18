@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { UnitId } from '../../api/model/application';
-import { getUnitIdName } from '../../model';
 import { useResourceState } from '../../state/resource';
 
 const WiwaUnitId = ({unitId}: { unitId?: UnitId }) => {
@@ -11,7 +10,7 @@ const WiwaUnitId = ({unitId}: { unitId?: UnitId }) => {
 
     useEffect(() => {
         if (unitId) {
-            setData(getUnitIdName(unitId, resourceState?.common));
+            setData(resourceState?.getUnit(unitId));
         } else {
             setData(undefined);
         }
