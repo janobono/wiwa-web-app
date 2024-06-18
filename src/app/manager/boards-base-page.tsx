@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+
 import { Page } from '../../api/model';
 import { Board } from '../../api/model/board';
 

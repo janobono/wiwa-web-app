@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Plus, Trash } from 'react-feather';
 
-import { useBoardState } from '../boards-base-page';
-import { setBoardCategoryItems } from '../../../api/controller/board';
-import { getBoardCategories } from '../../../api/controller/ui';
+import { useEdgeState } from '../edges-base-page';
+import { setEdgeCategoryItems } from '../../../api/controller/edge';
+import { getEdgeCategories } from '../../../api/controller/ui';
 import { CategoryItem, CategoryItemChange, CategoryItemField } from '../../../api/model';
 import { CodeList, CodeListItem } from '../../../api/model/code-list';
 import CategoryItemTable from '../../../component/category/category-item-table';
@@ -14,14 +14,14 @@ import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
 import { useResourceState } from '../../../state/resource';
 
-const BOARD_CATEGORIES_DIALOG_ID = 'board-categories-dialog-001';
+const EDGE_CATEGORIES_DIALOG_ID = 'edge-categories-dialog-001';
 
-const BoardCategoriesPage = () => {
+const EdgeCategoriesPage = () => {
     const authState = useAuthState();
     const dialogState = useDialogState();
     const resourceState = useResourceState();
 
-    const boardState = useBoardState();
+    const edgeState = useEdgeState();
 
     const [codeLists, setCodeLists] = useState<CodeList[]>([]);
 
@@ -33,16 +33,16 @@ const BoardCategoriesPage = () => {
     const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
-        getBoardCategories().then(data => {
+        getEdgeCategories().then(data => {
             setCodeLists(data?.data || []);
         });
     }, []);
 
     useEffect(() => {
-        if (boardState?.selected) {
-            setData([...boardState.selected.categoryItems]);
+        if (edgeState?.selected) {
+            setData([...edgeState.selected.categoryItems]);
         }
-    }, [boardState?.selected]);
+    }, [edgeState?.selected]);
 
     useEffect(() => {
         if (selected && data) {
@@ -59,12 +59,12 @@ const BoardCategoriesPage = () => {
         setError(undefined);
         setBusy(true);
         try {
-            const response = await setBoardCategoryItems(boardState?.selected?.id || -1, data, authState?.authToken?.accessToken);
+            const response = await setEdgeCategoryItems(edgeState?.selected?.id || -1, data, authState?.authToken?.accessToken);
 
-            boardState?.setSelected(response?.data);
+            edgeState?.setSelected(response?.data);
 
             if (response?.error) {
-                setError(resourceState?.manager?.boards.boardCategories.error);
+                setError(resourceState?.manager?.edges.edgeCategories.error);
             }
         } finally {
             setBusy(false);
@@ -118,8 +118,8 @@ const BoardCategoriesPage = () => {
                                 onClick={() => {
                                     dialogState?.showDialog({
                                         type: DialogType.YES_NO,
-                                        title: resourceState?.manager?.boards.boardCategories.deleteTitle,
-                                        message: resourceState?.manager?.boards.boardCategories.deleteMessage,
+                                        title: resourceState?.manager?.edges.edgeCategories.deleteTitle,
+                                        message: resourceState?.manager?.edges.edgeCategories.deleteMessage,
                                         callback: (answer: DialogAnswer) => {
                                             if (answer === DialogAnswer.YES) {
                                                 if (selected) {
@@ -144,7 +144,7 @@ const BoardCategoriesPage = () => {
                 </div>
 
                 <SelectCodeListItemDialog
-                    dialogId={BOARD_CATEGORIES_DIALOG_ID}
+                    dialogId={EDGE_CATEGORIES_DIALOG_ID}
                     codeLists={codeLists}
                     showDialog={showDialog}
                     setShowDialog={setShowDialog}
@@ -154,4 +154,4 @@ const BoardCategoriesPage = () => {
     )
 }
 
-export default BoardCategoriesPage;
+export default EdgeCategoriesPage;

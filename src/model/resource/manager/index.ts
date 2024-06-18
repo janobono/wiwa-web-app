@@ -142,5 +142,58 @@ export interface ResourceManager {
                 valueRequired: string
             }
         },
+    },
+    edges: {
+        fetchDataError: string,
+        addEdge: {
+            error: string
+        },
+        editEdge: {
+            error: string
+        },
+        deleteEdge: {
+            title: string,
+            message: string,
+            error: string
+        },
+        edgeDialog: {
+            title: string,
+            codeLabel: string,
+            codePlaceholder: string,
+            codeRequired: string,
+            nameLabel: string,
+            namePlaceholder: string,
+            nameRequired: string,
+            descriptionLabel: string,
+            descriptionPlaceholder: string,
+            weightLabel: string,
+            weightPlaceholder: string,
+            weightRequired: string,
+            widthLabel: string,
+            widthPlaceholder: string,
+            widthRequired: string,
+            thicknessLabel: string,
+            thicknessPlaceholder: string,
+            thicknessRequired: string,
+            priceLabel: string,
+            pricePlaceholder: string,
+            priceRequired: string
+        },
+        edgeCategories: {
+            error: string,
+            deleteTitle: string,
+            deleteMessage: string
+        },
+        edgeImage: {
+            editTitle: string,
+            editFileLabel: string,
+            editFilePlaceholder: string,
+            editFileRequired: string,
+            editFileFormat: string,
+            editError: string,
+            deleteTitle: string,
+            deleteMessage: string,
+            deleteError: string
+        }
     }
 }

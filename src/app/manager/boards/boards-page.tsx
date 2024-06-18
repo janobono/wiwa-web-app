@@ -305,7 +305,6 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
     useEffect(() => {
         setWeightSign(unitSign(UnitId.KILOGRAM));
         setLengthSign(unitSign(UnitId.MILLIMETER));
-        setPriceSign(unitSign(UnitId.PIECE));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
     }, [resourceState]);
 
@@ -536,7 +535,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         setValue={setWidth}
                         setValid={setWidthValid}
                         validate={() => {
-                            if (length.trim().length === 0) {
+                            if (width.trim().length === 0) {
                                 return {
                                     valid: false,
                                     message: resourceState?.manager?.boards.boardDialog.widthRequired

@@ -143,5 +143,58 @@
         "valueRequired": "Value is required"
       }
     }
+  },
+  "edges": {
+    "fetchDataError": "Edges loading failed",
+    "addEdge": {
+      "error": "Add edge failed"
+    },
+    "editEdge": {
+      "error": "Edit edge failed"
+    },
+    "deleteEdge": {
+      "title": "Delete edge",
+      "message": "Do you really want to delete edge?",
+      "error": "Delete edge failed"
+    },
+    "edgeDialog": {
+      "title": "Edge",
+      "codeLabel": "Code",
+      "codePlaceholder": "Enter code",
+      "codeRequired": "Code is required",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter name",
+      "nameRequired": "Name is required",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Enter description",
+      "weightLabel": "Weight",
+      "weightPlaceholder": "Enter weight",
+      "weightRequired": "Weight is required",
+      "widthLabel": "Width",
+      "widthPlaceholder": "Enter width",
+      "widthRequired": "Width is required",
+      "thicknessLabel": "Thickness",
+      "thicknessPlaceholder": "Enter thickness",
+      "thicknessRequired": "Thickness is required",
+      "priceLabel": "Price",
+      "pricePlaceholder": "Enter price",
+      "priceRequired": "Price is required"
+    },
+    "edgeCategories": {
+      "error": "Submit edge category items failed",
+      "deleteTitle": "Delete edge category item",
+      "deleteMessage": "Do you really want to delete edge category item?"
+    },
+    "edgeImage": {
+      "editTitle": "Edge image",
+      "editFileLabel": "File",
+      "editFilePlaceholder": "Select file",
+      "editFileRequired": "File is required",
+      "editFileFormat": "Supported file format is JPG or PNG",
+      "editError": "Edge image submitting failed",
+      "deleteTitle": "Delete edge image",
+      "deleteMessage": "Do you really want to delete edge image?",
+      "deleteError": "Delete edge image failed"
+    }
   }
 }

@@ -116,6 +116,31 @@
   "disabledAccount": {
     "text": "Zablokovaný účet."
   },
+  "edgeCriteria": {
+    "searchPlaceholder": "Kód alebo názov",
+    "codePlaceholder": "Kód",
+    "namePlaceholder": "Názov",
+    "widthFromPlaceholder": "Šírka od",
+    "widthToPlaceholder": "Šírka do",
+    "thicknessFromPlaceholder": "Hrúbka od",
+    "thicknessToPlaceholder": "Hrúbka do",
+    "priceFromPlaceholder": "Cena od",
+    "priceToPlaceholder": "Cena do"
+  },
+  "edgeTable": {
+    "id": "Id",
+    "code": "Kód",
+    "name": "Názov",
+    "description": "Popis",
+    "sale": "Predajná jednotka",
+    "weight": "Hmotnosť",
+    "width": "Šírka",
+    "thickness": "Hrúbka",
+    "price": "Cena",
+    "vatPrice": "Cena s DPH",
+    "codeListItems": "Kategórie",
+    "image": "Obrázok"
+  },
   "error": {
     "gdpr": "Vyžaduje sa súhlas s GDPR",
     "invalidCaptcha": "Nesprávny kontrolný text",

@@ -46,5 +46,8 @@ export enum EdgeField {
     weight = 'weight',
     width = 'width',
     thickness = 'thickness',
-    price = 'price'
+    price = 'price',
+    vatPrice = 'vatPrice',
+    codeListItems = 'codeListItems',
+    image = 'image'
 }

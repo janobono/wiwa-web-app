@@ -14,7 +14,7 @@
       "error": "Chyba zmazania dosky"
     },
     "boardDialog": {
-      "title": "Board",
+      "title": "Doska",
       "codeLabel": "Kód",
       "codePlaceholder": "Zadajte kód",
       "codeRequired": "Vyžaduje sa kód",
@@ -135,6 +135,53 @@
         "valuePlaceholder": "Zadajte hodnotu",
         "valueRequired": "Vyžaduje sa hodnota"
       }
+    }
+  },
+  "edges": {
+    "fetchDataError": "Chyba načítania hrán",
+    "deleteEdge": {
+      "title": "Zmazať hranu",
+      "message": "Naozaj si želáte zmazať hranu?",
+      "error": "Chyba zmazania hrany"
+    },
+    "edgeDialog": {
+      "title": "Hrana",
+      "codeLabel": "Kód",
+      "codePlaceholder": "Zadajte kód",
+      "codeRequired": "Vyžaduje sa kód",
+      "nameLabel": "Názov",
+      "namePlaceholder": "Zadajte názov",
+      "nameRequired": "Vyžaduje sa názov",
+      "descriptionLabel": "Popis",
+      "descriptionPlaceholder": "Zadajte popis",
+      "weightLabel": "Hmotnosť",
+      "weightPlaceholder": "Zadajte hmotnosť",
+      "weightRequired": "Vyžaduje sa hmotnosť",
+      "widthLabel": "Šírka",
+      "widthPlaceholder": "Zadajte šírku",
+      "widthRequired": "Vyžaduje sa šírka",
+      "thicknessLabel": "Hrúbka",
+      "thicknessPlaceholder": "Zadajte hrúbku",
+      "thicknessRequired": "Vyžaduje sa hrúbka",
+      "priceLabel": "Cena",
+      "pricePlaceholder": "Zadajte cenu",
+      "priceRequired": "Vyžaduje sa cena"
+    },
+    "edgeCategories": {
+      "error": "Chyba odoslania položiek kategórií hrany",
+      "deleteTitle": "Zmazať položku kategórie hrany",
+      "deleteMessage": "Naozaj si želáte zmazať položku kategórie hrany?"
+    },
+    "edgeImage": {
+      "editTitle": "Obrázok hrany",
+      "editFileLabel": "Súbor",
+      "editFilePlaceholder": "Zvoľte súbor",
+      "editFileRequired": "Vyžaduje sa súbor",
+      "editFileFormat": "Podporovaný formát súbory je JPG alebo PNG",
+      "editError": "Chyba odoslania obrázku dosky",
+      "deleteTitle": "Zmazať obrázok hrany",
+      "deleteMessage": "Naozaj si želáte zmazať obrázok hrany?",
+      "deleteError": "Chyba mazania obrázku"
     }
   }
 }

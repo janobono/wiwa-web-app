@@ -1,0 +1,195 @@
+import { ReactNode, useEffect, useState } from 'react';
+import { ChevronDown, ChevronUp, Search } from 'react-feather';
+
+import SelectCodeListItem from '../code-list/select-code-list-item';
+import WiwaFormInput from '../ui/wiwa-form-input';
+import WiwaInput from '../ui/wiwa-input';
+import WiwaButton from '../ui/wiwa-button';
+import { getEdgeCategories } from '../../api/controller/ui';
+import { Category } from '../../api/model';
+import { EdgeSearchCriteria } from '../../api/model/edge';
+import { CodeListItem } from '../../api/model/code-list';
+import { useResourceState } from '../../state/resource';
+
+const EdgeSearchCriteriaForm = ({searchHandler, children}: {
+    searchHandler: (criteria: EdgeSearchCriteria) => void
+    children?: ReactNode
+}) => {
+    const resourceState = useResourceState();
+
+    const [edgeCategories, setEdgeCategories] = useState<Category[]>();
+
+    const [searchField, setSearchField] = useState<string>();
+    const [code, setCode] = useState<string>();
+    const [name, setName] = useState<string>();
+    const [widthFrom, setWidthFrom] = useState('');
+    const [widthTo, setWidthTo] = useState('');
+    const [thicknessFrom, setThicknessFrom] = useState('');
+    const [thicknessTo, setThicknessTo] = useState('');
+    const [priceFrom, setPriceFrom] = useState('');
+    const [priceTo, setPriceTo] = useState('');
+    const [codeListItems, setCodeListItems] = useState<{ codeListId: number, item: CodeListItem }[]>([]);
+
+    const [extended, setExtended] = useState(false);
+
+    useEffect(() => {
+        getEdgeCategories().then(data => setEdgeCategories(data?.data));
+    }, []);
+
+    useEffect(() => {
+        if (!extended) {
+            setCode(undefined);
+            setName(undefined);
+            setWidthFrom('');
+            setWidthTo('');
+            setThicknessFrom('');
+            setThicknessTo('');
+            setPriceFrom('');
+            setPriceTo('');
+            setCodeListItems([]);
+        }
+    }, [extended]);
+
+    const createCriteria = () => {
+        return {
+            searchField,
+            code,
+            name,
+            widthFrom: toNumber(widthFrom),
+            widthTo: toNumber(widthTo),
+            thicknessFrom: toNumber(thicknessFrom),
+            thicknessTo: toNumber(thicknessTo),
+            priceFrom: toNumber(priceFrom),
+            priceTo: toNumber(priceTo),
+            codeListItems: codeListItems.map(item => item.item.code)
+        };
+    }
+
+    const toNumber = (value?: string) => {
+        if (value && value.length > 0) {
+            return Number(value);
+        }
+        return undefined;
+    }
+
+    return (
+        <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
+            <div className="flex w-2/3">
+                <div className="join w-full">
+                    <WiwaInput
+                        className="join-item w-full"
+                        placeholder={resourceState?.common?.edgeCriteria.searchPlaceholder}
+                        value={searchField}
+                        onChange={event => setSearchField(event.target.value)}
+                        onKeyUp={(event) => {
+                            if (event.key === 'Enter') {
+                                searchHandler(createCriteria());
+                            }
+                        }}
+                    />
+                    <WiwaButton
+                        title={resourceState?.common?.action.search}
+                        className="join-item"
+                        onClick={() => searchHandler(createCriteria())}
+                    ><Search size={18}/></WiwaButton>
+                    <WiwaButton
+                        title={resourceState?.common?.action.extendedSearch}
+                        className="join-item"
+                        onClick={() => setExtended(!extended)}
+                    >{extended ?
+                        <ChevronUp size={18}/>
+                        :
+                        <ChevronDown size={18}/>
+                    }</WiwaButton>
+                </div>
+                {children}
+            </div>
+
+            {extended &&
+                <>
+                    <div className="flex flex-row gap-5 w-2/3">
+                        <WiwaFormInput
+                            placeholder={resourceState?.common?.edgeCriteria.codePlaceholder}
+                            value={code}
+                            setValue={setCode}
+                        />
+                        <WiwaFormInput
+                            placeholder={resourceState?.common?.edgeCriteria.namePlaceholder}
+                            value={name}
+                            setValue={setName}
+                        />
+                        <WiwaFormInput
+                            type="number"
+                            min="0"
+                            placeholder={resourceState?.common?.edgeCriteria.priceFromPlaceholder}
+                            value={priceFrom}
+                            setValue={setPriceFrom}
+                        />
+                        <WiwaFormInput
+                            type="number"
+                            min="0"
+                            placeholder={resourceState?.common?.edgeCriteria.priceToPlaceholder}
+                            value={priceTo}
+                            setValue={setPriceTo}
+                        />
+                    </div>
+
+                    <div className="flex flex-row gap-5 w-2/3">
+                        <WiwaFormInput
+                            type="number"
+                            min="0"
+                            placeholder={resourceState?.common?.edgeCriteria.widthFromPlaceholder}
+                            value={widthFrom}
+                            setValue={setWidthFrom}
+                        />
+                        <WiwaFormInput
+                            type="number"
+                            min="0"
+                            placeholder={resourceState?.common?.edgeCriteria.widthToPlaceholder}
+                            value={widthTo}
+                            setValue={setWidthTo}
+                        />
+                        <WiwaFormInput
+                            type="number"
+                            min="0"
+                            placeholder={resourceState?.common?.edgeCriteria.thicknessFromPlaceholder}
+                            value={thicknessFrom}
+                            setValue={setThicknessFrom}
+                        />
+                        <WiwaFormInput
+                            type="number"
+                            min="0"
+                            placeholder={resourceState?.common?.edgeCriteria.thicknessToPlaceholder}
+                            value={thicknessTo}
+                            setValue={setThicknessTo}
+                        />
+                    </div>
+
+                    {edgeCategories &&
+                        <div className="flex flex-col gap-5 w-2/3">
+                            {edgeCategories.map(category =>
+                                <SelectCodeListItem
+                                    key={category.id}
+                                    codeListId={category.id}
+                                    itemSelectedHandler={(codeListItem) => {
+                                        const newCodeListItems = [...codeListItems];
+                                        const index = newCodeListItems.findIndex(item => item.codeListId === category.id);
+                                        if (index !== -1) {
+                                            newCodeListItems.splice(index, 1);
+                                        }
+                                        if (codeListItem) {
+                                            newCodeListItems.push({codeListId: category.id, item: codeListItem});
+                                        }
+                                        setCodeListItems(newCodeListItems);
+                                    }}
+                                />
+                            )}
+                        </div>
+                    }
+                </>
+            }
+        </div>
+    )
+}
+
+export default EdgeSearchCriteriaForm;

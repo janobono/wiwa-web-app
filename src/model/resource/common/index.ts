@@ -116,6 +116,31 @@ export interface ResourceCommon {
     disabledAccount: {
         text: string
     },
+    edgeCriteria:{
+        searchPlaceholder: string,
+        codePlaceholder: string,
+        namePlaceholder: string,
+        widthFromPlaceholder: string,
+        widthToPlaceholder: string,
+        thicknessFromPlaceholder: string,
+        thicknessToPlaceholder: string,
+        priceFromPlaceholder: string,
+        priceToPlaceholder: string
+    },
+    edgeTable: {
+        id: string,
+        code: string,
+        name: string,
+        description: string,
+        sale: string,
+        weight: string,
+        width: string,
+        thickness: string,
+        price: string,
+        vatPrice: string,
+        codeListItems: string,
+        image: string
+    },
     error: {
         gdpr: string,
         invalidCaptcha: string,

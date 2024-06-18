@@ -38,16 +38,15 @@ export default BoardTable;
 const TableHead = ({fields}: { fields: BoardField[] }) => {
     const resourceState = useResourceState();
 
-    const [pieceSign, setPieceSign] = useState<string>();
+    const [saleSign, setSaleSign] = useState<string>();
     const [weightSign, setWeightSign] = useState<string>();
     const [lengthSign, setLengthSign] = useState<string>();
     const [priceSign, setPriceSign] = useState<string>();
 
     useEffect(() => {
-        setPieceSign(unitSign(UnitId.PIECE));
+        setSaleSign(unitSign(UnitId.PIECE));
         setWeightSign(unitSign(UnitId.KILOGRAM));
         setLengthSign(unitSign(UnitId.MILLIMETER));
-        setPriceSign(unitSign(UnitId.PIECE));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
     }, [resourceState]);
 
@@ -80,7 +79,7 @@ const TableHead = ({fields}: { fields: BoardField[] }) => {
                 <th>{resourceState?.common?.boardTable.orientation}</th>
             }
             {fields?.find(item => item === BoardField.sale) &&
-                <th>{`${resourceState?.common?.boardTable.sale} ${pieceSign}`}</th>
+                <th>{`${resourceState?.common?.boardTable.sale} ${saleSign}`}</th>
             }
             {fields?.find(item => item === BoardField.weight) &&
                 <th>{`${resourceState?.common?.boardTable.weight} ${weightSign}`}</th>

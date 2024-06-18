@@ -35,6 +35,8 @@ import ManagerBoardCategoriesPage from './manager/boards/board-categories-page';
 import ManagerBoardImagePage from './manager/boards/board-image-page';
 import ManagerEdgesBasePage from './manager/edges-base-page';
 import ManagerEdgesPage from './manager/edges/edges-page';
+import ManagerEdgeCategoriesPage from './manager/edges/edge-categories-page';
+import ManagerEdgeImagePage from './manager/edges/edge-image-page';
 import ManagerOrderInputsPage from './manager/order-inputs-page';
 import ManagerOrdersBasePage from './manager/orders-base-page';
 import ManagerOrdersPage from './manager/orders/orders-page';
@@ -92,6 +94,8 @@ const AppPage = () => {
                 <Route path="edges" element={<ManagerEdgesBasePage/>}>
                     <Route index element={<Navigate to="index" replace/>}/>
                     <Route path="index" element={<ManagerEdgesPage/>}/>
+                    <Route path="categories" element={<ManagerEdgeCategoriesPage/>}/>
+                    <Route path="image" element={<ManagerEdgeImagePage/>}/>
                 </Route>
                 <Route path="order-inputs" element={<ManagerOrderInputsPage/>}/>
                 <Route path="orders" element={<ManagerOrdersBasePage/>}>

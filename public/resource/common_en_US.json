@@ -116,6 +116,31 @@
   "disabledAccount": {
     "text": "Blocked account."
   },
+  "edgeCriteria": {
+    "searchPlaceholder": "Code or name",
+    "codePlaceholder": "Code",
+    "namePlaceholder": "Name",
+    "widthFromPlaceholder": "Width from",
+    "widthToPlaceholder": "Width to",
+    "thicknessFromPlaceholder": "Thickness from",
+    "thicknessToPlaceholder": "Thickness to",
+    "priceFromPlaceholder": "Price from",
+    "priceToPlaceholder": "Price to"
+  },
+  "edgeTable": {
+    "id": "Id",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "sale": "Sale",
+    "weight": "Weight",
+    "width": "Width",
+    "thickness": "Thickness",
+    "price": "Price",
+    "vatPrice": "Vat price",
+    "codeListItems": "Categories",
+    "image": "Image"
+  },
   "error": {
     "gdpr": "GDPR consent required",
     "invalidCaptcha": "Invalid captcha",
