@@ -51,6 +51,17 @@ export interface ResourceManager {
             deleteMessage: string
         }
     },
+    categoryTable: {
+        id: string,
+        code: string,
+        name: string
+    },
+    categoryItemTable: {
+        id: string,
+        code: string,
+        name: string,
+        category: string
+    },
     categories: {
         option: {
             select: string,
@@ -60,6 +71,19 @@ export interface ResourceManager {
         },
         deleteCategoryQuestionTitle: string,
         deleteCategoryQuestionMessage: string
+    },
+    codeListTable: {
+        id: string,
+        code: string,
+        name: string
+    },
+    codeListItemTable: {
+        id: string,
+        codeListId: string,
+        sortNum: string,
+        code: string,
+        value: string,
+        leafNode: string
     },
     codeLists: {
         id: string,
@@ -154,6 +178,20 @@ export interface ResourceManager {
             pricesForGluingEdge: string,
             pricesForCutting: string,
             freeDays: string
+        },
+        vatRate: {
+            label: string,
+            placeholder: string,
+            required: string
         }
+    },
+    selectCodeListDialog: {
+        title: string,
+        searchTitle: string,
+        searchPlaceholder: string
+    },
+    selectCodeListItemDialog: {
+        title: string,
+        codeListPlaceholder: string
     }
 }

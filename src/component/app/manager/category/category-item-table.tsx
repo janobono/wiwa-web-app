@@ -1,6 +1,6 @@
-import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
-import { CategoryItem, CategoryItemField } from '../../api/model';
-import { useResourceState } from '../../state/resource';
+import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
+import { CategoryItem, CategoryItemField } from '../../../../api/model';
+import { useResourceState } from '../../../../state/resource';
 
 const CategoryItemTable = ({fields, rows, selected, setSelected}: {
     fields: CategoryItemField[],
@@ -35,16 +35,16 @@ const TableHead = ({fields}: { fields: CategoryItemField[] }) => {
         <thead>
         <tr>
             {fields?.find(item => item === CategoryItemField.id) &&
-                <th>{resourceState?.common?.categoryItemTable.id}</th>
+                <th>{resourceState?.manager?.categoryItemTable.id}</th>
             }
             {fields?.find(item => item === CategoryItemField.code) &&
-                <th>{resourceState?.common?.categoryItemTable.code}</th>
+                <th>{resourceState?.manager?.categoryItemTable.code}</th>
             }
             {fields?.find(item => item === CategoryItemField.name) &&
-                <th>{resourceState?.common?.categoryItemTable.name}</th>
+                <th>{resourceState?.manager?.categoryItemTable.name}</th>
             }
             {fields?.find(item => item === CategoryItemField.category) &&
-                <th>{resourceState?.common?.categoryItemTable.category}</th>
+                <th>{resourceState?.manager?.categoryItemTable.category}</th>
             }
             <th></th>
         </tr>

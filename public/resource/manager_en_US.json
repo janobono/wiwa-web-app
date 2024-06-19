@@ -51,6 +51,17 @@
       "deleteMessage": "Do you really want to delete board image?"
     }
   },
+  "categoryTable": {
+    "id": "Id",
+    "code": "Code",
+    "name": "Name"
+  },
+  "categoryItemTable": {
+    "id": "Id",
+    "code": "Code",
+    "name": "Name",
+    "category": "Category"
+  },
   "categories": {
     "option": {
       "select": "Categories",
@@ -60,6 +71,19 @@
     },
     "deleteCategoryQuestionTitle": "Delete category",
     "deleteCategoryQuestionMessage": "Do you really want to delete category?"
+  },
+  "codeListTable": {
+    "id": "Id",
+    "code": "Code",
+    "name": "Name"
+  },
+  "codeListItemTable": {
+    "id": "Id",
+    "codeListId": "Code list id",
+    "sortNum": "Sort num",
+    "code": "Code",
+    "value": "Value",
+    "leafNode": "Leaf node"
   },
   "codeLists": {
     "id": "Id",
@@ -153,6 +177,20 @@
       "pricesForGluingEdge": "Edge gluing prices",
       "pricesForCutting": "Cutting prices",
       "freeDays": "Free days"
+    },
+    "vatRate": {
+      "label": "Vat rate [%]",
+      "placeholder": "Enter vat rate",
+      "required": "Vat rate is required"
     }
+  },
+  "selectCodeListDialog": {
+    "title": "Select code list",
+    "searchTitle": "Search code list",
+    "searchPlaceholder": "Name or code"
+  },
+  "selectCodeListItemDialog": {
+    "title": "Select code list item",
+    "codeListPlaceholder": "Select code list"
   }
 }

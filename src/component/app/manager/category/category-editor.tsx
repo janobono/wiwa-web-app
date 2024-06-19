@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { Edit } from 'react-feather';
 
 import SelectCodeListDialog from '../code-list/select-code-list-dialog';
-import WiwaButton from '../ui/wiwa-button';
-import { ClientResponse } from '../../api/controller';
-import { Category } from '../../api/model';
-import { useAuthState } from '../../state/auth';
-import { useErrorState } from '../../state/error';
-import { useResourceState } from '../../state/resource';
+import WiwaButton from '../../../ui/wiwa-button';
+import { ClientResponse } from '../../../../api/controller';
+import { Category } from '../../../../api/model';
+import { useAuthState } from '../../../../state/auth';
+import { useErrorState } from '../../../../state/error';
+import { useResourceState } from '../../../../state/resource';
 
 const CATEGORY_SELECT_CODE_LIST_DIALOG_ID = 'category-select-code-list-dialog-001';
 

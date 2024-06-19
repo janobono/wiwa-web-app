@@ -1,4 +1,8 @@
 export interface ResourceAdmin {
+    applicationImageInfoTable: {
+        fileName: string,
+        thumbnail: string
+    },
     applicationImages: {
         deleteImageQuestionMessage: string,
         deleteImageQuestionTitle: string,
@@ -265,6 +269,10 @@ export interface ResourceAdmin {
             valuePlaceholder: string,
             valueRequired: string
         },
+    },
+    unitTable: {
+        id: string,
+        value: string
     },
     units: {
         editUnit: {

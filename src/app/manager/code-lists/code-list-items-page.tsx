@@ -12,7 +12,7 @@ import {
     setCodeListItem
 } from '../../../api/controller/code-list-item';
 import { CodeListItem, CodeListItemChange, CodeListItemField } from '../../../api/model/code-list';
-import CodeListItemTable from '../../../component/code-list/code-list-item-table';
+import CodeListItemTable from '../../../component/app/manager/code-list/code-list-item-table';
 import SelectCodeListItem from '../../../component/code-list/select-code-list-item';
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';

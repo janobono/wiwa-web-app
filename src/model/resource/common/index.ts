@@ -16,10 +16,6 @@ export interface ResourceCommon {
         search: string,
         submit: string
     },
-    applicationImageInfoTable: {
-        fileName: string,
-        thumbnail: string
-    },
     boardCriteria: {
         searchPlaceholder: string,
         codePlaceholder: string,
@@ -60,30 +56,6 @@ export interface ResourceCommon {
         label: string,
         placeholder: string,
         required: string
-    },
-    categoryTable: {
-        id: string,
-        code: string,
-        name: string
-    },
-    categoryItemTable: {
-        id: string,
-        code: string,
-        name: string,
-        category: string
-    },
-    codeListTable: {
-        id: string,
-        code: string,
-        name: string
-    },
-    codeListItemTable: {
-        id: string,
-        codeListId: string,
-        sortNum: string,
-        code: string,
-        value: string,
-        leafNode: string
     },
     confirmAccount: {
         action: string,
@@ -221,25 +193,12 @@ export interface ResourceCommon {
         action: string,
         text: string
     },
-    selectCodeListDialog: {
-        title: string,
-        searchTitle: string,
-        searchPlaceholder: string
-    },
-    selectCodeListItemDialog: {
-        title: string,
-        codeListPlaceholder: string
-    },
     unitId: {
         millimeter: string,
         meter: string,
         squareMeter: string,
         kilogram: string,
         piece: string
-    },
-    unitTable: {
-        id: string,
-        value: string
     },
     userCriteria: {
         searchPlaceholder: string,

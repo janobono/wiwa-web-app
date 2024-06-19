@@ -1,7 +1,7 @@
-import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
-import WiwaValue from '../ui/wiwa-value';
-import { useResourceState } from '../../state/resource';
-import { CodeListItem, CodeListItemField } from '../../api/model/code-list';
+import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
+import WiwaValue from '../../../ui/wiwa-value';
+import { CodeListItem, CodeListItemField } from '../../../../api/model/code-list';
+import { useResourceState } from '../../../../state/resource';
 
 const CodeListItemTable = ({fields, rows, selected, setSelected}: {
     fields: CodeListItemField[],
@@ -36,22 +36,22 @@ const TableHead = ({fields}: { fields: CodeListItemField[] }) => {
         <thead>
         <tr>
             {fields?.find(item => item === CodeListItemField.id) &&
-                <th>{resourceState?.common?.codeListItemTable.id}</th>
+                <th>{resourceState?.manager?.codeListItemTable.id}</th>
             }
             {fields?.find(item => item === CodeListItemField.codeListId) &&
-                <th>{resourceState?.common?.codeListItemTable.codeListId}</th>
+                <th>{resourceState?.manager?.codeListItemTable.codeListId}</th>
             }
             {fields?.find(item => item === CodeListItemField.sortNum) &&
-                <th>{resourceState?.common?.codeListItemTable.sortNum}</th>
+                <th>{resourceState?.manager?.codeListItemTable.sortNum}</th>
             }
             {fields?.find(item => item === CodeListItemField.code) &&
-                <th>{resourceState?.common?.codeListItemTable.code}</th>
+                <th>{resourceState?.manager?.codeListItemTable.code}</th>
             }
             {fields?.find(item => item === CodeListItemField.value) &&
-                <th>{resourceState?.common?.codeListItemTable.value}</th>
+                <th>{resourceState?.manager?.codeListItemTable.value}</th>
             }
             {fields?.find(item => item === CodeListItemField.leafNode) &&
-                <th>{resourceState?.common?.codeListItemTable.leafNode}</th>
+                <th>{resourceState?.manager?.codeListItemTable.leafNode}</th>
             }
             <th></th>
         </tr>

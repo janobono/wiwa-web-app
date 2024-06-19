@@ -16,10 +16,6 @@
     "search": "Vyhľadať",
     "submit": "Odoslať"
   },
-  "applicationImageInfoTable": {
-    "fileName": "Názov súboru",
-    "thumbnail": "Miniatúra"
-  },
   "boardCriteria": {
     "searchPlaceholder": "Kód, názov, kód dosky alebo kód štruktúry",
     "codePlaceholder": "Kód",
@@ -60,30 +56,6 @@
     "label": "Kontrolný text",
     "placeholder": "Zadajte kontrolný text",
     "required": "Zadajte kontrolný text"
-  },
-  "categoryTable": {
-    "id": "Id",
-    "code": "Kód",
-    "name": "Názov"
-  },
-  "categoryItemTable": {
-    "id": "Id",
-    "code": "Kód",
-    "name": "Názov",
-    "category": "Kategória"
-  },
-  "codeListTable": {
-    "id": "Id",
-    "code": "Kód",
-    "name": "Názov"
-  },
-  "codeListItemTable": {
-    "id": "Id",
-    "codeListId": "Id číselníka",
-    "sortNum": "Poradové číslo",
-    "code": "Kód",
-    "value": "Hodnota",
-    "leafNode": "Koncový uzol"
   },
   "confirmAccount": {
     "action": "Preposlať aktivačný email",
@@ -221,25 +193,12 @@
     "action": "Obnoviť",
     "text": "Platnosť prihlásenia vypršala."
   },
-  "selectCodeListDialog": {
-    "title": "Výber číselníka",
-    "searchTitle": "Vyhľadať číselník",
-    "searchPlaceholder": "Názov alebo kód"
-  },
-  "selectCodeListItemDialog": {
-    "title": "Výber položky číselníka",
-    "codeListPlaceholder": "Zvoľte číselník"
-  },
   "unitId": {
     "millimeter": "Millimeter",
     "meter": "Meter",
     "squareMeter": "Meter štvorcový",
     "kilogram": "Kilogram",
     "piece": "Kus"
-  },
-  "unitTable": {
-    "id": "Id",
-    "value": "Hodnota"
   },
   "userCriteria": {
     "searchPlaceholder": "Používateľské meno, meno, stredné meno, priezvisko alebo email",

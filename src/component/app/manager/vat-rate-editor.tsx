@@ -1,6 +1,71 @@
+import { useEffect, useState } from 'react';
+
+import WiwaFormInput from '../../ui/wiwa-form-input.tsx';
+import WiwaButton from '../../ui/wiwa-button.tsx';
+import { getVatRate, setVatRate } from '../../../api/controller/config';
+import { useAuthState } from '../../../state/auth';
+import { useErrorState } from '../../../state/error';
+import { useResourceState } from '../../../state/resource';
+
 const VatRateEditor = () => {
+    const authState = useAuthState();
+    const errorState = useErrorState();
+    const resourceState = useResourceState();
+
+    const [busy, setBusy] = useState(false);
+    const [value, setValue] = useState('');
+    const [valueValid, setValueValid] = useState(false);
+
+    useEffect(() => {
+        getVatRate(authState?.authToken?.accessToken).then(data => {
+            setValue(data?.data ? String(data.data.value) : '');
+        })
+    }, [authState?.authToken?.accessToken]);
+
+    const submitHandler = async (value: number) => {
+        setBusy(true);
+        try {
+            const response = await setVatRate(value, authState?.authToken?.accessToken);
+            setValue(response?.data ? String(response.data.value) : '');
+            errorState?.addError(response?.error);
+        } finally {
+            setBusy(false);
+        }
+    }
+
     return (
-        <></>
+        <div className="container p-5 mx-auto">
+            <WiwaFormInput
+                label={resourceState?.manager?.orderInputs.vatRate.label}
+                required={true}
+                placeholder={resourceState?.manager?.orderInputs.vatRate.placeholder}
+                value={value}
+                setValue={setValue}
+                setValid={setValueValid}
+                validate={() => {
+                    if (value.trim().length === 0) {
+                        return {
+                            valid: false,
+                            message: resourceState?.manager?.orderInputs.vatRate.required
+                        };
+                    }
+                    return {valid: true};
+                }}
+            />
+
+            <div className="flex flex-col items-center justify-center p-5">
+                <WiwaButton
+                    className="btn-primary"
+                    disabled={busy || !valueValid}
+                    onClick={() => {
+                        if (value) {
+                            submitHandler(Number(value)).then();
+                        }
+                    }}
+                >{resourceState?.common?.action.submit}
+                </WiwaButton>
+            </div>
+        </div>
     )
 }
 

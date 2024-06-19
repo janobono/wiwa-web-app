@@ -35,10 +35,10 @@ const TableHead = ({fields}: { fields: UnitField[] }) => {
         <thead>
         <tr>
             {fields?.find(item => item === UnitField.id) &&
-                <th>{resourceState?.common?.unitTable.id}</th>
+                <th>{resourceState?.admin?.unitTable.id}</th>
             }
             {fields?.find(item => item === UnitField.value) &&
-                <th>{resourceState?.common?.unitTable.value}</th>
+                <th>{resourceState?.admin?.unitTable.value}</th>
             }
             <th></th>
         </tr>
@@ -52,13 +52,15 @@ const TableRow = ({fields, row, selected, setSelected}: {
     selected?: Unit,
     setSelected: (unit?: Unit) => void
 }) => {
+    const resourceState = useResourceState();
+
     return (
         <tr
             className="hover"
             onClick={() => setSelected(row)}
         >
             {fields?.find(item => item === UnitField.id) &&
-                <td>{row.id}</td>
+                <td>{resourceState?.getUnitIdName(row.id)}</td>
             }
             {fields?.find(item => item === UnitField.value) &&
                 <td>{row.value}</td>

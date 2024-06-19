@@ -1,4 +1,8 @@
 {
+  "applicationImageInfoTable": {
+    "fileName": "Názov súboru",
+    "thumbnail": "Miniatúra"
+  },
   "applicationImages": {
     "deleteImageQuestionMessage": "Naozaj si želáte zmazať obrázok?",
     "deleteImageQuestionTitle": "Zmazať obrázok",
@@ -265,6 +269,10 @@
       "valuePlaceholder": "Zadajte pracovné hodiny",
       "valueRequired": "Vyžadujú sa pracovné hodiny"
     }
+  },
+  "unitTable": {
+    "id": "Názov",
+    "value": "Jednotka"
   },
   "units": {
     "editUnit": {

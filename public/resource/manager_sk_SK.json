@@ -51,6 +51,17 @@
       "deleteMessage": "Naozaj si želáte zmazať obrázok dosky?"
     }
   },
+  "categoryTable": {
+    "id": "Id",
+    "code": "Kód",
+    "name": "Názov"
+  },
+  "categoryItemTable": {
+    "id": "Id",
+    "code": "Kód",
+    "name": "Názov",
+    "category": "Kategória"
+  },
   "categories": {
     "option": {
       "select": "Kategórie",
@@ -60,6 +71,19 @@
     },
     "deleteCategoryQuestionTitle": "Zmazať kategóriu",
     "deleteCategoryQuestionMessage": "Naozaj si želáte zmazať kategóriu?"
+  },
+  "codeListTable": {
+    "id": "Id",
+    "code": "Kód",
+    "name": "Názov"
+  },
+  "codeListItemTable": {
+    "id": "Id",
+    "codeListId": "Id číselníka",
+    "sortNum": "Poradové číslo",
+    "code": "Kód",
+    "value": "Hodnota",
+    "leafNode": "Koncový uzol"
   },
   "codeLists": {
     "id": "Id",
@@ -146,12 +170,26 @@
   "orderInputs": {
     "option": {
       "select": "Vstup",
-      "vatRate": "DPH",
+      "vatRate": "dph",
       "manufactureProperties": "Výrobné parametre",
       "priceForGluingLayer": "Cena lepenia vrstvy",
       "pricesForGluingEdge": "Ceny lepenia hrany",
       "pricesForCutting": "Ceny rezania",
       "freeDays": "Voľné dni"
+    },
+    "vatRate": {
+      "label": "dph [%]",
+      "placeholder": "Zadajte dph",
+      "required": "Vyžaduje sa dph"
     }
+  },
+  "selectCodeListDialog": {
+    "title": "Výber číselníka",
+    "searchTitle": "Vyhľadať číselník",
+    "searchPlaceholder": "Názov alebo kód"
+  },
+  "selectCodeListItemDialog": {
+    "title": "Výber položky číselníka",
+    "codeListPlaceholder": "Zvoľte číselník"
   }
 }

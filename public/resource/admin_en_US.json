@@ -1,4 +1,8 @@
 {
+  "applicationImageInfoTable": {
+    "fileName": "File name",
+    "thumbnail": "Thumbnail"
+  },
   "applicationImages": {
     "deleteImageQuestionMessage": "Do you really want to delete image?",
     "deleteImageQuestionTitle": "Delete image",
@@ -269,6 +273,10 @@
       "valuePlaceholder": "Enter working hours",
       "valueRequired": "Working hours are required"
     }
+  },
+  "unitTable": {
+    "id": "Name",
+    "value": "Unit"
   },
   "units": {
     "editUnit": {

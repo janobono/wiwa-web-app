@@ -7,8 +7,8 @@ import {
     setEdgeCategories
 } from '../../api/controller/config';
 import { getBoardCategories, getEdgeCategories } from '../../api/controller/ui';
-import CategoriesEditor from '../../component/category/categories-editor';
-import CategoryEditor from '../../component/category/category-editor';
+import CategoriesEditor from '../../component/app/manager/category/categories-editor';
+import CategoryEditor from '../../component/app/manager/category/category-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
 import { useResourceState } from '../../state/resource';

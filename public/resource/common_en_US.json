@@ -16,10 +16,6 @@
     "search": "Search",
     "submit": "Submit"
   },
-  "applicationImageInfoTable": {
-    "fileName": "File name",
-    "thumbnail": "Thumbnail"
-  },
   "boardCriteria": {
     "searchPlaceholder": "Code, board code, structure code or name",
     "codePlaceholder": "Code",
@@ -60,30 +56,6 @@
     "label": "Captcha",
     "placeholder": "Enter captcha",
     "required": "Captcha is required"
-  },
-  "categoryTable": {
-    "id": "Id",
-    "code": "Code",
-    "name": "Name"
-  },
-  "categoryItemTable": {
-    "id": "Id",
-    "code": "Code",
-    "name": "Name",
-    "category": "Category"
-  },
-  "codeListTable": {
-    "id": "Id",
-    "code": "Code",
-    "name": "Name"
-  },
-  "codeListItemTable": {
-    "id": "Id",
-    "codeListId": "Code list id",
-    "sortNum": "Sort num",
-    "code": "Code",
-    "value": "Value",
-    "leafNode": "Leaf node"
   },
   "confirmAccount": {
     "action": "Resend activation email",
@@ -221,25 +193,12 @@
     "action": "Refresh",
     "text": "Login expired."
   },
-  "selectCodeListDialog": {
-    "title": "Select code list",
-    "searchTitle": "Search code list",
-    "searchPlaceholder": "Name or code"
-  },
-  "selectCodeListItemDialog": {
-    "title": "Select code list item",
-    "codeListPlaceholder": "Select code list"
-  },
   "unitId": {
     "millimeter": "Millimeter",
     "meter": "Meter",
     "squareMeter": "Square meter",
     "kilogram": "Kilogram",
     "piece": "Piece"
-  },
-  "unitTable": {
-    "id": "Id",
-    "value": "Value"
   },
   "userCriteria": {
     "searchPlaceholder": "Username, first name, middle name, last name or email",

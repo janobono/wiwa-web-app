@@ -35,10 +35,10 @@ const TableHead = ({fields}: { fields: ApplicationImageInfoField[] }) => {
         <thead>
         <tr>
             {fields?.find(item => item === ApplicationImageInfoField.fileName) &&
-                <th>{resourceState?.common?.applicationImageInfoTable.fileName}</th>
+                <th>{resourceState?.admin?.applicationImageInfoTable.fileName}</th>
             }
             {fields?.find(item => item === ApplicationImageInfoField.thumbnail) &&
-                <th>{resourceState?.common?.applicationImageInfoTable.thumbnail}</th>
+                <th>{resourceState?.admin?.applicationImageInfoTable.thumbnail}</th>
             }
             <th></th>
         </tr>

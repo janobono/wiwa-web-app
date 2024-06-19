@@ -1,12 +1,12 @@
-import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
-import { Category, CategoryField } from '../../api/model';
-import { useResourceState } from '../../state/resource';
+import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
+import { CodeList, CodeListField } from '../../../../api/model/code-list';
+import { useResourceState } from '../../../../state/resource';
 
-const CategoryTable = ({fields, rows, selected, setSelected}: {
-    fields: CategoryField[],
-    rows?: Category[],
-    selected?: Category,
-    setSelected: (category?: Category) => void
+const CodeListTable = ({fields, rows, selected, setSelected}: {
+    fields: CodeListField[],
+    rows?: CodeList[],
+    selected?: CodeList,
+    setSelected: (codeList?: CodeList) => void
 }) => {
     return (
         <table className="table table-zebra">
@@ -26,22 +26,22 @@ const CategoryTable = ({fields, rows, selected, setSelected}: {
     )
 }
 
-export default CategoryTable;
+export default CodeListTable;
 
-const TableHead = ({fields}: { fields: CategoryField[] }) => {
+const TableHead = ({fields}: { fields: CodeListField[] }) => {
     const resourceState = useResourceState();
 
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === CategoryField.id) &&
-                <th>{resourceState?.common?.categoryTable.id}</th>
+            {fields?.find(item => item === CodeListField.id) &&
+                <th>{resourceState?.manager?.codeListTable.id}</th>
             }
-            {fields?.find(item => item === CategoryField.code) &&
-                <th>{resourceState?.common?.categoryTable.code}</th>
+            {fields?.find(item => item === CodeListField.code) &&
+                <th>{resourceState?.manager?.codeListTable.code}</th>
             }
-            {fields?.find(item => item === CategoryField.name) &&
-                <th>{resourceState?.common?.categoryTable.name}</th>
+            {fields?.find(item => item === CodeListField.name) &&
+                <th>{resourceState?.manager?.codeListTable.name}</th>
             }
             <th></th>
         </tr>
@@ -50,23 +50,23 @@ const TableHead = ({fields}: { fields: CategoryField[] }) => {
 }
 
 const TableRow = ({fields, row, selected, setSelected}: {
-    fields: CategoryField[],
-    row: Category,
-    selected?: Category,
-    setSelected: (category?: Category) => void
+    fields: CodeListField[],
+    row: CodeList,
+    selected?: CodeList,
+    setSelected: (codeList?: CodeList) => void
 }) => {
     return (
         <tr
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === CategoryField.id) &&
+            {fields?.find(item => item === CodeListField.id) &&
                 <td>{row.id}</td>
             }
-            {fields?.find(item => item === CategoryField.code) &&
+            {fields?.find(item => item === CodeListField.code) &&
                 <td>{row.code}</td>
             }
-            {fields?.find(item => item === CategoryField.name) &&
+            {fields?.find(item => item === CodeListField.name) &&
                 <td>{row.name}</td>
             }
             <td>

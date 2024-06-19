@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import SelectCodeList from './select-code-list';
-import SelectCodeListItem from './select-code-list-item';
-import BaseDialog from '../dialog/base-dialog';
-import WiwaButton from '../ui/wiwa-button';
-import { CodeList, CodeListItem } from '../../api/model/code-list';
-import { useResourceState } from '../../state/resource';
-import { useDialogState } from '../../state/dialog';
+import SelectCodeListItem from '../../../code-list/select-code-list-item';
+import BaseDialog from '../../../dialog/base-dialog';
+import WiwaButton from '../../../ui/wiwa-button';
+import { CodeList, CodeListItem } from '../../../../api/model/code-list';
+import { useResourceState } from '../../../../state/resource';
+import { useDialogState } from '../../../../state/dialog';
 
 const SelectCodeListItemDialog = (
     {
@@ -36,11 +36,11 @@ const SelectCodeListItemDialog = (
                 <div className="container p-5 mx-auto">
                     <div className="flex flex-col items-center justify-center">
                         <div className="text-lg md:text-xl font-bold text-center">
-                            {resourceState?.common?.selectCodeListItemDialog.title}
+                            {resourceState?.manager?.selectCodeListItemDialog.title}
                         </div>
                         <div className="flex flex-col p-5 w-full">
                             <SelectCodeList
-                                placeholder={resourceState?.common?.selectCodeListItemDialog.codeListPlaceholder}
+                                placeholder={resourceState?.manager?.selectCodeListItemDialog.codeListPlaceholder}
                                 setValue={(codeList) => {
                                     setSelectedCodeList(codeList);
                                     setSelectedCodeListItem(undefined);

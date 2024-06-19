@@ -3,17 +3,17 @@ import { createPortal } from 'react-dom';
 import { Search } from 'react-feather';
 
 import CodeListTable from './code-list-table';
-import BaseDialog from '../dialog/base-dialog';
-import WiwaButton from '../ui/wiwa-button';
-import WiwaInput from '../ui/wiwa-input';
-import WiwaPageable from '../ui/wiwa-pageable';
-import { getCodeLists } from '../../api/controller/code-list';
-import { Page } from '../../api/model';
-import { CodeList, CodeListField } from '../../api/model/code-list';
-import { useAuthState } from '../../state/auth';
-import { useDialogState } from '../../state/dialog';
-import { useErrorState } from '../../state/error';
-import { useResourceState } from '../../state/resource';
+import BaseDialog from '../../../dialog/base-dialog';
+import WiwaButton from '../../../ui/wiwa-button';
+import WiwaInput from '../../../ui/wiwa-input';
+import WiwaPageable from '../../../ui/wiwa-pageable';
+import { getCodeLists } from '../../../../api/controller/code-list';
+import { Page } from '../../../../api/model';
+import { CodeList, CodeListField } from '../../../../api/model/code-list';
+import { useAuthState } from '../../../../state/auth';
+import { useDialogState } from '../../../../state/dialog';
+import { useErrorState } from '../../../../state/error';
+import { useResourceState } from '../../../../state/resource';
 
 const SelectCodeListDialog = (
     {
@@ -68,14 +68,14 @@ const SelectCodeListDialog = (
                 <div className="container p-5 mx-auto">
                     <div className="flex flex-col items-center justify-center">
                         <div className="text-lg md:text-xl font-bold text-center">
-                            {resourceState?.common?.selectCodeListDialog.title}
+                            {resourceState?.manager?.selectCodeListDialog.title}
                         </div>
                         <div className="flex flex-col p-5 w-full">
                             <div className="flex flex-row w-full items-center justify-center">
                                 <div className="join pb-5 w-2/3">
                                     <WiwaInput
                                         className="join-item"
-                                        placeholder={resourceState?.common?.selectCodeListDialog.searchPlaceholder}
+                                        placeholder={resourceState?.manager?.selectCodeListDialog.searchPlaceholder}
                                         value={searchField}
                                         onChange={event => setSearchField(event.target.value)}
                                         onKeyUp={(event) => {
@@ -85,7 +85,7 @@ const SelectCodeListDialog = (
                                         }}
                                     />
                                     <WiwaButton
-                                        title={resourceState?.common?.selectCodeListDialog.searchTitle}
+                                        title={resourceState?.manager?.selectCodeListDialog.searchTitle}
                                         className="join-item"
                                         onClick={fetchData}
                                     ><Search size={18}/></WiwaButton>
