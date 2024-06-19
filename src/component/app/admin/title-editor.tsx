@@ -5,7 +5,7 @@ import { Edit } from 'react-feather';
 import { setTitle } from '../../../api/controller/config';
 import { getTitle } from '../../../api/controller/ui';
 import BaseDialog from '../../../component/dialog/base-dialog';
-import WiwaFormInput from '../../../component/ui/wiwa-form-input';
+import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
@@ -92,7 +92,7 @@ const TitleDialog = ({showDialog, closeHandler, defaultValue, setDefaultValue}: 
                         {resourceState?.admin?.baseInfo.title.title}
                     </div>
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.admin?.baseInfo.title.titleLabel}
                         required={true}
                         placeholder={resourceState?.admin?.baseInfo.title.titlePlaceholder}

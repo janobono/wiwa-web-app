@@ -4,7 +4,7 @@ import { Minus, Plus } from 'react-feather';
 
 import { Entry } from '../../../api/model';
 import BaseDialog from '../../dialog/base-dialog';
-import WiwaFormInput from '../../ui/wiwa-form-input';
+import WiwaFormInputString from '../../ui/wiwa-form-input-string';
 import WiwaButton from '../../ui/wiwa-button';
 import { useDialogState } from '../../../state/dialog';
 import { useResourceState } from '../../../state/resource';
@@ -141,7 +141,7 @@ const CsvReplacementDialog = ({dialogId, showDialog, okHandler, cancelHandler}: 
                         {resourceState?.admin?.orderFormat.csvReplacement.title}
                     </div>
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.admin?.orderFormat.csvReplacement.regexLabel}
                         required={true}
                         placeholder={resourceState?.admin?.orderFormat.csvReplacement.regexPlaceholder}
@@ -159,7 +159,7 @@ const CsvReplacementDialog = ({dialogId, showDialog, okHandler, cancelHandler}: 
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.admin?.orderFormat.csvReplacement.replacementLabel}
                         required={true}
                         value={replacement}

@@ -13,7 +13,8 @@ import EdgeSearchCriteriaForm from '../../../component/edge/edge-search-criteria
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import WiwaFormInput from '../../../component/ui/wiwa-form-input';
+import WiwaFormInputDecimal from '../../../component/ui/wiwa-form-input-decimal';
+import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
 import WiwaFormTextarea from '../../../component/ui/wiwa-form-textarea';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
 import { DialogAnswer, DialogType } from '../../../model/ui';
@@ -264,16 +265,16 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
 
     const [description, setDescription] = useState('');
 
-    const [weight, setWeight] = useState('');
+    const [weight, setWeight] = useState<number>();
     const [weightValid, setWeightValid] = useState(false);
 
-    const [width, setWidth] = useState('');
+    const [width, setWidth] = useState<number>();
     const [widthValid, setWidthValid] = useState(false);
 
-    const [thickness, setThickness] = useState('');
+    const [thickness, setThickness] = useState<number>();
     const [thicknessValid, setThicknessValid] = useState(false);
 
-    const [price, setPrice] = useState('');
+    const [price, setPrice] = useState<number>();
     const [priceValid, setPriceValid] = useState(false);
 
     const [formValid, setFormValid] = useState(false);
@@ -294,16 +295,16 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
 
             setDescription(edge.description || '');
 
-            setWeight(String(edge.weight));
+            setWeight(edge.weight);
             setWeightValid(true);
 
-            setWidth(String(edge.width));
+            setWidth(edge.width);
             setWidthValid(true);
 
-            setThickness(String(edge.thickness));
+            setThickness(edge.thickness);
             setThicknessValid(true);
 
-            setPrice(String(edge.price));
+            setPrice(edge.price);
             setPriceValid(true);
         } else {
             setCode('');
@@ -314,16 +315,16 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
 
             setDescription('');
 
-            setWeight('');
+            setWeight(undefined);
             setWeightValid(true);
 
-            setWidth('');
+            setWidth(undefined);
             setWidthValid(true);
 
-            setThickness('');
+            setThickness(undefined);
             setThicknessValid(true);
 
-            setPrice('');
+            setPrice(undefined);
             setPriceValid(true);
         }
     }, [showDialog, edge]);
@@ -344,7 +345,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
                         {resourceState?.manager?.edges.edgeDialog.title}
                     </div>
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.manager?.edges.edgeDialog.codeLabel}
                         required={true}
                         placeholder={resourceState?.manager?.edges.edgeDialog.codePlaceholder}
@@ -362,7 +363,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.manager?.edges.edgeDialog.nameLabel}
                         required={true}
                         placeholder={resourceState?.manager?.edges.edgeDialog.namePlaceholder}
@@ -387,8 +388,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
                         setValue={setDescription}
                     />
 
-                    <WiwaFormInput
-                        type="number"
+                    <WiwaFormInputDecimal
                         min="0"
                         label={`${resourceState?.manager?.edges.edgeDialog.weightLabel} ${weightSign}`}
                         required={true}
@@ -397,7 +397,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
                         setValue={setWeight}
                         setValid={setWeightValid}
                         validate={() => {
-                            if (weight.trim().length === 0) {
+                            if (weight === undefined) {
                                 return {
                                     valid: false,
                                     message: resourceState?.manager?.edges.edgeDialog.weightRequired
@@ -407,8 +407,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
                         }}
                     />
 
-                    <WiwaFormInput
-                        type="number"
+                    <WiwaFormInputDecimal
                         min="0"
                         label={`${resourceState?.manager?.edges.edgeDialog.widthLabel} ${lengthSign}`}
                         required={true}
@@ -417,7 +416,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
                         setValue={setWidth}
                         setValid={setWidthValid}
                         validate={() => {
-                            if (width.trim().length === 0) {
+                            if (width === undefined) {
                                 return {
                                     valid: false,
                                     message: resourceState?.manager?.edges.edgeDialog.widthRequired
@@ -427,8 +426,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
                         }}
                     />
 
-                    <WiwaFormInput
-                        type="number"
+                    <WiwaFormInputDecimal
                         min="0"
                         label={`${resourceState?.manager?.edges.edgeDialog.thicknessLabel} ${lengthSign}`}
                         required={true}
@@ -437,7 +435,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
                         setValue={setThickness}
                         setValid={setThicknessValid}
                         validate={() => {
-                            if (thickness.trim().length === 0) {
+                            if (thickness === undefined) {
                                 return {
                                     valid: false,
                                     message: resourceState?.manager?.edges.edgeDialog.thicknessRequired
@@ -447,8 +445,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
                         }}
                     />
 
-                    <WiwaFormInput
-                        type="number"
+                    <WiwaFormInputDecimal
                         min="0"
                         label={`${resourceState?.manager?.edges.edgeDialog.priceLabel} ${priceSign}`}
                         required={true}
@@ -457,7 +454,7 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
                         setValue={setPrice}
                         setValid={setPriceValid}
                         validate={() => {
-                            if (price.trim().length === 0) {
+                            if (price === undefined) {
                                 return {
                                     valid: false,
                                     message: resourceState?.manager?.edges.edgeDialog.priceRequired

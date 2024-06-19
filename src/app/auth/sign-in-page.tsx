@@ -3,7 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
 import WiwaButton from '../../component/ui/wiwa-button';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
+import WiwaFormInputPassword from '../../component/ui/wiwa-form-input-password';
+import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import { useAuthState } from '../../state/auth';
 import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
@@ -75,7 +76,7 @@ const SignInPage = () => {
                     event.preventDefault();
                     handleSubmit().then();
                 }}>
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.auth?.signIn.usernameLabel}
                         required={true}
                         placeholder={resourceState?.auth?.signIn.usernamePlaceholder}
@@ -93,10 +94,9 @@ const SignInPage = () => {
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputPassword
                         label={resourceState?.auth?.signIn.passwordLabel}
                         required={true}
-                        type="password"
                         placeholder={resourceState?.auth?.signIn.passwordPlaceholder}
                         value={password}
                         setValue={setPassword}
@@ -117,7 +117,7 @@ const SignInPage = () => {
                                 to="/auth/reset-password"
                             >{resourceState?.auth?.signIn.forgottenPasswordLink}</NavLink>
                         </div>
-                    </WiwaFormInput>
+                    </WiwaFormInputPassword>
 
                     <WiwaButton
                         type="submit"

@@ -9,7 +9,7 @@ import UnitTable from '../../component/app/admin/unit-table';
 import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
+import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import { useAuthState } from '../../state/auth';
 import { useErrorState } from '../../state/error';
 import { useDialogState } from '../../state/dialog';
@@ -127,7 +127,7 @@ const UnitDialog = ({showDialog, unit, okHandler, cancelHandler}: {
                         {resourceState?.admin?.units.editUnit.title}
                     </div>
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={unit ? resourceState?.getUnitIdName(unit.id) : ''}
                         required={true}
                         placeholder={resourceState?.admin?.units.editUnit.valuePlaceholder}

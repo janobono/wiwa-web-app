@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
 import { EMAIL_REGEX } from '../../const';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
+import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
 import { useAuthState } from '../../state/auth';
@@ -81,10 +81,9 @@ const ResetPasswordPage = () => {
                         event.preventDefault();
                         handleSubmit().then();
                     }}>
-                        <WiwaFormInput
+                        <WiwaFormInputEmail
                             label={resourceState?.auth?.resetPassword.emailLabel}
                             required={true}
-                            type="email"
                             placeholder={resourceState?.auth?.resetPassword.emailPlaceholder}
                             value={email}
                             setValue={setEmail}

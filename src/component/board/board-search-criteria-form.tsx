@@ -2,7 +2,8 @@ import { ReactNode, useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Search } from 'react-feather';
 
 import SelectCodeListItem from '../code-list/select-code-list-item';
-import WiwaFormInput from '../ui/wiwa-form-input';
+import WiwaFormInputDecimal from '../ui/wiwa-form-input-decimal';
+import WiwaFormInputString from '../ui/wiwa-form-input-string';
 import WiwaInput from '../ui/wiwa-input';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaSelect from '../ui/wiwa-select';
@@ -26,14 +27,14 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
     const [boardCode, setBoardCode] = useState<string>();
     const [structureCode, setStructureCode] = useState<string>();
     const [orientation, setOrientation] = useState<boolean>();
-    const [lengthFrom, setLengthFrom] = useState('');
-    const [lengthTo, setLengthTo] = useState('');
-    const [widthFrom, setWidthFrom] = useState('');
-    const [widthTo, setWidthTo] = useState('');
-    const [thicknessFrom, setThicknessFrom] = useState('');
-    const [thicknessTo, setThicknessTo] = useState('');
-    const [priceFrom, setPriceFrom] = useState('');
-    const [priceTo, setPriceTo] = useState('');
+    const [lengthFrom, setLengthFrom] = useState<number>();
+    const [lengthTo, setLengthTo] = useState<number>();
+    const [widthFrom, setWidthFrom] = useState<number>();
+    const [widthTo, setWidthTo] = useState<number>();
+    const [thicknessFrom, setThicknessFrom] = useState<number>();
+    const [thicknessTo, setThicknessTo] = useState<number>();
+    const [priceFrom, setPriceFrom] = useState<number>();
+    const [priceTo, setPriceTo] = useState<number>();
     const [codeListItems, setCodeListItems] = useState<{ codeListId: number, item: CodeListItem }[]>([]);
 
     const [extended, setExtended] = useState(false);
@@ -49,14 +50,14 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
             setBoardCode(undefined);
             setStructureCode(undefined);
             setOrientation(undefined);
-            setLengthFrom('');
-            setLengthTo('');
-            setWidthFrom('');
-            setWidthTo('');
-            setThicknessFrom('');
-            setThicknessTo('');
-            setPriceFrom('');
-            setPriceTo('');
+            setLengthFrom(undefined);
+            setLengthTo(undefined);
+            setWidthFrom(undefined);
+            setWidthTo(undefined);
+            setThicknessFrom(undefined);
+            setThicknessTo(undefined);
+            setPriceFrom(undefined);
+            setPriceTo(undefined);
             setCodeListItems([]);
         }
     }, [extended]);
@@ -69,23 +70,16 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
             boardCode,
             structureCode,
             orientation,
-            lengthFrom: toNumber(lengthFrom),
-            lengthTo: toNumber(lengthTo),
-            widthFrom: toNumber(widthFrom),
-            widthTo: toNumber(widthTo),
-            thicknessFrom: toNumber(thicknessFrom),
-            thicknessTo: toNumber(thicknessTo),
-            priceFrom: toNumber(priceFrom),
-            priceTo: toNumber(priceTo),
+            lengthFrom,
+            lengthTo,
+            widthFrom,
+            widthTo,
+            thicknessFrom,
+            thicknessTo,
+            priceFrom,
+            priceTo,
             codeListItems: codeListItems.map(item => item.item.code)
         };
-    }
-
-    const toNumber = (value?: string) => {
-        if (value && value.length > 0) {
-            return Number(value);
-        }
-        return undefined;
     }
 
     return (
@@ -124,22 +118,22 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
             {extended &&
                 <>
                     <div className="flex flex-row gap-5 w-2/3">
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             placeholder={resourceState?.common?.boardCriteria.codePlaceholder}
                             value={code}
                             setValue={setCode}
                         />
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             placeholder={resourceState?.common?.boardCriteria.namePlaceholder}
                             value={name}
                             setValue={setName}
                         />
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             placeholder={resourceState?.common?.boardCriteria.boardCodePlaceholder}
                             value={boardCode}
                             setValue={setBoardCode}
                         />
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             placeholder={resourceState?.common?.boardCriteria.structureCodePlaceholder}
                             value={structureCode}
                             setValue={setStructureCode}
@@ -158,29 +152,25 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                     </div>
 
                     <div className="flex flex-row gap-5 w-2/3">
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.lengthFromPlaceholder}
                             value={lengthFrom}
                             setValue={setLengthFrom}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.lengthToPlaceholder}
                             value={lengthTo}
                             setValue={setLengthTo}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.widthFromPlaceholder}
                             value={widthFrom}
                             setValue={setWidthFrom}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.widthToPlaceholder}
                             value={widthTo}
@@ -189,29 +179,25 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                     </div>
 
                     <div className="flex flex-row gap-5 w-2/3">
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.thicknessFromPlaceholder}
                             value={thicknessFrom}
                             setValue={setThicknessFrom}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.thicknessToPlaceholder}
                             value={thicknessTo}
                             setValue={setThicknessTo}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.priceFromPlaceholder}
                             value={priceFrom}
                             setValue={setPriceFrom}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.priceToPlaceholder}
                             value={priceTo}

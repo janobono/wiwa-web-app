@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import WiwaFormInput from '../../ui/wiwa-form-input.tsx';
+import WiwaFormInputDecimal from '../../ui/wiwa-form-input-decimal';
 import WiwaButton from '../../ui/wiwa-button.tsx';
 import { getVatRate, setVatRate } from '../../../api/controller/config';
 import { useAuthState } from '../../../state/auth';
@@ -13,20 +13,18 @@ const VatRateEditor = () => {
     const resourceState = useResourceState();
 
     const [busy, setBusy] = useState(false);
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState<number>();
     const [valueValid, setValueValid] = useState(false);
 
     useEffect(() => {
-        getVatRate(authState?.authToken?.accessToken).then(data => {
-            setValue(data?.data ? String(data.data.value) : '');
-        })
+        getVatRate(authState?.authToken?.accessToken).then(data => setValue(data?.data?.value));
     }, [authState?.authToken?.accessToken]);
 
     const submitHandler = async (value: number) => {
         setBusy(true);
         try {
             const response = await setVatRate(value, authState?.authToken?.accessToken);
-            setValue(response?.data ? String(response.data.value) : '');
+            setValue(response?.data?.value);
             errorState?.addError(response?.error);
         } finally {
             setBusy(false);
@@ -35,7 +33,7 @@ const VatRateEditor = () => {
 
     return (
         <div className="container p-5 mx-auto">
-            <WiwaFormInput
+            <WiwaFormInputDecimal
                 label={resourceState?.manager?.orderInputs.vatRate.label}
                 required={true}
                 placeholder={resourceState?.manager?.orderInputs.vatRate.placeholder}
@@ -43,7 +41,7 @@ const VatRateEditor = () => {
                 setValue={setValue}
                 setValid={setValueValid}
                 validate={() => {
-                    if (value.trim().length === 0) {
+                    if (value === undefined) {
                         return {
                             valid: false,
                             message: resourceState?.manager?.orderInputs.vatRate.required

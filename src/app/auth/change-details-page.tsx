@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { WiwaErrorCode } from '../../api/model';
 import AccessDefender from '../../component/layout/access-defender';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
+import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
 import { useAuthState } from '../../state/auth';
@@ -98,14 +98,14 @@ const ChangeDetailsPage = () => {
                         event.preventDefault();
                         handleSubmit().then();
                     }}>
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.auth?.changeDetails.titleBeforeLabel}
                             placeholder={resourceState?.auth?.changeDetails.titleBeforePlaceholder}
                             value={titleBefore}
                             setValue={setTitleBefore}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.auth?.changeDetails.firstNameLabel}
                             required={true}
                             placeholder={resourceState?.auth?.changeDetails.firstNamePlaceholder}
@@ -123,14 +123,14 @@ const ChangeDetailsPage = () => {
                             }}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.auth?.changeDetails.midNameLabel}
                             placeholder={resourceState?.auth?.changeDetails.midNamePlaceholder}
                             value={midName}
                             setValue={setMidName}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.auth?.changeDetails.lastNameLabel}
                             placeholder={resourceState?.auth?.changeDetails.lastNamePlaceholder}
                             value={lastName}
@@ -147,7 +147,7 @@ const ChangeDetailsPage = () => {
                             }}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.auth?.changeDetails.titleAfterLabel}
                             placeholder={resourceState?.auth?.changeDetails.titleAfterPlaceholder}
                             value={titleAfter}

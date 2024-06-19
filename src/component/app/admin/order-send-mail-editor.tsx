@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getOrderSendMail, setOrderSendMail } from '../../../api/controller/config';
 import { OrderSendMail } from '../../../api/model/application';
 import WiwaButton from '../../ui/wiwa-button';
-import WiwaFormInput from '../../ui/wiwa-form-input';
+import WiwaFormInputString from '../../ui/wiwa-form-input-string';
 import { useAuthState } from '../../../state/auth';
 import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
@@ -71,12 +71,10 @@ const OrderSendMailEditor = () => {
                     },
                     authState?.authToken?.accessToken
                 );
-                if (response?.error) {
-                    errorState?.addError(response?.error);
-                }
                 if (response.data) {
                     setValue(response.data);
                 }
+                errorState?.addError(response?.error);
             }
         } finally {
             setBusy(false);
@@ -86,7 +84,7 @@ const OrderSendMailEditor = () => {
     return (
         <div className="flex flex-col p-5 gap-5 w-full">
             <div className="flex flex-col items-center justify-center">
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderSend.subjectLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderSend.subjectPlaceholder}
                     value={subject}
@@ -103,7 +101,7 @@ const OrderSendMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderSend.titleLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderSend.titlePlaceholder}
                     value={title}
@@ -120,7 +118,7 @@ const OrderSendMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderSend.messageLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderSend.messagePlaceholder}
                     value={message}
@@ -137,7 +135,7 @@ const OrderSendMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderSend.linkLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderSend.linkPlaceholder}
                     value={link}
@@ -154,7 +152,7 @@ const OrderSendMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderSend.attachmentLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderSend.attachmentPlaceholder}
                     value={attachment}

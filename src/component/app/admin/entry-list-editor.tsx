@@ -4,7 +4,7 @@ import { Edit } from 'react-feather';
 
 import { Entry } from '../../../api/model';
 import BaseDialog from '../../dialog/base-dialog';
-import WiwaFormInput from '../../ui/wiwa-form-input';
+import WiwaFormInputString from '../../ui/wiwa-form-input-string';
 import WiwaButton from '../../ui/wiwa-button';
 import { useDialogState } from '../../../state/dialog';
 import { useResourceState } from '../../../state/resource';
@@ -128,7 +128,7 @@ const EntryDialog = ({dialogId, showDialog, key, value, setValue, okHandler, can
                         {key}
                     </div>
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.admin?.orderFormat.editEntry.label}
                         required={true}
                         placeholder={resourceState?.admin?.orderFormat.editEntry.placeholder}

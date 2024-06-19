@@ -3,7 +3,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
 import { EMAIL_REGEX } from '../../const';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
+import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
+import WiwaFormInputPassword from '../../component/ui/wiwa-form-input-password';
+import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import WiwaFormCheckBox from '../../component/ui/wiwa-form-check-box';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
@@ -117,7 +119,7 @@ const SignUpPage = () => {
                     event.preventDefault();
                     handleSubmit().then();
                 }}>
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.auth?.signUp.usernameLabel}
                         required={true}
                         placeholder={resourceState?.auth?.signUp.usernamePlaceholder}
@@ -135,10 +137,9 @@ const SignUpPage = () => {
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputPassword
                         label={resourceState?.auth?.signUp.passwordLabel}
                         required={true}
-                        type="password"
                         placeholder={resourceState?.auth?.signUp.passwordPlaceholder}
                         value={password}
                         setValue={setPassword}
@@ -154,10 +155,9 @@ const SignUpPage = () => {
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputPassword
                         label={resourceState?.auth?.signUp.passwordConfirmationLabel}
                         required={true}
-                        type="password"
                         placeholder={resourceState?.auth?.signUp.passwordConfirmationPlaceholder}
                         value={passwordConfirmation}
                         setValue={setPasswordConfirmation}
@@ -179,10 +179,9 @@ const SignUpPage = () => {
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputEmail
                         label={resourceState?.auth?.signUp.emailLabel}
                         required={true}
-                        type="email"
                         placeholder={resourceState?.auth?.signUp.emailPlaceholder}
                         value={email}
                         setValue={setEmail}
@@ -204,14 +203,14 @@ const SignUpPage = () => {
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.auth?.signUp.titleBeforeLabel}
                         placeholder={resourceState?.auth?.signUp.titleBeforePlaceholder}
                         value={titleBefore}
                         setValue={setTitleBefore}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.auth?.signUp.firstNameLabel}
                         required={true}
                         placeholder={resourceState?.auth?.signUp.firstNamePlaceholder}
@@ -229,14 +228,14 @@ const SignUpPage = () => {
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.auth?.signUp.midNameLabel}
                         placeholder={resourceState?.auth?.signUp.midNamePlaceholder}
                         value={midName}
                         setValue={setMidName}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.auth?.signUp.lastNameLabel}
                         placeholder={resourceState?.auth?.signUp.lastNamePlaceholder}
                         value={lastName}
@@ -253,7 +252,7 @@ const SignUpPage = () => {
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.auth?.signUp.titleAfterLabel}
                         placeholder={resourceState?.auth?.signUp.titleAfterPlaceholder}
                         value={titleAfter}

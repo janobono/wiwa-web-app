@@ -17,7 +17,7 @@ import SelectCodeListItem from '../../../component/code-list/select-code-list-it
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import WiwaFormInput from '../../../component/ui/wiwa-form-input';
+import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
@@ -336,7 +336,7 @@ const CodeListItemDataDialog = (
                         {resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.title}
                     </div>
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.codeLabel}
                         required={true}
                         placeholder={resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.codePlaceholder}
@@ -354,7 +354,7 @@ const CodeListItemDataDialog = (
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.valueLabel}
                         required={true}
                         placeholder={resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.valuePlaceholder}

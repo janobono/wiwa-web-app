@@ -5,7 +5,8 @@ import { getCompanyInfo } from '../../api/controller/ui';
 import { CompanyInfo } from '../../api/model/application';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
+import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
+import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import WiwaFormTextarea from '../../component/ui/wiwa-form-textarea';
 import { EMAIL_REGEX } from '../../const';
 import { useAuthState } from '../../state/auth';
@@ -139,7 +140,7 @@ const CompanyInfoPage = () => {
             <div className="flex flex-col p-5 gap-5 w-full">
                 <div className="flex flex-col items-center justify-center">
                     <div className="md:grid md:grid-cols-2 md:gap-5 w-full">
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.admin?.companyInfo.nameLabel}
                             placeholder={resourceState?.admin?.companyInfo.namePlaceholder}
                             value={name}
@@ -156,7 +157,7 @@ const CompanyInfoPage = () => {
                             }}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.admin?.companyInfo.streetLabel}
                             placeholder={resourceState?.admin?.companyInfo.streetPlaceholder}
                             value={street}
@@ -175,7 +176,7 @@ const CompanyInfoPage = () => {
                     </div>
 
                     <div className="md:grid md:grid-cols-3 md:gap-5 w-full">
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.admin?.companyInfo.cityLabel}
                             placeholder={resourceState?.admin?.companyInfo.cityPlaceholder}
                             value={city}
@@ -192,7 +193,7 @@ const CompanyInfoPage = () => {
                             }}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.admin?.companyInfo.zipCodeLabel}
                             placeholder={resourceState?.admin?.companyInfo.zipCodePlaceholder}
                             value={zipCode}
@@ -209,7 +210,7 @@ const CompanyInfoPage = () => {
                             }}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.admin?.companyInfo.stateLabel}
                             placeholder={resourceState?.admin?.companyInfo.statePlaceholder}
                             value={state}
@@ -228,7 +229,7 @@ const CompanyInfoPage = () => {
                     </div>
 
                     <div className="md:grid md:grid-cols-2 md:gap-5 w-full">
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.admin?.companyInfo.phoneLabel}
                             placeholder={resourceState?.admin?.companyInfo.phonePlaceholder}
                             value={phone}
@@ -245,8 +246,7 @@ const CompanyInfoPage = () => {
                             }}
                         />
 
-                        <WiwaFormInput
-                            type="email"
+                        <WiwaFormInputEmail
                             label={resourceState?.admin?.companyInfo.mailLabel}
                             placeholder={resourceState?.admin?.companyInfo.mailPlaceholder}
                             value={mail}
@@ -271,21 +271,21 @@ const CompanyInfoPage = () => {
                     </div>
 
                     <div className="md:grid md:grid-cols-3 md:gap-5 w-full">
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.admin?.companyInfo.businessIdLabel}
                             placeholder={resourceState?.admin?.companyInfo.businessIdPlaceholder}
                             value={businessId}
                             setValue={setBusinessId}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.admin?.companyInfo.taxIdLabel}
                             placeholder={resourceState?.admin?.companyInfo.taxIdPlaceholder}
                             value={taxId}
                             setValue={setTaxId}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             label={resourceState?.admin?.companyInfo.vatRegNoLabel}
                             placeholder={resourceState?.admin?.companyInfo.vatRegNoPlaceholder}
                             value={vatRegNo}
@@ -293,7 +293,7 @@ const CompanyInfoPage = () => {
                         />
                     </div>
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.admin?.companyInfo.commercialRegisterInfoLabel}
                         placeholder={resourceState?.admin?.companyInfo.commercialRegisterInfoPlaceholder}
                         value={commercialRegisterInfo}

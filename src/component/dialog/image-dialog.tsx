@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import BaseDialog from './base-dialog';
 import WiwaButton from '../ui/wiwa-button';
-import WiwaFormFileInput from '../ui/wiwa-form-file-input';
+import WiwaFormFile from '../ui/wiwa-form-file';
 import { ValidationResult } from '../../model/ui';
 import { useResourceState } from '../../state/resource';
 
@@ -60,7 +60,7 @@ const ImageDialog = (
                         {title}
                     </div>
 
-                    <WiwaFormFileInput
+                    <WiwaFormFile
                         label={label}
                         required={required}
                         placeholder={placeholder}

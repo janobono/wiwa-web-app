@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
+import WiwaInput from './wiwa-input';
 import { ValidationResult } from '../../model/ui';
 
-const WiwaFormFileInput = (
+const WiwaFormInputEmail = (
     {
         label,
         required = false,
@@ -15,31 +15,22 @@ const WiwaFormFileInput = (
         validate = () => {
             return {valid: true}
         },
-        children
+        children,
+        disabled
     }: {
         label?: string,
         required?: boolean,
         name?: string,
         placeholder?: string,
-        value?: File,
-        setValue: (value: File) => void,
+        value: string,
+        setValue: (value: string) => void,
         setValid?: (valid: boolean) => void,
         validate?: () => ValidationResult,
-        children?: ReactNode
+        children?: ReactNode,
+        disabled?: boolean
     }) => {
-    const inputRef = useRef<HTMLInputElement>(null);
     const didMount = useRef(false);
     const [message, setMessage] = useState<string>();
-
-    useEffect(() => {
-        if (inputRef !== null && inputRef.current !== null) {
-            const dataTransfer = new DataTransfer();
-            if (value) {
-                dataTransfer.items.add(value);
-            }
-            inputRef.current.files = dataTransfer.files;
-        }
-    }, [value]);
 
     const revalidate = () => {
         if (validate && setValid) {
@@ -54,6 +45,7 @@ const WiwaFormFileInput = (
             didMount.current = true;
             return;
         }
+
         revalidate();
     }, [value]);
 
@@ -64,23 +56,19 @@ const WiwaFormFileInput = (
                     <span className="label-text">{label + (required ? '*' : '')}</span>
                 </label>
             }
-            <input
-                ref={inputRef}
-                type="file"
+            <WiwaInput
+                type="email"
                 id={name}
                 name={name}
                 placeholder={placeholder}
-                className="file-input file-input-bordered w-full"
-                onChange={event => {
-                    if (event.target.files && setValue) {
-                        setValue(event.target.files[0]);
-                    }
-                }}
+                value={value}
+                onChange={event => setValue(event.target.value)}
                 onBlur={(event) => {
                     if (!event.currentTarget.contains(event.relatedTarget)) {
                         revalidate();
                     }
                 }}
+                disabled={disabled}
             />
             {message &&
                 <label className="label">
@@ -92,4 +80,4 @@ const WiwaFormFileInput = (
     )
 }
 
-export default WiwaFormFileInput;
+export default WiwaFormInputEmail;

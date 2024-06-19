@@ -1,10 +1,11 @@
 import { ReactNode, useEffect, useState } from 'react';
-import WiwaInput from '../ui/wiwa-input.tsx';
-import WiwaButton from '../ui/wiwa-button.tsx';
+
+import WiwaFormInputString from '../ui/wiwa-form-input-string';
+import WiwaInput from '../ui/wiwa-input';
+import WiwaButton from '../ui/wiwa-button';
 import { ChevronDown, ChevronUp, Search } from 'react-feather';
 import { useResourceState } from '../../state/resource';
 import { UserSearchCriteria } from '../../api/model/user';
-import WiwaFormInput from '../ui/wiwa-form-input.tsx';
 
 const UserSearchCriteriaForm = ({searchHandler, children}: {
     searchHandler: (criteria: UserSearchCriteria) => void
@@ -60,13 +61,13 @@ const UserSearchCriteriaForm = ({searchHandler, children}: {
 
             {extended &&
                 <div className="flex flex-row gap-5 w-2/3">
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         placeholder={resourceState?.common?.userCriteria.usernamePlaceholder}
                         value={username}
                         setValue={setUsername}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         placeholder={resourceState?.common?.userCriteria.emailPlaceholder}
                         value={email}
                         setValue={setEmail}

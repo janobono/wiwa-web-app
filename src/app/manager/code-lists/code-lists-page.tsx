@@ -10,7 +10,7 @@ import CodeListTable from '../../../component/app/manager/code-list/code-list-ta
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import WiwaFormInput from '../../../component/ui/wiwa-form-input';
+import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
 import WiwaInput from '../../../component/ui/wiwa-input';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
 import { DialogAnswer, DialogType } from '../../../model/ui';
@@ -298,7 +298,7 @@ const CodeListDataDialog = ({showDialog, codeList, okHandler, cancelHandler, sub
                         {resourceState?.manager?.codeLists.codeListDialog.title}
                     </div>
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.manager?.codeLists.codeListDialog.codeLabel}
                         required={true}
                         placeholder={resourceState?.manager?.codeLists.codeListDialog.codePlaceholder}
@@ -316,7 +316,7 @@ const CodeListDataDialog = ({showDialog, codeList, okHandler, cancelHandler, sub
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.manager?.codeLists.codeListDialog.nameLabel}
                         required={true}
                         placeholder={resourceState?.manager?.codeLists.codeListDialog.namePlaceholder}

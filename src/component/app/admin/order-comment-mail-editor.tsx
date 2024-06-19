@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getOrderCommentMail, setOrderCommentMail } from '../../../api/controller/config';
 import { OrderCommentMail } from '../../../api/model/application';
 import WiwaButton from '../../ui/wiwa-button';
-import WiwaFormInput from '../../ui/wiwa-form-input';
+import WiwaFormInputString from '../../ui/wiwa-form-input-string';
 import { useAuthState } from '../../../state/auth';
 import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
@@ -64,12 +64,10 @@ const OrderCommentMailEditor = () => {
                     },
                     authState?.authToken?.accessToken
                 );
-                if (response?.error) {
-                    errorState?.addError(response?.error);
-                }
                 if (response.data) {
                     setValue(response.data);
                 }
+                errorState?.addError(response?.error);
             }
         } finally {
             setBusy(false);
@@ -79,7 +77,7 @@ const OrderCommentMailEditor = () => {
     return (
         <div className="flex flex-col p-5 gap-5 w-full">
             <div className="flex flex-col items-center justify-center">
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderComment.subjectLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderComment.subjectPlaceholder}
                     value={subject}
@@ -96,7 +94,7 @@ const OrderCommentMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderComment.titleLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderComment.titlePlaceholder}
                     value={title}
@@ -113,7 +111,7 @@ const OrderCommentMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderComment.messageLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderComment.messagePlaceholder}
                     value={message}
@@ -130,7 +128,7 @@ const OrderCommentMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderComment.linkLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderComment.linkPlaceholder}
                     value={link}

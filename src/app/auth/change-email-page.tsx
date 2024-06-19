@@ -6,7 +6,8 @@ import { EMAIL_REGEX } from '../../const';
 import AccessDefender from '../../component/layout/access-defender';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
+import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
+import WiwaFormInputPassword from '../../component/ui/wiwa-form-input-password';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import { useAuthState } from '../../state/auth';
 import { useErrorState } from '../../state/error';
@@ -91,10 +92,9 @@ const ChangeEmailPage = () => {
                         event.preventDefault();
                         handleSubmit().then();
                     }}>
-                        <WiwaFormInput
+                        <WiwaFormInputEmail
                             label={resourceState?.auth?.changeEmail.emailLabel}
                             required={true}
-                            type="email"
                             placeholder={resourceState?.auth?.changeEmail.emailPlaceholder}
                             value={email}
                             setValue={setEmail}
@@ -116,10 +116,9 @@ const ChangeEmailPage = () => {
                             }}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputPassword
                             label={resourceState?.auth?.changeEmail.passwordLabel}
                             required={true}
-                            type="password"
                             placeholder={resourceState?.auth?.changeEmail.passwordPlaceholder}
                             value={password}
                             setValue={setPassword}

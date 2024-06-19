@@ -2,7 +2,8 @@ import { ReactNode, useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Search } from 'react-feather';
 
 import SelectCodeListItem from '../code-list/select-code-list-item';
-import WiwaFormInput from '../ui/wiwa-form-input';
+import WiwaFormInputDecimal from '../ui/wiwa-form-input-decimal';
+import WiwaFormInputString from '../ui/wiwa-form-input-string';
 import WiwaInput from '../ui/wiwa-input';
 import WiwaButton from '../ui/wiwa-button';
 import { getEdgeCategories } from '../../api/controller/ui';
@@ -22,12 +23,12 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
     const [searchField, setSearchField] = useState<string>();
     const [code, setCode] = useState<string>();
     const [name, setName] = useState<string>();
-    const [widthFrom, setWidthFrom] = useState('');
-    const [widthTo, setWidthTo] = useState('');
-    const [thicknessFrom, setThicknessFrom] = useState('');
-    const [thicknessTo, setThicknessTo] = useState('');
-    const [priceFrom, setPriceFrom] = useState('');
-    const [priceTo, setPriceTo] = useState('');
+    const [widthFrom, setWidthFrom] = useState<number>();
+    const [widthTo, setWidthTo] = useState<number>();
+    const [thicknessFrom, setThicknessFrom] = useState<number>();
+    const [thicknessTo, setThicknessTo] = useState<number>();
+    const [priceFrom, setPriceFrom] = useState<number>();
+    const [priceTo, setPriceTo] = useState<number>();
     const [codeListItems, setCodeListItems] = useState<{ codeListId: number, item: CodeListItem }[]>([]);
 
     const [extended, setExtended] = useState(false);
@@ -40,12 +41,12 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
         if (!extended) {
             setCode(undefined);
             setName(undefined);
-            setWidthFrom('');
-            setWidthTo('');
-            setThicknessFrom('');
-            setThicknessTo('');
-            setPriceFrom('');
-            setPriceTo('');
+            setWidthFrom(undefined);
+            setWidthTo(undefined);
+            setThicknessFrom(undefined);
+            setThicknessTo(undefined);
+            setPriceFrom(undefined);
+            setPriceTo(undefined);
             setCodeListItems([]);
         }
     }, [extended]);
@@ -55,21 +56,14 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
             searchField,
             code,
             name,
-            widthFrom: toNumber(widthFrom),
-            widthTo: toNumber(widthTo),
-            thicknessFrom: toNumber(thicknessFrom),
-            thicknessTo: toNumber(thicknessTo),
-            priceFrom: toNumber(priceFrom),
-            priceTo: toNumber(priceTo),
+            widthFrom,
+            widthTo,
+            thicknessFrom,
+            thicknessTo,
+            priceFrom,
+            priceTo,
             codeListItems: codeListItems.map(item => item.item.code)
         };
-    }
-
-    const toNumber = (value?: string) => {
-        if (value && value.length > 0) {
-            return Number(value);
-        }
-        return undefined;
     }
 
     return (
@@ -108,25 +102,23 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
             {extended &&
                 <>
                     <div className="flex flex-row gap-5 w-2/3">
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             placeholder={resourceState?.common?.edgeCriteria.codePlaceholder}
                             value={code}
                             setValue={setCode}
                         />
-                        <WiwaFormInput
+                        <WiwaFormInputString
                             placeholder={resourceState?.common?.edgeCriteria.namePlaceholder}
                             value={name}
                             setValue={setName}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.edgeCriteria.priceFromPlaceholder}
                             value={priceFrom}
                             setValue={setPriceFrom}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.edgeCriteria.priceToPlaceholder}
                             value={priceTo}
@@ -135,29 +127,25 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
                     </div>
 
                     <div className="flex flex-row gap-5 w-2/3">
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.edgeCriteria.widthFromPlaceholder}
                             value={widthFrom}
                             setValue={setWidthFrom}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.edgeCriteria.widthToPlaceholder}
                             value={widthTo}
                             setValue={setWidthTo}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.edgeCriteria.thicknessFromPlaceholder}
                             value={thicknessFrom}
                             setValue={setThicknessFrom}
                         />
-                        <WiwaFormInput
-                            type="number"
+                        <WiwaFormInputDecimal
                             min="0"
                             placeholder={resourceState?.common?.edgeCriteria.thicknessToPlaceholder}
                             value={thicknessTo}

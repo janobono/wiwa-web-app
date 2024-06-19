@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getOrderStatusMail, setOrderStatusMail } from '../../../api/controller/config';
 import { OrderStatusMail } from '../../../api/model/application';
 import WiwaButton from '../../ui/wiwa-button';
-import WiwaFormInput from '../../ui/wiwa-form-input';
+import WiwaFormInputString from '../../ui/wiwa-form-input-string';
 import { useAuthState } from '../../../state/auth';
 import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
@@ -138,12 +138,10 @@ const OrderStatusMailEditor = () => {
                     },
                     authState?.authToken?.accessToken
                 );
-                if (response?.error) {
-                    errorState?.addError(response?.error);
-                }
                 if (response.data) {
                     setValue(response.data);
                 }
+                errorState?.addError(response?.error);
             }
         } finally {
             setBusy(false);
@@ -153,7 +151,7 @@ const OrderStatusMailEditor = () => {
     return (
         <div className="flex flex-col p-5 gap-5 w-full">
             <div className="flex flex-col items-center justify-center">
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.productionSubjectLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.productionSubjectPlaceholder}
                     value={productionSubject}
@@ -170,7 +168,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.productionTitleLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.productionTitlePlaceholder}
                     value={productionTitle}
@@ -187,7 +185,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.productionMessageLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.productionMessagePlaceholder}
                     value={productionMessage}
@@ -204,7 +202,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.readySubjectLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.readySubjectPlaceholder}
                     value={readySubject}
@@ -221,7 +219,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.readyTitleLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.readyTitlePlaceholder}
                     value={readyTitle}
@@ -238,7 +236,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.readyMessageLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.readyMessagePlaceholder}
                     value={readyMessage}
@@ -255,7 +253,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.finishedSubjectLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.finishedSubjectPlaceholder}
                     value={finishedSubject}
@@ -272,7 +270,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.finishedTitleLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.finishedTitlePlaceholder}
                     value={finishedTitle}
@@ -289,7 +287,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.finishedMessageLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.finishedMessagePlaceholder}
                     value={finishedMessage}
@@ -306,7 +304,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.cancelledSubjectLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.cancelledSubjectPlaceholder}
                     value={cancelledSubject}
@@ -323,7 +321,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.cancelledTitleLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.cancelledTitlePlaceholder}
                     value={cancelledTitle}
@@ -340,7 +338,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.cancelledMessageLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.cancelledMessagePlaceholder}
                     value={cancelledMessage}
@@ -357,7 +355,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.linkLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.linkPlaceholder}
                     value={link}
@@ -374,7 +372,7 @@ const OrderStatusMailEditor = () => {
                     }}
                 />
 
-                <WiwaFormInput
+                <WiwaFormInputString
                     label={resourceState?.admin?.mailFormat.orderStatus.attachmentLabel}
                     placeholder={resourceState?.admin?.mailFormat.orderStatus.attachmentPlaceholder}
                     value={attachment}

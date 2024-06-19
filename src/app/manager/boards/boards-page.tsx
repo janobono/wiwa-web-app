@@ -13,7 +13,8 @@ import BoardSearchCriteriaForm from '../../../component/board/board-search-crite
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import WiwaFormInput from '../../../component/ui/wiwa-form-input';
+import WiwaFormInputDecimal from '../../../component/ui/wiwa-form-input-decimal';
+import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
 import WiwaFormTextarea from '../../../component/ui/wiwa-form-textarea';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
 import WiwaSelect from '../../../component/ui/wiwa-select';
@@ -273,19 +274,19 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
 
     const [orientation, setOrientation] = useState(false);
 
-    const [weight, setWeight] = useState('');
+    const [weight, setWeight] = useState<number>();
     const [weightValid, setWeightValid] = useState(false);
 
-    const [length, setLength] = useState('');
+    const [length, setLength] = useState<number>();
     const [lengthValid, setLengthValid] = useState(false);
 
-    const [width, setWidth] = useState('');
+    const [width, setWidth] = useState<number>();
     const [widthValid, setWidthValid] = useState(false);
 
-    const [thickness, setThickness] = useState('');
+    const [thickness, setThickness] = useState<number>();
     const [thicknessValid, setThicknessValid] = useState(false);
 
-    const [price, setPrice] = useState('');
+    const [price, setPrice] = useState<number>();
     const [priceValid, setPriceValid] = useState(false);
 
     const [formValid, setFormValid] = useState(false);
@@ -314,19 +315,19 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
 
             setOrientation(board.orientation);
 
-            setWeight(String(board.weight));
+            setWeight(board.weight);
             setWeightValid(true);
 
-            setLength(String(board.length));
+            setLength(board.length);
             setLengthValid(true);
 
-            setWidth(String(board.width));
+            setWidth(board.width);
             setWidthValid(true);
 
-            setThickness(String(board.thickness));
+            setThickness(board.thickness);
             setThicknessValid(true);
 
-            setPrice(String(board.price));
+            setPrice(board.price);
             setPriceValid(true);
         } else {
             setCode('');
@@ -345,19 +346,19 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
 
             setOrientation(false);
 
-            setWeight('');
+            setWeight(undefined);
             setWeightValid(true);
 
-            setLength('');
+            setLength(undefined);
             setLengthValid(true);
 
-            setWidth('');
+            setWidth(undefined);
             setWidthValid(true);
 
-            setThickness('');
+            setThickness(undefined);
             setThicknessValid(true);
 
-            setPrice('');
+            setPrice(undefined);
             setPriceValid(true);
         }
     }, [showDialog, board]);
@@ -379,7 +380,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         {resourceState?.manager?.boards.boardDialog.title}
                     </div>
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.manager?.boards.boardDialog.codeLabel}
                         required={true}
                         placeholder={resourceState?.manager?.boards.boardDialog.codePlaceholder}
@@ -397,7 +398,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.manager?.boards.boardDialog.nameLabel}
                         required={true}
                         placeholder={resourceState?.manager?.boards.boardDialog.namePlaceholder}
@@ -422,7 +423,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         setValue={setDescription}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.manager?.boards.boardDialog.boardCodeLabel}
                         required={true}
                         placeholder={resourceState?.manager?.boards.boardDialog.boardCodePlaceholder}
@@ -440,7 +441,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         }}
                     />
 
-                    <WiwaFormInput
+                    <WiwaFormInputString
                         label={resourceState?.manager?.boards.boardDialog.structureCodeLabel}
                         required={true}
                         placeholder={resourceState?.manager?.boards.boardDialog.structureCodePlaceholder}
@@ -473,8 +474,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         </WiwaSelect>
                     </div>
 
-                    <WiwaFormInput
-                        type="number"
+                    <WiwaFormInputDecimal
                         min="0"
                         label={`${resourceState?.manager?.boards.boardDialog.weightLabel} ${weightSign}`}
                         required={true}
@@ -483,7 +483,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         setValue={setWeight}
                         setValid={setWeightValid}
                         validate={() => {
-                            if (weight.trim().length === 0) {
+                            if (weight === undefined) {
                                 return {
                                     valid: false,
                                     message: resourceState?.manager?.boards.boardDialog.weightRequired
@@ -493,8 +493,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         }}
                     />
 
-                    <WiwaFormInput
-                        type="number"
+                    <WiwaFormInputDecimal
                         min="0"
                         label={`${resourceState?.manager?.boards.boardDialog.lengthLabel} ${lengthSign}`}
                         required={true}
@@ -503,7 +502,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         setValue={setLength}
                         setValid={setLengthValid}
                         validate={() => {
-                            if (length.trim().length === 0) {
+                            if (length === undefined) {
                                 return {
                                     valid: false,
                                     message: resourceState?.manager?.boards.boardDialog.lengthRequired
@@ -513,8 +512,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         }}
                     />
 
-                    <WiwaFormInput
-                        type="number"
+                    <WiwaFormInputDecimal
                         min="0"
                         label={`${resourceState?.manager?.boards.boardDialog.widthLabel} ${lengthSign}`}
                         required={true}
@@ -523,7 +521,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         setValue={setWidth}
                         setValid={setWidthValid}
                         validate={() => {
-                            if (width.trim().length === 0) {
+                            if (width === undefined) {
                                 return {
                                     valid: false,
                                     message: resourceState?.manager?.boards.boardDialog.widthRequired
@@ -533,8 +531,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         }}
                     />
 
-                    <WiwaFormInput
-                        type="number"
+                    <WiwaFormInputDecimal
                         min="0"
                         label={`${resourceState?.manager?.boards.boardDialog.thicknessLabel} ${lengthSign}`}
                         required={true}
@@ -543,7 +540,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         setValue={setThickness}
                         setValid={setThicknessValid}
                         validate={() => {
-                            if (thickness.trim().length === 0) {
+                            if (thickness === undefined) {
                                 return {
                                     valid: false,
                                     message: resourceState?.manager?.boards.boardDialog.thicknessRequired
@@ -553,8 +550,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         }}
                     />
 
-                    <WiwaFormInput
-                        type="number"
+                    <WiwaFormInputDecimal
                         min="0"
                         label={`${resourceState?.manager?.boards.boardDialog.priceLabel} ${priceSign}`}
                         required={true}
@@ -563,7 +559,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         setValue={setPrice}
                         setValid={setPriceValid}
                         validate={() => {
-                            if (price.trim().length === 0) {
+                            if (price === undefined) {
                                 return {
                                     valid: false,
                                     message: resourceState?.manager?.boards.boardDialog.priceRequired
@@ -585,11 +581,11 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                                     boardCode,
                                     structureCode,
                                     orientation,
-                                    weight: Number(weight),
-                                    length: Number(length),
-                                    width: Number(width),
-                                    thickness: Number(thickness),
-                                    price: Number(price)
+                                    weight: weight ? weight : 0,
+                                    length: length ? length : 0,
+                                    width: width ? width : 0,
+                                    thickness: thickness ? thickness : 0,
+                                    price: price ? price : 0
                                 });
                             }}
                         >{resourceState?.common?.action.ok}

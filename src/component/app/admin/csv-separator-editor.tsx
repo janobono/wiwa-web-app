@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import WiwaButton from '../../ui/wiwa-button';
-import WiwaFormInput from '../../ui/wiwa-form-input';
+import WiwaFormInputString from '../../ui/wiwa-form-input-string';
 import { useResourceState } from '../../../state/resource';
 
 const CsvSeparatorEditor = ({busy, separator, submitHandler}: {
@@ -20,7 +20,7 @@ const CsvSeparatorEditor = ({busy, separator, submitHandler}: {
 
     return (
         <div className="container p-5 mx-auto">
-            <WiwaFormInput
+            <WiwaFormInputString
                 label={resourceState?.admin?.orderFormat.editEntry.label}
                 required={true}
                 placeholder={resourceState?.admin?.orderFormat.editEntry.placeholder}

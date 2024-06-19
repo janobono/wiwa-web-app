@@ -6,7 +6,7 @@ import AccessDefender from '../../component/layout/access-defender';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
+import WiwaFormInputPassword from '../../component/ui/wiwa-form-input-password';
 import { useAuthState } from '../../state/auth';
 import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
@@ -83,10 +83,9 @@ const ChangePasswordPage = () => {
                         event.preventDefault();
                         handleSubmit().then();
                     }}>
-                        <WiwaFormInput
+                        <WiwaFormInputPassword
                             label={resourceState?.auth?.changePassword.oldPasswordLabel}
                             required={true}
-                            type="password"
                             placeholder={resourceState?.auth?.changePassword.oldPasswordPlaceholder}
                             value={oldPassword}
                             setValue={setOldPassword}
@@ -102,10 +101,9 @@ const ChangePasswordPage = () => {
                             }}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputPassword
                             label={resourceState?.auth?.changePassword.passwordLabel}
                             required={true}
-                            type="password"
                             placeholder={resourceState?.auth?.changePassword.passwordPlaceholder}
                             value={newPassword}
                             setValue={setNewPassword}
@@ -121,10 +119,9 @@ const ChangePasswordPage = () => {
                             }}
                         />
 
-                        <WiwaFormInput
+                        <WiwaFormInputPassword
                             label={resourceState?.auth?.changePassword.passwordConfirmationLabel}
                             required={true}
-                            type="password"
                             placeholder={resourceState?.auth?.changePassword.passwordConfirmationPlaceholder}
                             value={passwordConfirmation}
                             setValue={setPasswordConfirmation}
