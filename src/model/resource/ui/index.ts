@@ -1,8 +1,7 @@
 export interface ResourceUi {
     confirm: {
         title: string,
-        message: string,
-        error: string
+        message: string
     },
     contactInfo: {
         businessId: string,

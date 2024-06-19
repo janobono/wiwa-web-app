@@ -2,16 +2,12 @@
   "applicationImages": {
     "deleteImageQuestionMessage": "Do you really want to delete image?",
     "deleteImageQuestionTitle": "Delete image",
-    "loadImagesError": "Application images loading failed",
-    "addImageError": "Application image add failed",
-    "deleteImageError": "Application image delete failed",
     "addAppImage": {
       "title": "Add application image",
       "fileLabel": "File",
       "filePlaceholder": "Select file",
       "fileFormat": "Supported file format is JPG or PNG",
-      "fileRequired": "File is required",
-      "error": "Application image submitting failed"
+      "fileRequired": "File is required"
     }
   },
   "baseInfo": {
@@ -20,22 +16,19 @@
       "fileLabel": "File",
       "filePlaceholder": "Select file",
       "fileFormat": "Supported file format is PNG",
-      "fileRequired": "File is required",
-      "error": "Logo submitting failed"
+      "fileRequired": "File is required"
     },
     "title": {
       "title": "Edit title",
       "titleLabel": "Title",
       "titlePlaceholder": "Enter title",
-      "titleRequired": "Title is required",
-      "error": "Title submitting failed"
+      "titleRequired": "Title is required"
     },
     "welcomeText": {
       "title": "Edit welcome text",
       "valueLabel": "Welcome text",
       "valuePlaceholder": "Enter welcome text",
-      "valueRequired": "Welcome text is required",
-      "error": "Welcome text submitting failed"
+      "valueRequired": "Welcome text is required"
     },
     "applicationInfo": {
       "title": "Application info",
@@ -48,7 +41,6 @@
       "confirm": "Confirm application info changes",
       "deleteItemQuestionTitle": "Delete application info item",
       "deleteItemQuestionMessage": "Do you really want to delete item?",
-      "error": "Application info changes confirmation failed",
       "editItemDialog": {
         "title": "Application info item dialog",
         "valueLabel": "Application info item",
@@ -91,8 +83,7 @@
     "commercialRegisterInfoPlaceholder": "Enter commercial register info",
     "mapUrlLabel": "Map",
     "mapUrlPlaceholder": "Enter map",
-    "mapUrlRequired": "Map is required",
-    "error": "Company info submitting failed"
+    "mapUrlRequired": "Map is required"
   },
   "mailFormat": {
     "option": {
@@ -115,8 +106,7 @@
       "messageRequired": "Message is required",
       "linkLabel": "Link",
       "linkPlaceholder": "Enter link",
-      "linkRequired": "Link is required",
-      "error": "Sign up mail format submitting error"
+      "linkRequired": "Link is required"
     },
     "resetPassword": {
       "subjectLabel": "Subject",
@@ -133,8 +123,7 @@
       "passwordMessageRequired": "Password message is required",
       "linkLabel": "Link",
       "linkPlaceholder": "Enter link",
-      "linkRequired": "Link is required",
-      "error": "Sign up mail format submitting error"
+      "linkRequired": "Link is required"
     },
     "orderComment": {
       "subjectLabel": "Subject",
@@ -148,8 +137,7 @@
       "messageRequired": "Message is required",
       "linkLabel": "Link",
       "linkPlaceholder": "Enter link",
-      "linkRequired": "Link is required",
-      "error": "Order comment mail format submitting error"
+      "linkRequired": "Link is required"
     },
     "orderSend": {
       "subjectLabel": "Subject",
@@ -166,8 +154,7 @@
       "linkRequired": "Link is required",
       "attachmentLabel": "Attachment",
       "attachmentPlaceholder": "Enter attachment",
-      "attachmentRequired": "Attachment is required",
-      "error": "Order send mail format submitting error"
+      "attachmentRequired": "Attachment is required"
     },
     "orderStatus": {
       "productionSubjectLabel": "Production subject",
@@ -211,8 +198,7 @@
       "linkRequired": "Link is required",
       "attachmentLabel": "Attachment",
       "attachmentPlaceholder": "Enter attachment",
-      "attachmentRequired": "Attachment is required",
-      "error": "Order status mail format submitting error"
+      "attachmentRequired": "Attachment is required"
     }
   },
   "orderFormat": {
@@ -231,7 +217,6 @@
     },
     "key": "key",
     "value": "value",
-    "error": "Order format submitting error",
     "editEntry": {
       "label": "Value",
       "placeholder": "Enter value",
@@ -258,52 +243,45 @@
       "title": "Edit business conditions",
       "valueLabel": "Business conditions",
       "valuePlaceholder": "Enter business conditions",
-      "valueRequired": "Business conditions are required",
-      "error": "Business conditions submitting failed"
+      "valueRequired": "Business conditions are required"
     },
     "cookiesInfo": {
       "title": "Edit cookies info",
       "valueLabel": "Cookies info",
       "valuePlaceholder": "Enter cookies info",
-      "valueRequired": "Cookies info is required",
-      "error": "Cookies info submitting failed"
+      "valueRequired": "Cookies info is required"
     },
     "gdprInfo": {
       "title": "Edit gdpr info",
       "valueLabel": "Gdpr info",
       "valuePlaceholder": "Enter gdpr info",
-      "valueRequired": "Gdpr info is required",
-      "error": "Gdpr info submitting failed"
+      "valueRequired": "Gdpr info is required"
     },
     "orderInfo": {
       "title": "Edit how to create order",
       "valueLabel": "How to create order",
       "valuePlaceholder": "Enter how to create order",
-      "valueRequired": "How to create order is required",
-      "error": "How to create order submitting failed"
+      "valueRequired": "How to create order is required"
     },
     "workingHours": {
       "title": "Edit working hours",
       "valueLabel": "Working hours",
       "valuePlaceholder": "Enter working hours",
-      "valueRequired": "Working hours are required",
-      "error": "Working hours submitting failed"
+      "valueRequired": "Working hours are required"
     }
   },
   "units": {
     "editUnit": {
       "title": "Edit unit",
       "valuePlaceholder": "Enter unit",
-      "valueRequired": "Unit is required",
-      "error": "Unit value submitting failed"
+      "valueRequired": "Unit is required"
     }
   },
   "users": {
     "fetchDataError": "Users loading failed",
     "deleteUser": {
       "title": "Delete user",
-      "message": "Do you really want to delete user?",
-      "error": "Delete user failed"
+      "message": "Do you really want to delete user?"
     },
     "userAuthorities": {
       "title": "User authorities",
@@ -311,22 +289,19 @@
       "customer": "Customer",
       "employee": "Employee",
       "manager": "Manager",
-      "admin": "Admin",
-      "error": "User authorities change failed"
+      "admin": "Admin"
     },
     "userEnabled": {
       "title": "Enabled",
       "dialogTitle": "User enabled/disabled",
       "disableQuestion": "Do you really want to disable user?",
-      "enableQuestion": "Do you really want to enable user?",
-      "error": "Enable/disable user failed"
+      "enableQuestion": "Do you really want to enable user?"
     },
     "userConfirmed": {
       "title": "Confirmed",
       "dialogTitle": "User confirmed/denied",
       "denyQuestion": "Do you really want to deny user?",
-      "confirmQuestion": "Do you really want to confirm user?",
-      "error": "Confirm/deny user failed"
+      "confirmQuestion": "Do you really want to confirm user?"
     }
   }
 }

@@ -13,6 +13,7 @@ import WiwaPageable from '../../component/ui/wiwa-pageable';
 import { DialogAnswer, DialogType } from '../../model/ui';
 import { useAuthState } from '../../state/auth';
 import { useDialogState } from '../../state/dialog';
+import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
 
 const APP_IMAGE_DIALOG_ID = 'admin-app-images-image-dialog-001';
@@ -20,12 +21,12 @@ const APP_IMAGE_DIALOG_ID = 'admin-app-images-image-dialog-001';
 const ApplicationImagesPage = () => {
     const authState = useAuthState();
     const dialogState = useDialogState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<ApplicationImageInfo>>();
     const [selected, setSelected] = useState<ApplicationImageInfo>();
-    const [error, setError] = useState<string>();
 
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
@@ -50,23 +51,19 @@ const ApplicationImagesPage = () => {
     }, [data, selected]);
 
     const fetchData = async (page: number) => {
-        setError(undefined);
         setBusy(true);
         try {
             const response = await getApplicationImages({page, size: 8}, authState?.authToken?.accessToken);
 
             setData(response?.data);
 
-            if (response?.error) {
-                setError(resourceState?.admin?.applicationImages.loadImagesError);
-            }
+            errorState?.addError(response?.error);
         } finally {
             setBusy(false);
         }
     }
 
     const addHandler = async (file: File) => {
-        setError(undefined);
         setBusy(true);
         try {
             const response = await setApplicationImage(file, authState?.authToken?.accessToken);
@@ -79,16 +76,13 @@ const ApplicationImagesPage = () => {
                 setShowDialog(false);
             }
 
-            if (response?.error) {
-                setError(resourceState?.admin?.applicationImages.addImageError);
-            }
+            errorState?.addError(response?.error);
         } finally {
             setBusy(false);
         }
     }
 
     const deleteHandler = async (filename: string) => {
-        setError(undefined);
         setBusy(true);
         try {
             const response = await deleteApplicationImage(filename, authState?.authToken?.accessToken);
@@ -104,9 +98,7 @@ const ApplicationImagesPage = () => {
 
             setSelected(undefined);
 
-            if (response?.error) {
-                setError(resourceState?.admin?.applicationImages.deleteImageError);
-            }
+            errorState?.addError(response?.error);
         } finally {
             setBusy(false);
         }
@@ -120,108 +112,98 @@ const ApplicationImagesPage = () => {
     }
 
     return (
-        error ?
-            <div className="flex  flex-col justify-center items-center w-full">
-                <div className="font-mono text-xl">{error}</div>
-            </div>
-            :
-            <>
-                <WiwaBreadcrumb breadcrumbs={[
-                    {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
-                    {
-                        key: 1,
-                        label: resourceState?.common?.navigation.adminNav.applicationImages || '',
-                        to: '/admin/application-images'
-                    }
-                ]}/>
-                <div className="flex flex-col p-5 w-full">
-                    <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
-                        <div className="join">
-                            <WiwaButton
-                                className="btn-primary join-item"
-                                title={resourceState?.common?.action.add}
-                                disabled={busy}
-                                onClick={() => setShowDialog(true)}
-                            ><Plus size={18}/>
-                            </WiwaButton>
+        <>
+            <WiwaBreadcrumb breadcrumbs={[
+                {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                {
+                    key: 1,
+                    label: resourceState?.common?.navigation.adminNav.applicationImages || '',
+                    to: '/admin/application-images'
+                }
+            ]}/>
+            <div className="flex flex-col p-5 w-full">
+                <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
+                    <div className="join">
+                        <WiwaButton
+                            className="btn-primary join-item"
+                            title={resourceState?.common?.action.add}
+                            disabled={busy}
+                            onClick={() => setShowDialog(true)}
+                        ><Plus size={18}/>
+                        </WiwaButton>
 
-                            <WiwaButton
-                                className="btn-ghost join-item"
-                                title={resourceState?.common?.action.copy}
-                                disabled={busy || selected === undefined}
-                                onClick={() => navigator.clipboard.writeText(
-                                    window.location.href
-                                        .replace('admin', 'api/ui')
-                                    + '/' + selected?.fileName)
-                                }
-                            ><Copy size={18}/>
-                            </WiwaButton>
+                        <WiwaButton
+                            className="btn-ghost join-item"
+                            title={resourceState?.common?.action.copy}
+                            disabled={busy || selected === undefined}
+                            onClick={() => navigator.clipboard.writeText(
+                                window.location.href
+                                    .replace('admin', 'api/ui')
+                                + '/' + selected?.fileName)
+                            }
+                        ><Copy size={18}/>
+                        </WiwaButton>
 
-                            <WiwaButton
-                                className="btn-accent join-item"
-                                title={resourceState?.common?.action.delete}
-                                disabled={busy || selected === undefined}
-                                onClick={() => {
-                                    dialogState?.showDialog({
-                                        type: DialogType.YES_NO,
-                                        title: resourceState?.admin?.applicationImages.deleteImageQuestionTitle,
-                                        message: resourceState?.admin?.applicationImages.deleteImageQuestionMessage,
-                                        callback: (answer: DialogAnswer) => {
-                                            if (answer === DialogAnswer.YES) {
-                                                if (selected) {
-                                                    deleteHandler(selected.fileName).then();
-                                                }
+                        <WiwaButton
+                            className="btn-accent join-item"
+                            title={resourceState?.common?.action.delete}
+                            disabled={busy || selected === undefined}
+                            onClick={() => {
+                                dialogState?.showDialog({
+                                    type: DialogType.YES_NO,
+                                    title: resourceState?.admin?.applicationImages.deleteImageQuestionTitle,
+                                    message: resourceState?.admin?.applicationImages.deleteImageQuestionMessage,
+                                    callback: (answer: DialogAnswer) => {
+                                        if (answer === DialogAnswer.YES) {
+                                            if (selected) {
+                                                deleteHandler(selected.fileName).then();
                                             }
                                         }
-                                    });
-                                }}
-                            ><Trash size={18}/>
-                            </WiwaButton>
-                        </div>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                        <ApplicationImageInfoTable
-                            fields={Object.values(ApplicationImageInfoField)}
-                            rows={data?.content}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-                    </div>
-
-                    <div className="w-full flex justify-center pt-5">
-                        <WiwaPageable
-                            isPrevious={previous}
-                            previousHandler={() => fetchData(page() - 1).then()}
-                            page={page() + 1}
-                            pageHandler={() => fetchData(page()).then()}
-                            isNext={next}
-                            nextHandler={() => fetchData(page() + 1).then()}
-                            disabled={busy}
-                        />
+                                    }
+                                });
+                            }}
+                        ><Trash size={18}/>
+                        </WiwaButton>
                     </div>
                 </div>
 
-                <AppImageDialog
-                    showDialog={showDialog}
-                    okHandler={addHandler}
-                    cancelHandler={() => {
-                        setError(undefined);
-                        setShowDialog(false);
-                    }}
-                    error={error}
-                />
-            </>
+                <div className="overflow-x-auto">
+                    <ApplicationImageInfoTable
+                        fields={Object.values(ApplicationImageInfoField)}
+                        rows={data?.content}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                </div>
+
+                <div className="w-full flex justify-center pt-5">
+                    <WiwaPageable
+                        isPrevious={previous}
+                        previousHandler={() => fetchData(page() - 1).then()}
+                        page={page() + 1}
+                        pageHandler={() => fetchData(page()).then()}
+                        isNext={next}
+                        nextHandler={() => fetchData(page() + 1).then()}
+                        disabled={busy}
+                    />
+                </div>
+            </div>
+
+            <AppImageDialog
+                showDialog={showDialog}
+                okHandler={addHandler}
+                cancelHandler={() => setShowDialog(false)}
+            />
+        </>
     )
 }
 
 export default ApplicationImagesPage;
 
-const AppImageDialog = ({showDialog, okHandler, cancelHandler, error, disabled}: {
+const AppImageDialog = ({showDialog, okHandler, cancelHandler, disabled}: {
     showDialog: boolean,
     okHandler: (file: File) => void,
     cancelHandler: () => void,
-    error?: string,
     disabled?: boolean
 }) => {
     const dialogState = useDialogState();
@@ -267,7 +249,6 @@ const AppImageDialog = ({showDialog, okHandler, cancelHandler, error, disabled}:
                 }
                 return {valid: true};
             }}
-            error={error}
             okHandler={submitHandler}
             cancelHandler={cancelHandler}
         />, dialogState.modalRoot))

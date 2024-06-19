@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit } from 'react-feather';
 
+import { setUnits } from '../../api/controller/config';
 import { getUnits } from '../../api/controller/ui';
 import { Unit, UnitField } from '../../api/model/application';
 import UnitTable from '../../component/app/admin/unit-table';
@@ -10,20 +11,20 @@ import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import { useAuthState } from '../../state/auth';
+import { useErrorState } from '../../state/error';
 import { useDialogState } from '../../state/dialog';
 import { useResourceState } from '../../state/resource';
-import { setUnits } from '../../api/controller/config';
 
 const UNIT_VALUE_DIALOG_ID = 'admin-unit-value-dialog-001';
 
 const UnitsPage = () => {
     const authState = useAuthState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Unit[]>();
     const [selected, setSelected] = useState<Unit>();
-    const [error, setError] = useState<string>();
 
     const [showDialog, setShowDialog] = useState(false);
 
@@ -32,7 +33,6 @@ const UnitsPage = () => {
     }, []);
 
     const okHandler = async (unit: Unit) => {
-        setError(undefined);
         setBusy(true);
         try {
             if (data) {
@@ -44,9 +44,7 @@ const UnitsPage = () => {
 
                     setData(response.data);
 
-                    if (response?.error) {
-                        setError(resourceState?.admin?.units.editUnit.error);
-                    }
+                    errorState?.addError(response.error);
                 }
             }
         } finally {
@@ -54,54 +52,50 @@ const UnitsPage = () => {
         }
     }
 
-    return (error ?
-            <div className="flex  flex-col justify-center items-center w-full">
-                <div className="font-mono text-xl">{error}</div>
-            </div>
-            :
-            <>
-                <WiwaBreadcrumb breadcrumbs={[
-                    {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
-                    {
-                        key: 1,
-                        label: resourceState?.common?.navigation.adminNav.units || '',
-                        to: '/admin/units'
-                    }
-                ]}/>
-                <div className="flex flex-col p-5 w-full">
-                    <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
-                        <div className="join">
-                            <WiwaButton
-                                className="btn-primary"
-                                title={resourceState?.common?.action.edit}
-                                disabled={busy || selected === undefined}
-                                onClick={() => {
-                                    setShowDialog(true);
-                                }}
-                            ><Edit size={18}/>
-                            </WiwaButton>
-                        </div>
-                    </div>
-                    <div className="overflow-x-auto">
-                        <UnitTable
-                            fields={Object.values(UnitField)}
-                            rows={data}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
+    return (
+        <>
+            <WiwaBreadcrumb breadcrumbs={[
+                {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                {
+                    key: 1,
+                    label: resourceState?.common?.navigation.adminNav.units || '',
+                    to: '/admin/units'
+                }
+            ]}/>
+            <div className="flex flex-col p-5 w-full">
+                <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
+                    <div className="join">
+                        <WiwaButton
+                            className="btn-primary"
+                            title={resourceState?.common?.action.edit}
+                            disabled={busy || selected === undefined}
+                            onClick={() => {
+                                setShowDialog(true);
+                            }}
+                        ><Edit size={18}/>
+                        </WiwaButton>
                     </div>
                 </div>
+                <div className="overflow-x-auto">
+                    <UnitTable
+                        fields={Object.values(UnitField)}
+                        rows={data}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                </div>
+            </div>
 
-                <UnitDialog
-                    showDialog={showDialog}
-                    unit={selected}
-                    okHandler={(data) => {
-                        okHandler(data).then();
-                        setShowDialog(false);
-                    }}
-                    cancelHandler={() => setShowDialog(false)}
-                />
-            </>
+            <UnitDialog
+                showDialog={showDialog}
+                unit={selected}
+                okHandler={(data) => {
+                    okHandler(data).then();
+                    setShowDialog(false);
+                }}
+                cancelHandler={() => setShowDialog(false)}
+            />
+        </>
     )
 }
 

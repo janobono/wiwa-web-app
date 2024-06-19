@@ -9,6 +9,7 @@ import WiwaMarkdownRenderer from '../../../component/ui/wiwa-markdown-renderer';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
+import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
 
 const WELCOME_TEXT_DIALOG_ID = 'admin-base-info-welcome-text-dialog-001';
@@ -57,12 +58,12 @@ const WelcomeTextDialog = ({showDialog, closeHandler, defaultValue, setDefaultVa
 }) => {
     const authState = useAuthState();
     const dialogState = useDialogState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState(defaultValue);
     const [valid, setValid] = useState(false);
-    const [error, setError] = useState<string>();
 
     useEffect(() => {
         setValue(defaultValue)
@@ -73,12 +74,9 @@ const WelcomeTextDialog = ({showDialog, closeHandler, defaultValue, setDefaultVa
         try {
             if (valid) {
                 const response = await setWelcomeText(value || '', authState?.authToken?.accessToken);
-                if (response?.error) {
-                    setError(resourceState?.admin?.baseInfo.welcomeText.error);
-                } else {
-                    setDefaultValue(response.data?.value || '');
-                    closeHandler();
-                }
+                errorState?.addError(response.error);
+                setDefaultValue(response.data?.value || '');
+                closeHandler();
             }
         } finally {
             setBusy(false);
@@ -108,7 +106,6 @@ const WelcomeTextDialog = ({showDialog, closeHandler, defaultValue, setDefaultVa
                 return {valid: true};
             }}
             rows={20}
-            error={error}
             okHandler={submit}
             cancelHandler={closeHandler}
         />

@@ -5,6 +5,7 @@ import PriceForGluingLayerEditor from '../../component/app/manager/price-for-glu
 import PricesForGluingEdgeEditor from '../../component/app/manager/prices-for-gluing-edge-editor';
 import PricesForCuttingEditor from '../../component/app/manager/prices-for-cutting-editor';
 import FreeDaysEditor from '../../component/app/manager/free-days-editor';
+import VatRateEditor from '../../component/app/manager/vat-rate-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
 import { useResourceState } from '../../state/resource';
@@ -31,19 +32,21 @@ const OrderInputsPage = () => {
                     onChange={event => setIndex(Number(event.currentTarget.value))}
                 >
                     <option disabled value="0">{resourceState?.manager?.orderInputs.option.select}</option>
-                    <option value="1">{resourceState?.manager?.orderInputs.option.manufactureProperties}</option>
-                    <option value="2">{resourceState?.manager?.orderInputs.option.priceForGluingLayer}</option>
-                    <option value="3">{resourceState?.manager?.orderInputs.option.pricesForGluingEdge}</option>
-                    <option value="4">{resourceState?.manager?.orderInputs.option.pricesForCutting}</option>
-                    <option value="5">{resourceState?.manager?.orderInputs.option.freeDays}</option>
+                    <option value="1">{resourceState?.manager?.orderInputs.option.vatRate}</option>
+                    <option value="2">{resourceState?.manager?.orderInputs.option.manufactureProperties}</option>
+                    <option value="3">{resourceState?.manager?.orderInputs.option.priceForGluingLayer}</option>
+                    <option value="4">{resourceState?.manager?.orderInputs.option.pricesForGluingEdge}</option>
+                    <option value="5">{resourceState?.manager?.orderInputs.option.pricesForCutting}</option>
+                    <option value="6">{resourceState?.manager?.orderInputs.option.freeDays}</option>
                 </WiwaSelect>
 
                 <div>
-                    {index == 1 && <ManufacturePropertiesEditor/>}
-                    {index == 2 && <PriceForGluingLayerEditor/>}
-                    {index == 3 && <PricesForGluingEdgeEditor/>}
-                    {index == 4 && <PricesForCuttingEditor/>}
-                    {index == 5 && <FreeDaysEditor/>}
+                    {index == 1 && <VatRateEditor/>}
+                    {index == 2 && <ManufacturePropertiesEditor/>}
+                    {index == 3 && <PriceForGluingLayerEditor/>}
+                    {index == 4 && <PricesForGluingEdgeEditor/>}
+                    {index == 5 && <PricesForCuttingEditor/>}
+                    {index == 6 && <FreeDaysEditor/>}
                 </div>
             </div>
         </>

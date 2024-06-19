@@ -13,8 +13,7 @@
     "lastNameRequired": "Vyžaduje sa priezvisko",
     "titleAfterLabel": "Titul za",
     "titleAfterPlaceholder": "Zadajte titul za",
-    "gdprLabel": "GDPR súhlas",
-    "error": "Zmena údajov používateľa neúspešná"
+    "gdprLabel": "GDPR súhlas"
   },
   "changeEmail": {
     "title": "Zmeniť email",
@@ -24,8 +23,7 @@
     "emailFormat": "Neplatný email",
     "passwordLabel": "Heslo",
     "passwordPlaceholder": "Zadajte heslo",
-    "passwordRequired": "Vyžaduje sa heslo",
-    "error": "Zmena emailu neúspešná"
+    "passwordRequired": "Vyžaduje sa heslo"
   },
   "changePassword": {
     "title": "Zmeniť heslo",
@@ -38,13 +36,11 @@
     "passwordConfirmationLabel": "Potvrdenie hesla",
     "passwordConfirmationPlaceholder": "Zadajte potvrdenie hesla",
     "passwordConfirmationRequired": "Vyžaduje sa potvrdenie hesla",
-    "passwordConfirmationNotEquals": "Potvrdenie hesla sa nezhoduje s heslom",
-    "error": "Zmena hesla neúspešná"
+    "passwordConfirmationNotEquals": "Potvrdenie hesla sa nezhoduje s heslom"
   },
   "resendConfirmation": {
     "title": "Preposlať aktivačný email",
-    "message": "Aktivačná správa bola odoslaná na Váš email.",
-    "error": "Nepodarilo sa odoslať aktivačnú správu."
+    "message": "Aktivačná správa bola odoslaná na Váš email."
   },
   "resetPassword": {
     "title": "Zabudnuté heslo",
@@ -52,8 +48,7 @@
     "emailPlaceholder": "Zadajte email",
     "emailRequired": "Vyžaduje sa email",
     "emailFormat": "Neplatný email",
-    "message": "Na Váš používateľský email sme odoslali odkaz na aktiváciu hesla.",
-    "error": "Vygenerovanie hesla neúspešné"
+    "message": "Na Váš používateľský email sme odoslali odkaz na aktiváciu hesla."
   },
   "signIn": {
     "title": "Prihláste sa do svojho účtu",
@@ -65,8 +60,7 @@
     "passwordLabel": "Heslo",
     "passwordPlaceholder": "Zadajte heslo",
     "passwordRequired": "Vyžaduje sa heslo",
-    "forgottenPasswordLink": "Zabudnuté heslo?",
-    "error": "Prihlásenie neúspešné"
+    "forgottenPasswordLink": "Zabudnuté heslo?"
   },
   "signUp": {
     "title": "Zaregistrujte si svoj účet",
@@ -98,7 +92,6 @@
     "lastNameRequired": "Vyžaduje sa priezvisko",
     "titleAfterLabel": "Titul za",
     "titleAfterPlaceholder": "Zadajte titul za",
-    "gdprLabel": "GDPR súhlas",
-    "error": "Zaregistrovanie neúspešné"
+    "gdprLabel": "GDPR súhlas"
   }
 }

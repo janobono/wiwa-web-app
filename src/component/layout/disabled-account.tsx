@@ -19,9 +19,7 @@ const DisabledAccount = () => {
 
     return (!show ? null :
         <div className="alert alert-error text-xs md:text-base">
-            <span>
-                <span>{resourceState?.common?.disabledAccount.text}</span>
-            </span>
+            <span>{resourceState?.common?.disabledAccount.text}</span>
         </div>)
 }
 

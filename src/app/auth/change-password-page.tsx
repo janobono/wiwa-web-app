@@ -3,17 +3,19 @@ import { useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
 import AccessDefender from '../../component/layout/access-defender';
-import WiwaFormInput from '../../component/ui/wiwa-form-input';
-import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
+import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
+import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import { useAuthState } from '../../state/auth';
+import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
-import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb.tsx';
 
 const ChangePasswordPage = () => {
     const navigate = useNavigate();
 
     const authState = useAuthState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [oldPassword, setOldPassword] = useState('');
@@ -56,7 +58,7 @@ const ChangePasswordPage = () => {
                         setFormError(resourceState?.common?.error.invalidCaptcha);
                         break;
                     default:
-                        setFormError(resourceState?.auth?.changePassword.error);
+                        errorState?.addError(response?.error);
                         break;
                 }
             } else {

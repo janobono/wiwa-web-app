@@ -18,7 +18,6 @@ const ImageDialog = (
         value,
         setValue,
         validate,
-        error,
         okHandler,
         cancelHandler
     }: {
@@ -32,7 +31,6 @@ const ImageDialog = (
         value?: File,
         setValue: (value: File) => void,
         validate?: () => ValidationResult,
-        error?: string,
         okHandler: () => void,
         cancelHandler: () => void
     }) => {
@@ -92,11 +90,6 @@ const ImageDialog = (
                         >{resourceState?.common?.imageDialog.cancel}
                         </WiwaButton>
                     </div>
-                    {error &&
-                        <label className="label">
-                            <span className="label-text-alt text-error">{error}</span>
-                        </label>
-                    }
                 </div>
             </div>
         </BaseDialog>

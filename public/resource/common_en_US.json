@@ -3,6 +3,7 @@
     "add": "Add",
     "cancel": "Cancel",
     "categories": "Categories",
+    "close": "Close",
     "copy": "Copy",
     "delete": "Delete",
     "edit": "Edit",
@@ -128,6 +129,7 @@
     "image": "Image"
   },
   "error": {
+    "title": "We apologize. An error occurred.",
     "gdpr": "GDPR consent required",
     "invalidCaptcha": "Invalid captcha",
     "invalidCredentials": "Invalid credentials",
@@ -222,8 +224,7 @@
   "selectCodeListDialog": {
     "title": "Select code list",
     "searchTitle": "Search code list",
-    "searchPlaceholder": "Name or code",
-    "error": "Code lists loading failed"
+    "searchPlaceholder": "Name or code"
   },
   "selectCodeListItemDialog": {
     "title": "Select code list item",

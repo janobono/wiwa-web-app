@@ -21,16 +21,12 @@ const CookiesConsent = () => {
     }, [appState]);
 
     return (!show ? null :
-        <div className="alert alert-warning text-xs md:text-base">
-            <span>
+            <div className="alert alert-warning text-xs md:text-base">
                 <span>{resourceState?.common?.cookiesConsent.text}</span>
-                <span> </span>
                 <NavLink
                     className="link"
                     to="/ui/cookies-info"
                 >{resourceState?.common?.cookiesConsent.link}</NavLink>
-            </span>
-            <div>
                 <button
                     className="btn btn-sm normal-case text-xs md:text-base"
                     onClick={() => {
@@ -38,7 +34,7 @@ const CookiesConsent = () => {
                     }}
                 >{resourceState?.common?.cookiesConsent.action}</button>
             </div>
-        </div>)
+    )
 }
 
 export default CookiesConsent;

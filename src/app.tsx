@@ -6,6 +6,7 @@ import AppPage from './app/app-page';
 import ConfirmAccount from './component/layout/confirm-account';
 import CookiesConsent from './component/layout/cookies-consent';
 import DisabledAccount from './component/layout/disabled-account';
+import ErrorInfo from './component/layout/error-info';
 import MaintenanceInfo from './component/layout/maintenance-info';
 import RefreshToken from './component/layout/refresh-token';
 import WiwaSpinner from './component/ui/wiwa-spinner';
@@ -23,19 +24,23 @@ function App() {
     }, []);
 
     return (
-        healthState?.up ?
-            <BrowserRouter>
-                <ConfirmAccount/>
-                <CookiesConsent/>
-                <DisabledAccount/>
-                <MaintenanceInfo/>
-                <RefreshToken/>
-                <AppPage/>
-            </BrowserRouter>
-            :
-            <div className="flex gap-5 w-full h-screen items-center justify-center">
-                <WiwaSpinner/>
-            </div>
+        <>
+            <ErrorInfo/>
+            {healthState?.up ?
+                <BrowserRouter>
+                    <ConfirmAccount/>
+                    <CookiesConsent/>
+                    <DisabledAccount/>
+                    <MaintenanceInfo/>
+                    <RefreshToken/>
+                    <AppPage/>
+                </BrowserRouter>
+                :
+                <div className="flex gap-5 w-full h-screen items-center justify-center">
+                    <WiwaSpinner/>
+                </div>
+            }
+        </>
     )
 }
 

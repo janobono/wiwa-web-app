@@ -1,10 +1,8 @@
 {
   "boards": {
-    "fetchDataError": "Chyba načítania dosiek",
     "deleteBoard": {
       "title": "Zmazať dosku",
-      "message": "Naozaj si želáte zmazať dosku?",
-      "error": "Chyba zmazania dosky"
+      "message": "Naozaj si želáte zmazať dosku?"
     },
     "boardDialog": {
       "title": "Doska",
@@ -40,7 +38,6 @@
       "priceRequired": "Vyžaduje sa cena"
     },
     "boardCategories": {
-      "error": "Chyba odoslania položiek kategórií dosky",
       "deleteTitle": "Zmazať položku kategórie dosky",
       "deleteMessage": "Naozaj si želáte zmazať položku kategórie dosky?"
     },
@@ -50,10 +47,8 @@
       "editFilePlaceholder": "Zvoľte súbor",
       "editFileRequired": "Vyžaduje sa súbor",
       "editFileFormat": "Podporovaný formát súbory je JPG alebo PNG",
-      "editError": "Chyba odoslania obrázku dosky",
       "deleteTitle": "Zmazať obrázok dosky",
-      "deleteMessage": "Naozaj si želáte zmazať obrázok dosky?",
-      "deleteError": "Chyba mazania obrázku"
+      "deleteMessage": "Naozaj si želáte zmazať obrázok dosky?"
     }
   },
   "categories": {
@@ -63,8 +58,6 @@
       "edge": "Hrany",
       "material": "Materiál dosky"
     },
-    "setCategoryError": "Zmena kategórie neúspešná",
-    "setCategoriesError": "Zmena kategórií neúspešná",
     "deleteCategoryQuestionTitle": "Zmazať kategóriu",
     "deleteCategoryQuestionMessage": "Naozaj si želáte zmazať kategóriu?"
   },
@@ -72,20 +65,12 @@
     "id": "Id",
     "code": "Kód",
     "name": "Názov",
-    "fetchDataError": "Chyba načítania číselníkov",
     "searchCodeList": {
       "placeholder": "Názov alebo kód"
     },
-    "addCodeList": {
-      "error": "Chyba pridania číselníka"
-    },
-    "editCodeList": {
-      "error": "Chyba úpravy číselníka"
-    },
     "deleteCodeList": {
       "title": "Zmazať číselník",
-      "message": "Naozaj si želáte zmazať číselník?",
-      "error": "Chyba zmazania číselníka"
+      "message": "Naozaj si želáte zmazať číselník?"
     },
     "codeListDialog": {
       "title": "Číselník",
@@ -101,23 +86,9 @@
       "id": "Id",
       "code": "Kód",
       "value": "Hodnota",
-      "fetchDataError": "Chyba načítania položiek číselníkov",
-      "addCodeListItem": {
-        "error": "Chyba pridania položky číselníka"
-      },
-      "editCodeListItem": {
-        "error": "Chyba úpravy položky číselníka"
-      },
-      "moveUpCodeListItem": {
-        "error": "Chyba presunu položky číselníka nahor"
-      },
-      "moveDownCodeListItem": {
-        "error": "Chyba presunu položky číselníka nadol"
-      },
       "deleteCodeListItem": {
         "title": "Zmazať položku číselníka",
-        "message": "Naozaj si želáte zmazať položku číselníka?",
-        "error": "Chyba zmazania položky číselníka"
+        "message": "Naozaj si želáte zmazať položku číselníka?"
       },
       "codeListItemDialog": {
         "title": "Položka číselníka",
@@ -131,11 +102,9 @@
     }
   },
   "edges": {
-    "fetchDataError": "Chyba načítania hrán",
     "deleteEdge": {
       "title": "Zmazať hranu",
-      "message": "Naozaj si želáte zmazať hranu?",
-      "error": "Chyba zmazania hrany"
+      "message": "Naozaj si želáte zmazať hranu?"
     },
     "edgeDialog": {
       "title": "Hrana",
@@ -161,7 +130,6 @@
       "priceRequired": "Vyžaduje sa cena"
     },
     "edgeCategories": {
-      "error": "Chyba odoslania položiek kategórií hrany",
       "deleteTitle": "Zmazať položku kategórie hrany",
       "deleteMessage": "Naozaj si želáte zmazať položku kategórie hrany?"
     },
@@ -171,15 +139,14 @@
       "editFilePlaceholder": "Zvoľte súbor",
       "editFileRequired": "Vyžaduje sa súbor",
       "editFileFormat": "Podporovaný formát súbory je JPG alebo PNG",
-      "editError": "Chyba odoslania obrázku dosky",
       "deleteTitle": "Zmazať obrázok hrany",
-      "deleteMessage": "Naozaj si želáte zmazať obrázok hrany?",
-      "deleteError": "Chyba mazania obrázku"
+      "deleteMessage": "Naozaj si želáte zmazať obrázok hrany?"
     }
   },
   "orderInputs": {
     "option": {
       "select": "Vstup",
+      "vatRate": "DPH",
       "manufactureProperties": "Výrobné parametre",
       "priceForGluingLayer": "Cena lepenia vrstvy",
       "pricesForGluingEdge": "Ceny lepenia hrany",

@@ -13,8 +13,7 @@
     "lastNameRequired": "Last name is required",
     "titleAfterLabel": "Title after",
     "titleAfterPlaceholder": "Enter title after",
-    "gdprLabel": "GDPR consent",
-    "error": "Change user details failed"
+    "gdprLabel": "GDPR consent"
   },
   "changeEmail": {
     "title": "Change email",
@@ -24,8 +23,7 @@
     "emailFormat": "Invalid email",
     "passwordLabel": "Password",
     "passwordPlaceholder": "Enter password",
-    "passwordRequired": "Password is required",
-    "error": "Change email failed"
+    "passwordRequired": "Password is required"
   },
   "changePassword": {
     "title": "Change password",
@@ -38,13 +36,11 @@
     "passwordConfirmationLabel": "Password confirmation",
     "passwordConfirmationPlaceholder": "Enter password confirmation",
     "passwordConfirmationRequired": "Password confirmation is required",
-    "passwordConfirmationNotEquals": "Password confirmation not equals password",
-    "error": "Change password failed"
+    "passwordConfirmationNotEquals": "Password confirmation not equals password"
   },
   "resendConfirmation": {
     "title": "Resend activation email",
-    "message": "The activation message has been sent to your email.",
-    "error": "Resend activation email failed"
+    "message": "The activation message has been sent to your email."
   },
   "resetPassword": {
     "title": "Forgotten password",
@@ -52,8 +48,7 @@
     "emailPlaceholder": "Enter email",
     "emailRequired": "Email is required",
     "emailFormat": "Invalid email",
-    "message": "We have sent an password activation link to your user email.",
-    "error": "Reset password failed"
+    "message": "We have sent an password activation link to your user email."
   },
   "signIn": {
     "title": "Sign in to your account",
@@ -65,8 +60,7 @@
     "passwordLabel": "Password",
     "passwordPlaceholder": "Enter password",
     "passwordRequired": "Password is required",
-    "forgottenPasswordLink": "Forgotten password?",
-    "error": "Sign in failed"
+    "forgottenPasswordLink": "Forgotten password?"
   },
   "signUp": {
     "title": "Sign up with new account",
@@ -98,7 +92,6 @@
     "lastNameRequired": "Last name is required",
     "titleAfterLabel": "Title after",
     "titleAfterPlaceholder": "Enter title after",
-    "gdprLabel": "GDPR consent",
-    "error": "Sign up failed"
+    "gdprLabel": "GDPR consent"
   }
 }

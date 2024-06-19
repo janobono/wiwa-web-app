@@ -8,9 +8,7 @@ const MaintenanceInfo = () => {
     return (
         healthState?.maintenance &&
         <div className="alert alert-warning text-xs md:text-base">
-            <span>
-                <span>{resourceState?.common?.maintenance}</span>
-            </span>
+            <span>{resourceState?.common?.maintenance}</span>
         </div>
     )
 }

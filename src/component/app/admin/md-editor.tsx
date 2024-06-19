@@ -8,6 +8,7 @@ import MdDialog from '../../../component/dialog/md-dialog';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaMarkdownRenderer from '../../../component/ui/wiwa-markdown-renderer';
 import { useAuthState } from '../../../state/auth';
+import { useErrorState } from '../../../state/error';
 import { useDialogState } from '../../../state/dialog';
 
 const MdEditor = (
@@ -17,7 +18,6 @@ const MdEditor = (
         valueLabel,
         valuePlaceholder,
         valueRequired,
-        errorMessage,
         loadValue,
         saveValue
     }: {
@@ -26,17 +26,16 @@ const MdEditor = (
         valueLabel: string,
         valuePlaceholder: string,
         valueRequired: string,
-        errorMessage: string,
         loadValue: () => Promise<ClientResponse<SingleValueBody<string>>>,
         saveValue: (value: string, token?: string) => Promise<ClientResponse<SingleValueBody<string>>>,
     }
 ) => {
     const authState = useAuthState();
+    const errorState = useErrorState();
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<string>();
     const [showDialog, setShowDialog] = useState(false);
-    const [error, setError] = useState<string>();
 
     useEffect(() => {
         loadValue().then(data => setValue(data.data?.value));
@@ -46,12 +45,8 @@ const MdEditor = (
         setBusy(true);
         try {
             const response = await saveValue(value || '', authState?.authToken?.accessToken);
-            if (response?.error) {
-                setError(errorMessage);
-            } else {
-                setValue(response.data?.value || '');
-                setShowDialog(false);
-            }
+            setValue(response.data?.value || '');
+            errorState?.addError(response?.error);
         } finally {
             setBusy(false);
         }
@@ -79,7 +74,6 @@ const MdEditor = (
                 valueLabel={valueLabel}
                 valuePlaceholder={valuePlaceholder}
                 valueRequired={valueRequired}
-                error={error}
                 busy={busy}
                 defaultValue={value || ''}
                 showDialog={showDialog}
@@ -99,7 +93,6 @@ const MdEditorDialog = (
         valueLabel,
         valuePlaceholder,
         valueRequired,
-        error,
         busy,
         defaultValue,
         showDialog,
@@ -111,7 +104,6 @@ const MdEditorDialog = (
         valueLabel: string,
         valuePlaceholder: string,
         valueRequired: string,
-        error: string | undefined,
         busy: boolean,
         defaultValue: string,
         showDialog: boolean,
@@ -147,7 +139,6 @@ const MdEditorDialog = (
                 return {valid: true};
             }}
             rows={20}
-            error={error}
             okHandler={() => okHandler(value)}
             cancelHandler={cancelHandler}
         />

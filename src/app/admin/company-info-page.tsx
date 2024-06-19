@@ -9,10 +9,12 @@ import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormTextarea from '../../component/ui/wiwa-form-textarea';
 import { EMAIL_REGEX } from '../../const';
 import { useAuthState } from '../../state/auth';
+import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
 
 const CompanyInfoPage = () => {
     const authState = useAuthState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [busy, setBusy] = useState(false);
@@ -49,8 +51,6 @@ const CompanyInfoPage = () => {
 
     const [mapUrl, setMapUrl] = useState('');
     const [mapUrlValid, setMapUrlValid] = useState(false);
-
-    const [formError, setFormError] = useState<string>();
 
     useEffect(() => {
         getCompanyInfo().then(data => setValue(data.data));
@@ -98,7 +98,6 @@ const CompanyInfoPage = () => {
 
     const submit = async () => {
         setBusy(true);
-        setFormError(undefined);
         try {
             if (isFormValid()) {
                 const response = await setCompanyInfo({
@@ -117,12 +116,10 @@ const CompanyInfoPage = () => {
                     },
                     authState?.authToken?.accessToken
                 );
-                if (response?.error) {
-                    setFormError(resourceState?.admin?.companyInfo.error);
-                }
-                if (response.data) {
-                    setValue(response.data);
-                }
+
+                setValue(response.data);
+
+                errorState?.addError(response.error);
             }
         } finally {
             setBusy(false);
@@ -337,11 +334,6 @@ const CompanyInfoPage = () => {
                         >{resourceState?.common?.action.submit}
                         </WiwaButton>
                     </div>
-                    {formError &&
-                        <label className="label">
-                            <span className="label-text-alt text-error">{formError}</span>
-                        </label>
-                    }
                 </div>
             </div>
         </>

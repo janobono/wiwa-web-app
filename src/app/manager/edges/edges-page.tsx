@@ -19,6 +19,7 @@ import WiwaPageable from '../../../component/ui/wiwa-pageable';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
+import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
 
 const BOARD_DIALOG_ID = 'edge-dialog-001';
@@ -28,11 +29,10 @@ const EdgesPage = () => {
 
     const authState = useAuthState();
     const dialogState = useDialogState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const edgeState = useEdgeState();
-
-    const [error, setError] = useState<string>();
 
     const [criteria, setCriteria] = useState<EdgeSearchCriteria>();
     const [page, setPage] = useState(0);
@@ -61,21 +61,17 @@ const EdgesPage = () => {
     }, [edgeState?.data, edgeState?.selected]);
 
     const fetchData = async () => {
-        setError(undefined);
         edgeState?.setBusy(true);
         try {
             const response = await getEdges(criteria, {page, size: 10}, authState?.authToken?.accessToken);
             edgeState?.setData(response?.data);
-            if (response?.error) {
-                setError(resourceState?.manager?.edges.fetchDataError);
-            }
+            errorState?.addError(response?.error);
         } finally {
             edgeState?.setBusy(false);
         }
     }
 
     const okHandler = async (edgeChange: EdgeChange) => {
-        setError(undefined);
         edgeState?.setBusy(true);
         try {
             let response;
@@ -98,20 +94,13 @@ const EdgesPage = () => {
                 edgeState?.setData(newData);
             }
 
-            if (response?.error) {
-                if (editMode) {
-                    setError(resourceState?.manager?.edges.editEdge.error);
-                } else {
-                    setError(resourceState?.manager?.edges.addEdge.error);
-                }
-            }
+            errorState?.addError(response?.error);
         } finally {
             edgeState?.setBusy(false);
         }
     }
 
     const deleteHandler = async (id: number) => {
-        setError(undefined);
         edgeState?.setBusy(true);
         try {
             const response = await deleteEdge(id, authState?.authToken?.accessToken);
@@ -127,136 +116,127 @@ const EdgesPage = () => {
                 edgeState?.setData(newData);
             }
 
-            if (response?.error) {
-                setError(resourceState?.manager?.edges.deleteEdge.error);
-            }
+            errorState?.addError(response?.error);
         } finally {
             edgeState?.setBusy(false);
         }
     }
 
-    return (error ?
-            <div className="flex  flex-col justify-center items-center w-full">
-                <div className="font-mono text-xl">{error}</div>
-            </div>
-            :
-            <>
-                <WiwaBreadcrumb breadcrumbs={[
-                    {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
-                    {
-                        key: 1,
-                        label: resourceState?.common?.navigation.managerNav.edges || '',
-                        to: '/manager/edges'
-                    }
-                ]}/>
-                <div className="flex flex-col p-5 w-full">
-                    <EdgeSearchCriteriaForm searchHandler={setCriteria}>
-                        <div className="join pl-5">
-                            <WiwaButton
-                                title={resourceState?.common?.action.add}
-                                className="btn-primary join-item"
-                                disabled={edgeState?.busy}
-                                onClick={() => {
-                                    setEditMode(false);
-                                    setShowDialog(true);
-                                }}
-                            >
-                                <Plus size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                title={resourceState?.common?.action.edit}
-                                className="btn-secondary join-item"
-                                disabled={edgeState?.busy || edgeState?.selected === undefined}
-                                onClick={() => {
-                                    setEditMode(true);
-                                    setShowDialog(true);
-                                }}
-                            >
-                                <Edit size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                title={resourceState?.common?.action.categories}
-                                className="btn-ghost join-item"
-                                disabled={edgeState?.busy || edgeState?.selected === undefined}
-                                onClick={() => {
-                                    if (edgeState?.selected) {
-                                        navigate('/manager/edges/categories');
-                                    }
-                                }}
-                            >
-                                <List size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                title={resourceState?.common?.action.image}
-                                className="btn-ghost join-item"
-                                disabled={edgeState?.busy || edgeState?.selected === undefined}
-                                onClick={() => {
-                                    if (edgeState?.selected) {
-                                        navigate('/manager/edges/image');
-                                    }
-                                }}
-                            >
-                                <Image size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                className="btn-accent join-item"
-                                title={resourceState?.common?.action.delete}
-                                disabled={edgeState?.busy || edgeState?.selected === undefined}
-                                onClick={() => {
-                                    dialogState?.showDialog({
-                                        type: DialogType.YES_NO,
-                                        title: resourceState?.manager?.edges.deleteEdge.title,
-                                        message: resourceState?.manager?.edges.deleteEdge.message,
-                                        callback: (answer: DialogAnswer) => {
-                                            if (answer === DialogAnswer.YES) {
-                                                if (edgeState?.selected) {
-                                                    deleteHandler(edgeState?.selected.id).then();
-                                                }
+    return (
+        <>
+            <WiwaBreadcrumb breadcrumbs={[
+                {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                {
+                    key: 1,
+                    label: resourceState?.common?.navigation.managerNav.edges || '',
+                    to: '/manager/edges'
+                }
+            ]}/>
+            <div className="flex flex-col p-5 w-full">
+                <EdgeSearchCriteriaForm searchHandler={setCriteria}>
+                    <div className="join pl-5">
+                        <WiwaButton
+                            title={resourceState?.common?.action.add}
+                            className="btn-primary join-item"
+                            disabled={edgeState?.busy}
+                            onClick={() => {
+                                setEditMode(false);
+                                setShowDialog(true);
+                            }}
+                        >
+                            <Plus size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            title={resourceState?.common?.action.edit}
+                            className="btn-secondary join-item"
+                            disabled={edgeState?.busy || edgeState?.selected === undefined}
+                            onClick={() => {
+                                setEditMode(true);
+                                setShowDialog(true);
+                            }}
+                        >
+                            <Edit size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            title={resourceState?.common?.action.categories}
+                            className="btn-ghost join-item"
+                            disabled={edgeState?.busy || edgeState?.selected === undefined}
+                            onClick={() => {
+                                if (edgeState?.selected) {
+                                    navigate('/manager/edges/categories');
+                                }
+                            }}
+                        >
+                            <List size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            title={resourceState?.common?.action.image}
+                            className="btn-ghost join-item"
+                            disabled={edgeState?.busy || edgeState?.selected === undefined}
+                            onClick={() => {
+                                if (edgeState?.selected) {
+                                    navigate('/manager/edges/image');
+                                }
+                            }}
+                        >
+                            <Image size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            className="btn-accent join-item"
+                            title={resourceState?.common?.action.delete}
+                            disabled={edgeState?.busy || edgeState?.selected === undefined}
+                            onClick={() => {
+                                dialogState?.showDialog({
+                                    type: DialogType.YES_NO,
+                                    title: resourceState?.manager?.edges.deleteEdge.title,
+                                    message: resourceState?.manager?.edges.deleteEdge.message,
+                                    callback: (answer: DialogAnswer) => {
+                                        if (answer === DialogAnswer.YES) {
+                                            if (edgeState?.selected) {
+                                                deleteHandler(edgeState?.selected.id).then();
                                             }
                                         }
-                                    });
-                                }}
-                            ><Trash size={18}/>
-                            </WiwaButton>
-                        </div>
-                    </EdgeSearchCriteriaForm>
-
-                    <div className="overflow-x-auto">
-                        <EdgeTable
-                            fields={Object.values(EdgeField)}
-                            rows={edgeState?.data?.content}
-                            selected={edgeState?.selected}
-                            setSelected={(selected) => edgeState?.setSelected(selected)}
-                        />
+                                    }
+                                });
+                            }}
+                        ><Trash size={18}/>
+                        </WiwaButton>
                     </div>
+                </EdgeSearchCriteriaForm>
 
-                    <div className="w-full flex justify-center pt-5">
-                        <WiwaPageable
-                            isPrevious={previous}
-                            previousHandler={() => setPage(page + 1)}
-                            page={page + 1}
-                            pageHandler={() => fetchData()}
-                            isNext={next}
-                            nextHandler={() => setPage(page - 1)}
-                            disabled={edgeState?.busy}
-                        />
-                    </div>
+                <div className="overflow-x-auto">
+                    <EdgeTable
+                        fields={Object.values(EdgeField)}
+                        rows={edgeState?.data?.content}
+                        selected={edgeState?.selected}
+                        setSelected={(selected) => edgeState?.setSelected(selected)}
+                    />
                 </div>
 
-                <EdgeDataDialog
-                    showDialog={showDialog}
-                    edge={editMode ? edgeState?.selected : undefined}
-                    okHandler={(data) => {
-                        okHandler(data).then();
-                        setShowDialog(false);
-                    }}
-                    cancelHandler={() => {
-                        setError(undefined);
-                        setShowDialog(false);
-                    }}
-                    submitting={edgeState?.busy || false}
-                />
-            </>
+                <div className="w-full flex justify-center pt-5">
+                    <WiwaPageable
+                        isPrevious={previous}
+                        previousHandler={() => setPage(page + 1)}
+                        page={page + 1}
+                        pageHandler={() => fetchData()}
+                        isNext={next}
+                        nextHandler={() => setPage(page - 1)}
+                        disabled={edgeState?.busy}
+                    />
+                </div>
+            </div>
+
+            <EdgeDataDialog
+                showDialog={showDialog}
+                edge={editMode ? edgeState?.selected : undefined}
+                okHandler={(data) => {
+                    okHandler(data).then();
+                    setShowDialog(false);
+                }}
+                cancelHandler={() => setShowDialog(false)}
+                submitting={edgeState?.busy || false}
+            />
+        </>
     )
 }
 

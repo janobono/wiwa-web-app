@@ -8,12 +8,14 @@ import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
 import { useAuthState } from '../../state/auth';
+import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
 
 const ChangeDetailsPage = () => {
     const navigate = useNavigate();
 
     const authState = useAuthState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [titleBefore, setTitleBefore] = useState('');
@@ -60,7 +62,7 @@ const ChangeDetailsPage = () => {
                         setFormError(resourceState?.common?.error.invalidCaptcha);
                         break;
                     default:
-                        setFormError(resourceState?.auth?.changeDetails.error);
+                        errorState?.addError(response?.error);
                         break;
                 }
             } else {

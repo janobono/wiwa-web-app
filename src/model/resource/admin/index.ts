@@ -2,16 +2,12 @@ export interface ResourceAdmin {
     applicationImages: {
         deleteImageQuestionMessage: string,
         deleteImageQuestionTitle: string,
-        loadImagesError: string,
-        addImageError: string,
-        deleteImageError: string,
         addAppImage: {
             title: string,
             fileLabel: string,
             filePlaceholder: string,
             fileFormat: string,
-            fileRequired: string,
-            error: string
+            fileRequired: string
         }
     },
     baseInfo: {
@@ -20,22 +16,19 @@ export interface ResourceAdmin {
             fileLabel: string,
             filePlaceholder: string,
             fileFormat: string,
-            fileRequired: string,
-            error: string
+            fileRequired: string
         },
         title: {
             title: string,
             titleLabel: string,
             titlePlaceholder: string,
-            titleRequired: string,
-            error: string
+            titleRequired: string
         },
         welcomeText: {
             title: string,
             valueLabel: string,
             valuePlaceholder: string,
-            valueRequired: string,
-            error: string
+            valueRequired: string
         },
         applicationInfo: {
             title: string,
@@ -43,8 +36,7 @@ export interface ResourceAdmin {
             valuePlaceholder: string,
             valueRequired: string,
             deleteItemQuestionTitle: string,
-            deleteItemQuestionMessage: string,
-            error: string,
+            deleteItemQuestionMessage: string
             editItemDialog: {
                 title: string,
                 valueLabel: string,
@@ -87,8 +79,7 @@ export interface ResourceAdmin {
         commercialRegisterInfoPlaceholder: string,
         mapUrlLabel: string,
         mapUrlPlaceholder: string,
-        mapUrlRequired: string,
-        error: string
+        mapUrlRequired: string
     },
     mailFormat: {
         option: {
@@ -111,8 +102,7 @@ export interface ResourceAdmin {
             messageRequired: string,
             linkLabel: string,
             linkPlaceholder: string,
-            linkRequired: string,
-            error: string,
+            linkRequired: string
         },
         resetPassword: {
             subjectLabel: string,
@@ -129,8 +119,7 @@ export interface ResourceAdmin {
             passwordMessageRequired: string,
             linkLabel: string,
             linkPlaceholder: string,
-            linkRequired: string,
-            error: string,
+            linkRequired: string
         },
         orderComment: {
             subjectLabel: string,
@@ -144,8 +133,7 @@ export interface ResourceAdmin {
             messageRequired: string,
             linkLabel: string,
             linkPlaceholder: string,
-            linkRequired: string,
-            error: string,
+            linkRequired: string
         },
         orderSend: {
             subjectLabel: string,
@@ -162,8 +150,7 @@ export interface ResourceAdmin {
             linkRequired: string,
             attachmentLabel: string,
             attachmentPlaceholder: string,
-            attachmentRequired: string,
-            error: string,
+            attachmentRequired: string
         },
         orderStatus: {
             productionSubjectLabel: string,
@@ -207,8 +194,7 @@ export interface ResourceAdmin {
             linkRequired: string,
             attachmentLabel: string,
             attachmentPlaceholder: string,
-            attachmentRequired: string,
-            error: string,
+            attachmentRequired: string
         }
     },
     orderFormat: {
@@ -226,8 +212,7 @@ export interface ResourceAdmin {
             csvColumns: string
         },
         key: string,
-        value: string,
-        error: string,
+        value: string
         editEntry: {
             label: string,
             placeholder: string,
@@ -254,52 +239,45 @@ export interface ResourceAdmin {
             title: string,
             valueLabel: string,
             valuePlaceholder: string,
-            valueRequired: string,
-            error: string
+            valueRequired: string
         }
         cookiesInfo: {
             title: string,
             valueLabel: string,
             valuePlaceholder: string,
-            valueRequired: string,
-            error: string
+            valueRequired: string
         },
         gdprInfo: {
             title: string,
             valueLabel: string,
             valuePlaceholder: string,
-            valueRequired: string,
-            error: string
+            valueRequired: string
         },
         orderInfo: {
             title: string,
             valueLabel: string,
             valuePlaceholder: string,
-            valueRequired: string,
-            error: string
+            valueRequired: string
         },
         workingHours: {
             title: string,
             valueLabel: string,
             valuePlaceholder: string,
-            valueRequired: string,
-            error: string
+            valueRequired: string
         },
     },
     units: {
         editUnit: {
             title: string,
             valuePlaceholder: string,
-            valueRequired: string,
-            error: string
+            valueRequired: string
         }
     },
     users: {
         fetchDataError: string,
         deleteUser: {
             title: string,
-            message: string,
-            error: string
+            message: string
         },
         userAuthorities: {
             title: string,
@@ -307,22 +285,19 @@ export interface ResourceAdmin {
             customer: string,
             employee: string,
             manager: string,
-            admin: string,
-            error: string
+            admin: string
         },
         userEnabled: {
             title: string,
             dialogTitle: string,
             disableQuestion: string,
-            enableQuestion: string,
-            error: string
+            enableQuestion: string
         },
         userConfirmed: {
             title: string,
             dialogTitle: string,
             denyQuestion: string,
-            confirmQuestion: string,
-            error: string
+            confirmQuestion: string
         }
     }
 }

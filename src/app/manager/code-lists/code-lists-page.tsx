@@ -16,6 +16,7 @@ import WiwaPageable from '../../../component/ui/wiwa-pageable';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
+import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
 
 const CODE_LIST_DIALOG_ID = 'code-list-dialog-001';
@@ -25,12 +26,12 @@ const CodeListsPage = () => {
 
     const authState = useAuthState();
     const dialogState = useDialogState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<CodeList>>();
     const [selected, setSelected] = useState<CodeList>();
-    const [error, setError] = useState<string>();
 
     const [searchField, setSearchField] = useState('');
     const [page, setPage] = useState(0);
@@ -59,7 +60,6 @@ const CodeListsPage = () => {
     }, [data, selected]);
 
     const fetchData = async () => {
-        setError(undefined);
         setBusy(true);
         try {
             const response = await getCodeLists(
@@ -68,16 +68,13 @@ const CodeListsPage = () => {
                 authState?.authToken?.accessToken
             );
             setData(response?.data);
-            if (response?.error) {
-                setError(resourceState?.manager?.codeLists.fetchDataError);
-            }
+            errorState?.addError(response?.error);
         } finally {
             setBusy(false);
         }
     }
 
     const okHandler = async (codeListChange: CodeListChange) => {
-        setError(undefined);
         setBusy(true);
         try {
             let response;
@@ -100,20 +97,13 @@ const CodeListsPage = () => {
                 setData(newData);
             }
 
-            if (response?.error) {
-                if (editMode) {
-                    setError(resourceState?.manager?.codeLists.editCodeList.error);
-                } else {
-                    setError(resourceState?.manager?.codeLists.addCodeList.error);
-                }
-            }
+            errorState?.addError(response?.error);
         } finally {
             setBusy(false);
         }
     }
 
     const deleteHandler = async (id: number) => {
-        setError(undefined);
         setBusy(true);
         try {
             const response = await deleteCodeList(id, authState?.authToken?.accessToken);
@@ -129,144 +119,134 @@ const CodeListsPage = () => {
                 setData(newData);
             }
 
-            if (response?.error) {
-                setError(resourceState?.manager?.codeLists.deleteCodeList.error);
-            }
+            errorState?.addError(response?.error);
         } finally {
             setBusy(false);
         }
     }
 
     return (
-        error ?
-            <div className="flex  flex-col justify-center items-center w-full">
-                <div className="font-mono text-xl">{error}</div>
-            </div>
-            :
-            <>
-                <WiwaBreadcrumb breadcrumbs={[
-                    {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
-                    {
-                        key: 1,
-                        label: resourceState?.common?.navigation.managerNav.codeLists || '',
-                        to: '/manager/code-lists'
-                    }
-                ]}/>
-                <div className="flex flex-col p-5 w-full">
-                    <div className="flex flex-row w-full items-center justify-center">
-                        <div className="join pb-5 w-2/3">
-                            <WiwaInput
-                                className="join-item"
-                                placeholder={resourceState?.manager?.codeLists.searchCodeList.placeholder}
-                                value={searchField}
-                                onChange={event => setSearchField(event.target.value)}
-                                onKeyUp={(event) => {
-                                    if (event.key === 'Enter') {
-                                        fetchData().then();
-                                    }
-                                }}
-                            />
-                            <WiwaButton
-                                title={resourceState?.common?.action.search}
-                                className="join-item"
-                                onClick={fetchData}
-                            ><Search size={18}/></WiwaButton>
-                        </div>
+        <>
+            <WiwaBreadcrumb breadcrumbs={[
+                {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                {
+                    key: 1,
+                    label: resourceState?.common?.navigation.managerNav.codeLists || '',
+                    to: '/manager/code-lists'
+                }
+            ]}/>
+            <div className="flex flex-col p-5 w-full">
+                <div className="flex flex-row w-full items-center justify-center">
+                    <div className="join pb-5 w-2/3">
+                        <WiwaInput
+                            className="join-item"
+                            placeholder={resourceState?.manager?.codeLists.searchCodeList.placeholder}
+                            value={searchField}
+                            onChange={event => setSearchField(event.target.value)}
+                            onKeyUp={(event) => {
+                                if (event.key === 'Enter') {
+                                    fetchData().then();
+                                }
+                            }}
+                        />
+                        <WiwaButton
+                            title={resourceState?.common?.action.search}
+                            className="join-item"
+                            onClick={fetchData}
+                        ><Search size={18}/></WiwaButton>
+                    </div>
 
-                        <div className="join pb-5 px-5">
-                            <WiwaButton
-                                title={resourceState?.common?.action.add}
-                                className="btn-primary join-item"
-                                disabled={busy}
-                                onClick={() => {
-                                    setEditMode(false);
-                                    setShowDialog(true);
-                                }}
-                            >
-                                <Plus size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                title={resourceState?.common?.action.edit}
-                                className="btn-secondary join-item"
-                                disabled={busy || selected === undefined}
-                                onClick={() => {
-                                    setEditMode(true);
-                                    setShowDialog(true);
-                                }}
-                            >
-                                <Edit size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                title={resourceState?.common?.action.items}
-                                className="btn-ghost join-item"
-                                disabled={busy || selected === undefined}
-                                onClick={() => {
-                                    if (selected) {
-                                        navigate('/manager/code-lists/' + selected.id + '/items');
-                                    }
-                                }}
-                            >
-                                <List size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                className="btn-accent join-item"
-                                title={resourceState?.common?.action.delete}
-                                disabled={busy || selected === undefined}
-                                onClick={() => {
-                                    dialogState?.showDialog({
-                                        type: DialogType.YES_NO,
-                                        title: resourceState?.manager?.codeLists.deleteCodeList.title,
-                                        message: resourceState?.manager?.codeLists.deleteCodeList.message,
-                                        callback: (answer: DialogAnswer) => {
-                                            if (answer === DialogAnswer.YES) {
-                                                if (selected) {
-                                                    deleteHandler(selected.id).then();
-                                                }
+                    <div className="join pb-5 px-5">
+                        <WiwaButton
+                            title={resourceState?.common?.action.add}
+                            className="btn-primary join-item"
+                            disabled={busy}
+                            onClick={() => {
+                                setEditMode(false);
+                                setShowDialog(true);
+                            }}
+                        >
+                            <Plus size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            title={resourceState?.common?.action.edit}
+                            className="btn-secondary join-item"
+                            disabled={busy || selected === undefined}
+                            onClick={() => {
+                                setEditMode(true);
+                                setShowDialog(true);
+                            }}
+                        >
+                            <Edit size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            title={resourceState?.common?.action.items}
+                            className="btn-ghost join-item"
+                            disabled={busy || selected === undefined}
+                            onClick={() => {
+                                if (selected) {
+                                    navigate('/manager/code-lists/' + selected.id + '/items');
+                                }
+                            }}
+                        >
+                            <List size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            className="btn-accent join-item"
+                            title={resourceState?.common?.action.delete}
+                            disabled={busy || selected === undefined}
+                            onClick={() => {
+                                dialogState?.showDialog({
+                                    type: DialogType.YES_NO,
+                                    title: resourceState?.manager?.codeLists.deleteCodeList.title,
+                                    message: resourceState?.manager?.codeLists.deleteCodeList.message,
+                                    callback: (answer: DialogAnswer) => {
+                                        if (answer === DialogAnswer.YES) {
+                                            if (selected) {
+                                                deleteHandler(selected.id).then();
                                             }
                                         }
-                                    });
-                                }}
-                            ><Trash size={18}/>
-                            </WiwaButton>
-                        </div>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                        <CodeListTable
-                            fields={Object.values(CodeListField)}
-                            rows={data?.content}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-                    </div>
-
-                    <div className="w-full flex justify-center pt-5">
-                        <WiwaPageable
-                            isPrevious={previous}
-                            previousHandler={() => setPage(page + 1)}
-                            page={page + 1}
-                            pageHandler={() => fetchData()}
-                            isNext={next}
-                            nextHandler={() => setPage(page - 1)}
-                            disabled={busy}
-                        />
+                                    }
+                                });
+                            }}
+                        ><Trash size={18}/>
+                        </WiwaButton>
                     </div>
                 </div>
 
-                <CodeListDataDialog
-                    showDialog={showDialog}
-                    codeList={editMode ? selected : undefined}
-                    okHandler={(data) => {
-                        okHandler(data).then();
-                        setShowDialog(false);
-                    }}
-                    cancelHandler={() => {
-                        setError(undefined);
-                        setShowDialog(false);
-                    }}
-                    submitting={busy || false}
-                />
-            </>
+                <div className="overflow-x-auto">
+                    <CodeListTable
+                        fields={Object.values(CodeListField)}
+                        rows={data?.content}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                </div>
+
+                <div className="w-full flex justify-center pt-5">
+                    <WiwaPageable
+                        isPrevious={previous}
+                        previousHandler={() => setPage(page + 1)}
+                        page={page + 1}
+                        pageHandler={() => fetchData()}
+                        isNext={next}
+                        nextHandler={() => setPage(page - 1)}
+                        disabled={busy}
+                    />
+                </div>
+            </div>
+
+            <CodeListDataDialog
+                showDialog={showDialog}
+                codeList={editMode ? selected : undefined}
+                okHandler={(data) => {
+                    okHandler(data).then();
+                    setShowDialog(false);
+                }}
+                cancelHandler={() => setShowDialog(false)}
+                submitting={busy || false}
+            />
+        </>
     )
 }
 

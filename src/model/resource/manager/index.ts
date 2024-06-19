@@ -1,16 +1,8 @@
 export interface ResourceManager {
     boards: {
-        fetchDataError: string,
-        addBoard: {
-            error: string
-        },
-        editBoard: {
-            error: string
-        },
         deleteBoard: {
             title: string,
-            message: string,
-            error: string
+            message: string
         },
         boardDialog: {
             title: string,
@@ -46,7 +38,6 @@ export interface ResourceManager {
             priceRequired: string
         },
         boardCategories: {
-            error: string,
             deleteTitle: string,
             deleteMessage: string
         },
@@ -56,10 +47,8 @@ export interface ResourceManager {
             editFilePlaceholder: string,
             editFileRequired: string,
             editFileFormat: string,
-            editError: string,
             deleteTitle: string,
-            deleteMessage: string,
-            deleteError: string
+            deleteMessage: string
         }
     },
     categories: {
@@ -69,8 +58,6 @@ export interface ResourceManager {
             edge: string,
             material: string
         },
-        setCategoryError: string,
-        setCategoriesError: string,
         deleteCategoryQuestionTitle: string,
         deleteCategoryQuestionMessage: string
     },
@@ -82,16 +69,9 @@ export interface ResourceManager {
         searchCodeList: {
             placeholder: string
         },
-        addCodeList: {
-            error: string
-        },
-        editCodeList: {
-            error: string
-        },
         deleteCodeList: {
             title: string,
-            message: string,
-            error: string
+            message: string
         },
         codeListDialog: {
             title: string,
@@ -108,22 +88,9 @@ export interface ResourceManager {
             code: string,
             value: string,
             fetchDataError: string,
-            addCodeListItem: {
-                error: string
-            },
-            editCodeListItem: {
-                error: string
-            },
-            moveUpCodeListItem: {
-                error: string
-            },
-            moveDownCodeListItem: {
-                error: string
-            },
             deleteCodeListItem: {
                 title: string,
-                message: string,
-                error: string
+                message: string
             },
             codeListItemDialog: {
                 title: string,
@@ -137,17 +104,9 @@ export interface ResourceManager {
         },
     },
     edges: {
-        fetchDataError: string,
-        addEdge: {
-            error: string
-        },
-        editEdge: {
-            error: string
-        },
         deleteEdge: {
             title: string,
-            message: string,
-            error: string
+            message: string
         },
         edgeDialog: {
             title: string,
@@ -173,7 +132,6 @@ export interface ResourceManager {
             priceRequired: string
         },
         edgeCategories: {
-            error: string,
             deleteTitle: string,
             deleteMessage: string
         },
@@ -183,15 +141,14 @@ export interface ResourceManager {
             editFilePlaceholder: string,
             editFileRequired: string,
             editFileFormat: string,
-            editError: string,
             deleteTitle: string,
-            deleteMessage: string,
-            deleteError: string
+            deleteMessage: string
         }
     },
     orderInputs: {
         option: {
             select: string,
+            vatRate: string,
             manufactureProperties: string,
             priceForGluingLayer: string,
             pricesForGluingEdge: string,

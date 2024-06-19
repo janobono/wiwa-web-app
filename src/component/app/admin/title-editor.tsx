@@ -9,6 +9,7 @@ import WiwaFormInput from '../../../component/ui/wiwa-form-input';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
+import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
 
 const TITLE_DIALOG_ID = 'admin-base-info-title-dialog-001';
@@ -58,29 +59,25 @@ const TitleDialog = ({showDialog, closeHandler, defaultValue, setDefaultValue}: 
 }) => {
     const authState = useAuthState();
     const dialogState = useDialogState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState(defaultValue);
     const [valid, setValid] = useState(false);
-    const [error, setError] = useState<string>();
 
     useEffect(() => {
         setValue(defaultValue)
     }, [defaultValue, showDialog]);
 
     const submit = async () => {
-        setError(undefined);
         setBusy(true);
         try {
             if (valid) {
                 const response = await setTitle(value || '', authState?.authToken?.accessToken);
-                if (response?.error) {
-                    setError(resourceState?.admin?.baseInfo.title.error);
-                } else {
-                    setDefaultValue(response.data?.value || '');
-                    closeHandler();
-                }
+                errorState?.addError(response?.error);
+                setDefaultValue(response.data?.value || '');
+                closeHandler();
             }
         } finally {
             setBusy(false);
@@ -127,11 +124,6 @@ const TitleDialog = ({showDialog, closeHandler, defaultValue, setDefaultValue}: 
                         >{resourceState?.common?.action.cancel}
                         </WiwaButton>
                     </div>
-                    {error &&
-                        <label className="label">
-                            <span className="label-text-alt text-error">{error}</span>
-                        </label>
-                    }
                 </div>
             </div>
         </BaseDialog>

@@ -5,10 +5,12 @@ import { OrderCommentMail } from '../../../api/model/application';
 import WiwaButton from '../../ui/wiwa-button';
 import WiwaFormInput from '../../ui/wiwa-form-input';
 import { useAuthState } from '../../../state/auth';
+import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
 
 const OrderCommentMailEditor = () => {
     const authState = useAuthState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [busy, setBusy] = useState(false);
@@ -25,8 +27,6 @@ const OrderCommentMailEditor = () => {
 
     const [link, setLink] = useState('');
     const [linkValid, setLinkValid] = useState(false);
-
-    const [formError, setFormError] = useState<string>();
 
     useEffect(() => {
         getOrderCommentMail(authState?.authToken?.accessToken).then(data => setValue(data.data));
@@ -54,7 +54,6 @@ const OrderCommentMailEditor = () => {
 
     const submit = async () => {
         setBusy(true);
-        setFormError(undefined);
         try {
             if (isFormValid()) {
                 const response = await setOrderCommentMail({
@@ -66,7 +65,7 @@ const OrderCommentMailEditor = () => {
                     authState?.authToken?.accessToken
                 );
                 if (response?.error) {
-                    setFormError(resourceState?.admin?.mailFormat.orderComment.error);
+                    errorState?.addError(response?.error);
                 }
                 if (response.data) {
                     setValue(response.data);
@@ -156,11 +155,6 @@ const OrderCommentMailEditor = () => {
                     >{resourceState?.common?.action.submit}
                     </WiwaButton>
                 </div>
-                {formError &&
-                    <label className="label">
-                        <span className="label-text-alt text-error">{formError}</span>
-                    </label>
-                }
             </div>
         </div>
     )

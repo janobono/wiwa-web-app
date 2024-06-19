@@ -1,8 +1,7 @@
 {
   "confirm": {
     "title": "Spracovanie požiadavky",
-    "message": "Vaša požiadavka bola spracovaná.",
-    "error": "Vaša požiadavka nebola spracovaná."
+    "message": "Vaša požiadavka bola spracovaná."
   },
   "contactInfo": {
     "businessId": "Ičo",

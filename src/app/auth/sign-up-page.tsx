@@ -8,12 +8,14 @@ import WiwaFormCheckBox from '../../component/ui/wiwa-form-check-box';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
 import { useAuthState } from '../../state/auth';
+import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
 
 const SignUpPage = () => {
     const navigate = useNavigate();
 
     const authState = useAuthState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [username, setUsername] = useState('');
@@ -83,7 +85,7 @@ const SignUpPage = () => {
                         setFormError(resourceState?.common?.error.invalidCaptcha);
                         break;
                     default:
-                        setFormError(resourceState?.auth?.signUp.error);
+                        errorState?.addError(response?.error);
                         break;
                 }
             }

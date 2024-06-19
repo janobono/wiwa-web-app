@@ -8,6 +8,7 @@ import ImageDialog from '../../../component/dialog/image-dialog';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
+import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
 
 const LOGO_DIALOG_ID = 'admin-base-info-logo-dialog-001';
@@ -51,28 +52,23 @@ const LogoDialog = ({showDialog, closeHandler}: {
 }) => {
     const authState = useAuthState();
     const dialogState = useDialogState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [busy, setBusy] = useState(false);
     const [file, setFile] = useState<File>();
-    const [error, setError] = useState<string>();
 
     useEffect(() => {
         setFile(undefined);
-        setError(undefined);
     }, [showDialog]);
 
     const submitHandler = async () => {
-        setError(undefined);
         setBusy(true);
         try {
             if (file) {
                 const response = await setLogo(file, authState?.authToken?.accessToken);
-                if (response?.error) {
-                    setError(resourceState?.admin?.baseInfo.logo.error);
-                } else {
-                    closeHandler();
-                }
+                errorState?.addError(response?.error);
+                closeHandler();
             }
         } finally {
             setBusy(false);
@@ -105,7 +101,6 @@ const LogoDialog = ({showDialog, closeHandler}: {
                 }
                 return {valid: true};
             }}
-            error={error}
             okHandler={submitHandler}
             cancelHandler={closeHandler}
         />, dialogState.modalRoot))

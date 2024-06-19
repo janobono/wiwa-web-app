@@ -57,7 +57,6 @@ const TextInfoPage = () => {
                             valueLabel={resourceState?.admin?.textInfo.businessConditions.valueLabel || ''}
                             valuePlaceholder={resourceState?.admin?.textInfo.businessConditions.valuePlaceholder || ''}
                             valueRequired={resourceState?.admin?.textInfo.businessConditions.valueRequired || ''}
-                            errorMessage={resourceState?.admin?.textInfo.businessConditions.error || ''}
                             loadValue={getBusinessConditions}
                             saveValue={setBusinessConditions}
                         />
@@ -69,7 +68,6 @@ const TextInfoPage = () => {
                             valueLabel={resourceState?.admin?.textInfo.cookiesInfo.valueLabel || ''}
                             valuePlaceholder={resourceState?.admin?.textInfo.cookiesInfo.valuePlaceholder || ''}
                             valueRequired={resourceState?.admin?.textInfo.cookiesInfo.valueRequired || ''}
-                            errorMessage={resourceState?.admin?.textInfo.cookiesInfo.error || ''}
                             loadValue={getCookiesInfo}
                             saveValue={setCookiesInfo}
                         />
@@ -81,7 +79,6 @@ const TextInfoPage = () => {
                             valueLabel={resourceState?.admin?.textInfo.gdprInfo.valueLabel || ''}
                             valuePlaceholder={resourceState?.admin?.textInfo.gdprInfo.valuePlaceholder || ''}
                             valueRequired={resourceState?.admin?.textInfo.gdprInfo.valueRequired || ''}
-                            errorMessage={resourceState?.admin?.textInfo.gdprInfo.error || ''}
                             loadValue={getGdprInfo}
                             saveValue={setGdprInfo}
                         />
@@ -93,7 +90,6 @@ const TextInfoPage = () => {
                             valueLabel={resourceState?.admin?.textInfo.orderInfo.valueLabel || ''}
                             valuePlaceholder={resourceState?.admin?.textInfo.orderInfo.valuePlaceholder || ''}
                             valueRequired={resourceState?.admin?.textInfo.orderInfo.valueRequired || ''}
-                            errorMessage={resourceState?.admin?.textInfo.orderInfo.error || ''}
                             loadValue={getOrderInfo}
                             saveValue={setOrderInfo}
                         />
@@ -105,7 +101,6 @@ const TextInfoPage = () => {
                             valueLabel={resourceState?.admin?.textInfo.workingHours.valueLabel || ''}
                             valuePlaceholder={resourceState?.admin?.textInfo.workingHours.valuePlaceholder || ''}
                             valueRequired={resourceState?.admin?.textInfo.workingHours.valueRequired || ''}
-                            errorMessage={resourceState?.admin?.textInfo.workingHours.error || ''}
                             loadValue={getWorkingHours}
                             saveValue={setWorkingHours}
                         />

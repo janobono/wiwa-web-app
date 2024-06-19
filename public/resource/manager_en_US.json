@@ -1,16 +1,8 @@
 {
   "boards": {
-    "fetchDataError": "Boards loading failed",
-    "addBoard": {
-      "error": "Add board failed"
-    },
-    "editBoard": {
-      "error": "Edit board failed"
-    },
     "deleteBoard": {
       "title": "Delete board",
-      "message": "Do you really want to delete board?",
-      "error": "Delete board failed"
+      "message": "Do you really want to delete board?"
     },
     "boardDialog": {
       "title": "Board",
@@ -46,7 +38,6 @@
       "priceRequired": "Price is required"
     },
     "boardCategories": {
-      "error": "Submit board category items failed",
       "deleteTitle": "Delete board category item",
       "deleteMessage": "Do you really want to delete board category item?"
     },
@@ -56,10 +47,8 @@
       "editFilePlaceholder": "Select file",
       "editFileRequired": "File is required",
       "editFileFormat": "Supported file format is JPG or PNG",
-      "editError": "Board image submitting failed",
       "deleteTitle": "Delete board image",
-      "deleteMessage": "Do you really want to delete board image?",
-      "deleteError": "Delete board image failed"
+      "deleteMessage": "Do you really want to delete board image?"
     }
   },
   "categories": {
@@ -69,8 +58,6 @@
       "edge": "Edge",
       "material": "Board material"
     },
-    "setCategoryError": "Category change failed",
-    "setCategoriesError": "Categories change failed",
     "deleteCategoryQuestionTitle": "Delete category",
     "deleteCategoryQuestionMessage": "Do you really want to delete category?"
   },
@@ -78,21 +65,13 @@
     "id": "Id",
     "code": "Code",
     "name": "Name",
-    "fetchDataError": "Code lists loading failed",
     "searchCodeList": {
       "title": "Search code list",
       "placeholder": "Name or code"
     },
-    "addCodeList": {
-      "error": "Add code list failed"
-    },
-    "editCodeList": {
-      "error": "Edit code list failed"
-    },
     "deleteCodeList": {
       "title": "Delete code list",
-      "message": "Do you really want to delete code list?",
-      "error": "Delete code list failed"
+      "message": "Do you really want to delete code list?"
     },
     "codeListDialog": {
       "title": "Code list",
@@ -108,23 +87,9 @@
       "id": "Id",
       "code": "Code",
       "value": "Value",
-      "fetchDataError": "Code list items loading failed",
-      "addCodeListItem": {
-        "error": "Add code list item failed"
-      },
-      "editCodeListItem": {
-        "error": "Edit code list item failed"
-      },
-      "moveUpCodeListItem": {
-        "error": "Move code list item up failed"
-      },
-      "moveDownCodeListItem": {
-        "error": "Move code list item down failed"
-      },
       "deleteCodeListItem": {
         "title": "Delete code list item",
-        "message": "Do you really want to delete code list item?",
-        "error": "Delete code list item failed"
+        "message": "Do you really want to delete code list item?"
       },
       "codeListItemDialog": {
         "title": "Code list item",
@@ -138,17 +103,9 @@
     }
   },
   "edges": {
-    "fetchDataError": "Edges loading failed",
-    "addEdge": {
-      "error": "Add edge failed"
-    },
-    "editEdge": {
-      "error": "Edit edge failed"
-    },
     "deleteEdge": {
       "title": "Delete edge",
-      "message": "Do you really want to delete edge?",
-      "error": "Delete edge failed"
+      "message": "Do you really want to delete edge?"
     },
     "edgeDialog": {
       "title": "Edge",
@@ -174,7 +131,6 @@
       "priceRequired": "Price is required"
     },
     "edgeCategories": {
-      "error": "Submit edge category items failed",
       "deleteTitle": "Delete edge category item",
       "deleteMessage": "Do you really want to delete edge category item?"
     },
@@ -184,15 +140,14 @@
       "editFilePlaceholder": "Select file",
       "editFileRequired": "File is required",
       "editFileFormat": "Supported file format is JPG or PNG",
-      "editError": "Edge image submitting failed",
       "deleteTitle": "Delete edge image",
-      "deleteMessage": "Do you really want to delete edge image?",
-      "deleteError": "Delete edge image failed"
+      "deleteMessage": "Do you really want to delete edge image?"
     }
   },
   "orderInputs": {
     "option": {
       "select": "Input",
+      "vatRate": "Vat rate",
       "manufactureProperties": "Manufacture properties",
       "priceForGluingLayer": "Layer gluing price",
       "pricesForGluingEdge": "Edge gluing prices",

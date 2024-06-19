@@ -19,17 +19,13 @@ const RefreshToken = () => {
 
     return (!show ? null :
             <div className="alert alert-warning text-xs md:text-base">
-            <span>
                 <span>{resourceState?.common?.refreshToken.text}</span>
-            </span>
-                <div>
-                    <button
-                        className="btn btn-sm normal-case text-xs md:text-base"
-                        onClick={() => {
-                            authState?.refreshAuth();
-                        }}
-                    >{resourceState?.common?.refreshToken.action}</button>
-                </div>
+                <button
+                    className="btn btn-sm normal-case text-xs md:text-base"
+                    onClick={() => {
+                        authState?.refreshAuth();
+                    }}
+                >{resourceState?.common?.refreshToken.action}</button>
             </div>
     )
 }

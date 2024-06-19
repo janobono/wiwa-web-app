@@ -23,7 +23,6 @@ const MdDialog = (
             return {valid: true}
         },
         rows,
-        error,
         okHandler,
         cancelHandler
     }: {
@@ -38,7 +37,6 @@ const MdDialog = (
         setValue: (value: string) => void,
         validate?: () => ValidationResult,
         rows?: number,
-        error?: string,
         okHandler: () => void,
         cancelHandler: () => void
     }) => {
@@ -98,11 +96,6 @@ const MdDialog = (
                         >{resourceState?.common?.mdDialog.cancel}
                         </WiwaButton>
                     </div>
-                    {error &&
-                        <label className="label">
-                            <span className="label-text-alt text-error">{error}</span>
-                        </label>
-                    }
                 </div>
             </div>
         </BaseDialog>

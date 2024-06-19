@@ -1,8 +1,7 @@
 {
   "confirm": {
     "title": "Request confirmation",
-    "message": "Your request has been processed.",
-    "error": "Your request has not been processed."
+    "message": "Your request has been processed."
   },
   "contactInfo": {
     "businessId": "Business id",

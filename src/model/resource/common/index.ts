@@ -3,6 +3,7 @@ export interface ResourceCommon {
         add: string,
         cancel: string,
         categories: string,
+        close: string,
         copy: string,
         delete: string,
         edit: string,
@@ -128,6 +129,7 @@ export interface ResourceCommon {
         image: string
     },
     error: {
+        title: string,
         gdpr: string,
         invalidCaptcha: string,
         invalidCredentials: string,
@@ -222,8 +224,7 @@ export interface ResourceCommon {
     selectCodeListDialog: {
         title: string,
         searchTitle: string,
-        searchPlaceholder: string,
-        error: string
+        searchPlaceholder: string
     },
     selectCodeListItemDialog: {
         title: string,

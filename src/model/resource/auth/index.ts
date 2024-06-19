@@ -13,8 +13,7 @@ export interface ResourceAuth {
         lastNameRequired: string,
         titleAfterLabel: string,
         titleAfterPlaceholder: string,
-        gdprLabel: string,
-        error: string
+        gdprLabel: string
     },
     changeEmail: {
         title: string,
@@ -24,8 +23,7 @@ export interface ResourceAuth {
         emailFormat: string,
         passwordLabel: string,
         passwordPlaceholder: string,
-        passwordRequired: string,
-        error: string
+        passwordRequired: string
     },
     changePassword: {
         title: string,
@@ -38,13 +36,11 @@ export interface ResourceAuth {
         passwordConfirmationLabel: string,
         passwordConfirmationPlaceholder: string,
         passwordConfirmationRequired: string,
-        passwordConfirmationNotEquals: string,
-        error: string
+        passwordConfirmationNotEquals: string
     },
     resendConfirmation: {
         title: string,
-        message: string,
-        error: string
+        message: string
     },
     resetPassword: {
         title: string,
@@ -52,8 +48,7 @@ export interface ResourceAuth {
         emailPlaceholder: string,
         emailRequired: string,
         emailFormat: string,
-        message: string,
-        error: string
+        message: string
     },
     signIn: {
         title: string,
@@ -65,8 +60,7 @@ export interface ResourceAuth {
         passwordLabel: string,
         passwordPlaceholder: string,
         passwordRequired: string,
-        forgottenPasswordLink: string,
-        error: string
+        forgottenPasswordLink: string
     },
     signUp: {
         title: string,
@@ -98,7 +92,6 @@ export interface ResourceAuth {
         lastNameRequired: string,
         titleAfterLabel: string,
         titleAfterPlaceholder: string,
-        gdprLabel: string,
-        error: string
+        gdprLabel: string
     }
 }

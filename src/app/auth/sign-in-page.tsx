@@ -5,12 +5,14 @@ import { WiwaErrorCode } from '../../api/model';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import { useAuthState } from '../../state/auth';
+import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
 
 const SignInPage = () => {
     const navigate = useNavigate();
 
     const authState = useAuthState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [username, setUsername] = useState('');
@@ -41,7 +43,7 @@ const SignInPage = () => {
                         setFormError(resourceState?.common?.error.invalidCredentials);
                         break;
                     default:
-                        setFormError(resourceState?.auth?.signIn.error);
+                        errorState?.addError(response?.error);
                         break;
                 }
             }

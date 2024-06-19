@@ -9,12 +9,14 @@ import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInput from '../../component/ui/wiwa-form-input';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import { useAuthState } from '../../state/auth';
+import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
 
 const ChangeEmailPage = () => {
     const navigate = useNavigate();
 
     const authState = useAuthState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [email, setEmail] = useState('');
@@ -57,7 +59,7 @@ const ChangeEmailPage = () => {
                         setFormError(resourceState?.common?.error.userEmailIsUsed);
                         break;
                     default:
-                        setFormError(resourceState?.auth?.changeEmail.error);
+                        errorState?.addError(response?.error);
                         break;
                 }
             } else {

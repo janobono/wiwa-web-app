@@ -3,6 +3,7 @@
     "add": "Pridať",
     "cancel": "Zrušiť",
     "categories": "Kategórie",
+    "close": "Zavrieť",
     "copy": "Kopírovať",
     "delete": "Zmazať",
     "edit": "Upraviť",
@@ -128,6 +129,7 @@
     "image": "Obrázok"
   },
   "error": {
+    "title": "Ospravedlňujeme sa. Nastala chyba.",
     "gdpr": "Vyžaduje sa súhlas s GDPR",
     "invalidCaptcha": "Nesprávny kontrolný text",
     "invalidCredentials": "Nesprávne prihlasovacie údaje",
@@ -222,8 +224,7 @@
   "selectCodeListDialog": {
     "title": "Výber číselníka",
     "searchTitle": "Vyhľadať číselník",
-    "searchPlaceholder": "Názov alebo kód",
-    "error": "Chyba načítania číselníkov"
+    "searchPlaceholder": "Názov alebo kód"
   },
   "selectCodeListItemDialog": {
     "title": "Výber položky číselníka",

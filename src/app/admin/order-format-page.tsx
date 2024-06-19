@@ -19,34 +19,35 @@ import CsvSeparatorEditor from '../../component/app/admin/csv-separator-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
 import { useAuthState } from '../../state/auth';
+import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
 
 const ORDER_FORMAT_DIALOG_ID = 'order-format-dialog-';
 
 const OrderFormatPage = () => {
     const authState = useAuthState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [index, setIndex] = useState(0);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<OrderProperties>();
-    const [error, setError] = useState<string>();
 
     useEffect(() => {
         getOrderProperties().then(data => setValue(data.data));
     }, []);
 
     const saveValue = async (newData: OrderProperties) => {
-        setError(undefined);
         setBusy(true);
         try {
             if (value) {
                 const response = await setOrderProperties(newData, authState?.authToken?.accessToken);
+
+                setValue(response.data);
+
                 if (response.error) {
-                    setError(resourceState?.admin?.orderFormat.error);
-                } else {
-                    setValue(response.data);
+                    errorState?.addError(response.error);
                 }
             }
         } finally {
@@ -238,12 +239,6 @@ const OrderFormatPage = () => {
                                 }
                             }}
                         />
-                    }
-
-                    {error &&
-                        <label className="label">
-                            <span className="label-text-alt text-error">{error}</span>
-                        </label>
                     }
                 </div>
             </div>

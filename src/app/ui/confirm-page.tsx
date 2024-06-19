@@ -4,12 +4,14 @@ import { useParams } from 'react-router-dom';
 import { WiwaErrorCode } from '../../api/model';
 import WiwaSpinner from '../../component/ui/wiwa-spinner';
 import { useAuthState } from '../../state/auth';
+import { useErrorState } from '../../state/error';
 import { useResourceState } from '../../state/resource';
 
 const ConfirmPage = () => {
     const {token} = useParams();
 
     const authState = useAuthState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const [done, setDone] = useState(false);
@@ -26,7 +28,7 @@ const ConfirmPage = () => {
                                 setMessage(resourceState?.common?.error.unsupportedValidationToken);
                                 break;
                             default:
-                                setMessage(resourceState?.ui?.confirm.error);
+                                errorState?.addError(response?.error);
                                 break;
                         }
                     } else {

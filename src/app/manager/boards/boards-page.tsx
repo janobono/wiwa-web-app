@@ -20,6 +20,7 @@ import WiwaSelect from '../../../component/ui/wiwa-select';
 import { DialogAnswer, DialogType } from '../../../model/ui';
 import { useAuthState } from '../../../state/auth';
 import { useDialogState } from '../../../state/dialog';
+import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
 
 const BOARD_DIALOG_ID = 'board-dialog-001';
@@ -29,11 +30,10 @@ const BoardsPage = () => {
 
     const authState = useAuthState();
     const dialogState = useDialogState();
+    const errorState = useErrorState();
     const resourceState = useResourceState();
 
     const boardState = useBoardState();
-
-    const [error, setError] = useState<string>();
 
     const [criteria, setCriteria] = useState<BoardSearchCriteria>();
     const [page, setPage] = useState(0);
@@ -62,21 +62,17 @@ const BoardsPage = () => {
     }, [boardState?.data, boardState?.selected]);
 
     const fetchData = async () => {
-        setError(undefined);
         boardState?.setBusy(true);
         try {
             const response = await getBoards(criteria, {page, size: 10}, authState?.authToken?.accessToken);
             boardState?.setData(response?.data);
-            if (response?.error) {
-                setError(resourceState?.manager?.boards.fetchDataError);
-            }
+            errorState?.addError(response?.error);
         } finally {
             boardState?.setBusy(false);
         }
     }
 
     const okHandler = async (boardChange: BoardChange) => {
-        setError(undefined);
         boardState?.setBusy(true);
         try {
             let response;
@@ -99,20 +95,13 @@ const BoardsPage = () => {
                 boardState?.setData(newData);
             }
 
-            if (response?.error) {
-                if (editMode) {
-                    setError(resourceState?.manager?.boards.editBoard.error);
-                } else {
-                    setError(resourceState?.manager?.boards.addBoard.error);
-                }
-            }
+            errorState?.addError(response?.error);
         } finally {
             boardState?.setBusy(false);
         }
     }
 
     const deleteHandler = async (id: number) => {
-        setError(undefined);
         boardState?.setBusy(true);
         try {
             const response = await deleteBoard(id, authState?.authToken?.accessToken);
@@ -128,136 +117,127 @@ const BoardsPage = () => {
                 boardState?.setData(newData);
             }
 
-            if (response?.error) {
-                setError(resourceState?.manager?.boards.deleteBoard.error);
-            }
+            errorState?.addError(response?.error);
         } finally {
             boardState?.setBusy(false);
         }
     }
 
-    return (error ?
-            <div className="flex  flex-col justify-center items-center w-full">
-                <div className="font-mono text-xl">{error}</div>
-            </div>
-            :
-            <>
-                <WiwaBreadcrumb breadcrumbs={[
-                    {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
-                    {
-                        key: 1,
-                        label: resourceState?.common?.navigation.managerNav.boards || '',
-                        to: '/manager/boards'
-                    }
-                ]}/>
-                <div className="flex flex-col p-5 w-full">
-                    <BoardSearchCriteriaForm searchHandler={setCriteria}>
-                        <div className="join pl-5">
-                            <WiwaButton
-                                title={resourceState?.common?.action.add}
-                                className="btn-primary join-item"
-                                disabled={boardState?.busy}
-                                onClick={() => {
-                                    setEditMode(false);
-                                    setShowDialog(true);
-                                }}
-                            >
-                                <Plus size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                title={resourceState?.common?.action.edit}
-                                className="btn-secondary join-item"
-                                disabled={boardState?.busy || boardState?.selected === undefined}
-                                onClick={() => {
-                                    setEditMode(true);
-                                    setShowDialog(true);
-                                }}
-                            >
-                                <Edit size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                title={resourceState?.common?.action.categories}
-                                className="btn-ghost join-item"
-                                disabled={boardState?.busy || boardState?.selected === undefined}
-                                onClick={() => {
-                                    if (boardState?.selected) {
-                                        navigate('/manager/boards/categories');
-                                    }
-                                }}
-                            >
-                                <List size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                title={resourceState?.common?.action.image}
-                                className="btn-ghost join-item"
-                                disabled={boardState?.busy || boardState?.selected === undefined}
-                                onClick={() => {
-                                    if (boardState?.selected) {
-                                        navigate('/manager/boards/image');
-                                    }
-                                }}
-                            >
-                                <Image size={18}/>
-                            </WiwaButton>
-                            <WiwaButton
-                                className="btn-accent join-item"
-                                title={resourceState?.common?.action.delete}
-                                disabled={boardState?.busy || boardState?.selected === undefined}
-                                onClick={() => {
-                                    dialogState?.showDialog({
-                                        type: DialogType.YES_NO,
-                                        title: resourceState?.manager?.boards.deleteBoard.title,
-                                        message: resourceState?.manager?.boards.deleteBoard.message,
-                                        callback: (answer: DialogAnswer) => {
-                                            if (answer === DialogAnswer.YES) {
-                                                if (boardState?.selected) {
-                                                    deleteHandler(boardState?.selected.id).then();
-                                                }
+    return (
+        <>
+            <WiwaBreadcrumb breadcrumbs={[
+                {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                {
+                    key: 1,
+                    label: resourceState?.common?.navigation.managerNav.boards || '',
+                    to: '/manager/boards'
+                }
+            ]}/>
+            <div className="flex flex-col p-5 w-full">
+                <BoardSearchCriteriaForm searchHandler={setCriteria}>
+                    <div className="join pl-5">
+                        <WiwaButton
+                            title={resourceState?.common?.action.add}
+                            className="btn-primary join-item"
+                            disabled={boardState?.busy}
+                            onClick={() => {
+                                setEditMode(false);
+                                setShowDialog(true);
+                            }}
+                        >
+                            <Plus size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            title={resourceState?.common?.action.edit}
+                            className="btn-secondary join-item"
+                            disabled={boardState?.busy || boardState?.selected === undefined}
+                            onClick={() => {
+                                setEditMode(true);
+                                setShowDialog(true);
+                            }}
+                        >
+                            <Edit size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            title={resourceState?.common?.action.categories}
+                            className="btn-ghost join-item"
+                            disabled={boardState?.busy || boardState?.selected === undefined}
+                            onClick={() => {
+                                if (boardState?.selected) {
+                                    navigate('/manager/boards/categories');
+                                }
+                            }}
+                        >
+                            <List size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            title={resourceState?.common?.action.image}
+                            className="btn-ghost join-item"
+                            disabled={boardState?.busy || boardState?.selected === undefined}
+                            onClick={() => {
+                                if (boardState?.selected) {
+                                    navigate('/manager/boards/image');
+                                }
+                            }}
+                        >
+                            <Image size={18}/>
+                        </WiwaButton>
+                        <WiwaButton
+                            className="btn-accent join-item"
+                            title={resourceState?.common?.action.delete}
+                            disabled={boardState?.busy || boardState?.selected === undefined}
+                            onClick={() => {
+                                dialogState?.showDialog({
+                                    type: DialogType.YES_NO,
+                                    title: resourceState?.manager?.boards.deleteBoard.title,
+                                    message: resourceState?.manager?.boards.deleteBoard.message,
+                                    callback: (answer: DialogAnswer) => {
+                                        if (answer === DialogAnswer.YES) {
+                                            if (boardState?.selected) {
+                                                deleteHandler(boardState?.selected.id).then();
                                             }
                                         }
-                                    });
-                                }}
-                            ><Trash size={18}/>
-                            </WiwaButton>
-                        </div>
-                    </BoardSearchCriteriaForm>
-
-                    <div className="overflow-x-auto">
-                        <BoardTable
-                            fields={Object.values(BoardField)}
-                            rows={boardState?.data?.content}
-                            selected={boardState?.selected}
-                            setSelected={(selected) => boardState?.setSelected(selected)}
-                        />
+                                    }
+                                });
+                            }}
+                        ><Trash size={18}/>
+                        </WiwaButton>
                     </div>
+                </BoardSearchCriteriaForm>
 
-                    <div className="w-full flex justify-center pt-5">
-                        <WiwaPageable
-                            isPrevious={previous}
-                            previousHandler={() => setPage(page + 1)}
-                            page={page + 1}
-                            pageHandler={() => fetchData()}
-                            isNext={next}
-                            nextHandler={() => setPage(page - 1)}
-                            disabled={boardState?.busy}
-                        />
-                    </div>
+                <div className="overflow-x-auto">
+                    <BoardTable
+                        fields={Object.values(BoardField)}
+                        rows={boardState?.data?.content}
+                        selected={boardState?.selected}
+                        setSelected={(selected) => boardState?.setSelected(selected)}
+                    />
                 </div>
 
-                <BoardDataDialog
-                    showDialog={showDialog}
-                    board={editMode ? boardState?.selected : undefined}
-                    okHandler={(data) => {
-                        okHandler(data).then();
-                        setShowDialog(false);
-                    }}
-                    cancelHandler={() => {
-                        setError(undefined);
-                        setShowDialog(false);
-                    }}
-                    submitting={boardState?.busy || false}
-                />
-            </>
+                <div className="w-full flex justify-center pt-5">
+                    <WiwaPageable
+                        isPrevious={previous}
+                        previousHandler={() => setPage(page + 1)}
+                        page={page + 1}
+                        pageHandler={() => fetchData()}
+                        isNext={next}
+                        nextHandler={() => setPage(page - 1)}
+                        disabled={boardState?.busy}
+                    />
+                </div>
+            </div>
+
+            <BoardDataDialog
+                showDialog={showDialog}
+                board={editMode ? boardState?.selected : undefined}
+                okHandler={(data) => {
+                    okHandler(data).then();
+                    setShowDialog(false);
+                }}
+                cancelHandler={() => setShowDialog(false)}
+                submitting={boardState?.busy || false}
+            />
+        </>
     )
 }
 
