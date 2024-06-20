@@ -168,6 +168,11 @@
       "deleteMessage": "Do you really want to delete edge image?"
     }
   },
+  "freeDayTable": {
+    "name": "Name",
+    "day": "Day",
+    "month": "Month"
+  },
   "orderInputs": {
     "option": {
       "select": "Input",
@@ -177,6 +182,44 @@
       "pricesForGluingEdge": "Edge gluing prices",
       "pricesForCutting": "Cutting prices",
       "freeDays": "Free days"
+    },
+    "freeDay": {
+      "title": "Free day",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter name",
+      "nameRequired": "Name is required",
+      "dateLabel": "Date",
+      "datePlaceholder": "Enter date",
+      "dateRequired": "Date required",
+      "deleteQuestionTitle": "Delete free day",
+      "deleteQuestionMessage": "Do you really want to delete free day?"
+    },
+    "manufactureProperties": {
+      "minimalSystemDimensionsLabel": "Minimal board",
+      "minimalSystemDimensionsPlaceholderX": "Enter x",
+      "minimalSystemDimensionsPlaceholderY": "Enter y",
+      "minimalSystemDimensionsRequired": "Minimal board is required",
+      "minimalEdgedBoardDimensionsLabel": "Minimal edge board",
+      "minimalEdgedBoardDimensionsPlaceholderX": "Enter x",
+      "minimalEdgedBoardDimensionsPlaceholderY": "Enter y",
+      "minimalEdgedBoardDimensionsRequired": "Minimal edge board is required",
+      "minimalLayeredBoardDimensionsLabel": "Minimal layered board",
+      "minimalLayeredBoardDimensionsPlaceholderX": "Enter x",
+      "minimalLayeredBoardDimensionsPlaceholderY": "Enter y",
+      "minimalLayeredBoardDimensionsRequired": "Minimal layered board is required",
+      "minimalFrameBoardDimensionsLabel": "Minimal frame board",
+      "minimalFrameBoardDimensionsPlaceholderX": "Enter x",
+      "minimalFrameBoardDimensionsPlaceholderY": "Enter y",
+      "minimalFrameBoardDimensionsRequired": "Minimal frame board is required",
+      "edgeWidthAppendLabel": "Edge width append",
+      "edgeWidthAppendPlaceholder": "Enter edge width append",
+      "edgeWidthAppendRequired": "Edge width append is required",
+      "edgeLengthAppendLabel": "Edge length append",
+      "edgeLengthAppendPlaceholder": "Enter edge length append",
+      "edgeLengthAppendRequired": "Edge length append is required",
+      "duplicatedBoardAppendLabel": "Duplicated board append",
+      "duplicatedBoardAppendPlaceholder": "Enter duplicated board append",
+      "duplicatedBoardAppendRequired": "Duplicated board append is required"
     },
     "vatRate": {
       "label": "Vat rate [%]",

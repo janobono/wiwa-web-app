@@ -1,11 +1,14 @@
+import { useEffect, useState } from 'react';
+
+import { getManufactureProperties, setManufactureProperties } from '../../../api/controller/config';
+import { Dimensions } from '../../../api/model';
+import { ManufactureProperties } from '../../../api/model/application';
+import WiwaButton from '../../ui/wiwa-button';
+import WiwaFormDimensions from '../../ui/wiwa-form-dimensions';
+import WiwaFormInputDecimal from '../../ui/wiwa-form-input-decimal';
 import { useAuthState } from '../../../state/auth';
 import { useErrorState } from '../../../state/error';
 import { useResourceState } from '../../../state/resource';
-import { useEffect, useState } from 'react';
-import { ManufactureProperties } from '../../../api/model/application';
-import { getManufactureProperties, setManufactureProperties } from '../../../api/controller/config';
-import WiwaButton from '../../ui/wiwa-button';
-import { Dimensions } from '../../../api/model';
 
 const ManufacturePropertiesEditor = () => {
     const authState = useAuthState();
@@ -108,90 +111,134 @@ const ManufacturePropertiesEditor = () => {
     return (
         <div className="flex flex-col p-5 gap-5 w-full">
             <div className="flex flex-col items-center justify-center">
-                {/*<WiwaFormInput*/}
-                {/*    label={resourceState?.admin?.mailFormat.resetPassword.subjectLabel}*/}
-                {/*    placeholder={resourceState?.admin?.mailFormat.resetPassword.subjectPlaceholder}*/}
-                {/*    value={subject}*/}
-                {/*    setValue={setSubject}*/}
-                {/*    setValid={setSubjectValid}*/}
-                {/*    validate={() => {*/}
-                {/*        if (subject.trim().length === 0) {*/}
-                {/*            return {*/}
-                {/*                valid: false,*/}
-                {/*                message: resourceState?.admin?.mailFormat.resetPassword.subjectRequired*/}
-                {/*            };*/}
-                {/*        }*/}
-                {/*        return {valid: true};*/}
-                {/*    }}*/}
-                {/*/>*/}
+                <WiwaFormDimensions
+                    label={resourceState?.manager?.orderInputs.manufactureProperties.minimalSystemDimensionsLabel}
+                    placeholderX={resourceState?.manager?.orderInputs.manufactureProperties.minimalSystemDimensionsPlaceholderX}
+                    placeholderY={resourceState?.manager?.orderInputs.manufactureProperties.minimalSystemDimensionsPlaceholderY}
+                    value={minimalSystemDimensions}
+                    setValue={setMinimalSystemDimensions}
+                    setValid={setMinimalSystemDimensionsValid}
+                    validate={() => {
+                        if (minimalSystemDimensions === undefined) {
+                            return {
+                                valid: false,
+                                message: resourceState?.manager?.orderInputs.manufactureProperties.minimalSystemDimensionsRequired
+                            };
+                        }
+                        return {valid: true};
+                    }}
+                />
 
-                {/*<WiwaFormInput*/}
-                {/*    label={resourceState?.admin?.mailFormat.resetPassword.titleLabel}*/}
-                {/*    placeholder={resourceState?.admin?.mailFormat.resetPassword.titlePlaceholder}*/}
-                {/*    value={title}*/}
-                {/*    setValue={setTitle}*/}
-                {/*    setValid={setTitleValid}*/}
-                {/*    validate={() => {*/}
-                {/*        if (title.trim().length === 0) {*/}
-                {/*            return {*/}
-                {/*                valid: false,*/}
-                {/*                message: resourceState?.admin?.mailFormat.resetPassword.titleRequired*/}
-                {/*            };*/}
-                {/*        }*/}
-                {/*        return {valid: true};*/}
-                {/*    }}*/}
-                {/*/>*/}
+                <WiwaFormDimensions
+                    label={resourceState?.manager?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsLabel}
+                    placeholderX={resourceState?.manager?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsPlaceholderX}
+                    placeholderY={resourceState?.manager?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsPlaceholderY}
+                    value={minimalEdgedBoardDimensions}
+                    setValue={setMinimalEdgedBoardDimensions}
+                    setValid={setMinimalEdgedBoardDimensionsValid}
+                    validate={() => {
+                        if (minimalEdgedBoardDimensions === undefined) {
+                            return {
+                                valid: false,
+                                message: resourceState?.manager?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsRequired
+                            };
+                        }
+                        return {valid: true};
+                    }}
+                />
 
-                {/*<WiwaFormInput*/}
-                {/*    label={resourceState?.admin?.mailFormat.resetPassword.messageLabel}*/}
-                {/*    placeholder={resourceState?.admin?.mailFormat.resetPassword.messagePlaceholder}*/}
-                {/*    value={message}*/}
-                {/*    setValue={setMessage}*/}
-                {/*    setValid={setMessageValid}*/}
-                {/*    validate={() => {*/}
-                {/*        if (message.trim().length === 0) {*/}
-                {/*            return {*/}
-                {/*                valid: false,*/}
-                {/*                message: resourceState?.admin?.mailFormat.resetPassword.messageRequired*/}
-                {/*            };*/}
-                {/*        }*/}
-                {/*        return {valid: true};*/}
-                {/*    }}*/}
-                {/*/>*/}
+                <WiwaFormDimensions
+                    label={resourceState?.manager?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsLabel}
+                    placeholderX={resourceState?.manager?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsPlaceholderX}
+                    placeholderY={resourceState?.manager?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsPlaceholderY}
+                    value={minimalLayeredBoardDimensions}
+                    setValue={setMinimalLayeredBoardDimensions}
+                    setValid={setMinimalLayeredBoardDimensionsValid}
+                    validate={() => {
+                        if (minimalLayeredBoardDimensions === undefined) {
+                            return {
+                                valid: false,
+                                message: resourceState?.manager?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsRequired
+                            };
+                        }
+                        return {valid: true};
+                    }}
+                />
 
-                {/*<WiwaFormInput*/}
-                {/*    label={resourceState?.admin?.mailFormat.resetPassword.passwordMessageLabel}*/}
-                {/*    placeholder={resourceState?.admin?.mailFormat.resetPassword.passwordMessagePlaceholder}*/}
-                {/*    value={passwordMessage}*/}
-                {/*    setValue={setPasswordMessage}*/}
-                {/*    setValid={setPasswordMessageValid}*/}
-                {/*    validate={() => {*/}
-                {/*        if (passwordMessage.trim().length === 0) {*/}
-                {/*            return {*/}
-                {/*                valid: false,*/}
-                {/*                message: resourceState?.admin?.mailFormat.resetPassword.passwordMessageRequired*/}
-                {/*            };*/}
-                {/*        }*/}
-                {/*        return {valid: true};*/}
-                {/*    }}*/}
-                {/*/>*/}
+                <WiwaFormDimensions
+                    label={resourceState?.manager?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsLabel}
+                    placeholderX={resourceState?.manager?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsPlaceholderX}
+                    placeholderY={resourceState?.manager?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsPlaceholderY}
+                    value={minimalFrameBoardDimensions}
+                    setValue={setMinimalFrameBoardDimensions}
+                    setValid={setMinimalFrameBoardDimensionsValid}
+                    validate={() => {
+                        if (minimalFrameBoardDimensions === undefined) {
+                            return {
+                                valid: false,
+                                message: resourceState?.manager?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsRequired
+                            };
+                        }
+                        return {valid: true};
+                    }}
+                />
 
-                {/*<WiwaFormInput*/}
-                {/*    label={resourceState?.admin?.mailFormat.resetPassword.linkLabel}*/}
-                {/*    placeholder={resourceState?.admin?.mailFormat.resetPassword.linkPlaceholder}*/}
-                {/*    value={link}*/}
-                {/*    setValue={setLink}*/}
-                {/*    setValid={setLinkValid}*/}
-                {/*    validate={() => {*/}
-                {/*        if (link.trim().length === 0) {*/}
-                {/*            return {*/}
-                {/*                valid: false,*/}
-                {/*                message: resourceState?.admin?.mailFormat.resetPassword.linkRequired*/}
-                {/*            };*/}
-                {/*        }*/}
-                {/*        return {valid: true};*/}
-                {/*    }}*/}
-                {/*/>*/}
+                <WiwaFormInputDecimal
+                    min="0"
+                    label={resourceState?.manager?.orderInputs.manufactureProperties.edgeWidthAppendLabel}
+                    required={true}
+                    placeholder={resourceState?.manager?.orderInputs.manufactureProperties.edgeWidthAppendPlaceholder}
+                    value={edgeWidthAppend}
+                    setValue={setEdgeWidthAppend}
+                    setValid={setEdgeWidthAppendValid}
+                    validate={() => {
+                        if (edgeWidthAppend === undefined) {
+                            return {
+                                valid: false,
+                                message: resourceState?.manager?.orderInputs.manufactureProperties.edgeWidthAppendRequired
+                            };
+                        }
+                        return {valid: true};
+                    }}
+                />
+
+                <WiwaFormInputDecimal
+                    min="0"
+                    label={resourceState?.manager?.orderInputs.manufactureProperties.edgeLengthAppendLabel}
+                    required={true}
+                    placeholder={resourceState?.manager?.orderInputs.manufactureProperties.edgeLengthAppendPlaceholder}
+                    value={edgeLengthAppend}
+                    setValue={setEdgeLengthAppend}
+                    setValid={setEdgeLengthAppendValid}
+                    validate={() => {
+                        if (edgeLengthAppend === undefined) {
+                            return {
+                                valid: false,
+                                message: resourceState?.manager?.orderInputs.manufactureProperties.edgeLengthAppendRequired
+                            };
+                        }
+                        return {valid: true};
+                    }}
+                />
+
+                <WiwaFormInputDecimal
+                    min="0"
+                    label={resourceState?.manager?.orderInputs.manufactureProperties.duplicatedBoardAppendLabel}
+                    required={true}
+                    placeholder={resourceState?.manager?.orderInputs.manufactureProperties.duplicatedBoardAppendPlaceholder}
+                    value={duplicatedBoardAppend}
+                    setValue={setDuplicatedBoardAppend}
+                    setValid={setDuplicatedBoardAppendValid}
+                    validate={() => {
+                        if (duplicatedBoardAppend === undefined) {
+                            return {
+                                valid: false,
+                                message: resourceState?.manager?.orderInputs.manufactureProperties.duplicatedBoardAppendRequired
+                            };
+                        }
+                        return {valid: true};
+                    }}
+                />
 
                 <div className="join pt-5">
                     <WiwaButton

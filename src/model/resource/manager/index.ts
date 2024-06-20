@@ -169,6 +169,11 @@ export interface ResourceManager {
             deleteMessage: string
         }
     },
+    freeDayTable: {
+        name: string,
+        day: string,
+        month: string
+    },
     orderInputs: {
         option: {
             select: string,
@@ -178,6 +183,44 @@ export interface ResourceManager {
             pricesForGluingEdge: string,
             pricesForCutting: string,
             freeDays: string
+        },
+        freeDay: {
+            title: string,
+            nameLabel: string,
+            namePlaceholder: string,
+            nameRequired: string,
+            dateLabel: string,
+            datePlaceholder: string,
+            dateRequired: string,
+            deleteQuestionTitle: string,
+            deleteQuestionMessage: string
+        },
+        manufactureProperties: {
+            minimalSystemDimensionsLabel: string,
+            minimalSystemDimensionsPlaceholderX: string,
+            minimalSystemDimensionsPlaceholderY: string,
+            minimalSystemDimensionsRequired: string,
+            minimalEdgedBoardDimensionsLabel: string,
+            minimalEdgedBoardDimensionsPlaceholderX: string,
+            minimalEdgedBoardDimensionsPlaceholderY: string,
+            minimalEdgedBoardDimensionsRequired: string,
+            minimalLayeredBoardDimensionsLabel: string,
+            minimalLayeredBoardDimensionsPlaceholderX: string,
+            minimalLayeredBoardDimensionsPlaceholderY: string,
+            minimalLayeredBoardDimensionsRequired: string,
+            minimalFrameBoardDimensionsLabel: string,
+            minimalFrameBoardDimensionsPlaceholderX: string,
+            minimalFrameBoardDimensionsPlaceholderY: string,
+            minimalFrameBoardDimensionsRequired: string,
+            edgeWidthAppendLabel: string,
+            edgeWidthAppendPlaceholder: string,
+            edgeWidthAppendRequired: string,
+            edgeLengthAppendLabel: string,
+            edgeLengthAppendPlaceholder: string,
+            edgeLengthAppendRequired: string,
+            duplicatedBoardAppendLabel: string,
+            duplicatedBoardAppendPlaceholder: string,
+            duplicatedBoardAppendRequired: string
         },
         vatRate: {
             label: string,

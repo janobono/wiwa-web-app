@@ -4,7 +4,7 @@ import ManufacturePropertiesEditor from '../../component/app/manager/manufacture
 import PriceForGluingLayerEditor from '../../component/app/manager/price-for-gluing-layer-editor';
 import PricesForGluingEdgeEditor from '../../component/app/manager/prices-for-gluing-edge-editor';
 import PricesForCuttingEditor from '../../component/app/manager/prices-for-cutting-editor';
-import FreeDaysEditor from '../../component/app/manager/free-days-editor';
+import FreeDayEditor from '../../component/app/manager/free-day-editor';
 import VatRateEditor from '../../component/app/manager/vat-rate-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
@@ -46,7 +46,7 @@ const OrderInputsPage = () => {
                     {index == 3 && <PriceForGluingLayerEditor/>}
                     {index == 4 && <PricesForGluingEdgeEditor/>}
                     {index == 5 && <PricesForCuttingEditor/>}
-                    {index == 6 && <FreeDaysEditor/>}
+                    {index == 6 && <FreeDayEditor/>}
                 </div>
             </div>
         </>

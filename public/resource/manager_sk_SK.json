@@ -167,6 +167,11 @@
       "deleteMessage": "Naozaj si želáte zmazať obrázok hrany?"
     }
   },
+  "freeDayTable": {
+    "name": "Názov",
+    "day": "Deň",
+    "month": "Mesiac"
+  },
   "orderInputs": {
     "option": {
       "select": "Vstup",
@@ -176,6 +181,44 @@
       "pricesForGluingEdge": "Ceny lepenia hrany",
       "pricesForCutting": "Ceny rezania",
       "freeDays": "Voľné dni"
+    },
+    "freeDay": {
+      "title": "Voľný deň",
+      "nameLabel": "Názov",
+      "namePlaceholder": "Zadajte názov",
+      "nameRequired": "Vyžaduje sa názov",
+      "dateLabel": "Dátum",
+      "datePlaceholder": "Zadajte dátum",
+      "dateRequired": "Vyžaduje sa dátum",
+      "deleteQuestionTitle": "Zmazať voľný deň",
+      "deleteQuestionMessage": "Naozaj si želáte zmazať voľný deň?"
+    },
+    "manufactureProperties": {
+      "minimalSystemDimensionsLabel": "Minimálna doska",
+      "minimalSystemDimensionsPlaceholderX": "Zadajte x",
+      "minimalSystemDimensionsPlaceholderY": "Zadajte y",
+      "minimalSystemDimensionsRequired": "Vyžaduje sa minimálna doska",
+      "minimalEdgedBoardDimensionsLabel": "Minimálna ohranená doska",
+      "minimalEdgedBoardDimensionsPlaceholderX": "Zadajte x",
+      "minimalEdgedBoardDimensionsPlaceholderY": "Zadajte y",
+      "minimalEdgedBoardDimensionsRequired": "Vyžaduje sa minimálna ohranená doska",
+      "minimalLayeredBoardDimensionsLabel": "Minimálna lepená doska",
+      "minimalLayeredBoardDimensionsPlaceholderX": "Zadajte x",
+      "minimalLayeredBoardDimensionsPlaceholderY": "Zadajte y",
+      "minimalLayeredBoardDimensionsRequired": "Vyžaduje sa minimálna lepená doska",
+      "minimalFrameBoardDimensionsLabel": "Minimálna doska v rámiku",
+      "minimalFrameBoardDimensionsPlaceholderX": "Zadajte x",
+      "minimalFrameBoardDimensionsPlaceholderY": "Zadajte y",
+      "minimalFrameBoardDimensionsRequired": "Vyžaduje sa minimálna doska v rámiku",
+      "edgeWidthAppendLabel": "Prídavok širky hrany",
+      "edgeWidthAppendPlaceholder": "Zadajte prídavok širky hrany",
+      "edgeWidthAppendRequired": "Vyžaduje sa prídavok širky hrany",
+      "edgeLengthAppendLabel": "Prídavok dĺžky hrany",
+      "edgeLengthAppendPlaceholder": "Zadajte prídavok dĺžky hrany",
+      "edgeLengthAppendRequired": "Vyžaduje sa prídavok dĺžky hrany",
+      "duplicatedBoardAppendLabel": "Prídavok lepenia dosky",
+      "duplicatedBoardAppendPlaceholder": "Zadajte prídavok lepenia dosky",
+      "duplicatedBoardAppendRequired": "Vyžaduje sa prídavok lepenia dosky"
     },
     "vatRate": {
       "label": "dph [%]",

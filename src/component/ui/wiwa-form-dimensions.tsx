@@ -81,7 +81,7 @@ const WiwaFormDimensions = (
                     <span className="label-text">{label + (required ? '*' : '')}</span>
                 </label>
             }
-            <div className="grid-cols-2 gap-5 w-full">
+            <div className="flex grid-cols-2 gap-5 w-full">
                 <WiwaInput
                     type="number"
                     pattern="[0-9]"

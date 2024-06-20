@@ -44,6 +44,12 @@ export interface FreeDay {
     month: number
 }
 
+export enum FreeDayField {
+    name = 'name',
+    day = 'day',
+    month = 'month'
+}
+
 export interface ManufactureProperties {
     minimalSystemDimensions: Dimensions,
     minimalEdgedBoardDimensions: Dimensions,
