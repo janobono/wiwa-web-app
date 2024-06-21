@@ -220,11 +220,46 @@
       "duplicatedBoardAppendPlaceholder": "Zadajte prídavok lepenia dosky",
       "duplicatedBoardAppendRequired": "Vyžaduje sa prídavok lepenia dosky"
     },
+    "pricesForGluingEdge": {
+      "title": "Cena lepenia hrany",
+      "widthLabel": "Šírka",
+      "widthPlaceholder": "Zadajte šírku",
+      "widthRequired": "Vyžaduje sa šírka",
+      "priceLabel": "Cena",
+      "pricePlaceholder": "Zadajte cenu",
+      "priceRequired": "Vyžaduje sa cena",
+      "deleteQuestionTitle": "Zmazať cenu lepenia hrany",
+      "deleteQuestionMessage": "Naozaj si želáte zmazať cenu lepenia hrany?"
+    },
+    "priceForGluingLayer": {
+      "label": "Cena lepenia vrstvy za",
+      "placeholder": "Zadajte cenu lepenia vrstvy",
+      "required": "Vyžaduje sa cena lepenia vrstvy"
+    },
+    "pricesForCutting": {
+      "title": "Cena rezania",
+      "thicknessLabel": "Hrúbka",
+      "thicknessPlaceholder": "Zadajte hrúbku",
+      "thicknessRequired": "Vyžaduje sa hrúbka",
+      "priceLabel": "Cena",
+      "pricePlaceholder": "Zadajte cenu",
+      "priceRequired": "Vyžaduje sa cena",
+      "deleteQuestionTitle": "Zmazať cenu rezania",
+      "deleteQuestionMessage": "Naozaj si želáte zmazať cenu rezania?"
+    },
     "vatRate": {
       "label": "dph [%]",
       "placeholder": "Zadajte dph",
       "required": "Vyžaduje sa dph"
     }
+  },
+  "priceForCuttingTable": {
+    "thickness": "Hrúbka",
+    "price": "Cena"
+  },
+  "priceForGluingEdgeTable": {
+    "width": "Šírka",
+    "price": "Cena"
   },
   "selectCodeListDialog": {
     "title": "Výber číselníka",

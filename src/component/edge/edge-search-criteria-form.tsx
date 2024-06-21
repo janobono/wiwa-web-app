@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp, Search } from 'react-feather';
 
 import SelectCodeListItem from '../code-list/select-code-list-item';
 import WiwaFormInputDecimal from '../ui/wiwa-form-input-decimal';
+import WiwaFormInputInteger from '../ui/wiwa-form-input-integer';
 import WiwaFormInputString from '../ui/wiwa-form-input-string';
 import WiwaInput from '../ui/wiwa-input';
 import WiwaButton from '../ui/wiwa-button';
@@ -127,13 +128,13 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
                     </div>
 
                     <div className="flex flex-row gap-5 w-2/3">
-                        <WiwaFormInputDecimal
+                        <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.edgeCriteria.widthFromPlaceholder}
                             value={widthFrom}
                             setValue={setWidthFrom}
                         />
-                        <WiwaFormInputDecimal
+                        <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.edgeCriteria.widthToPlaceholder}
                             value={widthTo}

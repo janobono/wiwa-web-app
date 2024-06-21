@@ -267,9 +267,19 @@ export interface PriceForCutting {
     price: number
 }
 
+export enum PriceForCuttingField {
+    thickness = 'thickness',
+    price = 'price'
+}
+
 export interface PriceForGluingEdge {
     width: number,
     price: number
+}
+
+export enum PriceForGluingEdgeField {
+    width = 'width',
+    price = 'price'
 }
 
 export interface PriceForGluingLayer {

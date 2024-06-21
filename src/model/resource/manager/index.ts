@@ -222,11 +222,46 @@ export interface ResourceManager {
             duplicatedBoardAppendPlaceholder: string,
             duplicatedBoardAppendRequired: string
         },
+        pricesForGluingEdge: {
+            title: string,
+            widthLabel: string,
+            widthPlaceholder: string,
+            widthRequired: string,
+            priceLabel: string,
+            pricePlaceholder: string,
+            priceRequired: string,
+            deleteQuestionTitle: string,
+            deleteQuestionMessage: string
+        },
+        priceForGluingLayer: {
+            label: string,
+            placeholder: string,
+            required: string
+        },
+        pricesForCutting: {
+            title: string,
+            thicknessLabel: string,
+            thicknessPlaceholder: string,
+            thicknessRequired: string,
+            priceLabel: string,
+            pricePlaceholder: string,
+            priceRequired: string,
+            deleteQuestionTitle: string,
+            deleteQuestionMessage: string
+        },
         vatRate: {
             label: string,
             placeholder: string,
             required: string
         }
+    },
+    priceForCuttingTable: {
+        thickness: string,
+        price: string
+    },
+    priceForGluingEdgeTable: {
+        width: string,
+        price: string
     },
     selectCodeListDialog: {
         title: string,

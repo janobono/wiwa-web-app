@@ -14,6 +14,7 @@ import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInputDecimal from '../../../component/ui/wiwa-form-input-decimal';
+import WiwaFormInputInteger from '../../../component/ui/wiwa-form-input-integer';
 import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
 import WiwaFormTextarea from '../../../component/ui/wiwa-form-textarea';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
@@ -493,7 +494,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         }}
                     />
 
-                    <WiwaFormInputDecimal
+                    <WiwaFormInputInteger
                         min="0"
                         label={`${resourceState?.manager?.boards.boardDialog.lengthLabel} ${lengthSign}`}
                         required={true}
@@ -512,7 +513,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         }}
                     />
 
-                    <WiwaFormInputDecimal
+                    <WiwaFormInputInteger
                         min="0"
                         label={`${resourceState?.manager?.boards.boardDialog.widthLabel} ${lengthSign}`}
                         required={true}
@@ -531,7 +532,7 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
                         }}
                     />
 
-                    <WiwaFormInputDecimal
+                    <WiwaFormInputInteger
                         min="0"
                         label={`${resourceState?.manager?.boards.boardDialog.thicknessLabel} ${lengthSign}`}
                         required={true}

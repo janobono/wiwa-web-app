@@ -221,11 +221,46 @@
       "duplicatedBoardAppendPlaceholder": "Enter duplicated board append",
       "duplicatedBoardAppendRequired": "Duplicated board append is required"
     },
+    "pricesForGluingEdge": {
+      "title": "Gluing edge price",
+      "widthLabel": "Width",
+      "widthPlaceholder": "Enter width",
+      "widthRequired": "Width is required",
+      "priceLabel": "Price",
+      "pricePlaceholder": "Enter price",
+      "priceRequired": "Price is required",
+      "deleteQuestionTitle": "Delete gluing edge price",
+      "deleteQuestionMessage": "Do you really want to delete gluing edge price?"
+    },
+    "priceForGluingLayer": {
+      "label": "Price for gluing layer for",
+      "placeholder": "Enter price for gluing layer",
+      "required": "Price for gluing layer is required"
+    },
+    "pricesForCutting": {
+      "title": "Cutting price",
+      "thicknessLabel": "Thickness",
+      "thicknessPlaceholder": "Enter thickness",
+      "thicknessRequired": "Thickness is required",
+      "priceLabel": "Price",
+      "pricePlaceholder": "Enter price",
+      "priceRequired": "Price is required",
+      "deleteQuestionTitle": "Delete cutting price",
+      "deleteQuestionMessage": "Do you really want to delete cutting price?"
+    },
     "vatRate": {
       "label": "Vat rate [%]",
       "placeholder": "Enter vat rate",
       "required": "Vat rate is required"
     }
+  },
+  "priceForCuttingTable": {
+    "thickness": "Thickness",
+    "price": "Price"
+  },
+  "priceForGluingEdgeTable": {
+    "width": "Width",
+    "price": "Price"
   },
   "selectCodeListDialog": {
     "title": "Select code list",

@@ -63,15 +63,15 @@ const WiwaFormDimensions = (
     }, [value]);
 
     useEffect(() => {
-        if (valueX === undefined || valueX.length === 0) {
+        if (valueX === undefined || valueX.replace(/[^0-9]/g, '').length === 0) {
             setValue(undefined);
             return;
         }
-        if (valueY === undefined || valueY.length === 0) {
+        if (valueY === undefined || valueY.replace(/[^0-9]/g, '').length === 0) {
             setValue(undefined);
             return;
         }
-        setValue({x: Number(valueX), y: Number(valueY)});
+        setValue({x: Number(valueX.replace(/[^0-9]/g, '')), y: Number(valueY.replace(/[^0-9]/g, ''))});
     }, [valueX, valueY]);
 
     return (

@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp, Search } from 'react-feather';
 
 import SelectCodeListItem from '../code-list/select-code-list-item';
 import WiwaFormInputDecimal from '../ui/wiwa-form-input-decimal';
+import WiwaFormInputInteger from '../ui/wiwa-form-input-integer';
 import WiwaFormInputString from '../ui/wiwa-form-input-string';
 import WiwaInput from '../ui/wiwa-input';
 import WiwaButton from '../ui/wiwa-button';
@@ -152,25 +153,25 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                     </div>
 
                     <div className="flex flex-row gap-5 w-2/3">
-                        <WiwaFormInputDecimal
+                        <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.lengthFromPlaceholder}
                             value={lengthFrom}
                             setValue={setLengthFrom}
                         />
-                        <WiwaFormInputDecimal
+                        <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.lengthToPlaceholder}
                             value={lengthTo}
                             setValue={setLengthTo}
                         />
-                        <WiwaFormInputDecimal
+                        <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.widthFromPlaceholder}
                             value={widthFrom}
                             setValue={setWidthFrom}
                         />
-                        <WiwaFormInputDecimal
+                        <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.widthToPlaceholder}
                             value={widthTo}
@@ -179,13 +180,13 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                     </div>
 
                     <div className="flex flex-row gap-5 w-2/3">
-                        <WiwaFormInputDecimal
+                        <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.thicknessFromPlaceholder}
                             value={thicknessFrom}
                             setValue={setThicknessFrom}
                         />
-                        <WiwaFormInputDecimal
+                        <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.thicknessToPlaceholder}
                             value={thicknessTo}
