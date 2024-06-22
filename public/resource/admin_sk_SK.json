@@ -281,6 +281,24 @@
       "valueRequired": "Vyžaduje sa jednotka"
     }
   },
+  "userCriteria": {
+    "searchPlaceholder": "Používateľské meno, meno, stredné meno, priezvisko alebo email",
+    "usernamePlaceholder": "Používateľské meno",
+    "emailPlaceholder": "Email"
+  },
+  "userTable": {
+    "id": "Id",
+    "username": "Používateľské meno",
+    "email": "Email",
+    "titleBefore": "Titul pred",
+    "firstName": "Meno",
+    "midName": "Stredné meno",
+    "lastName": "Priezvisko",
+    "titleAfter": "Titul za",
+    "authorities": "Povolenia",
+    "confirmed": "Potvrdený",
+    "enabled": "Odblokovaný"
+  },
   "users": {
     "fetchDataError": "Chyba načítania používateľov",
     "deleteUser": {

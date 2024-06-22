@@ -184,6 +184,41 @@ export interface ResourceCommon {
         },
     },
     notFound: string,
+    orderPackageType: {
+        noPackage: string,
+        noPackageWithRemains: string,
+        package: string,
+        packageWithRemains: string
+    },
+    orderStatus: {
+        new: string,
+        sent: string,
+        inProduction: string,
+        ready: string,
+        finished: string,
+        cancelled: string
+    },
+    orderTable: {
+        id: string,
+        creator: string,
+        created: string,
+        status: string,
+        orderNumber: string,
+        weight: string,
+        total: string,
+        vatTotal: string,
+        deliveryDate: string,
+        packageType: string
+    },
+    orderUserTable: {
+        id: string,
+        titleBefore: string,
+        firstName: string,
+        midName: string,
+        lastName: string,
+        titleAfter: string,
+        email: string
+    },
     pageable: {
         next: string,
         page: string,
@@ -199,24 +234,6 @@ export interface ResourceCommon {
         squareMeter: string,
         kilogram: string,
         piece: string
-    },
-    userCriteria: {
-        searchPlaceholder: string,
-        usernamePlaceholder: string,
-        emailPlaceholder: string
-    },
-    userTable: {
-        id: string,
-        username: string,
-        email: string,
-        titleBefore: string,
-        firstName: string,
-        midName: string,
-        lastName: string,
-        titleAfter: string,
-        authorities: string,
-        confirmed: string,
-        enabled: string
     },
     value: {
         no: string,

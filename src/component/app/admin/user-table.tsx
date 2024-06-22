@@ -1,9 +1,9 @@
-import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
-import WiwaUserAuthorities from '../ui/wiwa-user-authorities';
-import WiwaValue from '../ui/wiwa-value';
-import { User } from '../../api/model';
-import { UserField } from '../../api/model/user';
-import { useResourceState } from '../../state/resource';
+import WiwaFormCheckBox from '../../ui/wiwa-form-check-box';
+import WiwaUserAuthorities from '../../ui/wiwa-user-authorities';
+import WiwaValue from '../../ui/wiwa-value';
+import { User } from '../../../api/model';
+import { UserField } from '../../../api/model/user';
+import { useResourceState } from '../../../state/resource';
 
 const UserTable = ({fields, rows, selected, setSelected}: {
     fields: UserField[],
@@ -38,37 +38,37 @@ const TableHead = ({fields}: { fields: UserField[] }) => {
         <thead>
         <tr>
             {fields?.find(item => item === UserField.id) &&
-                <th>{resourceState?.common?.userTable.id}</th>
+                <th>{resourceState?.admin?.userTable.id}</th>
             }
             {fields?.find(item => item === UserField.username) &&
-                <th>{resourceState?.common?.userTable.username}</th>
+                <th>{resourceState?.admin?.userTable.username}</th>
             }
             {fields?.find(item => item === UserField.email) &&
-                <th>{resourceState?.common?.userTable.email}</th>
+                <th>{resourceState?.admin?.userTable.email}</th>
             }
             {fields?.find(item => item === UserField.titleBefore) &&
-                <th>{resourceState?.common?.userTable.titleBefore}</th>
+                <th>{resourceState?.admin?.userTable.titleBefore}</th>
             }
             {fields?.find(item => item === UserField.firstName) &&
-                <th>{resourceState?.common?.userTable.firstName}</th>
+                <th>{resourceState?.admin?.userTable.firstName}</th>
             }
             {fields?.find(item => item === UserField.midName) &&
-                <th>{resourceState?.common?.userTable.midName}</th>
+                <th>{resourceState?.admin?.userTable.midName}</th>
             }
             {fields?.find(item => item === UserField.lastName) &&
-                <th>{resourceState?.common?.userTable.lastName}</th>
+                <th>{resourceState?.admin?.userTable.lastName}</th>
             }
             {fields?.find(item => item === UserField.titleAfter) &&
-                <th>{resourceState?.common?.userTable.titleAfter}</th>
+                <th>{resourceState?.admin?.userTable.titleAfter}</th>
             }
             {fields?.find(item => item === UserField.authorities) &&
-                <th>{resourceState?.common?.userTable.authorities}</th>
+                <th>{resourceState?.admin?.userTable.authorities}</th>
             }
             {fields?.find(item => item === UserField.confirmed) &&
-                <th>{resourceState?.common?.userTable.confirmed}</th>
+                <th>{resourceState?.admin?.userTable.confirmed}</th>
             }
             {fields?.find(item => item === UserField.enabled) &&
-                <th>{resourceState?.common?.userTable.enabled}</th>
+                <th>{resourceState?.admin?.userTable.enabled}</th>
             }
             <th></th>
         </tr>

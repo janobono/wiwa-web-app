@@ -184,6 +184,41 @@
     }
   },
   "notFound": "404 Stránka nenájdená",
+  "orderPackageType": {
+    "noPackage": "Bez balenia",
+    "noPackageWithRemains": "Bez balenia so zvyškami",
+    "package": "Balenie",
+    "packageWithRemains": "Balenie so zvyškami"
+  },
+  "orderStatus": {
+    "new": "Nová",
+    "sent": "Odoslaná",
+    "inProduction": "Vo výrobe",
+    "ready": "Pripravená",
+    "finished": "Vyzdvihnutá",
+    "cancelled": "Zrušená"
+  },
+  "orderTable": {
+    "id": "Id",
+    "creator": "Vytvoril",
+    "created": "Vytvorená",
+    "status": "Stav",
+    "orderNumber": "Číslo objednávky",
+    "weight": "Hmotnosť",
+    "total": "Cena",
+    "vatTotal": "Cena s DPH",
+    "deliveryDate": "Dátum doručenia",
+    "packageType": "Balenie"
+  },
+  "orderUserTable": {
+    "id": "Id",
+    "titleBefore": "Titul pred",
+    "firstName": "Meno",
+    "midName": "Stredné meno",
+    "lastName": "Priezvisko",
+    "titleAfter": "Titul za",
+    "email": "Email"
+  },
   "pageable": {
     "previous": "Predchádzajúca",
     "page": "Stránka",
@@ -199,24 +234,6 @@
     "squareMeter": "Meter štvorcový",
     "kilogram": "Kilogram",
     "piece": "Kus"
-  },
-  "userCriteria": {
-    "searchPlaceholder": "Používateľské meno, meno, stredné meno, priezvisko alebo email",
-    "usernamePlaceholder": "Používateľské meno",
-    "emailPlaceholder": "Email"
-  },
-  "userTable": {
-    "id": "Id",
-    "username": "Používateľské meno",
-    "email": "Email",
-    "titleBefore": "Titul pred",
-    "firstName": "Meno",
-    "midName": "Stredné meno",
-    "lastName": "Priezvisko",
-    "titleAfter": "Titul za",
-    "authorities": "Povolenia",
-    "confirmed": "Potvrdený",
-    "enabled": "Odblokovaný"
   },
   "value": {
     "no": "Nie",

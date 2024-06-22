@@ -281,6 +281,24 @@ export interface ResourceAdmin {
             valueRequired: string
         }
     },
+    userCriteria: {
+        searchPlaceholder: string,
+        usernamePlaceholder: string,
+        emailPlaceholder: string
+    },
+    userTable: {
+        id: string,
+        username: string,
+        email: string,
+        titleBefore: string,
+        firstName: string,
+        midName: string,
+        lastName: string,
+        titleAfter: string,
+        authorities: string,
+        confirmed: string,
+        enabled: string
+    },
     users: {
         fetchDataError: string,
         deleteUser: {

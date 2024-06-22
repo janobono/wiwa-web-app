@@ -12,11 +12,14 @@ import { Page, Pageable } from '../../model';
 import {
     Order,
     OrderCommentChange,
-    OrderContact, OrderContactField, OrderField,
+    OrderContact,
+    OrderContactField,
+    OrderField,
     OrderItemChange,
     OrderItemImage,
     OrderSearchCriteria,
     OrderStatusChange,
+    OrderUserSearchCriteria,
     SendOrder
 } from '../../model/order';
 
@@ -52,6 +55,20 @@ export const getOrderContacts = (pageable?: Pageable<OrderContactField>, accessT
     const queryParams = new URLSearchParams();
     setPageableQueryParams(queryParams, pageable);
     return getData<Page<OrderContact>>(PATH + '/contacts', queryParams, accessToken);
+}
+
+export const getOrderUsers = (criteria?: OrderUserSearchCriteria, pageable?: Pageable<OrderContactField>, accessToken?: string) => {
+    const queryParams = new URLSearchParams();
+    setPageableQueryParams(queryParams, pageable);
+    if (criteria) {
+        if (criteria.searchField) {
+            setQueryParam(queryParams, 'searchField', criteria.searchField);
+        }
+        if (criteria.email) {
+            setQueryParam(queryParams, 'email', criteria.email);
+        }
+    }
+    return getData<Page<Order>>(PATH + '/users', queryParams, accessToken);
 }
 
 export const setOrderContact = (id: number, orderContact: OrderContact, accessToken?: string) => {

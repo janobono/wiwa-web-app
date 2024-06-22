@@ -285,6 +285,24 @@
       "valueRequired": "Unit is required"
     }
   },
+  "userCriteria": {
+    "searchPlaceholder": "Username, first name, middle name, last name or email",
+    "usernamePlaceholder": "Username",
+    "emailPlaceholder": "Email"
+  },
+  "userTable": {
+    "id": "Id",
+    "username": "Username",
+    "email": "Email",
+    "titleBefore": "Title before",
+    "firstName": "First name",
+    "midName": "Mid name",
+    "lastName": "Last name",
+    "titleAfter": "Title after",
+    "authorities": "Authorities",
+    "confirmed": "Confirmed",
+    "enabled": "Enabled"
+  },
   "users": {
     "fetchDataError": "Users loading failed",
     "deleteUser": {

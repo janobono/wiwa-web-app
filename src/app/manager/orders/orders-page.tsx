@@ -1,8 +1,16 @@
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import { useResourceState } from '../../../state/resource';
+import OrderTable from '../../../component/order/order-table.tsx';
+import { Order, OrderField } from '../../../api/model/order';
+import { useOrderState } from '../../../state/order';
 
 const OrdersPage = () => {
+    const orderState = useOrderState();
     const resourceState = useResourceState();
+
+    const setSelected = (selected?: Order) => {
+        orderState?.setSelected(selected)
+    }
 
     return (
         <>
@@ -14,6 +22,18 @@ const OrdersPage = () => {
                     to: '/manager/orders'
                 }
             ]}/>
+            <div className="flex flex-col p-5 w-full">
+
+                <div className="overflow-x-auto">
+                    <OrderTable
+                        fields={Object.values(OrderField)}
+                        rows={orderState?.data?.content}
+                        selected={orderState?.selected}
+                        setSelected={setSelected}
+                    />
+                </div>
+
+            </div>
         </>
     )
 }

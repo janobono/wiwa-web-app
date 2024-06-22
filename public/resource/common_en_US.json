@@ -184,6 +184,41 @@
     }
   },
   "notFound": "404 Page not found",
+  "orderPackageType": {
+    "noPackage": "No package",
+    "noPackageWithRemains": "No package with remains",
+    "package": "package",
+    "packageWithRemains": "Package with remains"
+  },
+  "orderStatus": {
+    "new": "New",
+    "sent": "Sent",
+    "inProduction": "In production",
+    "ready": "Ready",
+    "finished": "Finished",
+    "cancelled": "Cancelled"
+  },
+  "orderTable": {
+    "id": "Id",
+    "creator": "Creator",
+    "created": "Created",
+    "status": "Status",
+    "orderNumber": "Order number",
+    "weight": "Weight",
+    "total": "Total",
+    "vatTotal": "Vat total",
+    "deliveryDate": "Delivery date",
+    "packageType": "Package type"
+  },
+  "orderUserTable": {
+    "id": "Id",
+    "titleBefore": "Title before",
+    "firstName": "First name",
+    "midName": "Mid name",
+    "lastName": "Last name",
+    "titleAfter": "Title after",
+    "email": "Email"
+  },
   "pageable": {
     "next": "Next",
     "page": "Page",
@@ -199,24 +234,6 @@
     "squareMeter": "Square meter",
     "kilogram": "Kilogram",
     "piece": "Piece"
-  },
-  "userCriteria": {
-    "searchPlaceholder": "Username, first name, middle name, last name or email",
-    "usernamePlaceholder": "Username",
-    "emailPlaceholder": "Email"
-  },
-  "userTable": {
-    "id": "Id",
-    "username": "Username",
-    "email": "Email",
-    "titleBefore": "Title before",
-    "firstName": "First name",
-    "midName": "Mid name",
-    "lastName": "Last name",
-    "titleAfter": "Title after",
-    "authorities": "Authorities",
-    "confirmed": "Confirmed",
-    "enabled": "Enabled"
   },
   "value": {
     "no": "No",

@@ -1,11 +1,11 @@
 import { ReactNode, useEffect, useState } from 'react';
-
-import WiwaFormInputString from '../ui/wiwa-form-input-string';
-import WiwaInput from '../ui/wiwa-input';
-import WiwaButton from '../ui/wiwa-button';
 import { ChevronDown, ChevronUp, Search } from 'react-feather';
-import { useResourceState } from '../../state/resource';
-import { UserSearchCriteria } from '../../api/model/user';
+
+import WiwaFormInputString from '../../ui/wiwa-form-input-string';
+import WiwaInput from '../../ui/wiwa-input';
+import WiwaButton from '../../ui/wiwa-button';
+import { UserSearchCriteria } from '../../../api/model/user';
+import { useResourceState } from '../../../state/resource';
 
 const UserSearchCriteriaForm = ({searchHandler, children}: {
     searchHandler: (criteria: UserSearchCriteria) => void
@@ -32,7 +32,7 @@ const UserSearchCriteriaForm = ({searchHandler, children}: {
                 <div className="join w-full">
                     <WiwaInput
                         className="join-item w-full"
-                        placeholder={resourceState?.common?.userCriteria.searchPlaceholder}
+                        placeholder={resourceState?.admin?.userCriteria.searchPlaceholder}
                         value={searchField}
                         onChange={event => setSearchField(event.target.value)}
                         onKeyUp={(event) => {
@@ -62,13 +62,13 @@ const UserSearchCriteriaForm = ({searchHandler, children}: {
             {extended &&
                 <div className="flex flex-row gap-5 w-2/3">
                     <WiwaFormInputString
-                        placeholder={resourceState?.common?.userCriteria.usernamePlaceholder}
+                        placeholder={resourceState?.admin?.userCriteria.usernamePlaceholder}
                         value={username}
                         setValue={setUsername}
                     />
 
                     <WiwaFormInputString
-                        placeholder={resourceState?.common?.userCriteria.emailPlaceholder}
+                        placeholder={resourceState?.admin?.userCriteria.emailPlaceholder}
                         value={email}
                         setValue={setEmail}
                     />

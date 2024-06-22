@@ -126,6 +126,21 @@ export interface OrderUser {
     email: string
 }
 
+export enum OrderUserField {
+    id = 'id',
+    titleBefore = 'titleBefore',
+    firstName = 'firstName',
+    midName = 'midName',
+    lastName = 'lastName',
+    titleAfter = 'titleAfter',
+    email = 'email'
+}
+
+export interface OrderUserSearchCriteria {
+    searchField: string,
+    email: string
+}
+
 export interface Order {
     id: number,
     creator: OrderUser,
@@ -144,6 +159,19 @@ export interface Order {
     comments: OrderComment[]
 }
 
+export enum OrderField {
+    id = 'id',
+    orderNumber = 'orderNumber',
+    creator = 'creator',
+    created = 'created',
+    status = 'status',
+    weight = 'weight',
+    total = 'total',
+    vatTotal = 'vatTotal',
+    deliveryDate = 'deliveryDate',
+    packageType = 'packageType'
+}
+
 export interface OrderSearchCriteria {
     userIds?: number[],
     createdFrom?: string,
@@ -151,18 +179,6 @@ export interface OrderSearchCriteria {
     statuses?: OrderStatus[],
     totalFrom?: number,
     totalTo?: number
-}
-
-export enum OrderField {
-    id = 'id',
-    userId = 'userId',
-    created = 'created',
-    orderNumber = 'orderNumber',
-    delivery = 'delivery',
-    packageType = 'packageType',
-    status = 'status',
-    weight = 'weight',
-    total = 'total'
 }
 
 export interface SendOrder {
