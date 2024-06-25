@@ -44,25 +44,6 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
         getBoardCategories().then(data => setBoardCategories(data?.data));
     }, []);
 
-    useEffect(() => {
-        if (!extended) {
-            setCode(undefined);
-            setName(undefined);
-            setBoardCode(undefined);
-            setStructureCode(undefined);
-            setOrientation(undefined);
-            setLengthFrom(undefined);
-            setLengthTo(undefined);
-            setWidthFrom(undefined);
-            setWidthTo(undefined);
-            setThicknessFrom(undefined);
-            setThicknessTo(undefined);
-            setPriceFrom(undefined);
-            setPriceTo(undefined);
-            setCodeListItems([]);
-        }
-    }, [extended]);
-
     const createCriteria = () => {
         return {
             searchField,
@@ -84,41 +65,39 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
     }
 
     return (
-        <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
-            <div className="flex w-2/3">
-                <div className="join w-full">
-                    <WiwaInput
-                        className="join-item w-full"
-                        placeholder={resourceState?.common?.boardCriteria.searchPlaceholder}
-                        value={searchField}
-                        onChange={event => setSearchField(event.target.value)}
-                        onKeyUp={(event) => {
-                            if (event.key === 'Enter') {
-                                searchHandler(createCriteria());
-                            }
-                        }}
-                    />
-                    <WiwaButton
-                        title={resourceState?.common?.action.search}
-                        className="join-item"
-                        onClick={() => searchHandler(createCriteria())}
-                    ><Search size={18}/></WiwaButton>
-                    <WiwaButton
-                        title={resourceState?.common?.action.extendedSearch}
-                        className="join-item"
-                        onClick={() => setExtended(!extended)}
-                    >{extended ?
-                        <ChevronUp size={18}/>
-                        :
-                        <ChevronDown size={18}/>
-                    }</WiwaButton>
-                </div>
+        <>
+            <div className="join join-vertical md:join-horizontal w-full">
+                <WiwaInput
+                    className="join-item w-full"
+                    placeholder={resourceState?.common?.boardCriteria.searchPlaceholder}
+                    value={searchField}
+                    onChange={event => setSearchField(event.target.value)}
+                    onKeyUp={(event) => {
+                        if (event.key === 'Enter') {
+                            searchHandler(createCriteria());
+                        }
+                    }}
+                />
+                <WiwaButton
+                    title={resourceState?.common?.action.search}
+                    className="join-item"
+                    onClick={() => searchHandler(createCriteria())}
+                ><Search size={18}/></WiwaButton>
+                <WiwaButton
+                    title={resourceState?.common?.action.extendedSearch}
+                    className="join-item"
+                    onClick={() => setExtended(!extended)}
+                >{extended ?
+                    <ChevronUp size={18}/>
+                    :
+                    <ChevronDown size={18}/>
+                }</WiwaButton>
                 {children}
             </div>
 
             {extended &&
                 <>
-                    <div className="flex flex-row gap-5 w-2/3">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full">
                         <WiwaFormInputString
                             placeholder={resourceState?.common?.boardCriteria.codePlaceholder}
                             value={code}
@@ -152,7 +131,7 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                         </WiwaSelect>
                     </div>
 
-                    <div className="flex flex-row gap-5 w-2/3">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-5 w-full">
                         <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.lengthFromPlaceholder}
@@ -177,9 +156,6 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                             value={widthTo}
                             setValue={setWidthTo}
                         />
-                    </div>
-
-                    <div className="flex flex-row gap-5 w-2/3">
                         <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.boardCriteria.thicknessFromPlaceholder}
@@ -205,8 +181,9 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                             setValue={setPriceTo}
                         />
                     </div>
+
                     {boardCategories &&
-                        <div className="flex flex-col gap-5 w-2/3">
+                        <div className="flex flex-col gap-5 w-full">
                             {boardCategories.map(category =>
                                 <SelectCodeListItem
                                     key={category.id}
@@ -228,7 +205,7 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                     }
                 </>
             }
-        </div>
+        </>
     )
 }
 

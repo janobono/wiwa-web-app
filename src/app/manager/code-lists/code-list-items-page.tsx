@@ -171,82 +171,80 @@ const CodeListItemsPage = () => {
             <div className="flex flex-col p-5 gap-5 w-full">
                 <SelectCodeListItem codeListId={Number(codeListId)} itemSelectedHandler={setParentItem}/>
 
-                <div className="flex flex-row w-full items-center justify-center">
-                    <div className="join">
-                        <WiwaButton
-                            title={resourceState?.common?.action.add}
-                            className="btn-primary join-item"
-                            disabled={busy}
-                            onClick={() => {
-                                setEditMode(false);
+                <div className="join join-vertical md:join-horizontal w-full">
+                    <WiwaButton
+                        title={resourceState?.common?.action.add}
+                        className="btn-primary join-item"
+                        disabled={busy}
+                        onClick={() => {
+                            setEditMode(false);
+                            setShowDialog(true);
+                        }}
+                    >
+                        <Plus size={18}/>
+                    </WiwaButton>
+
+                    <WiwaButton
+                        title={resourceState?.common?.action.edit}
+                        className="btn-secondary join-item"
+                        disabled={busy || selected === undefined}
+                        onClick={() => {
+                            if (selected) {
+                                setEditMode(true);
                                 setShowDialog(true);
-                            }}
-                        >
-                            <Plus size={18}/>
-                        </WiwaButton>
+                            }
+                        }}
+                    >
+                        <Edit size={18}/>
+                    </WiwaButton>
 
-                        <WiwaButton
-                            title={resourceState?.common?.action.edit}
-                            className="btn-secondary join-item"
-                            disabled={busy || selected === undefined}
-                            onClick={() => {
-                                if (selected) {
-                                    setEditMode(true);
-                                    setShowDialog(true);
-                                }
-                            }}
-                        >
-                            <Edit size={18}/>
-                        </WiwaButton>
+                    <WiwaButton
+                        title={resourceState?.common?.action.moveUp}
+                        className="btn-ghost join-item"
+                        disabled={busy || selected === undefined}
+                        onClick={() => {
+                            if (selected) {
+                                moveUpHandler(selected.id).then();
+                            }
+                        }}
+                    >
+                        <ArrowUp size={18}/>
+                    </WiwaButton>
 
-                        <WiwaButton
-                            title={resourceState?.common?.action.moveUp}
-                            className="btn-ghost join-item"
-                            disabled={busy || selected === undefined}
-                            onClick={() => {
-                                if (selected) {
-                                    moveUpHandler(selected.id).then();
-                                }
-                            }}
-                        >
-                            <ArrowUp size={18}/>
-                        </WiwaButton>
+                    <WiwaButton
+                        title={resourceState?.common?.action.moveDown}
+                        className="btn-ghost join-item"
+                        disabled={busy || selected === undefined}
+                        onClick={() => {
+                            if (selected) {
+                                moveDownHandler(selected.id).then();
+                            }
+                        }}
+                    >
+                        <ArrowDown size={18}/>
+                    </WiwaButton>
 
-                        <WiwaButton
-                            title={resourceState?.common?.action.moveDown}
-                            className="btn-ghost join-item"
-                            disabled={busy || selected === undefined}
-                            onClick={() => {
-                                if (selected) {
-                                    moveDownHandler(selected.id).then();
-                                }
-                            }}
-                        >
-                            <ArrowDown size={18}/>
-                        </WiwaButton>
-
-                        <WiwaButton
-                            className="btn-accent join-item"
-                            title={resourceState?.common?.action.delete}
-                            disabled={busy || selected === undefined}
-                            onClick={() => {
-                                dialogState?.showDialog({
-                                    type: DialogType.YES_NO,
-                                    title: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.title,
-                                    message: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.message,
-                                    callback: (answer: DialogAnswer) => {
-                                        if (answer === DialogAnswer.YES) {
-                                            if (selected) {
-                                                deleteHandler(selected.id).then();
-                                            }
-                                            setSelected(undefined);
+                    <WiwaButton
+                        className="btn-accent join-item"
+                        title={resourceState?.common?.action.delete}
+                        disabled={busy || selected === undefined}
+                        onClick={() => {
+                            dialogState?.showDialog({
+                                type: DialogType.YES_NO,
+                                title: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.title,
+                                message: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.message,
+                                callback: (answer: DialogAnswer) => {
+                                    if (answer === DialogAnswer.YES) {
+                                        if (selected) {
+                                            deleteHandler(selected.id).then();
                                         }
+                                        setSelected(undefined);
                                     }
-                                });
-                            }}
-                        ><Trash size={18}/>
-                        </WiwaButton>
-                    </div>
+                                }
+                            });
+                        }}
+                    ><Trash size={18}/>
+                    </WiwaButton>
                 </div>
 
                 <div className="overflow-x-auto">

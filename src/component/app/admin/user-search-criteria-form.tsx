@@ -27,9 +27,9 @@ const UserSearchCriteriaForm = ({searchHandler, children}: {
     }, [extended]);
 
     return (
-        <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
-            <div className="flex w-2/3">
-                <div className="join w-full">
+        <>
+            <div className="flex flex-col md:flex-row gap-5 w-full">
+                <div className="join join-vertical md:join-horizontal w-full">
                     <WiwaInput
                         className="join-item w-full"
                         placeholder={resourceState?.admin?.userCriteria.searchPlaceholder}
@@ -55,18 +55,17 @@ const UserSearchCriteriaForm = ({searchHandler, children}: {
                         :
                         <ChevronDown size={18}/>
                     }</WiwaButton>
+                    {children}
                 </div>
-                {children}
             </div>
 
             {extended &&
-                <div className="flex flex-row gap-5 w-2/3">
+                <div className="flex flex-col md:flex-row gap-5 w-full">
                     <WiwaFormInputString
                         placeholder={resourceState?.admin?.userCriteria.usernamePlaceholder}
                         value={username}
                         setValue={setUsername}
                     />
-
                     <WiwaFormInputString
                         placeholder={resourceState?.admin?.userCriteria.emailPlaceholder}
                         value={email}
@@ -74,7 +73,7 @@ const UserSearchCriteriaForm = ({searchHandler, children}: {
                     />
                 </div>
             }
-        </div>
+        </>
     )
 }
 

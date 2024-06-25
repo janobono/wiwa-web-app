@@ -39,14 +39,12 @@ const CategoriesPage = () => {
                     <option value="3">{resourceState?.manager?.categories.option.material}</option>
                 </WiwaSelect>
 
-                <div>
-                    {index == 1 &&
-                        <CategoriesEditor getCategories={getBoardCategories} setCategories={setBoardCategories}/>}
-                    {index == 2 &&
-                        <CategoriesEditor getCategories={getEdgeCategories} setCategories={setEdgeCategories}/>}
-                    {index == 3 &&
-                        <CategoryEditor getCategory={getBoardMaterialCategory} setCategory={setBoardMaterialCategory}/>}
-                </div>
+                {index == 1 &&
+                    <CategoriesEditor getCategories={getBoardCategories} setCategories={setBoardCategories}/>}
+                {index == 2 &&
+                    <CategoriesEditor getCategories={getEdgeCategories} setCategories={setEdgeCategories}/>}
+                {index == 3 &&
+                    <CategoryEditor getCategory={getBoardMaterialCategory} setCategory={setBoardMaterialCategory}/>}
             </div>
         </>
     )

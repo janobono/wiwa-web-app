@@ -158,7 +158,7 @@ const UsersPage = () => {
             ]}/>
             <div className="flex flex-col p-5 gap-5 w-full">
                 <UserSearchCriteriaForm searchHandler={setCriteria}>
-                    <div className="join pl-5">
+                    <>
                         <WiwaButton
                             title={resourceState?.admin?.users.userAuthorities.title}
                             className="btn-primary join-item"
@@ -169,7 +169,6 @@ const UsersPage = () => {
                         >
                             <FeatherUsers size={18}/>
                         </WiwaButton>
-
                         <WiwaButton
                             className="btn-warning join-item"
                             title={resourceState?.admin?.users.userConfirmed.dialogTitle}
@@ -197,7 +196,6 @@ const UsersPage = () => {
                                 <UserCheck size={18}/>
                             }
                         </WiwaButton>
-
                         <WiwaButton
                             className="btn-error join-item"
                             title={resourceState?.admin?.users.userEnabled.dialogTitle}
@@ -225,7 +223,6 @@ const UsersPage = () => {
                                 <Unlock size={18}/>
                             }
                         </WiwaButton>
-
                         <WiwaButton
                             className="btn-accent join-item"
                             title={resourceState?.common?.action.delete}
@@ -246,7 +243,7 @@ const UsersPage = () => {
                             }}
                         ><Trash size={18}/>
                         </WiwaButton>
-                    </div>
+                    </>
                 </UserSearchCriteriaForm>
 
                 <div className="overflow-x-auto">
@@ -258,7 +255,7 @@ const UsersPage = () => {
                     />
                 </div>
 
-                <div className="w-full flex justify-center">
+                <div className="flex justify-center w-full">
                     <WiwaPageable
                         isPrevious={previous}
                         previousHandler={() => setPage(page + 1)}

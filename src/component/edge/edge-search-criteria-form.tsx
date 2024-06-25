@@ -38,20 +38,6 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
         getEdgeCategories().then(data => setEdgeCategories(data?.data));
     }, []);
 
-    useEffect(() => {
-        if (!extended) {
-            setCode(undefined);
-            setName(undefined);
-            setWidthFrom(undefined);
-            setWidthTo(undefined);
-            setThicknessFrom(undefined);
-            setThicknessTo(undefined);
-            setPriceFrom(undefined);
-            setPriceTo(undefined);
-            setCodeListItems([]);
-        }
-    }, [extended]);
-
     const createCriteria = () => {
         return {
             searchField,
@@ -68,41 +54,40 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
     }
 
     return (
-        <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
-            <div className="flex w-2/3">
-                <div className="join w-full">
-                    <WiwaInput
-                        className="join-item w-full"
-                        placeholder={resourceState?.common?.edgeCriteria.searchPlaceholder}
-                        value={searchField}
-                        onChange={event => setSearchField(event.target.value)}
-                        onKeyUp={(event) => {
-                            if (event.key === 'Enter') {
-                                searchHandler(createCriteria());
-                            }
-                        }}
-                    />
-                    <WiwaButton
-                        title={resourceState?.common?.action.search}
-                        className="join-item"
-                        onClick={() => searchHandler(createCriteria())}
-                    ><Search size={18}/></WiwaButton>
-                    <WiwaButton
-                        title={resourceState?.common?.action.extendedSearch}
-                        className="join-item"
-                        onClick={() => setExtended(!extended)}
-                    >{extended ?
-                        <ChevronUp size={18}/>
-                        :
-                        <ChevronDown size={18}/>
-                    }</WiwaButton>
-                </div>
+        <>
+            <div className="join join-vertical md:join-horizontal w-full">
+                <WiwaInput
+                    className="join-item w-full"
+                    placeholder={resourceState?.common?.edgeCriteria.searchPlaceholder}
+                    value={searchField}
+                    onChange={event => setSearchField(event.target.value)}
+                    onKeyUp={(event) => {
+                        if (event.key === 'Enter') {
+                            searchHandler(createCriteria());
+                        }
+                    }}
+                />
+                <WiwaButton
+                    title={resourceState?.common?.action.search}
+                    className="join-item"
+                    onClick={() => searchHandler(createCriteria())}
+                ><Search size={18}/></WiwaButton>
+                <WiwaButton
+                    title={resourceState?.common?.action.extendedSearch}
+                    className="join-item"
+                    onClick={() => setExtended(!extended)}
+                >{extended ?
+                    <ChevronUp size={18}/>
+                    :
+                    <ChevronDown size={18}/>
+                }</WiwaButton>
                 {children}
             </div>
 
+
             {extended &&
                 <>
-                    <div className="flex flex-row gap-5 w-2/3">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-5 w-full">
                         <WiwaFormInputString
                             placeholder={resourceState?.common?.edgeCriteria.codePlaceholder}
                             value={code}
@@ -125,9 +110,6 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
                             value={priceTo}
                             setValue={setPriceTo}
                         />
-                    </div>
-
-                    <div className="flex flex-row gap-5 w-2/3">
                         <WiwaFormInputInteger
                             min="0"
                             placeholder={resourceState?.common?.edgeCriteria.widthFromPlaceholder}
@@ -155,7 +137,7 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
                     </div>
 
                     {edgeCategories &&
-                        <div className="flex flex-col gap-5 w-2/3">
+                        <div className="flex flex-col gap-5 w-full">
                             {edgeCategories.map(category =>
                                 <SelectCodeListItem
                                     key={category.id}
@@ -177,7 +159,7 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
                     }
                 </>
             }
-        </div>
+        </>
     )
 }
 

@@ -136,7 +136,7 @@ const EdgesPage = () => {
             ]}/>
             <div className="flex flex-col gap-5 p-5 w-full">
                 <EdgeSearchCriteriaForm searchHandler={setCriteria}>
-                    <div className="join pl-5">
+                    <>
                         <WiwaButton
                             title={resourceState?.common?.action.add}
                             className="btn-primary join-item"
@@ -203,7 +203,7 @@ const EdgesPage = () => {
                             }}
                         ><Trash size={18}/>
                         </WiwaButton>
-                    </div>
+                    </>
                 </EdgeSearchCriteriaForm>
 
                 <div className="overflow-x-auto">
@@ -215,7 +215,7 @@ const EdgesPage = () => {
                     />
                 </div>
 
-                <div className="w-full flex justify-center">
+                <div className="flex justify-center w-full">
                     <WiwaPageable
                         isPrevious={previous}
                         previousHandler={() => setPage(page + 1)}

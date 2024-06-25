@@ -137,7 +137,7 @@ const BoardsPage = () => {
             ]}/>
             <div className="flex flex-col p-5 gap-5 w-full">
                 <BoardSearchCriteriaForm searchHandler={setCriteria}>
-                    <div className="join pl-5">
+                    <>
                         <WiwaButton
                             title={resourceState?.common?.action.add}
                             className="btn-primary join-item"
@@ -204,7 +204,7 @@ const BoardsPage = () => {
                             }}
                         ><Trash size={18}/>
                         </WiwaButton>
-                    </div>
+                    </>
                 </BoardSearchCriteriaForm>
 
                 <div className="overflow-x-auto">
@@ -216,7 +216,7 @@ const BoardsPage = () => {
                     />
                 </div>
 
-                <div className="w-full flex justify-center">
+                <div className="flex justify-center w-full">
                     <WiwaPageable
                         isPrevious={previous}
                         previousHandler={() => setPage(page + 1)}

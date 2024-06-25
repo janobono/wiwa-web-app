@@ -79,49 +79,47 @@ const PricesForCuttingEditor = () => {
     return (
         <>
             <div className="flex flex-col p-5 w-full">
-                <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
-                    <div className="join">
-                        <WiwaButton
-                            className="btn-primary join-item"
-                            title={resourceState?.common?.action.add}
-                            disabled={busy}
-                            onClick={() => {
-                                setEdit(false);
-                                setShowDialog(true);
-                            }}
-                        ><Plus size={18}/>
-                        </WiwaButton>
-                        <WiwaButton
-                            className="btn-secondary join-item"
-                            title={resourceState?.common?.action.edit}
-                            disabled={busy || selected === undefined}
-                            onClick={() => {
-                                setEdit(true);
-                                setShowDialog(true);
-                            }}
-                        ><Edit size={18}/>
-                        </WiwaButton>
-                        <WiwaButton
-                            className="btn-accent join-item"
-                            title={resourceState?.common?.action.delete}
-                            disabled={busy || selected === undefined}
-                            onClick={() => {
-                                dialogState?.showDialog({
-                                    type: DialogType.YES_NO,
-                                    title: resourceState?.manager?.orderInputs.pricesForCutting.deleteQuestionTitle,
-                                    message: resourceState?.manager?.orderInputs.pricesForCutting.deleteQuestionMessage,
-                                    callback: (answer: DialogAnswer) => {
-                                        if (answer === DialogAnswer.YES) {
-                                            if (selected) {
-                                                deleteHandler(selected).then();
-                                            }
+                <div className="join">
+                    <WiwaButton
+                        className="btn-primary join-item"
+                        title={resourceState?.common?.action.add}
+                        disabled={busy}
+                        onClick={() => {
+                            setEdit(false);
+                            setShowDialog(true);
+                        }}
+                    ><Plus size={18}/>
+                    </WiwaButton>
+                    <WiwaButton
+                        className="btn-secondary join-item"
+                        title={resourceState?.common?.action.edit}
+                        disabled={busy || selected === undefined}
+                        onClick={() => {
+                            setEdit(true);
+                            setShowDialog(true);
+                        }}
+                    ><Edit size={18}/>
+                    </WiwaButton>
+                    <WiwaButton
+                        className="btn-accent join-item"
+                        title={resourceState?.common?.action.delete}
+                        disabled={busy || selected === undefined}
+                        onClick={() => {
+                            dialogState?.showDialog({
+                                type: DialogType.YES_NO,
+                                title: resourceState?.manager?.orderInputs.pricesForCutting.deleteQuestionTitle,
+                                message: resourceState?.manager?.orderInputs.pricesForCutting.deleteQuestionMessage,
+                                callback: (answer: DialogAnswer) => {
+                                    if (answer === DialogAnswer.YES) {
+                                        if (selected) {
+                                            deleteHandler(selected).then();
                                         }
                                     }
-                                });
-                            }}
-                        ><Trash size={18}/>
-                        </WiwaButton>
-                    </div>
+                                }
+                            });
+                        }}
+                    ><Trash size={18}/>
+                    </WiwaButton>
                 </div>
                 <div className="overflow-x-auto">
                     <PriceForCuttingTable

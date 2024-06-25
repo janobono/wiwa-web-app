@@ -82,37 +82,35 @@ const EdgeImagePage = () => {
                 }
             ]}/>
             <div className="flex flex-col gap-5 p-5 w-full">
-                <div className="flex flex-row w-full items-center justify-center">
-                    <div className="join">
-                        <WiwaButton
-                            title={resourceState?.common?.action.edit}
-                            className="btn-secondary join-item"
-                            disabled={busy}
-                            onClick={() => {
-                                setShowDialog(true);
-                            }}
-                        >
-                            <Edit size={18}/>
-                        </WiwaButton>
-                        <WiwaButton
-                            className="btn-accent join-item"
-                            title={resourceState?.common?.action.delete}
-                            disabled={busy}
-                            onClick={() => {
-                                dialogState?.showDialog({
-                                    type: DialogType.YES_NO,
-                                    title: resourceState?.manager?.edges.edgeImage.deleteTitle,
-                                    message: resourceState?.manager?.edges.edgeImage.deleteMessage,
-                                    callback: (answer: DialogAnswer) => {
-                                        if (answer === DialogAnswer.YES) {
-                                            deleteHandler().then();
-                                        }
+                <div className="join">
+                    <WiwaButton
+                        title={resourceState?.common?.action.edit}
+                        className="btn-secondary join-item"
+                        disabled={busy}
+                        onClick={() => {
+                            setShowDialog(true);
+                        }}
+                    >
+                        <Edit size={18}/>
+                    </WiwaButton>
+                    <WiwaButton
+                        className="btn-accent join-item"
+                        title={resourceState?.common?.action.delete}
+                        disabled={busy}
+                        onClick={() => {
+                            dialogState?.showDialog({
+                                type: DialogType.YES_NO,
+                                title: resourceState?.manager?.edges.edgeImage.deleteTitle,
+                                message: resourceState?.manager?.edges.edgeImage.deleteMessage,
+                                callback: (answer: DialogAnswer) => {
+                                    if (answer === DialogAnswer.YES) {
+                                        deleteHandler().then();
                                     }
-                                });
-                            }}
-                        ><Trash size={18}/>
-                        </WiwaButton>
-                    </div>
+                                }
+                            });
+                        }}
+                    ><Trash size={18}/>
+                    </WiwaButton>
                 </div>
                 <div className="flex flex-row w-full items-center justify-center">
                     <img

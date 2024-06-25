@@ -63,18 +63,16 @@ const UnitsPage = () => {
                 }
             ]}/>
             <div className="flex flex-col p-5 gap-5 w-full">
-                <div className="flex flex-col w-full items-center justify-center gap-5">
-                    <div className="join">
-                        <WiwaButton
-                            className="btn-primary"
-                            title={resourceState?.common?.action.edit}
-                            disabled={busy || selected === undefined}
-                            onClick={() => {
-                                setShowDialog(true);
-                            }}
-                        ><Edit size={18}/>
-                        </WiwaButton>
-                    </div>
+                <div className="join">
+                    <WiwaButton
+                        className="btn-primary"
+                        title={resourceState?.common?.action.edit}
+                        disabled={busy || selected === undefined}
+                        onClick={() => {
+                            setShowDialog(true);
+                        }}
+                    ><Edit size={18}/>
+                    </WiwaButton>
                 </div>
                 <div className="overflow-x-auto">
                     <UnitTable

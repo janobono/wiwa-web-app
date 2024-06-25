@@ -1,32 +1,21 @@
-import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
-import { useResourceState } from '../../state/resource';
-import { Order, OrderField, OrderSearchCriteria, OrderStatus } from '../../api/model/order';
-import OrderTable from '../../component/order/order-table';
-import { useOrderState } from '../../state/order';
-import WiwaPageable from '../../component/ui/wiwa-pageable.tsx';
 import { useEffect, useState } from 'react';
+
 import { getOrders } from '../../api/controller/order';
+import { Order, OrderField, OrderSearchCriteria } from '../../api/model/order';
+import OrderTable from '../../component/order/order-table';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
+import WiwaPageable from '../../component/ui/wiwa-pageable';
 import { useAuthState } from '../../state/auth';
 import { useErrorState } from '../../state/error';
-import WiwaFormInputDate from '../../component/ui/wiwa-form-input-date.tsx';
-import WiwaFormCheckBox from '../../component/ui/wiwa-form-check-box.tsx';
-import OrderStatusValue from '../../component/order/order-status-value.tsx';
+import { useOrderState } from '../../state/order';
+import { useResourceState } from '../../state/resource';
+import CustomerOrderSearchCriteriaForm from '../../component/order/customer-order-search-criteria-form.tsx';
 
 const OrdersPage = () => {
     const authState = useAuthState();
     const errorState = useErrorState();
     const orderState = useOrderState();
     const resourceState = useResourceState();
-
-    const [statusNew, setStatusNew] = useState(false);
-    const [statusSent, setStatusSent] = useState(false);
-    const [statusInProduction, setStatusInProduction] = useState(false);
-    const [statusReady, setStatusReady] = useState(false);
-    const [statusFinished, setStatusFinished] = useState(false);
-    const [statusCancelled, setStatusCancelled] = useState(false);
-
-    const [createdFrom, setCreatedFrom] = useState<Date>();
-    const [createdTo, setCreatedTo] = useState<Date>();
 
     const [busy, setBusy] = useState(false);
     const [criteria, setCriteria] = useState<OrderSearchCriteria>();
@@ -79,61 +68,9 @@ const OrdersPage = () => {
                 }
             ]}/>
             <div className="flex flex-col gap-5 p-5 w-full">
-                <div className="flex flex-col w-full items-center justify-center gap-5">
-                    <div className="flex flex-col w-2/3">
-                        <div className="flex flex-col md:flex-row gap-5 w-full">
-                            <WiwaFormCheckBox
-                                className="flex flex-row gap-2 items-center"
-                                value={statusNew}
-                                setValue={setStatusNew}>
-                                <OrderStatusValue value={OrderStatus.NEW}/>
-                            </WiwaFormCheckBox>
-                            <WiwaFormCheckBox
-                                className="flex flex-row gap-2 items-center"
-                                value={statusSent}
-                                setValue={setStatusSent}>
-                                <OrderStatusValue value={OrderStatus.SENT}/>
-                            </WiwaFormCheckBox>
-                            <WiwaFormCheckBox
-                                className="flex flex-row gap-2 items-center"
-                                value={statusInProduction}
-                                setValue={setStatusInProduction}>
-                                <OrderStatusValue value={OrderStatus.IN_PRODUCTION}/>
-                            </WiwaFormCheckBox>
-                            <WiwaFormCheckBox
-                                className="flex flex-row gap-2 items-center"
-                                value={statusReady}
-                                setValue={setStatusReady}>
-                                <OrderStatusValue value={OrderStatus.READY}/>
-                            </WiwaFormCheckBox>
-                            <WiwaFormCheckBox
-                                className="flex flex-row gap-2 items-center"
-                                value={statusFinished}
-                                setValue={setStatusFinished}>
-                                <OrderStatusValue value={OrderStatus.FINISHED}/>
-                            </WiwaFormCheckBox>
-                            <WiwaFormCheckBox
-                                className="flex flex-row gap-2 items-center"
-                                value={statusCancelled}
-                                setValue={setStatusCancelled}>
-                                <OrderStatusValue value={OrderStatus.CANCELLED}/>
-                            </WiwaFormCheckBox>
-                        </div>
-
-                        <div className="flex flex-col md:flex-row gap-5 w-full">
-                            <WiwaFormInputDate
-                                label={resourceState?.customer?.orderCriteria.createdFromLabel}
-                                value={createdFrom}
-                                setValue={setCreatedFrom}
-                            />
-                            <WiwaFormInputDate
-                                label={resourceState?.customer?.orderCriteria.createdToLabel}
-                                value={createdTo}
-                                setValue={setCreatedTo}
-                            />
-                        </div>
-                    </div>
-                </div>
+                <CustomerOrderSearchCriteriaForm
+                    searchHandler={(criteria) => {
+                }}/>
 
                 <div className="overflow-x-auto">
                     <OrderTable

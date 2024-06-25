@@ -122,49 +122,47 @@ const ApplicationImagesPage = () => {
                 }
             ]}/>
             <div className="flex flex-col gap-5 p-5 w-full">
-                <div className="flex flex-col w-full items-center justify-center gap-5">
-                    <div className="join">
-                        <WiwaButton
-                            className="btn-primary join-item"
-                            title={resourceState?.common?.action.add}
-                            disabled={busy}
-                            onClick={() => setShowDialog(true)}
-                        ><Plus size={18}/>
-                        </WiwaButton>
+                <div className="join">
+                    <WiwaButton
+                        className="btn-primary join-item"
+                        title={resourceState?.common?.action.add}
+                        disabled={busy}
+                        onClick={() => setShowDialog(true)}
+                    ><Plus size={18}/>
+                    </WiwaButton>
 
-                        <WiwaButton
-                            className="btn-ghost join-item"
-                            title={resourceState?.common?.action.copy}
-                            disabled={busy || selected === undefined}
-                            onClick={() => navigator.clipboard.writeText(
-                                window.location.href
-                                    .replace('admin', 'api/ui')
-                                + '/' + selected?.fileName)
-                            }
-                        ><Copy size={18}/>
-                        </WiwaButton>
+                    <WiwaButton
+                        className="btn-ghost join-item"
+                        title={resourceState?.common?.action.copy}
+                        disabled={busy || selected === undefined}
+                        onClick={() => navigator.clipboard.writeText(
+                            window.location.href
+                                .replace('admin', 'api/ui')
+                            + '/' + selected?.fileName)
+                        }
+                    ><Copy size={18}/>
+                    </WiwaButton>
 
-                        <WiwaButton
-                            className="btn-accent join-item"
-                            title={resourceState?.common?.action.delete}
-                            disabled={busy || selected === undefined}
-                            onClick={() => {
-                                dialogState?.showDialog({
-                                    type: DialogType.YES_NO,
-                                    title: resourceState?.admin?.applicationImages.deleteImageQuestionTitle,
-                                    message: resourceState?.admin?.applicationImages.deleteImageQuestionMessage,
-                                    callback: (answer: DialogAnswer) => {
-                                        if (answer === DialogAnswer.YES) {
-                                            if (selected) {
-                                                deleteHandler(selected.fileName).then();
-                                            }
+                    <WiwaButton
+                        className="btn-accent join-item"
+                        title={resourceState?.common?.action.delete}
+                        disabled={busy || selected === undefined}
+                        onClick={() => {
+                            dialogState?.showDialog({
+                                type: DialogType.YES_NO,
+                                title: resourceState?.admin?.applicationImages.deleteImageQuestionTitle,
+                                message: resourceState?.admin?.applicationImages.deleteImageQuestionMessage,
+                                callback: (answer: DialogAnswer) => {
+                                    if (answer === DialogAnswer.YES) {
+                                        if (selected) {
+                                            deleteHandler(selected.fileName).then();
                                         }
                                     }
-                                });
-                            }}
-                        ><Trash size={18}/>
-                        </WiwaButton>
-                    </div>
+                                }
+                            });
+                        }}
+                    ><Trash size={18}/>
+                    </WiwaButton>
                 </div>
 
                 <div className="overflow-x-auto">
