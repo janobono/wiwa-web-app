@@ -135,9 +135,9 @@ const CodeListsPage = () => {
                     to: '/manager/code-lists'
                 }
             ]}/>
-            <div className="flex flex-col p-5 w-full">
+            <div className="flex flex-col p-5 gap-5 w-full">
                 <div className="flex flex-row w-full items-center justify-center">
-                    <div className="join pb-5 w-2/3">
+                    <div className="join w-2/3">
                         <WiwaInput
                             className="join-item"
                             placeholder={resourceState?.manager?.codeLists.searchCodeList.placeholder}
@@ -156,7 +156,7 @@ const CodeListsPage = () => {
                         ><Search size={18}/></WiwaButton>
                     </div>
 
-                    <div className="join pb-5 px-5">
+                    <div className="join px-5">
                         <WiwaButton
                             title={resourceState?.common?.action.add}
                             className="btn-primary join-item"
@@ -223,7 +223,7 @@ const CodeListsPage = () => {
                     />
                 </div>
 
-                <div className="w-full flex justify-center pt-5">
+                <div className="w-full flex justify-center">
                     <WiwaPageable
                         isPrevious={previous}
                         previousHandler={() => setPage(page + 1)}

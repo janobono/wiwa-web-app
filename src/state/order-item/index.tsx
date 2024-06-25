@@ -1,11 +1,9 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
-import { OrderItem } from '../../api/model/order';
 import { useOrderState } from '../order';
+import { OrderItem } from '../../api/model/order';
 
 export interface OrderItemState {
-    busy: boolean,
-    setBusy: (busy: boolean) => void,
     data?: OrderItem[],
     setData: (data?: OrderItem[]) => void,
     selected?: OrderItem,
@@ -17,7 +15,6 @@ const orderItemStateContext = createContext<OrderItemState | undefined>(undefine
 const OrderItemStateProvider = ({children}: { children: ReactNode }) => {
     const orderState = useOrderState();
 
-    const [busy, setBusy] = useState(false);
     const [data, setData] = useState<OrderItem[]>();
     const [selected, setSelected] = useState<OrderItem>();
 
@@ -43,8 +40,6 @@ const OrderItemStateProvider = ({children}: { children: ReactNode }) => {
         <orderItemStateContext.Provider
             value={
                 {
-                    busy,
-                    setBusy,
                     data,
                     setData,
                     selected,

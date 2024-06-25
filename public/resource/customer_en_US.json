@@ -1,3 +1,6 @@
 {
-  "title": "customer"
+  "orderCriteria": {
+    "createdFromLabel": "Created from",
+    "createdToLabel": "Created to"
+  }
 }

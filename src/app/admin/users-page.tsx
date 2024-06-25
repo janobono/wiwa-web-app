@@ -156,7 +156,7 @@ const UsersPage = () => {
                     to: '/admin/users'
                 }
             ]}/>
-            <div className="flex flex-col p-5 w-full">
+            <div className="flex flex-col p-5 gap-5 w-full">
                 <UserSearchCriteriaForm searchHandler={setCriteria}>
                     <div className="join pl-5">
                         <WiwaButton
@@ -258,7 +258,7 @@ const UsersPage = () => {
                     />
                 </div>
 
-                <div className="w-full flex justify-center pt-5">
+                <div className="w-full flex justify-center">
                     <WiwaPageable
                         isPrevious={previous}
                         previousHandler={() => setPage(page + 1)}

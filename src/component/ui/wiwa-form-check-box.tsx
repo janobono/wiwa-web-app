@@ -17,17 +17,15 @@ const WiwaFormCheckBox = (
     }) => {
     return (
         <div className={twMerge(`form-control w-full ${className ?? ''}`)}>
-            <span>
-                <input
-                    type="checkbox"
-                    id={name}
-                    name={name}
-                    checked={value}
-                    onChange={() => setValue(!value)}
-                    className="checkbox"
-                />
-                {children}
-            </span>
+            <input
+                type="checkbox"
+                id={name}
+                name={name}
+                checked={value}
+                onChange={() => setValue(!value)}
+                className="checkbox"
+            />
+            {children}
         </div>
     );
 }

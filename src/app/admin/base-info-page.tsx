@@ -18,7 +18,7 @@ const BaseInfoPage = () => {
                     to: '/admin/base-info'
                 }
             ]}/>
-            <div className="flex flex-col p-5 gap-5 w-full">
+            <div className="flex flex-col gap-5 p-5 w-full">
                 <LogoEditor/>
                 <TitleEditor/>
                 <WelcomeTextEditor/>

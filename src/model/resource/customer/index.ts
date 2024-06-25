@@ -1,3 +1,6 @@
 export interface ResourceCustomer {
-    title: string
+    orderCriteria: {
+        createdFromLabel: string,
+        createdToLabel: string
+    }
 }

@@ -4,8 +4,6 @@ import { Page } from '../../api/model';
 import { Order } from '../../api/model/order';
 
 export interface OrderState {
-    busy: boolean,
-    setBusy: (busy: boolean) => void,
     data?: Page<Order>,
     setData: (data?: Page<Order>) => void,
     selected?: Order,
@@ -15,7 +13,6 @@ export interface OrderState {
 const orderStateContext = createContext<OrderState | undefined>(undefined);
 
 const OrderStateProvider = ({children}: { children: ReactNode }) => {
-    const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<Order>>();
     const [selected, setSelected] = useState<Order>();
 
@@ -23,8 +20,6 @@ const OrderStateProvider = ({children}: { children: ReactNode }) => {
         <orderStateContext.Provider
             value={
                 {
-                    busy,
-                    setBusy,
                     data,
                     setData,
                     selected,

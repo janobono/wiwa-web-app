@@ -24,7 +24,7 @@ const MailFormatPage = () => {
                     to: '/admin/mail-format'
                 }
             ]}/>
-            <div className="flex flex-col p-5 gap-5 w-full">
+            <div className="flex flex-col gap-5 p-5 w-full">
                 <WiwaSelect
                     defaultValue="0"
                     onChange={event => setIndex(Number(event.currentTarget.value))}

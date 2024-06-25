@@ -259,7 +259,7 @@ const SignUpPage = () => {
                         setValue={setTitleAfter}
                     />
 
-                    <WiwaFormCheckBox className="py-5" value={gdpr} setValue={setGdpr}>
+                    <WiwaFormCheckBox className="flex flex-row py-5" value={gdpr} setValue={setGdpr}>
                         <NavLink
                             className="link text-sm md:text:xs pl-2"
                             to="/ui/gdpr-info"

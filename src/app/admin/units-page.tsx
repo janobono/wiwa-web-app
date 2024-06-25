@@ -62,8 +62,8 @@ const UnitsPage = () => {
                     to: '/admin/units'
                 }
             ]}/>
-            <div className="flex flex-col p-5 w-full">
-                <div className="flex flex-col w-full items-center justify-center pb-5 gap-5">
+            <div className="flex flex-col p-5 gap-5 w-full">
+                <div className="flex flex-col w-full items-center justify-center gap-5">
                     <div className="join">
                         <WiwaButton
                             className="btn-primary"

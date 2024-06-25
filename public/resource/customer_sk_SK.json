@@ -1,3 +1,6 @@
 {
-  "title": "customer"
+  "orderCriteria": {
+    "createdFromLabel": "Vytvorená od",
+    "createdToLabel": "Vytvorená do"
+  }
 }

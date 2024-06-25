@@ -168,11 +168,11 @@ const CodeListItemsPage = () => {
                     to: `/manager/code-lists/${codeListId}/items`
                 }
             ]}/>
-            <div className="flex flex-col p-5 w-full">
+            <div className="flex flex-col p-5 gap-5 w-full">
                 <SelectCodeListItem codeListId={Number(codeListId)} itemSelectedHandler={setParentItem}/>
 
                 <div className="flex flex-row w-full items-center justify-center">
-                    <div className="join pb-5 px-5">
+                    <div className="join">
                         <WiwaButton
                             title={resourceState?.common?.action.add}
                             className="btn-primary join-item"

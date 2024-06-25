@@ -134,7 +134,7 @@ const EdgesPage = () => {
                     to: '/manager/edges'
                 }
             ]}/>
-            <div className="flex flex-col p-5 w-full">
+            <div className="flex flex-col gap-5 p-5 w-full">
                 <EdgeSearchCriteriaForm searchHandler={setCriteria}>
                     <div className="join pl-5">
                         <WiwaButton
@@ -215,7 +215,7 @@ const EdgesPage = () => {
                     />
                 </div>
 
-                <div className="w-full flex justify-center pt-5">
+                <div className="w-full flex justify-center">
                     <WiwaPageable
                         isPrevious={previous}
                         previousHandler={() => setPage(page + 1)}

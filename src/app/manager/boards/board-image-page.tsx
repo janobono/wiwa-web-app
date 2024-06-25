@@ -81,8 +81,8 @@ const BoardImagePage = () => {
                     to: '/manager/boards/image'
                 }
             ]}/>
-            <div className="flex flex-col p-5 w-full">
-                <div className="flex flex-row w-full items-center justify-center pb-5">
+            <div className="flex flex-col gap-5 p-5 w-full">
+                <div className="flex flex-row w-full items-center justify-center">
                     <div className="join">
                         <WiwaButton
                             title={resourceState?.common?.action.edit}
@@ -114,7 +114,7 @@ const BoardImagePage = () => {
                         </WiwaButton>
                     </div>
                 </div>
-                <div className="flex flex-row w-full items-center justify-center pb-5">
+                <div className="flex flex-row w-full items-center justify-center">
                     <img
                         className="flex-none w-48 h-48 object-scale-down object-center"
                         src={data}
