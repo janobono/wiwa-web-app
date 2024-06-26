@@ -56,54 +56,42 @@ const TableHead = ({fields}: { fields: BoardField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === BoardField.id) &&
-                <th>{resourceState?.common?.boardTable.id}</th>
-            }
-            {fields?.find(item => item === BoardField.code) &&
-                <th>{resourceState?.common?.boardTable.code}</th>
-            }
-            {fields?.find(item => item === BoardField.name) &&
-                <th>{resourceState?.common?.boardTable.name}</th>
-            }
-            {fields?.find(item => item === BoardField.description) &&
-                <th>{resourceState?.common?.boardTable.description}</th>
-            }
-            {fields?.find(item => item === BoardField.boardCode) &&
-                <th>{resourceState?.common?.boardTable.boardCode}</th>
-            }
-            {fields?.find(item => item === BoardField.structureCode) &&
-                <th>{resourceState?.common?.boardTable.structureCode}</th>
-            }
-            {fields?.find(item => item === BoardField.orientation) &&
-                <th>{resourceState?.common?.boardTable.orientation}</th>
-            }
-            {fields?.find(item => item === BoardField.sale) &&
-                <th>{`${resourceState?.common?.boardTable.sale} ${saleSign}`}</th>
-            }
-            {fields?.find(item => item === BoardField.weight) &&
-                <th>{`${resourceState?.common?.boardTable.weight} ${weightSign}`}</th>
-            }
-            {fields?.find(item => item === BoardField.length) &&
-                <th>{`${resourceState?.common?.boardTable.length} ${lengthSign}`}</th>
-            }
-            {fields?.find(item => item === BoardField.width) &&
-                <th>{`${resourceState?.common?.boardTable.width} ${lengthSign}`}</th>
-            }
-            {fields?.find(item => item === BoardField.thickness) &&
-                <th>{`${resourceState?.common?.boardTable.thickness} ${lengthSign}`}</th>
-            }
-            {fields?.find(item => item === BoardField.price) &&
-                <th>{`${resourceState?.common?.boardTable.price} ${priceSign}`}</th>
-            }
-            {fields?.find(item => item === BoardField.vatPrice) &&
-                <th>{`${resourceState?.common?.boardTable.vatPrice} ${priceSign}`}</th>
-            }
-            {fields?.find(item => item === BoardField.codeListItems) &&
-                <th>{resourceState?.common?.boardTable.codeListItems}</th>
-            }
-            {fields?.find(item => item === BoardField.image) &&
-                <th>{resourceState?.common?.boardTable.image}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case BoardField.id:
+                        return (<th key={field}>{resourceState?.common?.boardTable.id}</th>);
+                    case BoardField.code:
+                        return (<th key={field}>{resourceState?.common?.boardTable.code}</th>);
+                    case BoardField.name:
+                        return (<th key={field}>{resourceState?.common?.boardTable.name}</th>);
+                    case BoardField.description:
+                        return (<th key={field}>{resourceState?.common?.boardTable.description}</th>);
+                    case BoardField.boardCode:
+                        return (<th key={field}>{resourceState?.common?.boardTable.boardCode}</th>);
+                    case BoardField.structureCode:
+                        return (<th key={field}>{resourceState?.common?.boardTable.structureCode}</th>);
+                    case BoardField.orientation:
+                        return (<th key={field}>{resourceState?.common?.boardTable.orientation}</th>);
+                    case BoardField.sale:
+                        return (<th key={field}>{`${resourceState?.common?.boardTable.sale} ${saleSign}`}</th>);
+                    case BoardField.weight:
+                        return (<th key={field}>{`${resourceState?.common?.boardTable.weight} ${weightSign}`}</th>);
+                    case BoardField.length:
+                        return (<th key={field}>{`${resourceState?.common?.boardTable.length} ${lengthSign}`}</th>);
+                    case BoardField.width:
+                        return (<th key={field}>{`${resourceState?.common?.boardTable.width} ${lengthSign}`}</th>);
+                    case BoardField.thickness:
+                        return (<th key={field}>{`${resourceState?.common?.boardTable.thickness} ${lengthSign}`}</th>);
+                    case BoardField.price:
+                        return (<th key={field}>{`${resourceState?.common?.boardTable.price} ${priceSign}`}</th>);
+                    case BoardField.vatPrice:
+                        return (<th key={field}>{`${resourceState?.common?.boardTable.vatPrice} ${priceSign}`}</th>);
+                    case BoardField.codeListItems:
+                        return (<th key={field}>{resourceState?.common?.boardTable.codeListItems}</th>);
+                    case BoardField.image:
+                        return (<th key={field}>{resourceState?.common?.boardTable.image}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -121,67 +109,59 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === BoardField.id) &&
-                <td>{row.id}</td>
-            }
-            {fields?.find(item => item === BoardField.code) &&
-                <td>{row.code}</td>
-            }
-            {fields?.find(item => item === BoardField.name) &&
-                <td>{row.name}</td>
-            }
-            {fields?.find(item => item === BoardField.description) &&
-                <td>{row.description}</td>
-            }
-            {fields?.find(item => item === BoardField.boardCode) &&
-                <td>{row.boardCode}</td>
-            }
-            {fields?.find(item => item === BoardField.structureCode) &&
-                <td>{row.structureCode}</td>
-            }
-            {fields?.find(item => item === BoardField.orientation) &&
-                <td><WiwaValue value={`${row.orientation}`}/></td>
-            }
-            {fields?.find(item => item === BoardField.sale) &&
-                <td><WiwaValueNumber value={row.sale}/></td>
-            }
-            {fields?.find(item => item === BoardField.weight) &&
-                <td><WiwaValueNumber value={row.weight}/></td>
-            }
-            {fields?.find(item => item === BoardField.length) &&
-                <td><WiwaValueNumber value={row.length}/></td>
-            }
-            {fields?.find(item => item === BoardField.width) &&
-                <td><WiwaValueNumber value={row.width}/></td>
-            }
-            {fields?.find(item => item === BoardField.thickness) &&
-                <td><WiwaValueNumber value={row.thickness}/></td>
-            }
-            {fields?.find(item => item === BoardField.price) &&
-                <td><WiwaValueNumber value={row.price}/></td>
-            }
-            {fields?.find(item => item === BoardField.vatPrice) &&
-                <td><WiwaValueNumber value={row.vatPrice}/></td>
-            }
-            {fields?.find(item => item === BoardField.codeListItems) &&
-                <td>
-                    {row.categoryItems?.map(categoryItem =>
-                        <WiwaValue
-                            key={categoryItem.id}
-                            value={`${categoryItem.code}:${categoryItem.name}`}
-                        />
-                    )}
-                </td>
-            }
-            {fields?.find(item => item === BoardField.image) &&
-                <td>
-                    <img
-                        className="flex-none w-24 h-24 object-scale-down object-center"
-                        src={getBoardImagePath(row.id)}
-                        alt="Logo"
-                    />
-                </td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case BoardField.id:
+                        return (<td key={field}>{row.id}</td>);
+                    case BoardField.code:
+                        return (<td key={field}>{row.code}</td>);
+                    case BoardField.name:
+                        return (<td key={field}>{row.name}</td>);
+                    case BoardField.description:
+                        return (<td key={field}>{row.description}</td>);
+                    case BoardField.boardCode:
+                        return (<td key={field}>{row.boardCode}</td>);
+                    case BoardField.structureCode:
+                        return (<td key={field}>{row.structureCode}</td>);
+                    case BoardField.orientation:
+                        return (<td key={field}><WiwaValue value={`${row.orientation}`}/></td>);
+                    case BoardField.sale:
+                        return (<td key={field}><WiwaValueNumber value={row.sale}/></td>);
+                    case BoardField.weight:
+                        return (<td key={field}><WiwaValueNumber value={row.weight}/></td>);
+                    case BoardField.length:
+                        return (<td key={field}><WiwaValueNumber value={row.length}/></td>);
+                    case BoardField.width:
+                        return (<td key={field}><WiwaValueNumber value={row.width}/></td>);
+                    case BoardField.thickness:
+                        return (<td key={field}><WiwaValueNumber value={row.thickness}/></td>);
+                    case BoardField.price:
+                        return (<td key={field}><WiwaValueNumber value={row.price}/></td>);
+                    case BoardField.vatPrice:
+                        return (<td key={field}><WiwaValueNumber value={row.vatPrice}/></td>);
+                    case BoardField.codeListItems:
+                        return (
+                            <td key={field}>
+                                {row.categoryItems?.map(categoryItem =>
+                                    <WiwaValue
+                                        key={categoryItem.id}
+                                        value={`${categoryItem.code}:${categoryItem.name}`}
+                                    />
+                                )}
+                            </td>
+                        );
+                    case BoardField.image:
+                        return (
+                            <td key={field}>
+                                <img
+                                    className="flex-none w-24 h-24 object-scale-down object-center"
+                                    src={getBoardImagePath(row.id)}
+                                    alt="Logo"
+                                />
+                            </td>
+                        );
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {

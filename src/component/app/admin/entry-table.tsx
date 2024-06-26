@@ -36,12 +36,14 @@ const TableHead = ({fields}: { fields: EntryField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === EntryField.key) &&
-                <th>{resourceState?.admin?.entryTable.key}</th>
-            }
-            {fields?.find(item => item === EntryField.value) &&
-                <th>{resourceState?.admin?.entryTable.value}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case EntryField.key:
+                        return (<th key={field}>{resourceState?.admin?.entryTable.key}</th>);
+                    case EntryField.value:
+                        return (<th key={field}>{resourceState?.admin?.entryTable.value}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -59,12 +61,14 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === EntryField.key) &&
-                <td>{row.key}</td>
-            }
-            {fields?.find(item => item === EntryField.value) &&
-                <td>{row.value}</td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case EntryField.key:
+                        return (<td key={field}>{row.key}</td>);
+                    case EntryField.value:
+                        return (<td key={field}>{row.value}</td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.key === selected?.key} setValue={(value) => {
                     if (value) {

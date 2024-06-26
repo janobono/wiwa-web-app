@@ -39,39 +39,32 @@ const TableHead = ({fields}: { fields: UserField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === UserField.id) &&
-                <th>{resourceState?.admin?.userTable.id}</th>
-            }
-            {fields?.find(item => item === UserField.username) &&
-                <th>{resourceState?.admin?.userTable.username}</th>
-            }
-            {fields?.find(item => item === UserField.email) &&
-                <th>{resourceState?.admin?.userTable.email}</th>
-            }
-            {fields?.find(item => item === UserField.titleBefore) &&
-                <th>{resourceState?.admin?.userTable.titleBefore}</th>
-            }
-            {fields?.find(item => item === UserField.firstName) &&
-                <th>{resourceState?.admin?.userTable.firstName}</th>
-            }
-            {fields?.find(item => item === UserField.midName) &&
-                <th>{resourceState?.admin?.userTable.midName}</th>
-            }
-            {fields?.find(item => item === UserField.lastName) &&
-                <th>{resourceState?.admin?.userTable.lastName}</th>
-            }
-            {fields?.find(item => item === UserField.titleAfter) &&
-                <th>{resourceState?.admin?.userTable.titleAfter}</th>
-            }
-            {fields?.find(item => item === UserField.authorities) &&
-                <th>{resourceState?.admin?.userTable.authorities}</th>
-            }
-            {fields?.find(item => item === UserField.confirmed) &&
-                <th>{resourceState?.admin?.userTable.confirmed}</th>
-            }
-            {fields?.find(item => item === UserField.enabled) &&
-                <th>{resourceState?.admin?.userTable.enabled}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case UserField.id:
+                        return (<th key={field}>{resourceState?.admin?.userTable.id}</th>);
+                    case UserField.username:
+                        return (<th key={field}>{resourceState?.admin?.userTable.username}</th>);
+                    case UserField.email:
+                        return (<th key={field}>{resourceState?.admin?.userTable.email}</th>);
+                    case UserField.titleBefore:
+                        return (<th key={field}>{resourceState?.admin?.userTable.titleBefore}</th>);
+                    case UserField.firstName:
+                        return (<th key={field}>{resourceState?.admin?.userTable.firstName}</th>);
+                    case UserField.midName:
+                        return (<th key={field}>{resourceState?.admin?.userTable.midName}</th>);
+                    case UserField.lastName:
+                        return (<th key={field}>{resourceState?.admin?.userTable.lastName}</th>);
+                    case UserField.titleAfter:
+                        return (<th key={field}>{resourceState?.admin?.userTable.titleAfter}</th>);
+                    case UserField.authorities:
+                        return (<th key={field}>{resourceState?.admin?.userTable.authorities}</th>);
+                    case UserField.confirmed:
+                        return (<th key={field}>{resourceState?.admin?.userTable.confirmed}</th>);
+                    case UserField.enabled:
+                        return (<th key={field}>{resourceState?.admin?.userTable.enabled}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -89,39 +82,32 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === UserField.id) &&
-                <td>{row.id}</td>
-            }
-            {fields?.find(item => item === UserField.username) &&
-                <td>{row.username}</td>
-            }
-            {fields?.find(item => item === UserField.email) &&
-                <td>{row.email}</td>
-            }
-            {fields?.find(item => item === UserField.titleBefore) &&
-                <td>{row.titleBefore}</td>
-            }
-            {fields?.find(item => item === UserField.firstName) &&
-                <td>{row.firstName}</td>
-            }
-            {fields?.find(item => item === UserField.midName) &&
-                <td>{row.midName}</td>
-            }
-            {fields?.find(item => item === UserField.lastName) &&
-                <td>{row.lastName}</td>
-            }
-            {fields?.find(item => item === UserField.titleAfter) &&
-                <td>{row.titleAfter}</td>
-            }
-            {fields?.find(item => item === UserField.authorities) &&
-                <td><WiwaUserAuthorities authorities={row.authorities}/></td>
-            }
-            {fields?.find(item => item === UserField.confirmed) &&
-                <td><WiwaValue value={`${row.confirmed}`}/></td>
-            }
-            {fields?.find(item => item === UserField.enabled) &&
-                <td><WiwaValue value={`${row.enabled}`}/></td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case UserField.id:
+                        return (<td key={field}>{row.id}</td>);
+                    case UserField.username:
+                        return (<td key={field}>{row.username}</td>);
+                    case UserField.email:
+                        return (<td key={field}>{row.email}</td>);
+                    case UserField.titleBefore:
+                        return (<td key={field}>{row.titleBefore}</td>);
+                    case UserField.firstName:
+                        return (<td key={field}>{row.firstName}</td>);
+                    case UserField.midName:
+                        return (<td key={field}>{row.midName}</td>);
+                    case UserField.lastName:
+                        return (<td key={field}>{row.lastName}</td>);
+                    case UserField.titleAfter:
+                        return (<td key={field}>{row.titleAfter}</td>);
+                    case UserField.authorities:
+                        return (<td key={field}><WiwaUserAuthorities authorities={row.authorities}/></td>);
+                    case UserField.confirmed:
+                        return (<td key={field}><WiwaValue value={`${row.confirmed}`}/></td>);
+                    case UserField.enabled:
+                        return (<td key={field}><WiwaValue value={`${row.enabled}`}/></td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {

@@ -36,12 +36,14 @@ const TableHead = ({fields}: { fields: ApplicationImageInfoField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === ApplicationImageInfoField.fileName) &&
-                <th>{resourceState?.admin?.applicationImageInfoTable.fileName}</th>
-            }
-            {fields?.find(item => item === ApplicationImageInfoField.thumbnail) &&
-                <th>{resourceState?.admin?.applicationImageInfoTable.thumbnail}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case ApplicationImageInfoField.fileName:
+                        return <th key={field}>{resourceState?.admin?.applicationImageInfoTable.fileName}</th>;
+                    case ApplicationImageInfoField.thumbnail:
+                        return <th key={field}>{resourceState?.admin?.applicationImageInfoTable.thumbnail}</th>;
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -59,18 +61,22 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === ApplicationImageInfoField.fileName) &&
-                <td>{row.fileName}</td>
-            }
-            {fields?.find(item => item === ApplicationImageInfoField.thumbnail) &&
-                <td>
-                    <img
-                        className="flex-none w-48 h-48 object-scale-down object-center"
-                        src={row.thumbnail}
-                        alt={row.fileName}
-                    />
-                </td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case ApplicationImageInfoField.fileName:
+                        return (<td key={field}>{row.fileName}</td>);
+                    case ApplicationImageInfoField.thumbnail:
+                        return (
+                            <td key={field}>
+                                <img
+                                    className="flex-none w-48 h-48 object-scale-down object-center"
+                                    src={row.thumbnail}
+                                    alt={row.fileName}
+                                />
+                            </td>
+                        );
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.fileName === selected?.fileName} setValue={(value) => {
                     if (value) {

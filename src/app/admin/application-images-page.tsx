@@ -50,7 +50,7 @@ const ApplicationImagesPage = () => {
     const fetchData = async (page: number) => {
         setBusy(true);
         try {
-            const response = await getApplicationImages({page, size: 8}, authState?.authToken?.accessToken);
+            const response = await getApplicationImages({page, size: 10}, authState?.authToken?.accessToken);
 
             setData(response?.data);
 

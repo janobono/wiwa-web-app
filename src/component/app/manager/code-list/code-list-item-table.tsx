@@ -37,24 +37,22 @@ const TableHead = ({fields}: { fields: CodeListItemField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === CodeListItemField.id) &&
-                <th>{resourceState?.manager?.codeListItemTable.id}</th>
-            }
-            {fields?.find(item => item === CodeListItemField.codeListId) &&
-                <th>{resourceState?.manager?.codeListItemTable.codeListId}</th>
-            }
-            {fields?.find(item => item === CodeListItemField.sortNum) &&
-                <th>{resourceState?.manager?.codeListItemTable.sortNum}</th>
-            }
-            {fields?.find(item => item === CodeListItemField.code) &&
-                <th>{resourceState?.manager?.codeListItemTable.code}</th>
-            }
-            {fields?.find(item => item === CodeListItemField.value) &&
-                <th>{resourceState?.manager?.codeListItemTable.value}</th>
-            }
-            {fields?.find(item => item === CodeListItemField.leafNode) &&
-                <th>{resourceState?.manager?.codeListItemTable.leafNode}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case CodeListItemField.id:
+                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.id}</th>);
+                    case CodeListItemField.codeListId:
+                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.codeListId}</th>);
+                    case CodeListItemField.sortNum:
+                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.sortNum}</th>);
+                    case CodeListItemField.code:
+                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.code}</th>);
+                    case CodeListItemField.value:
+                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.value}</th>);
+                    case CodeListItemField.leafNode:
+                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.leafNode}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -72,24 +70,22 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === CodeListItemField.id) &&
-                <td>{row.id}</td>
-            }
-            {fields?.find(item => item === CodeListItemField.codeListId) &&
-                <td>{row.codeListId}</td>
-            }
-            {fields?.find(item => item === CodeListItemField.sortNum) &&
-                <td>{row.sortNum + 1}</td>
-            }
-            {fields?.find(item => item === CodeListItemField.code) &&
-                <td>{row.code}</td>
-            }
-            {fields?.find(item => item === CodeListItemField.value) &&
-                <td>{row.value}</td>
-            }
-            {fields?.find(item => item === CodeListItemField.leafNode) &&
-                <td><WiwaValue value={`${row.leafNode}`}/></td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case CodeListItemField.id:
+                        return (<td key={field}>{row.id}</td>);
+                    case CodeListItemField.codeListId:
+                        return (<td key={field}>{row.codeListId}</td>);
+                    case CodeListItemField.sortNum:
+                        return (<td key={field}>{row.sortNum + 1}</td>);
+                    case CodeListItemField.code:
+                        return (<td key={field}>{row.code}</td>);
+                    case CodeListItemField.value:
+                        return (<td key={field}>{row.value}</td>);
+                    case CodeListItemField.leafNode:
+                        return (<td key={field}><WiwaValue value={`${row.leafNode}`}/></td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {

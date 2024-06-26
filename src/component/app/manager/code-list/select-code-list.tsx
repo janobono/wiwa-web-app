@@ -32,7 +32,6 @@ const SelectCodeList = (
             {codeLists?.map(codeList =>
                 <option
                     key={codeList.id}
-                    selected={codeList.id === value?.id}
                     value={codeList.id}>{codeList.code}:{codeList.name}</option>
             )}
         </WiwaSelect>

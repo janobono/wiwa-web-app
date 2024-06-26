@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit, Plus, Trash } from 'react-feather';
 
-import PriceForGluingEdgeTable from './price-for-gluing-edge';
+import PriceForGluingEdgeTable from './price-for-gluing-edge-table';
 import BaseDialog from '../../dialog/base-dialog';
 import WiwaButton from '../../ui/wiwa-button';
 import WiwaFormInputInteger from '../../ui/wiwa-form-input-integer';

@@ -16,9 +16,9 @@ const PriceForCuttingTable = ({fields, rows, selected, setSelected}: {
         <table className="table table-zebra">
             <TableHead fields={fields}/>
             <tbody>
-            {rows?.map((row, index) =>
+            {rows?.map((row) =>
                 <TableRow
-                    key={index}
+                    key={row.thickness}
                     fields={fields}
                     row={row}
                     selected={selected}
@@ -50,12 +50,18 @@ const TableHead = ({fields}: { fields: PriceForCuttingField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === PriceForCuttingField.thickness) &&
-                <th>{`${resourceState?.manager?.priceForCuttingTable.thickness} ${lengthSign}`}</th>
-            }
-            {fields?.find(item => item === PriceForCuttingField.price) &&
-                <th>{`${resourceState?.manager?.priceForCuttingTable.price} ${priceSign}`}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case PriceForCuttingField.thickness:
+                        return (
+                            <th key={field}>{`${resourceState?.manager?.priceForCuttingTable.thickness} ${lengthSign}`}</th>
+                        );
+                    case PriceForCuttingField.price:
+                        return (
+                            <th key={field}>{`${resourceState?.manager?.priceForCuttingTable.price} ${priceSign}`}</th>
+                        );
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -73,12 +79,14 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === PriceForCuttingField.thickness) &&
-                <td><WiwaValueNumber value={row.thickness}/></td>
-            }
-            {fields?.find(item => item === PriceForCuttingField.price) &&
-                <td><WiwaValueNumber value={row.price}/></td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case PriceForCuttingField.thickness:
+                        return (<td key={field}><WiwaValueNumber value={row.thickness}/></td>);
+                    case PriceForCuttingField.price:
+                        return (<td key={field}><WiwaValueNumber value={row.price}/></td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox
                     value={row.thickness === selected?.thickness}

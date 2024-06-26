@@ -36,12 +36,14 @@ const TableHead = ({fields}: { fields: UnitField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === UnitField.id) &&
-                <th>{resourceState?.admin?.unitTable.id}</th>
-            }
-            {fields?.find(item => item === UnitField.value) &&
-                <th>{resourceState?.admin?.unitTable.value}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case UnitField.id:
+                        return (<th key={field}>{resourceState?.admin?.unitTable.id}</th>);
+                    case UnitField.value:
+                        return (<th key={field}>{resourceState?.admin?.unitTable.value}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -61,12 +63,14 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === UnitField.id) &&
-                <td>{resourceState?.getUnitIdName(row.id)}</td>
-            }
-            {fields?.find(item => item === UnitField.value) &&
-                <td>{row.value}</td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case UnitField.id:
+                        return (<td key={field}>{resourceState?.getUnitIdName(row.id)}</td>);
+                    case UnitField.value:
+                        return (<td key={field}>{row.value}</td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {

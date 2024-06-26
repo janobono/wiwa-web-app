@@ -36,15 +36,16 @@ const TableHead = ({fields}: { fields: FreeDayField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === FreeDayField.name) &&
-                <th>{resourceState?.manager?.freeDayTable.name}</th>
-            }
-            {fields?.find(item => item === FreeDayField.day) &&
-                <th>{resourceState?.manager?.freeDayTable.day}</th>
-            }
-            {fields?.find(item => item === FreeDayField.month) &&
-                <th>{resourceState?.manager?.freeDayTable.month}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case FreeDayField.name:
+                        return (<th key={field}>{resourceState?.manager?.freeDayTable.name}</th>);
+                    case FreeDayField.day:
+                        return (<th key={field}>{resourceState?.manager?.freeDayTable.day}</th>);
+                    case FreeDayField.month:
+                        return (<th key={field}>{resourceState?.manager?.freeDayTable.month}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -62,15 +63,16 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === FreeDayField.name) &&
-                <td>{row.name}</td>
-            }
-            {fields?.find(item => item === FreeDayField.day) &&
-                <td>{row.day}</td>
-            }
-            {fields?.find(item => item === FreeDayField.month) &&
-                <td>{row.month}</td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case FreeDayField.name:
+                        return (<td key={field}>{row.name}</td>);
+                    case FreeDayField.day:
+                        return (<td key={field}>{row.day}</td>);
+                    case FreeDayField.month:
+                        return (<td key={field}>{row.month}</td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox
                     value={row.day === selected?.day && row.month === selected?.month}

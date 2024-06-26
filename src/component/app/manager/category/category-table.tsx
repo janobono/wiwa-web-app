@@ -36,15 +36,16 @@ const TableHead = ({fields}: { fields: CategoryField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === CategoryField.id) &&
-                <th>{resourceState?.manager?.categoryTable.id}</th>
-            }
-            {fields?.find(item => item === CategoryField.code) &&
-                <th>{resourceState?.manager?.categoryTable.code}</th>
-            }
-            {fields?.find(item => item === CategoryField.name) &&
-                <th>{resourceState?.manager?.categoryTable.name}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case CategoryField.id:
+                        return (<th key={field}>{resourceState?.manager?.categoryTable.id}</th>);
+                    case CategoryField.code:
+                        return (<th key={field}>{resourceState?.manager?.categoryTable.code}</th>);
+                    case CategoryField.name:
+                        return (<th key={field}>{resourceState?.manager?.categoryTable.name}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -62,15 +63,16 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === CategoryField.id) &&
-                <td>{row.id}</td>
-            }
-            {fields?.find(item => item === CategoryField.code) &&
-                <td>{row.code}</td>
-            }
-            {fields?.find(item => item === CategoryField.name) &&
-                <td>{row.name}</td>
-            }
+            {fields.map(field => {
+                switch (field) {
+                    case CategoryField.id:
+                        return (<td key={field}>{row.id}</td>);
+                    case CategoryField.code:
+                        return (<td key={field}>{row.code}</td>);
+                    case CategoryField.name:
+                        return (<td key={field}>{row.name}</td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {

@@ -36,18 +36,18 @@ const TableHead = ({fields}: { fields: CategoryItemField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === CategoryItemField.id) &&
-                <th>{resourceState?.manager?.categoryItemTable.id}</th>
-            }
-            {fields?.find(item => item === CategoryItemField.code) &&
-                <th>{resourceState?.manager?.categoryItemTable.code}</th>
-            }
-            {fields?.find(item => item === CategoryItemField.name) &&
-                <th>{resourceState?.manager?.categoryItemTable.name}</th>
-            }
-            {fields?.find(item => item === CategoryItemField.category) &&
-                <th>{resourceState?.manager?.categoryItemTable.category}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case CategoryItemField.id:
+                        return (<th key={field}>{resourceState?.manager?.categoryItemTable.id}</th>);
+                    case CategoryItemField.code:
+                        return (<th key={field}>{resourceState?.manager?.categoryItemTable.code}</th>);
+                    case CategoryItemField.name:
+                        return (<th key={field}>{resourceState?.manager?.categoryItemTable.name}</th>);
+                    case CategoryItemField.category:
+                        return (<th key={field}>{resourceState?.manager?.categoryItemTable.category}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -65,18 +65,18 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === CategoryItemField.id) &&
-                <td>{row.id}</td>
-            }
-            {fields?.find(item => item === CategoryItemField.code) &&
-                <td>{row.code}</td>
-            }
-            {fields?.find(item => item === CategoryItemField.name) &&
-                <td>{row.name}</td>
-            }
-            {fields?.find(item => item === CategoryItemField.category) &&
-                <td>{`${row.category.code}:${row.category.name}`}</td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case CategoryItemField.id:
+                        return (<td key={field}>{row.id}</td>);
+                    case CategoryItemField.code:
+                        return (<td key={field}>{row.code}</td>);
+                    case CategoryItemField.name:
+                        return (<td key={field}>{row.name}</td>);
+                    case CategoryItemField.category:
+                        return (<td key={field}>{`${row.category.code}:${row.category.name}`}</td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {

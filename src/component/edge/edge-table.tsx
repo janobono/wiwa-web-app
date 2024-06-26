@@ -56,42 +56,34 @@ const TableHead = ({fields}: { fields: EdgeField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === EdgeField.id) &&
-                <th>{resourceState?.common?.edgeTable.id}</th>
-            }
-            {fields?.find(item => item === EdgeField.code) &&
-                <th>{resourceState?.common?.edgeTable.code}</th>
-            }
-            {fields?.find(item => item === EdgeField.name) &&
-                <th>{resourceState?.common?.edgeTable.name}</th>
-            }
-            {fields?.find(item => item === EdgeField.description) &&
-                <th>{resourceState?.common?.edgeTable.description}</th>
-            }
-            {fields?.find(item => item === EdgeField.sale) &&
-                <th>{`${resourceState?.common?.edgeTable.sale} ${saleSign}`}</th>
-            }
-            {fields?.find(item => item === EdgeField.weight) &&
-                <th>{`${resourceState?.common?.edgeTable.weight} ${weightSign}`}</th>
-            }
-            {fields?.find(item => item === EdgeField.width) &&
-                <th>{`${resourceState?.common?.edgeTable.width} ${lengthSign}`}</th>
-            }
-            {fields?.find(item => item === EdgeField.thickness) &&
-                <th>{`${resourceState?.common?.edgeTable.thickness} ${lengthSign}`}</th>
-            }
-            {fields?.find(item => item === EdgeField.price) &&
-                <th>{`${resourceState?.common?.edgeTable.price} ${priceSign}`}</th>
-            }
-            {fields?.find(item => item === EdgeField.vatPrice) &&
-                <th>{`${resourceState?.common?.edgeTable.vatPrice} ${priceSign}`}</th>
-            }
-            {fields?.find(item => item === EdgeField.codeListItems) &&
-                <th>{resourceState?.common?.edgeTable.codeListItems}</th>
-            }
-            {fields?.find(item => item === EdgeField.image) &&
-                <th>{resourceState?.common?.edgeTable.image}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case EdgeField.id:
+                        return (<th key={field}>{resourceState?.common?.edgeTable.id}</th>);
+                    case EdgeField.code:
+                        return (<th key={field}>{resourceState?.common?.edgeTable.code}</th>);
+                    case EdgeField.name:
+                        return (<th key={field}>{resourceState?.common?.edgeTable.name}</th>);
+                    case EdgeField.description:
+                        return (<th key={field}>{resourceState?.common?.edgeTable.description}</th>);
+                    case EdgeField.sale:
+                        return (<th key={field}>{`${resourceState?.common?.edgeTable.sale} ${saleSign}`}</th>);
+                    case EdgeField.weight:
+                        return (<th key={field}>{`${resourceState?.common?.edgeTable.weight} ${weightSign}`}</th>);
+                    case EdgeField.width:
+                        return (<th key={field}>{`${resourceState?.common?.edgeTable.width} ${lengthSign}`}</th>);
+                    case EdgeField.thickness:
+                        return (<th key={field}>{`${resourceState?.common?.edgeTable.thickness} ${lengthSign}`}</th>);
+                    case EdgeField.price:
+                        return (<th key={field}>{`${resourceState?.common?.edgeTable.price} ${priceSign}`}</th>);
+                    case EdgeField.vatPrice:
+                        return (<th key={field}>{`${resourceState?.common?.edgeTable.vatPrice} ${priceSign}`}</th>);
+                    case EdgeField.codeListItems:
+                        return (<th key={field}>{resourceState?.common?.edgeTable.codeListItems}</th>);
+                    case EdgeField.image:
+                        return (<th key={field}>{resourceState?.common?.edgeTable.image}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -109,55 +101,51 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === EdgeField.id) &&
-                <td>{row.id}</td>
-            }
-            {fields?.find(item => item === EdgeField.code) &&
-                <td>{row.code}</td>
-            }
-            {fields?.find(item => item === EdgeField.name) &&
-                <td>{row.name}</td>
-            }
-            {fields?.find(item => item === EdgeField.description) &&
-                <td>{row.description}</td>
-            }
-            {fields?.find(item => item === EdgeField.sale) &&
-                <td><WiwaValueNumber value={row.sale}/></td>
-            }
-            {fields?.find(item => item === EdgeField.weight) &&
-                <td><WiwaValueNumber value={row.weight}/></td>
-            }
-            {fields?.find(item => item === EdgeField.width) &&
-                <td><WiwaValueNumber value={row.width}/></td>
-            }
-            {fields?.find(item => item === EdgeField.thickness) &&
-                <td><WiwaValueNumber value={row.thickness}/></td>
-            }
-            {fields?.find(item => item === EdgeField.price) &&
-                <td><WiwaValueNumber value={row.price}/></td>
-            }
-            {fields?.find(item => item === EdgeField.vatPrice) &&
-                <td><WiwaValueNumber value={row.vatPrice}/></td>
-            }
-            {fields?.find(item => item === EdgeField.codeListItems) &&
-                <td>
-                    {row.categoryItems?.map(categoryItem =>
-                        <WiwaValue
-                            key={categoryItem.id}
-                            value={`${categoryItem.code}:${categoryItem.name}`}
-                        />
-                    )}
-                </td>
-            }
-            {fields?.find(item => item === EdgeField.image) &&
-                <td>
-                    <img
-                        className="flex-none w-24 h-24 object-scale-down object-center"
-                        src={getEdgeImagePath(row.id)}
-                        alt="Logo"
-                    />
-                </td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case EdgeField.id:
+                        return (<td key={field}>{row.id}</td>);
+                    case EdgeField.code:
+                        return (<td key={field}>{row.code}</td>);
+                    case EdgeField.name:
+                        return (<td key={field}>{row.name}</td>);
+                    case EdgeField.description:
+                        return (<td key={field}>{row.description}</td>);
+                    case EdgeField.sale:
+                        return (<td key={field}><WiwaValueNumber value={row.sale}/></td>);
+                    case EdgeField.weight:
+                        return (<td key={field}><WiwaValueNumber value={row.weight}/></td>);
+                    case EdgeField.width:
+                        return (<td key={field}><WiwaValueNumber value={row.width}/></td>);
+                    case EdgeField.thickness:
+                        return (<td key={field}><WiwaValueNumber value={row.thickness}/></td>);
+                    case EdgeField.price:
+                        return (<td key={field}><WiwaValueNumber value={row.price}/></td>);
+                    case EdgeField.vatPrice:
+                        return (<td key={field}><WiwaValueNumber value={row.vatPrice}/></td>);
+                    case EdgeField.codeListItems:
+                        return (
+                            <td key={field}>
+                                {row.categoryItems?.map(categoryItem =>
+                                    <WiwaValue
+                                        key={categoryItem.id}
+                                        value={`${categoryItem.code}:${categoryItem.name}`}
+                                    />
+                                )}
+                            </td>
+                        );
+                    case EdgeField.image:
+                        return (
+                            <td key={field}>
+                                <img
+                                    className="flex-none w-24 h-24 object-scale-down object-center"
+                                    src={getEdgeImagePath(row.id)}
+                                    alt="Logo"
+                                />
+                            </td>
+                        );
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {

@@ -16,9 +16,9 @@ const PriceForGluingEdgeTable = ({fields, rows, selected, setSelected}: {
         <table className="table table-zebra">
             <TableHead fields={fields}/>
             <tbody>
-            {rows?.map((row, index) =>
+            {rows?.map((row) =>
                 <TableRow
-                    key={index}
+                    key={row.width}
                     fields={fields}
                     row={row}
                     selected={selected}
@@ -50,12 +50,18 @@ const TableHead = ({fields}: { fields: PriceForGluingEdgeField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === PriceForGluingEdgeField.width) &&
-                <th>{`${resourceState?.manager?.priceForGluingEdgeTable.width} ${lengthSign}`}</th>
-            }
-            {fields?.find(item => item === PriceForGluingEdgeField.price) &&
-                <th>{`${resourceState?.manager?.priceForGluingEdgeTable.price} ${priceSign}`}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case PriceForGluingEdgeField.width:
+                        return (
+                            <th key={field}>{`${resourceState?.manager?.priceForGluingEdgeTable.width} ${lengthSign}`}</th>
+                        );
+                    case PriceForGluingEdgeField.price:
+                        return (
+                            <th key={field}>{`${resourceState?.manager?.priceForGluingEdgeTable.price} ${priceSign}`}</th>
+                        );
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -73,12 +79,14 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === PriceForGluingEdgeField.width) &&
-                <td><WiwaValueNumber value={row.width}/></td>
-            }
-            {fields?.find(item => item === PriceForGluingEdgeField.price) &&
-                <td><WiwaValueNumber value={row.price}/></td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case PriceForGluingEdgeField.width:
+                        return (<td key={field}><WiwaValueNumber value={row.width}/></td>);
+                    case PriceForGluingEdgeField.price:
+                        return (<td key={field}><WiwaValueNumber value={row.price}/></td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox
                     value={row.width === selected?.width}
