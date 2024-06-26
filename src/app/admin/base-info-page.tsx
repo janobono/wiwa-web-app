@@ -1,12 +1,14 @@
+import { useContext } from 'react';
+
 import LogoEditor from '../../component/app/admin/logo-editor';
 import TitleEditor from '../../component/app/admin/title-editor';
 import WelcomeTextEditor from '../../component/app/admin/welcome-text-editor';
 import ApplicationInfoEditor from '../../component/app/admin/application-info-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const BaseInfoPage = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <>

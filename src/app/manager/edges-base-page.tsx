@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Page } from '../../api/model';
@@ -6,9 +6,9 @@ import { Edge } from '../../api/model/edge';
 
 const EdgesBasePage = () => {
     return (
-        <EdgeStateProvider>
+        <EdgeProvider>
             <Outlet/>
-        </EdgeStateProvider>
+        </EdgeProvider>
     )
 }
 
@@ -23,15 +23,15 @@ export interface EdgeState {
     setSelected: (edge?: Edge) => void
 }
 
-const edgeStateContext = createContext<EdgeState | undefined>(undefined);
+export const EdgeContext = createContext<EdgeState | undefined>(undefined);
 
-const EdgeStateProvider = ({children}: { children: ReactNode }) => {
+const EdgeProvider = ({children}: { children: ReactNode }) => {
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<Edge>>();
     const [selected, setSelected] = useState<Edge>();
 
     return (
-        <edgeStateContext.Provider
+        <EdgeContext.Provider
             value={
                 {
                     busy,
@@ -43,10 +43,6 @@ const EdgeStateProvider = ({children}: { children: ReactNode }) => {
                 }
             }
         >{children}
-        </edgeStateContext.Provider>
+        </EdgeContext.Provider>
     );
-}
-
-export const useEdgeState = () => {
-    return useContext(edgeStateContext);
 }

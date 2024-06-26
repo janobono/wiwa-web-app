@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit } from 'react-feather';
 
@@ -7,9 +7,7 @@ import { SingleValueBody } from '../../../api/model';
 import MdDialog from '../../../component/dialog/md-dialog';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaMarkdownRenderer from '../../../component/ui/wiwa-markdown-renderer';
-import { useAuthState } from '../../../state/auth';
-import { useErrorState } from '../../../state/error';
-import { useDialogState } from '../../../state/dialog';
+import { AuthContext, DialogContext, ErrorContext } from '../../../context';
 
 const MdEditor = (
     {
@@ -30,8 +28,8 @@ const MdEditor = (
         saveValue: (value: string, token?: string) => Promise<ClientResponse<SingleValueBody<string>>>,
     }
 ) => {
-    const authState = useAuthState();
-    const errorState = useErrorState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<string>();
@@ -110,7 +108,7 @@ const MdEditorDialog = (
         cancelHandler: () => void,
         okHandler: (value: string) => void
     }) => {
-    const dialogState = useDialogState();
+    const dialogState = useContext(DialogContext);
 
     const [value, setValue] = useState('');
 

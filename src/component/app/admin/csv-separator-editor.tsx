@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import WiwaButton from '../../ui/wiwa-button';
 import WiwaFormInputString from '../../ui/wiwa-form-input-string';
-import { useResourceState } from '../../../state/resource';
+import { ResourceContext } from '../../../context';
 
 const CsvSeparatorEditor = ({busy, separator, submitHandler}: {
     busy: boolean,
     separator: string,
     submitHandler: (separator: string) => Promise<void>
 }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [value, setValue] = useState('');
     const [valueValid, setValueValid] = useState(false);

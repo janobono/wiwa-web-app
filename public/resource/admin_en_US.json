@@ -89,6 +89,10 @@
     "mapUrlPlaceholder": "Enter map",
     "mapUrlRequired": "Map is required"
   },
+  "entryTable": {
+    "key": "Key",
+    "value": "Value"
+  },
   "mailFormat": {
     "option": {
       "select": "Format",
@@ -219,8 +223,6 @@
       "csvReplacements": "CSV replace",
       "csvColumns": "CSV columns"
     },
-    "key": "key",
-    "value": "value",
     "editEntry": {
       "label": "Value",
       "placeholder": "Enter value",

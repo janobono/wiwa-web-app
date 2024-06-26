@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Edit, List, Plus, Search, Trash } from 'react-feather';
@@ -13,21 +13,18 @@ import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
 import WiwaInput from '../../../component/ui/wiwa-input';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
-import { DialogAnswer, DialogType } from '../../../model/ui';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const CODE_LIST_DIALOG_ID = 'code-list-dialog-001';
 
 const CodeListsPage = () => {
     const navigate = useNavigate();
 
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<CodeList>>();
@@ -254,8 +251,8 @@ const CodeListDataDialog = ({showDialog, codeList, okHandler, cancelHandler, sub
     cancelHandler: () => void,
     submitting: boolean
 }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [code, setCode] = useState('');
     const [codeValid, setCodeValid] = useState(false);

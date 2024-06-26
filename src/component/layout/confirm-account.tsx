@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { useAuthState } from '../../state/auth';
-import { useResourceState } from '../../state/resource';
+import { AuthContext, ResourceContext } from '../../context';
 
 const ConfirmAccount = () => {
-    const authState = useAuthState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const resourceState = useContext(ResourceContext);
 
     const [show, setShow] = useState(false);
 

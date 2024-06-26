@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
+import { ValidationResult } from './';
 import WiwaInput from './wiwa-input';
-import { ValidationResult } from '../../model/ui';
 
 const WiwaFormInputDecimal = (
     {

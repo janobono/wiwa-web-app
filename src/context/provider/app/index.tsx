@@ -1,21 +1,13 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+
+import { AppContext } from '../../';
 
 const COOKIES_ENABLED = 'cookies-enabled';
 const LOCALE = 'locale';
 export const LOCALE_EN = 'en_US';
 export const LOCALE_SK = 'sk_SK';
 
-export interface AppState {
-    cookiesEnabled?: boolean,
-    locale?: string,
-    enableCookies: () => void,
-    switchLocale: () => void,
-    setDefaultLocale: (locale: string) => void
-}
-
-const appStateContext = createContext<AppState | undefined>(undefined);
-
-const AppStateProvider = ({children}: { children: ReactNode }) => {
+const AppProvider = ({children}: { children: ReactNode }) => {
     const [cookiesEnabled, setCookiesEnabled] = useState<boolean>();
     const [defaultLocale, setDefaultLocale] = useState<string>();
     const [locale, setLocale] = useState<string>();
@@ -47,7 +39,7 @@ const AppStateProvider = ({children}: { children: ReactNode }) => {
     }
 
     return (
-        <appStateContext.Provider
+        <AppContext.Provider
             value={
                 {
                     cookiesEnabled,
@@ -58,12 +50,8 @@ const AppStateProvider = ({children}: { children: ReactNode }) => {
                 }
             }
         >{children}
-        </appStateContext.Provider>
+        </AppContext.Provider>
     )
 }
 
-export default AppStateProvider;
-
-export const useAppState = () => {
-    return useContext(appStateContext);
-}
+export default AppProvider;

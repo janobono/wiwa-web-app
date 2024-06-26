@@ -17,14 +17,3 @@ export interface DialogState {
     modalRoot: HTMLElement | null,
     showDialog: (data: DialogData) => void
 }
-
-export interface ValidationResult {
-    valid: boolean,
-    message?: string
-}
-
-export interface BreadcrumbData {
-    key: number,
-    label: string,
-    to?: string
-}

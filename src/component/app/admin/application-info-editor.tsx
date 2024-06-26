@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit, Plus, Trash } from 'react-feather';
 
@@ -7,16 +7,14 @@ import { getApplicationInfo } from '../../../api/controller/ui';
 import MdDialog from '../../../component/dialog/md-dialog';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaMarkdownRenderer from '../../../component/ui/wiwa-markdown-renderer';
-import { DialogAnswer, DialogType } from '../../../model/ui';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ResourceContext } from '../../../context';
+import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const APP_INFO_DIALOG_ID = 'admin-app-info-item-dialog-001';
 
 const ApplicationInfoEditor = () => {
-    const authState = useAuthState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState<boolean>();
     const [data, setData] = useState<string[]>();
@@ -147,8 +145,8 @@ const AppInfoItem = (
         editHandler: (index: number) => void,
         disabled?: boolean
     }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     return (
         <div className="flex flex-col border border-solid p-5 w-full">
@@ -203,8 +201,8 @@ const AppInfoDialog = (
         okHandler: (item: string, index?: number) => void,
         cancelHandler: () => void,
     }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [value, setValue] = useState('');
 

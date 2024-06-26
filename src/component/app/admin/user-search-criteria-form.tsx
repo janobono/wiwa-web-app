@@ -1,17 +1,17 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Search } from 'react-feather';
 
 import WiwaFormInputString from '../../ui/wiwa-form-input-string';
 import WiwaInput from '../../ui/wiwa-input';
 import WiwaButton from '../../ui/wiwa-button';
 import { UserSearchCriteria } from '../../../api/model/user';
-import { useResourceState } from '../../../state/resource';
+import { ResourceContext } from '../../../context';
 
 const UserSearchCriteriaForm = ({searchHandler, children}: {
     searchHandler: (criteria: UserSearchCriteria) => void
     children?: ReactNode
 }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [searchField, setSearchField] = useState<string>();
     const [username, setUsername] = useState<string>();

@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import BaseDialog from './base-dialog';
+import { ValidationResult } from '../ui';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaFormTextarea from '../ui/wiwa-form-textarea';
 import WiwaMarkdownRenderer from '../ui/wiwa-markdown-renderer';
-import { ValidationResult } from '../../model/ui';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const MdDialog = (
     {
@@ -40,7 +40,7 @@ const MdDialog = (
         okHandler: () => void,
         cancelHandler: () => void
     }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [editor, setEditor] = useState(true);
     const [valid, setValid] = useState(false);

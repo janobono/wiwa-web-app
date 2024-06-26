@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit } from 'react-feather';
 
@@ -7,15 +7,12 @@ import { getTitle } from '../../../api/controller/ui';
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
 
 const TITLE_DIALOG_ID = 'admin-base-info-title-dialog-001';
 
 const TitleEditor = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [title, setTitle] = useState<string>();
     const [showTitleDialog, setShowTitleDialog] = useState(false);
@@ -57,10 +54,10 @@ const TitleDialog = ({showDialog, closeHandler, defaultValue, setDefaultValue}: 
     defaultValue: string,
     setDefaultValue: (defaultValue: string) => void
 }) => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState(defaultValue);

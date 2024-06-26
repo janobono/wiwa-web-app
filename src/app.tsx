@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
+import { HealthContext } from './context';
 import { getApplicationProperties } from './api/controller/ui';
 import AppPage from './app/app-page';
 import ConfirmAccount from './component/layout/confirm-account';
@@ -10,10 +11,9 @@ import ErrorInfo from './component/layout/error-info';
 import MaintenanceInfo from './component/layout/maintenance-info';
 import RefreshToken from './component/layout/refresh-token';
 import WiwaSpinner from './component/ui/wiwa-spinner';
-import { useHealthState } from './state/health';
 
 function App() {
-    const healthState = useHealthState();
+    const healthState = useContext(HealthContext);
 
     useEffect(() => {
         getApplicationProperties().then(data => {

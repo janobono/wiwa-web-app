@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { getOrderStatusMail, setOrderStatusMail } from '../../../api/controller/config';
 import { OrderStatusMail } from '../../../api/model/application';
 import WiwaButton from '../../ui/wiwa-button';
 import WiwaFormInputString from '../../ui/wiwa-form-input-string';
-import { useAuthState } from '../../../state/auth';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, ErrorContext, ResourceContext } from '../../../context';
 
 const OrderStatusMailEditor = () => {
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<OrderStatusMail>();

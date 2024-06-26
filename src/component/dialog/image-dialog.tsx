@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import BaseDialog from './base-dialog';
+import { ValidationResult } from '../ui';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaFormFile from '../ui/wiwa-form-file';
-import { ValidationResult } from '../../model/ui';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const ImageDialog = (
     {
@@ -34,7 +34,7 @@ const ImageDialog = (
         okHandler: () => void,
         cancelHandler: () => void
     }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [valid, setValid] = useState(false);
     const [preview, setPreview] = useState<string>()

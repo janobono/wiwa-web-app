@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import SignUpMailEditor from '../../component/app/admin/sign-up-mail-editor';
 import ResetPasswordMailEditor from '../../component/app/admin/reset-password-mail-editor';
 import OrderCommentMailEditor from '../../component/app/admin/order-comment-mail-editor';
 import OrderSendMailEditor from '../../component/app/admin/order-send-mail-editor';
 import OrderStatusMailEditor from '../../component/app/admin/order-status-mail-editor';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
-import { useResourceState } from '../../state/resource';
-import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb.tsx';
+import { ResourceContext } from '../../context';
 
 const MailFormatPage = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [index, setIndex] = useState(0);
 

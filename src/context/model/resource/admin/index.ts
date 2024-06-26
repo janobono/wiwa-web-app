@@ -85,6 +85,10 @@ export interface ResourceAdmin {
         mapUrlPlaceholder: string,
         mapUrlRequired: string
     },
+    entryTable: {
+        key: string,
+        value: string
+    },
     mailFormat: {
         option: {
             select: string,
@@ -215,8 +219,6 @@ export interface ResourceAdmin {
             csvReplacements: string,
             csvColumns: string
         },
-        key: string,
-        value: string
         editEntry: {
             label: string,
             placeholder: string,

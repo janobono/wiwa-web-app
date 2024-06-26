@@ -1,6 +1,8 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 
-import { ClientResponse } from '../../api/controller';
+import { AppContext, AuthContext } from '../../';
+import { AuthToken, AuthUser } from '../../model/auth';
+import { ClientResponse } from '../../../api/controller';
 import {
     changeEmail as apiChangeEmail,
     changePassword as apiChangePassword,
@@ -12,8 +14,8 @@ import {
     resetPassword as apiResetPassword,
     signIn as apiSignIn,
     signUp as apiSignUp
-} from '../../api/controller/auth';
-import { Authority } from '../../api/model';
+} from '../../../api/controller/auth';
+import { Authority } from '../../../api/model';
 import {
     AuthenticationResponse,
     ChangeEmailRequest,
@@ -24,49 +26,23 @@ import {
     ResetPasswordRequest,
     SignInRequest,
     SignUpRequest
-} from '../../api/model/auth';
-import { useAppState } from '../app';
+} from '../../../api/model/auth';
 import {
     decodeAccessToken,
     getTimeToAccessExpiration,
+    hasAnyAuthority,
     isAccessExpired,
     isJwtPayloadExpired,
     isRefreshExpired
-} from '../../auth';
-import { AuthToken, AuthUser, hasAnyAuthority } from '../../model';
+} from '../../../auth';
 
 const ACCESS_TOKEN = 'access-token';
 const REFRESH_TOKEN = 'refresh-token';
 
 export const REFRESH_TIMEOUT = 15000;
 
-export interface AuthState {
-    busy: boolean,
-    authToken?: AuthToken,
-    authUser?: AuthUser,
-    accessExpired: boolean,
-    timeToAccessExpiration: number,
-    refreshExpired: boolean,
-    adminAuthority: boolean,
-    managerAuthority: boolean,
-    employeeAuthority: boolean,
-    customerAuthority: boolean,
-    refreshAuth: () => Promise<ClientResponse<AuthenticationResponse>>,
-    signIn: (signInRequest: SignInRequest) => Promise<ClientResponse<AuthenticationResponse>>,
-    signOut: () => Promise<void>,
-    signUp: (signUpRequest: SignUpRequest) => Promise<ClientResponse<AuthenticationResponse>>,
-    confirm: (confirmationRequest: ConfirmationRequest) => Promise<ClientResponse<AuthenticationResponse>>,
-    resendConfirmation: (resendConfirmationRequest: ResendConfirmationRequest) => Promise<ClientResponse<void>>,
-    resetPassword: (resetPasswordRequest: ResetPasswordRequest) => Promise<ClientResponse<void>>,
-    changePassword: (changePasswordRequest: ChangePasswordRequest) => Promise<ClientResponse<AuthenticationResponse>>,
-    changeEmail: (changeEmailRequest: ChangeEmailRequest) => Promise<ClientResponse<AuthenticationResponse>>,
-    changeUserDetails: (changeUserDetailsRequest: ChangeUserDetailsRequest) => Promise<ClientResponse<AuthenticationResponse>>
-}
-
-const authStateContext = createContext<AuthState | undefined>(undefined);
-
-const AuthStateProvider = ({children}: { children: ReactNode }) => {
-    const appState = useAppState();
+const AuthProvider = ({children}: { children: ReactNode }) => {
+    const appState = useContext(AppContext);
 
     const [busy, setBusy] = useState(false);
     const [authToken, setAuthToken] = useState<AuthToken>();
@@ -269,7 +245,7 @@ const AuthStateProvider = ({children}: { children: ReactNode }) => {
     }
 
     return (
-        <authStateContext.Provider
+        <AuthContext.Provider
             value={
                 {
                     busy,
@@ -295,12 +271,8 @@ const AuthStateProvider = ({children}: { children: ReactNode }) => {
                 }
             }
         >{children}
-        </authStateContext.Provider>
+        </AuthContext.Provider>
     )
 }
 
-export default AuthStateProvider;
-
-export const useAuthState = () => {
-    return useContext(authStateContext);
-}
+export default AuthProvider;

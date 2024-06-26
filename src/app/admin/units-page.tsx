@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit } from 'react-feather';
 
@@ -10,17 +10,14 @@ import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
-import { useAuthState } from '../../state/auth';
-import { useErrorState } from '../../state/error';
-import { useDialogState } from '../../state/dialog';
-import { useResourceState } from '../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../context';
 
 const UNIT_VALUE_DIALOG_ID = 'admin-unit-value-dialog-001';
 
 const UnitsPage = () => {
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Unit[]>();
@@ -105,8 +102,8 @@ const UnitDialog = ({showDialog, unit, okHandler, cancelHandler}: {
     okHandler: (unit: Unit) => void,
     cancelHandler: () => void
 }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [value, setValue] = useState('');
     const [valueValid, setValueValid] = useState(false);

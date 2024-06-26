@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
@@ -7,16 +7,14 @@ import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaFormInputPassword from '../../component/ui/wiwa-form-input-password';
-import { useAuthState } from '../../state/auth';
-import { useErrorState } from '../../state/error';
-import { useResourceState } from '../../state/resource';
+import { AuthContext, ErrorContext, ResourceContext } from '../../context';
 
 const ChangePasswordPage = () => {
     const navigate = useNavigate();
 
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [oldPassword, setOldPassword] = useState('');
     const [oldPasswordValid, setOldPasswordValid] = useState(false);

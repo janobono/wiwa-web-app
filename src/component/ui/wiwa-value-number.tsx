@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { useAppState } from '../../state/app';
+import { AppContext } from '../../context';
 
 const WiwaValueNumber = ({value}: { value?: number }) => {
-    const appState = useAppState();
+    const appState = useContext(AppContext);
 
     const [data, setData] = useState<string>();
 

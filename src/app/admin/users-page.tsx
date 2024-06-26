@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
     Lock,
@@ -23,19 +23,16 @@ import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import { DialogAnswer, DialogType } from '../../model/ui';
-import { useAuthState } from '../../state/auth';
-import { useDialogState } from '../../state/dialog';
-import { useErrorState } from '../../state/error';
-import { useResourceState } from '../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../context';
+import { DialogAnswer, DialogType } from '../../context/model/dialog';
 
 const USER_AUTHORITIES_DIALOG_ID = 'admin-users-authorities-dialog-001';
 
 const UsersPage = () => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<User>>();
@@ -294,8 +291,8 @@ const AuthoritiesDialog = ({showDialog, authorities, okHandler, cancelHandler}: 
     okHandler: (authorities: Authority[]) => void,
     cancelHandler: () => void
 }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [customerAuthority, setCustomerAuthority] = useState(false);
     const [employeeAuthority, setEmployeeAuthority] = useState(false);

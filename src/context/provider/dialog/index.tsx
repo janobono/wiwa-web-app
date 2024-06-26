@@ -1,17 +1,15 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { useResourceState } from '../resource';
-import BaseDialog from '../../component/dialog/base-dialog';
-import WiwaButton from '../../component/ui/wiwa-button';
-import { DialogAnswer, DialogData, DialogState, DialogType } from '../../model/ui';
-
-const dialogStateContext = createContext<DialogState | undefined>(undefined);
+import { DialogContext, ResourceContext } from '../../';
+import { DialogAnswer, DialogData, DialogType } from '../../model/dialog';
+import BaseDialog from '../../../component/dialog/base-dialog';
+import WiwaButton from '../../../component/ui/wiwa-button';
 
 const DIALOG_ID = 'dialog-state-provider-dialog-001';
 
-const DialogStateProvider = ({children}: { children: ReactNode }) => {
-    const resourceState = useResourceState();
+const DialogProvider = ({children}: { children: ReactNode }) => {
+    const resourceState = useContext(ResourceContext);
 
     const [data, setData] = useState<DialogData>();
     const [show, setShow] = useState(false);
@@ -28,7 +26,7 @@ const DialogStateProvider = ({children}: { children: ReactNode }) => {
 
     return (
         <>
-            <dialogStateContext.Provider
+            <DialogContext.Provider
                 value={
                     {
                         modalRoot,
@@ -36,7 +34,7 @@ const DialogStateProvider = ({children}: { children: ReactNode }) => {
                     }
                 }
             >{children}
-            </dialogStateContext.Provider>
+            </DialogContext.Provider>
             {modalRoot !== null && createPortal(
                 <BaseDialog
                     id={DIALOG_ID}
@@ -116,8 +114,4 @@ const DialogStateProvider = ({children}: { children: ReactNode }) => {
     )
 }
 
-export default DialogStateProvider;
-
-export const useDialogState = () => {
-    return useContext(dialogStateContext);
-}
+export default DialogProvider;

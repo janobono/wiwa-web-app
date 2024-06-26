@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Edit, Image, List, Plus, Trash } from 'react-feather';
 
-import { useEdgeState } from '../edges-base-page';
+import { EdgeContext } from '../edges-base-page';
 import { addEdge, deleteEdge, getEdges, setEdge } from '../../../api/controller/edge';
 import { getApplicationProperties } from '../../../api/controller/ui';
 import { UnitId } from '../../../api/model/application';
@@ -18,23 +18,20 @@ import WiwaFormInputInteger from '../../../component/ui/wiwa-form-input-integer'
 import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
 import WiwaFormTextarea from '../../../component/ui/wiwa-form-textarea';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
-import { DialogAnswer, DialogType } from '../../../model/ui';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const BOARD_DIALOG_ID = 'edge-dialog-001';
 
 const EdgesPage = () => {
     const navigate = useNavigate();
 
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
-    const edgeState = useEdgeState();
+    const edgeState = useContext(EdgeContext);
 
     const [criteria, setCriteria] = useState<EdgeSearchCriteria>();
     const [page, setPage] = useState(0);
@@ -251,8 +248,8 @@ const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}
     cancelHandler: () => void,
     submitting: boolean
 }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [weightSign, setWeightSign] = useState<string>();
     const [lengthSign, setLengthSign] = useState<string>();

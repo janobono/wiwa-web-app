@@ -1,8 +1,7 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 
-import { useAppState } from '../app';
-import { useAuthState } from '../auth';
-import { Unit, UnitId } from '../../api/model/application';
+import { AppContext, AuthContext, ResourceContext } from '../../';
+import { Unit, UnitId } from '../../../api/model/application';
 import { ResourceAdmin } from '../../model/resource/admin';
 import { ResourceAuth } from '../../model/resource/auth';
 import { ResourceCommon } from '../../model/resource/common';
@@ -10,7 +9,7 @@ import { ResourceCustomer } from '../../model/resource/customer';
 import { ResourceEmployee } from '../../model/resource/employee';
 import { ResourceManager } from '../../model/resource/manager';
 import { ResourceUi } from '../../model/resource/ui';
-import { getUnits } from '../../api/controller/ui';
+import { getUnits } from '../../../api/controller/ui';
 
 const RESOURCE_ADMIN = 'admin';
 const RESOURCE_AUTH = 'auth';
@@ -31,23 +30,9 @@ async function loadResource<T>(resource: string, locale?: string) {
     return RESOURCE_MAP.get(resourceFile) as T;
 }
 
-export interface ResourceState {
-    admin?: ResourceAdmin,
-    auth?: ResourceAuth,
-    common?: ResourceCommon,
-    customer?: ResourceCustomer,
-    employee?: ResourceEmployee,
-    manager?: ResourceManager,
-    ui?: ResourceUi,
-    getUnitIdName: (unitId: UnitId) => string | undefined,
-    getUnit: (unitId: UnitId) => string | undefined
-}
-
-const resourceStateContext = createContext<ResourceState | undefined>(undefined);
-
-const ResourceStateProvider = ({children}: { children: ReactNode }) => {
-    const appState = useAppState();
-    const authState = useAuthState();
+const ResourceProvider = ({children}: { children: ReactNode }) => {
+    const appState = useContext(AppContext);
+    const authState = useContext(AuthContext);
 
     const [admin, setAdmin] = useState<ResourceAdmin>();
     const [auth, setAuth] = useState<ResourceAuth>();
@@ -97,7 +82,7 @@ const ResourceStateProvider = ({children}: { children: ReactNode }) => {
     }
 
     return (
-        <resourceStateContext.Provider
+        <ResourceContext.Provider
             value={
                 {
                     admin,
@@ -112,12 +97,8 @@ const ResourceStateProvider = ({children}: { children: ReactNode }) => {
                 }
             }
         >{children}
-        </resourceStateContext.Provider>
+        </ResourceContext.Provider>
     );
 }
 
-export default ResourceStateProvider;
-
-export const useResourceState = () => {
-    return useContext(resourceStateContext);
-}
+export default ResourceProvider;

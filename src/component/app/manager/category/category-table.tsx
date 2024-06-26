@@ -1,6 +1,8 @@
+import { useContext } from 'react';
+
 import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import { Category, CategoryField } from '../../../../api/model';
-import { useResourceState } from '../../../../state/resource';
+import { ResourceContext } from '../../../../context';
 
 const CategoryTable = ({fields, rows, selected, setSelected}: {
     fields: CategoryField[],
@@ -29,7 +31,7 @@ const CategoryTable = ({fields, rows, selected, setSelected}: {
 export default CategoryTable;
 
 const TableHead = ({fields}: { fields: CategoryField[] }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <thead>

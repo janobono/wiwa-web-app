@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import AccessDefender from '../../component/layout/access-defender';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { useAuthState } from '../../state/auth';
-import { useResourceState } from '../../state/resource';
+import { AuthContext, ResourceContext } from '../../context';
 
 const SignOutPage = () => {
-    const authState = useAuthState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const resourceState = useContext(ResourceContext);
 
     useEffect(() => {
         if (authState) {

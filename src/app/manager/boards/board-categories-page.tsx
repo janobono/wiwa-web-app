@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Plus, Trash } from 'react-feather';
 
-import { useBoardState } from '../boards-base-page';
+import { BoardContext } from '../boards-base-page';
 import { setBoardCategoryItems } from '../../../api/controller/board';
 import { getBoardCategories } from '../../../api/controller/ui';
 import { CategoryItem, CategoryItemChange, CategoryItemField } from '../../../api/model';
@@ -10,21 +10,18 @@ import CategoryItemTable from '../../../component/app/manager/category/category-
 import SelectCodeListItemDialog from '../../../component/app/manager/code-list/select-code-list-item-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { DialogAnswer, DialogType } from '../../../model/ui';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const BOARD_CATEGORIES_DIALOG_ID = 'board-categories-dialog-001';
 
 const BoardCategoriesPage = () => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
-    const boardState = useBoardState();
+    const boardState = useContext(BoardContext);
 
     const [codeLists, setCodeLists] = useState<CodeList[]>([]);
 

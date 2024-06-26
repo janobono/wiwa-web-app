@@ -1,16 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { WiwaErrorCode } from '../../api/model';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { useAuthState } from '../../state/auth';
-import { useErrorState } from '../../state/error';
-import { useResourceState } from '../../state/resource';
+import { AuthContext, ErrorContext, ResourceContext } from '../../context';
 
 const ResendConfirmationPage = () => {
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [captchaText, setCaptchaText] = useState('');
     const [captchaToken, setCaptchaToken] = useState('');

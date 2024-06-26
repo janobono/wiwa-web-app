@@ -1,5 +1,10 @@
-import { BreadcrumbData } from '../../model/ui';
 import WiwaMenuItem from './wiwa-menu-item';
+
+export interface BreadcrumbData {
+    key: number,
+    label: string,
+    to?: string
+}
 
 const WiwaBreadcrumb = ({breadcrumbs}: { breadcrumbs: BreadcrumbData[] }) => {
     return (

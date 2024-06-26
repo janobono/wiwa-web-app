@@ -1,23 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Minus, Plus } from 'react-feather';
+import { Plus, Trash } from 'react-feather';
 
-import { Entry } from '../../../api/model';
+import { Entry, EntryField } from '../../../api/model';
 import BaseDialog from '../../dialog/base-dialog';
 import WiwaFormInputString from '../../ui/wiwa-form-input-string';
 import WiwaButton from '../../ui/wiwa-button';
-import { useDialogState } from '../../../state/dialog';
-import { useResourceState } from '../../../state/resource';
+import { DialogContext, ResourceContext } from '../../../context';
+import EntryTable from './entry-table.tsx';
 
 const CsvReplacementsEditor = ({dialogId, busy, entries, submitHandler}: {
     dialogId: string,
     busy: boolean,
-    entries: Entry<string, string>[],
-    submitHandler: (entries: Entry<string, string>[]) => Promise<void>
+    entries: Entry[],
+    submitHandler: (entries: Entry[]) => Promise<void>
 }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
-    const [data, setData] = useState<Entry<string, string>[]>();
+    const [data, setData] = useState<Entry[]>();
+    const [selected, setSelected] = useState<Entry>();
     const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
@@ -28,69 +29,57 @@ const CsvReplacementsEditor = ({dialogId, busy, entries, submitHandler}: {
 
     return (
         <>
-            <div className="overflow-x-auto">
-                <table className="table table-zebra">
-                    <thead>
-                    <tr>
-                        <th>
-                            {resourceState?.admin?.orderFormat.csvReplacement.regexLabel}
-                        </th>
-                        <th>
-                            {resourceState?.admin?.orderFormat.csvReplacement.replacementLabel}
-                        </th>
-                        <th>
-                            <WiwaButton
-                                className="btn-primary md:btn-xs"
-                                title={resourceState?.common?.action.add}
-                                disabled={busy}
-                                onClick={() => {
-                                    setShowDialog(true);
-                                }}
-                            ><Plus size={18}/>
-                            </WiwaButton>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {data?.map(entry =>
-                        <tr key={entry.key} className="hover">
-                            <td>{entry.key}</td>
-                            <td>{entry.value}</td>
-                            <td>
-                                <WiwaButton
-                                    className="btn-primary md:btn-xs"
-                                    title={resourceState?.common?.action.delete}
-                                    disabled={busy}
-                                    onClick={() => {
-                                        if (data) {
-                                            const newData = [...data];
-                                            const index = newData.findIndex(item => item.key === entry.key);
-                                            if (index !== -1) {
-                                                newData.splice(index, 1);
-                                                setData(newData);
-                                            }
-                                        }
-                                    }}
-                                ><Minus size={18}/>
-                                </WiwaButton>
-                            </td>
-                        </tr>
-                    )}
-                    </tbody>
-                </table>
-                <div className="flex flex-col items-center justify-center p-5">
-                    <WiwaButton
-                        className="btn-primary"
-                        disabled={busy}
-                        onClick={() => {
-                            if (data) {
-                                submitHandler(data).then();
+            <div className="join">
+                <WiwaButton
+                    className="btn-primary join-item"
+                    title={resourceState?.common?.action.add}
+                    disabled={busy}
+                    onClick={() => {
+                        setShowDialog(true);
+                    }}
+                ><Plus size={18}/>
+                </WiwaButton>
+
+                <WiwaButton
+                    className="btn-accent join-item"
+                    title={resourceState?.common?.action.delete}
+                    disabled={busy || selected === undefined}
+                    onClick={() => {
+                        if (data) {
+                            const newData = [...data];
+                            const index = newData.findIndex(item => item.key === selected?.key);
+                            if (index !== -1) {
+                                newData.splice(index, 1);
+                                setData(newData);
                             }
-                        }}
-                    >{resourceState?.common?.action.submit}
-                    </WiwaButton>
-                </div>
+                        }
+                    }}
+                ><Trash size={18}/>
+                </WiwaButton>
             </div>
+
+            <div className="overflow-x-auto">
+                <EntryTable
+                    fields={Object.values(EntryField)}
+                    rows={data}
+                    selected={selected}
+                    setSelected={setSelected}
+                />
+            </div>
+
+            <div className="flex flex-col items-center justify-center">
+                <WiwaButton
+                    className="btn-primary"
+                    disabled={busy}
+                    onClick={() => {
+                        if (data) {
+                            submitHandler(data).then();
+                        }
+                    }}
+                >{resourceState?.common?.action.submit}
+                </WiwaButton>
+            </div>
+
             <CsvReplacementDialog
                 dialogId={dialogId}
                 showDialog={showDialog}
@@ -117,11 +106,11 @@ export default CsvReplacementsEditor;
 const CsvReplacementDialog = ({dialogId, showDialog, okHandler, cancelHandler}: {
     dialogId: string,
     showDialog: boolean,
-    okHandler: (entry: Entry<string, string>) => void,
+    okHandler: (entry: Entry) => void,
     cancelHandler: () => void
 }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [regex, setRegex] = useState('');
     const [regexValid, setRegexValid] = useState(false);
@@ -184,4 +173,3 @@ const CsvReplacementDialog = ({dialogId, showDialog, okHandler, cancelHandler}: 
         </BaseDialog>
         , dialogState.modalRoot))
 }
-

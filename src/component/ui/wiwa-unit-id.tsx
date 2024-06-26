@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { UnitId } from '../../api/model/application';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const WiwaUnitId = ({unitId}: { unitId?: UnitId }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [data, setData] = useState<string>();
 

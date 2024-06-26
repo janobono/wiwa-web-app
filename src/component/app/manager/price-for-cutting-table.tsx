@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import WiwaFormCheckBox from '../../ui/wiwa-form-check-box';
 import WiwaValueNumber from '../../ui/wiwa-value-number';
 import { getApplicationProperties } from '../../../api/controller/ui';
 import { PriceForCutting, PriceForCuttingField, UnitId } from '../../../api/model/application';
-import { useResourceState } from '../../../state/resource';
+import { ResourceContext } from '../../../context';
 
 const PriceForCuttingTable = ({fields, rows, selected, setSelected}: {
     fields: PriceForCuttingField[],
@@ -33,7 +33,7 @@ const PriceForCuttingTable = ({fields, rows, selected, setSelected}: {
 export default PriceForCuttingTable;
 
 const TableHead = ({fields}: { fields: PriceForCuttingField[] }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [lengthSign, setLengthSign] = useState<string>();
     const [priceSign, setPriceSign] = useState<string>();

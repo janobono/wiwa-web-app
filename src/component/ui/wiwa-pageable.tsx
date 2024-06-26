@@ -1,7 +1,8 @@
+import { useContext } from 'react';
 import { ChevronLeft, ChevronRight } from 'react-feather';
 
 import WiwaButton from './wiwa-button';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const WiwaPageable = (
     {
@@ -21,7 +22,7 @@ const WiwaPageable = (
         nextHandler: () => void,
         disabled?: boolean
     }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <div className="join">

@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Search } from 'react-feather';
 
 import SelectCodeListItem from '../code-list/select-code-list-item';
@@ -11,13 +11,13 @@ import { getEdgeCategories } from '../../api/controller/ui';
 import { Category } from '../../api/model';
 import { EdgeSearchCriteria } from '../../api/model/edge';
 import { CodeListItem } from '../../api/model/code-list';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const EdgeSearchCriteriaForm = ({searchHandler, children}: {
     searchHandler: (criteria: EdgeSearchCriteria) => void
     children?: ReactNode
 }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [edgeCategories, setEdgeCategories] = useState<Category[]>();
 

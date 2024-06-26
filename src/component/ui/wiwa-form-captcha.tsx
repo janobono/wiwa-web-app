@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { RefreshCw } from 'react-feather';
 
 import WiwaButton from './wiwa-button';
 import WiwaInput from './wiwa-input';
 import WiwaSpinner from './wiwa-spinner';
 import { getCaptcha } from '../../api/controller/ui';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const WiwaFormCaptcha = (
     {
@@ -27,7 +27,7 @@ const WiwaFormCaptcha = (
         setToken: (value: string) => void,
         setValid?: (valid: boolean) => void,
     }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const didMount = useRef(false);
     const [busy, setBusy] = useState(false);

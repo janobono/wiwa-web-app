@@ -1,16 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import WiwaFormInputDecimal from '../../ui/wiwa-form-input-decimal';
 import WiwaButton from '../../ui/wiwa-button.tsx';
 import { getVatRate, setVatRate } from '../../../api/controller/config';
-import { useAuthState } from '../../../state/auth';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, ErrorContext, ResourceContext } from '../../../context';
 
 const VatRateEditor = () => {
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<number>();

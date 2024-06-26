@@ -45,9 +45,14 @@ export interface Dimensions {
     y: number
 }
 
-export interface Entry<K, V> {
-    key: K,
-    value: V
+export interface Entry {
+    key: string,
+    value: string
+}
+
+export enum EntryField {
+    key = 'key',
+    value = 'value'
 }
 
 export interface HealthStatus {

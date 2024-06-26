@@ -1,15 +1,15 @@
-import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
-import { useResourceState } from '../../state/resource';
-import { useOrderState } from '../../state/order';
+import { useContext } from 'react';
+
 import { Order, OrderField } from '../../api/model/order';
-import OrderTable from '../../component/order/order-table.tsx';
+import OrderTable from '../../component/order/order-table';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
+import { ResourceContext } from '../../context';
 
 const OrdersPage = () => {
-    const orderState = useOrderState();
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const setSelected = (selected?: Order) => {
-        orderState?.setSelected(selected)
+
     }
 
     return (
@@ -27,8 +27,8 @@ const OrdersPage = () => {
                 <div className="overflow-x-auto">
                     <OrderTable
                         fields={Object.values(OrderField)}
-                        rows={orderState?.data?.content}
-                        selected={orderState?.selected}
+                        rows={[]}
+                        selected={undefined}
                         setSelected={setSelected}
                     />
                 </div>

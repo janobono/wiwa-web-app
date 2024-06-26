@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit } from 'react-feather';
 
@@ -6,15 +6,12 @@ import { setLogo } from '../../../api/controller/config';
 import { getLogoPath } from '../../../api/controller/ui';
 import ImageDialog from '../../../component/dialog/image-dialog';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
 
 const LOGO_DIALOG_ID = 'admin-base-info-logo-dialog-001';
 
 const LogoEditor = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [showLogoDialog, setShowLogoDialog] = useState(false);
 
@@ -50,10 +47,10 @@ const LogoDialog = ({showDialog, closeHandler}: {
     showDialog: boolean,
     closeHandler: () => void
 }) => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [file, setFile] = useState<File>();

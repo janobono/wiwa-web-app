@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Plus, Trash } from 'react-feather';
 
 import CategoryTable from '../category/category-table';
@@ -6,11 +6,8 @@ import SelectCodeListDialog from '../code-list/select-code-list-dialog';
 import WiwaButton from '../../../ui/wiwa-button';
 import { ClientResponse } from '../../../../api/controller';
 import { Category, CategoryField } from '../../../../api/model';
-import { DialogAnswer, DialogType } from '../../../../model/ui';
-import { useAuthState } from '../../../../state/auth';
-import { useDialogState } from '../../../../state/dialog';
-import { useErrorState } from '../../../../state/error';
-import { useResourceState } from '../../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../../context';
+import { DialogAnswer, DialogType } from '../../../../context/model/dialog';
 
 const CATEGORIES_SELECT_CODE_LIST_DIALOG_ID = 'categories-select-code-list-dialog-001';
 
@@ -18,10 +15,10 @@ const CategoriesEditor = ({getCategories, setCategories}: {
     getCategories: () => Promise<ClientResponse<Category[]>>,
     setCategories: (categoryIds: number[], accessToken?: string) => Promise<ClientResponse<Category[]>>
 }) => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Category[]>();

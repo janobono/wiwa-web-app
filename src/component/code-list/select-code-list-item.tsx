@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import WiwaButton from '../ui/wiwa-button';
 import WiwaSpinner from '../ui/wiwa-spinner';
 import { getCodeList } from '../../api/controller/code-list';
 import { getCodeListItem, getCodeListItems } from '../../api/controller/code-list-item';
 import { CodeListItem, CodeListItemField } from '../../api/model/code-list';
-import { useAuthState } from '../../state/auth';
-import { useErrorState } from '../../state/error';
+import { AuthContext, ErrorContext } from '../../context';
 
 const SelectCodeListItem = (
     {
@@ -18,8 +17,8 @@ const SelectCodeListItem = (
         codeListItemId?: number,
         itemSelectedHandler: (item?: CodeListItem) => void
     }) => {
-    const authState = useAuthState();
-    const errorState = useErrorState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
 
     const [busy, setBusy] = useState(true);
     const [data, setData] = useState<CodeListItem[]>();

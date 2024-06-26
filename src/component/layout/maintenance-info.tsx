@@ -1,9 +1,10 @@
-import { useHealthState } from '../../state/health';
-import { useResourceState } from '../../state/resource';
+import { useContext } from 'react';
+
+import { HealthContext, ResourceContext } from '../../context';
 
 const MaintenanceInfo = () => {
-    const healthState = useHealthState();
-    const resourceState = useResourceState();
+    const healthState = useContext(HealthContext);
+    const resourceState = useContext(ResourceContext);
 
     return (
         healthState?.maintenance &&

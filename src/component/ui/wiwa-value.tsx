@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const WiwaValue = ({value}: { value?: string }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [data, setData] = useState<string>();
 

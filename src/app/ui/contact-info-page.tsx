@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { getCompanyInfo, getWorkingHours } from '../../api/controller/ui';
 import { CompanyInfo } from '../../api/model/application';
 import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const ContactInfoPage = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [companyInfo, setCompanyInfo] = useState<CompanyInfo>();
     const [workingHours, setWorkingHours] = useState<string>();

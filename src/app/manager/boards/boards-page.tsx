@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Edit, Image, List, Plus, Trash } from 'react-feather';
 
-import { useBoardState } from '../boards-base-page';
+import { BoardContext } from '../boards-base-page';
 import { addBoard, deleteBoard, getBoards, setBoard } from '../../../api/controller/board';
 import { getApplicationProperties } from '../../../api/controller/ui';
 import { UnitId } from '../../../api/model/application';
@@ -19,23 +19,20 @@ import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
 import WiwaFormTextarea from '../../../component/ui/wiwa-form-textarea';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
 import WiwaSelect from '../../../component/ui/wiwa-select';
-import { DialogAnswer, DialogType } from '../../../model/ui';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const BOARD_DIALOG_ID = 'board-dialog-001';
 
 const BoardsPage = () => {
     const navigate = useNavigate();
 
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
-    const boardState = useBoardState();
+    const boardState = useContext(BoardContext);
 
     const [criteria, setCriteria] = useState<BoardSearchCriteria>();
     const [page, setPage] = useState(0);
@@ -252,8 +249,8 @@ const BoardDataDialog = ({showDialog, board, okHandler, cancelHandler, submittin
     cancelHandler: () => void,
     submitting: boolean
 }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [weightSign, setWeightSign] = useState<string>();
     const [lengthSign, setLengthSign] = useState<string>();

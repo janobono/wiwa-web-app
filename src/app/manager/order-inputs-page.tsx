@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import ManufacturePropertiesEditor from '../../component/app/manager/manufacture-properties-editor';
 import PriceForGluingLayerEditor from '../../component/app/manager/price-for-gluing-layer-editor';
@@ -8,10 +8,10 @@ import FreeDayEditor from '../../component/app/manager/free-day-editor';
 import VatRateEditor from '../../component/app/manager/vat-rate-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const OrderInputsPage = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [index, setIndex] = useState(0);
 

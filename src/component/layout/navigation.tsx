@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Lock, LogIn, PieChart, RefreshCw, Settings, ShoppingCart, Tool, Unlock, User } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 
@@ -8,13 +8,11 @@ import FlagSk from '../ui/icon/flag-sk';
 import FlagUs from '../ui/icon/flag-us';
 import { getApplicationProperties, getTitle } from '../../api/controller/ui';
 import { ApplicationProperties } from '../../api/model/application';
-import { LOCALE_EN, useAppState } from '../../state/app';
-import { useAuthState } from '../../state/auth';
-import { useHealthState } from '../../state/health';
-import { useResourceState } from '../../state/resource';
+import { AppContext, AuthContext, HealthContext, ResourceContext } from '../../context';
+import { LOCALE_EN } from '../../context/provider/app';
 
 const Navigation = () => {
-    const authState = useAuthState();
+    const authState = useContext(AuthContext);
 
     const [title, setTitle] = useState<string>();
 
@@ -53,9 +51,9 @@ const Navigation = () => {
 export default Navigation;
 
 const AuthNav = () => {
-    const authState = useAuthState();
-    const healthState = useHealthState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const healthState = useContext(HealthContext);
+    const resourceState = useContext(ResourceContext);
 
     const [menuDisplay, setMenuDisplay] = useState(true);
     const [displayMenuStyle, setDisplayMenuStyle] = useState('');
@@ -125,7 +123,7 @@ const AuthNav = () => {
 }
 
 const AdminNav = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [menuDisplay, setMenuDisplay] = useState(true);
     const [displayMenuStyle, setDisplayMenuStyle] = useState('');
@@ -189,7 +187,7 @@ const AdminNav = () => {
 }
 
 const ManagerNav = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [menuDisplay, setMenuDisplay] = useState(true);
     const [displayMenuStyle, setDisplayMenuStyle] = useState('');
@@ -245,7 +243,7 @@ const ManagerNav = () => {
 }
 
 const EmployeeNav = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <NavLink
@@ -259,7 +257,7 @@ const EmployeeNav = () => {
 }
 
 const CustomerNav = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <NavLink
@@ -273,9 +271,9 @@ const CustomerNav = () => {
 }
 
 const NavigationSwitch = () => {
-    const authState = useAuthState();
-    const healthState = useHealthState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const healthState = useContext(HealthContext);
+    const resourceState = useContext(ResourceContext);
 
     return (
         <div className="flex flex-row pl-2 items-center justify-center">
@@ -294,8 +292,8 @@ const NavigationSwitch = () => {
 }
 
 const LocaleSwitch = () => {
-    const appState = useAppState();
-    const resourceState = useResourceState();
+    const appState = useContext(AppContext);
+    const resourceState = useContext(ResourceContext);
 
     return (
         <div className="flex flex-row pl-2 items-center justify-center">
@@ -314,8 +312,8 @@ const LocaleSwitch = () => {
 }
 
 const UserCard = () => {
-    const authState = useAuthState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const resourceState = useContext(ResourceContext);
 
     const [applicationProperties, setApplicationProperties] = useState<ApplicationProperties>();
     const [value, setValue] = useState(0);

@@ -21,4 +21,3 @@ const WiwaTextArea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTML
 WiwaTextArea.displayName = 'WiwaTextArea';
 
 export default WiwaTextArea;
-

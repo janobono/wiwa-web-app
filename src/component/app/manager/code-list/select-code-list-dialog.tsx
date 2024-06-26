@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Search } from 'react-feather';
 
@@ -10,10 +10,7 @@ import WiwaPageable from '../../../ui/wiwa-pageable';
 import { getCodeLists } from '../../../../api/controller/code-list';
 import { Page } from '../../../../api/model';
 import { CodeList, CodeListField } from '../../../../api/model/code-list';
-import { useAuthState } from '../../../../state/auth';
-import { useDialogState } from '../../../../state/dialog';
-import { useErrorState } from '../../../../state/error';
-import { useResourceState } from '../../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../../context';
 
 const SelectCodeListDialog = (
     {
@@ -28,10 +25,10 @@ const SelectCodeListDialog = (
         okHandler: (codeList: CodeList) => void
     }
 ) => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<CodeList>>();

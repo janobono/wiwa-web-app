@@ -1,20 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInputPassword from '../../component/ui/wiwa-form-input-password';
 import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
-import { useAuthState } from '../../state/auth';
-import { useErrorState } from '../../state/error';
-import { useResourceState } from '../../state/resource';
+import { AuthContext, ErrorContext, ResourceContext } from '../../context';
 
 const SignInPage = () => {
     const navigate = useNavigate();
 
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [username, setUsername] = useState('');
     const [usernameValid, setUsernameValid] = useState(false);

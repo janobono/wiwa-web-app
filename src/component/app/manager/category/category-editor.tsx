@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Edit } from 'react-feather';
 
 import SelectCodeListDialog from '../code-list/select-code-list-dialog';
 import WiwaButton from '../../../ui/wiwa-button';
 import { ClientResponse } from '../../../../api/controller';
 import { Category } from '../../../../api/model';
-import { useAuthState } from '../../../../state/auth';
-import { useErrorState } from '../../../../state/error';
-import { useResourceState } from '../../../../state/resource';
+import { AuthContext, ErrorContext, ResourceContext } from '../../../../context';
 
 const CATEGORY_SELECT_CODE_LIST_DIALOG_ID = 'category-select-code-list-dialog-001';
 
@@ -15,9 +13,9 @@ const CategoryEditor = ({getCategory, setCategory}: {
     getCategory: (accessToken?: string) => Promise<ClientResponse<Category>>,
     setCategory: (categoryId: number, accessToken?: string) => Promise<ClientResponse<Category>>
 }) => {
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Category>();

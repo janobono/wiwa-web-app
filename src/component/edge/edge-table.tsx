@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
 import WiwaValue from '../ui/wiwa-value';
@@ -6,7 +6,7 @@ import WiwaValueNumber from '../ui/wiwa-value-number';
 import { getApplicationProperties, getEdgeImagePath } from '../../api/controller/ui';
 import { UnitId } from '../../api/model/application';
 import { Edge, EdgeField } from '../../api/model/edge';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const EdgeTable = ({fields, rows, selected, setSelected}: {
     fields: EdgeField[],
@@ -35,7 +35,7 @@ const EdgeTable = ({fields, rows, selected, setSelected}: {
 export default EdgeTable;
 
 const TableHead = ({fields}: { fields: EdgeField[] }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [saleSign, setSaleSign] = useState<string>();
     const [weightSign, setWeightSign] = useState<string>();

@@ -1,6 +1,8 @@
+import { useContext } from 'react';
+
 import WiwaFormCheckBox from '../../ui/wiwa-form-check-box';
 import { FreeDay, FreeDayField } from '../../../api/model/application';
-import { useResourceState } from '../../../state/resource';
+import { ResourceContext } from '../../../context';
 
 const FreeDayTable = ({fields, rows, selected, setSelected}: {
     fields: FreeDayField[],
@@ -29,7 +31,7 @@ const FreeDayTable = ({fields, rows, selected, setSelected}: {
 export default FreeDayTable;
 
 const TableHead = ({fields}: { fields: FreeDayField[] }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <thead>

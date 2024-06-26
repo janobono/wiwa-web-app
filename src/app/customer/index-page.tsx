@@ -1,21 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
+import { CustomerContext } from './customer-page';
 import { getOrders } from '../../api/controller/order';
 import { Order, OrderField, OrderSearchCriteria } from '../../api/model/order';
+import CustomerOrderSearchCriteriaForm from '../../component/order/customer-order-search-criteria-form';
 import OrderTable from '../../component/order/order-table';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import { useAuthState } from '../../state/auth';
-import { useErrorState } from '../../state/error';
-import { useOrderState } from '../../state/order';
-import { useResourceState } from '../../state/resource';
-import CustomerOrderSearchCriteriaForm from '../../component/order/customer-order-search-criteria-form.tsx';
+import { AuthContext, ErrorContext, ResourceContext } from '../../context';
 
-const OrdersPage = () => {
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const orderState = useOrderState();
-    const resourceState = useResourceState();
+const IndexPage = () => {
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
+
+    const customerState = useContext(CustomerContext);
 
     const [busy, setBusy] = useState(false);
     const [criteria, setCriteria] = useState<OrderSearchCriteria>();
@@ -28,26 +27,26 @@ const OrdersPage = () => {
     }, [criteria]);
 
     useEffect(() => {
-        setPrevious(orderState?.data !== undefined && !orderState.data.first);
-        setNext(orderState?.data !== undefined && !orderState.data.last);
+        setPrevious(customerState?.data !== undefined && !customerState.data.first);
+        setNext(customerState?.data !== undefined && !customerState.data.last);
 
-        const data = orderState?.data;
-        const selected = orderState?.selected;
+        const data = customerState?.data;
+        const selected = customerState?.selected;
         if (data && selected) {
             const index = data.content.findIndex(item => item.id === selected.id);
             if (index !== -1) {
-                orderState?.setSelected(data.content[index]);
+                customerState?.setSelected(data.content[index]);
             }
         } else {
-            orderState?.setSelected(undefined);
+            customerState?.setSelected(undefined);
         }
-    }, [orderState, orderState?.data, orderState?.selected]);
+    }, [customerState, customerState?.data, customerState?.selected]);
 
     const fetchData = async () => {
         setBusy(true);
         try {
             const response = await getOrders(criteria, {page, size: 10}, authState?.authToken?.accessToken);
-            orderState?.setData(response.data);
+            customerState?.setData(response.data);
             errorState?.addError(response.error);
         } finally {
             setBusy(false);
@@ -55,7 +54,7 @@ const OrdersPage = () => {
     }
 
     const setSelected = (order?: Order) => {
-        orderState?.setSelected(order)
+        customerState?.setSelected(order)
     }
 
     return (
@@ -70,7 +69,8 @@ const OrdersPage = () => {
             <div className="flex flex-col gap-5 p-5 w-full">
                 <CustomerOrderSearchCriteriaForm
                     searchHandler={(criteria) => {
-                }}/>
+                    }}
+                />
 
                 <div className="overflow-x-auto">
                     <OrderTable
@@ -84,8 +84,8 @@ const OrdersPage = () => {
                             OrderField.deliveryDate,
                             OrderField.packageType
                         ]}
-                        rows={orderState?.data?.content}
-                        selected={orderState?.selected}
+                        rows={customerState?.data?.content}
+                        selected={customerState?.selected}
                         setSelected={setSelected}
                     />
                 </div>
@@ -106,4 +106,4 @@ const OrdersPage = () => {
     )
 }
 
-export default OrdersPage;
+export default IndexPage;

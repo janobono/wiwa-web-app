@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
 import WiwaSpinner from '../../component/ui/wiwa-spinner';
-import { useAuthState } from '../../state/auth';
-import { useErrorState } from '../../state/error';
-import { useResourceState } from '../../state/resource';
+import { AuthContext, ErrorContext, ResourceContext } from '../../context';
 
 const ConfirmPage = () => {
     const {token} = useParams();
 
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [done, setDone] = useState(false);
     const [message, setMessage] = useState<string>();

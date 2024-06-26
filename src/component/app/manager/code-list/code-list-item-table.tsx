@@ -1,7 +1,9 @@
+import { useContext } from 'react';
+
 import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import WiwaValue from '../../../ui/wiwa-value';
 import { CodeListItem, CodeListItemField } from '../../../../api/model/code-list';
-import { useResourceState } from '../../../../state/resource';
+import { ResourceContext } from '../../../../context';
 
 const CodeListItemTable = ({fields, rows, selected, setSelected}: {
     fields: CodeListItemField[],
@@ -30,7 +32,7 @@ const CodeListItemTable = ({fields, rows, selected, setSelected}: {
 export default CodeListItemTable;
 
 const TableHead = ({fields}: { fields: CodeListItemField[] }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <thead>

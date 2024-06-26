@@ -85,6 +85,10 @@
     "mapUrlPlaceholder": "Zadajte mapu",
     "mapUrlRequired": "Vyžaduje sa mapa"
   },
+  "entryTable": {
+    "key": "Kľúč",
+    "value": "Hodnota"
+  },
   "mailFormat": {
     "option": {
       "select": "Formát",
@@ -215,8 +219,6 @@
       "csvReplacements": "CSV nahradenie textu",
       "csvColumns": "CSV stĺpce"
     },
-    "key": "kľúč",
-    "value": "hodnota",
     "editEntry": {
       "label": "Hodnota",
       "placeholder": "Zadajte hodnotu",

@@ -1,9 +1,11 @@
+import { useContext } from 'react';
+
 import Footer from '../component/layout/footer';
 import Navigation from '../component/layout/navigation';
-import { useResourceState } from '../state/resource';
+import { ResourceContext } from '../context';
 
 const MaintenancePage = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Page } from '../../api/model';
@@ -6,9 +6,9 @@ import { Board } from '../../api/model/board';
 
 const BoardsBasePage = () => {
     return (
-        <BoardStateProvider>
+        <BoardProvider>
             <Outlet/>
-        </BoardStateProvider>
+        </BoardProvider>
     )
 }
 
@@ -23,15 +23,15 @@ export interface BoardState {
     setSelected: (board?: Board) => void
 }
 
-const boardStateContext = createContext<BoardState | undefined>(undefined);
+export const BoardContext = createContext<BoardState | undefined>(undefined);
 
-const BoardStateProvider = ({children}: { children: ReactNode }) => {
+const BoardProvider = ({children}: { children: ReactNode }) => {
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<Board>>();
     const [selected, setSelected] = useState<Board>();
 
     return (
-        <boardStateContext.Provider
+        <BoardContext.Provider
             value={
                 {
                     busy,
@@ -43,10 +43,6 @@ const BoardStateProvider = ({children}: { children: ReactNode }) => {
                 }
             }
         >{children}
-        </boardStateContext.Provider>
+        </BoardContext.Provider>
     );
-}
-
-export const useBoardState = () => {
-    return useContext(boardStateContext);
 }

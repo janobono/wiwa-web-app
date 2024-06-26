@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
+import { ValidationResult } from './';
 import WiwaTextArea from './wiwa-textarea';
-import { ValidationResult } from '../../model/ui';
 
 const WiwaFormTextarea = (
     {

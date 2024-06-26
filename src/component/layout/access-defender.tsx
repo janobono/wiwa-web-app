@@ -1,15 +1,14 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuthState } from '../../state/auth';
+import { hasAnyAuthority } from '../../auth';
 import { Authority } from '../../api/model';
-import { hasAnyAuthority } from '../../model';
-import { useHealthState } from '../../state/health';
+import { AuthContext, HealthContext } from '../../context';
 
 const AccessDefender = ({children, authority}: { children?: ReactNode, authority?: Authority }) => {
     const navigate = useNavigate();
-    const authState = useAuthState();
-    const healthState = useHealthState();
+    const authState = useContext(AuthContext);
+    const healthState = useContext(HealthContext);
 
     useEffect(() => {
         if (authState?.accessExpired) {

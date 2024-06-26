@@ -1,17 +1,17 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'react-feather';
 import WiwaButton from '../ui/wiwa-button';
-import { useResourceState } from '../../state/resource';
 import WiwaFormCheckBox from '../ui/wiwa-form-check-box.tsx';
 import OrderStatusValue from './order-status-value.tsx';
 import { OrderSearchCriteria, OrderStatus } from '../../api/model/order';
 import WiwaFormInputDate from '../ui/wiwa-form-input-date.tsx';
+import { ResourceContext } from '../../context';
 
 const CustomerOrderSearchCriteriaForm = ({searchHandler, children}: {
     searchHandler: (criteria: OrderSearchCriteria) => void
     children?: ReactNode
 }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [statusNew, setStatusNew] = useState(false);
     const [statusSent, setStatusSent] = useState(false);

@@ -25,7 +25,7 @@ import AuthSignOutPage from './auth/sign-out-page';
 import AuthSignUpPage from './auth/sign-up-page';
 
 import CustomerPage from './customer/customer-page';
-import CustomerOrdersPage from './customer/orders-page';
+import CustomerIndexPage from './customer/index-page';
 
 import EmployeePage from './employee/employee-page';
 import EmployeeOrdersPage from './employee/orders-page';
@@ -85,7 +85,7 @@ const AppPage = () => {
 
             <Route path="/customer" element={<CustomerPage/>}>
                 <Route index element={<Navigate to="index" replace/>}/>
-                <Route path="index" element={<CustomerOrdersPage/>}/>
+                <Route path="index" element={<CustomerIndexPage/>}/>
             </Route>
 
             <Route path="/employee" element={<EmployeePage/>}>

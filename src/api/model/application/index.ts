@@ -225,16 +225,16 @@ export enum OrderPattern {
 }
 
 export interface OrderProperties {
-    dimensions: Entry<string, string>[],
-    boards: Entry<string, string>[],
-    edges: Entry<string, string>[],
-    corners: Entry<string, string>[],
-    pattern: Entry<string, string>[],
-    content: Entry<string, string>[],
-    packageType: Entry<string, string>[],
+    dimensions: Entry[],
+    boards: Entry[],
+    edges: Entry[],
+    corners: Entry[],
+    pattern: Entry[],
+    content: Entry[],
+    packageType: Entry[],
     csvSeparator: string,
-    csvReplacements: Entry<string, string>[],
-    csvColumns: Entry<string, string>[]
+    csvReplacements: Entry[],
+    csvColumns: Entry[]
 }
 
 export interface OrderSendMail {

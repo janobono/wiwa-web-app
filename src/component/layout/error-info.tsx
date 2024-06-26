@@ -1,9 +1,10 @@
+import { useContext } from 'react';
+
 import { WiwaError } from '../../api/model';
-import { useErrorState } from '../../state/error';
-import { useResourceState } from '../../state/resource';
+import { ErrorContext, ResourceContext } from '../../context';
 
 const ErrorInfo = () => {
-    const errorState = useErrorState();
+    const errorState = useContext(ErrorContext);
 
     return (
         <>
@@ -17,8 +18,8 @@ const ErrorInfo = () => {
 export default ErrorInfo;
 
 const WiwaErrorPanel = ({index, wiwaError}: { index: number, wiwaError: WiwaError }) => {
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     return (
         <div className="alert alert-error text-xs md:text-base">

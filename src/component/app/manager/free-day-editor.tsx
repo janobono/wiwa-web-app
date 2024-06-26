@@ -1,27 +1,25 @@
-import { useAuthState } from '../../../state/auth';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
-import { useEffect, useState } from 'react';
-import { FreeDay, FreeDayField } from '../../../api/model/application';
-import { getFreeDays } from '../../../api/controller/ui';
-import WiwaButton from '../../ui/wiwa-button.tsx';
-import { Edit, Plus, Trash } from 'react-feather';
-import FreeDayTable from './free-day-table.tsx';
-import { setFreeDays } from '../../../api/controller/config';
-import { useDialogState } from '../../../state/dialog';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import BaseDialog from '../../dialog/base-dialog.tsx';
-import WiwaFormInputString from '../../ui/wiwa-form-input-string.tsx';
-import WiwaFormInputDate from '../../ui/wiwa-form-input-date.tsx';
-import { DialogAnswer, DialogType } from '../../../model/ui';
+import { Edit, Plus, Trash } from 'react-feather';
+
+import FreeDayTable from './free-day-table';
+import BaseDialog from '../../dialog/base-dialog';
+import WiwaButton from '../../ui/wiwa-button';
+import WiwaFormInputDate from '../../ui/wiwa-form-input-date';
+import WiwaFormInputString from '../../ui/wiwa-form-input-string';
+import { setFreeDays } from '../../../api/controller/config';
+import { getFreeDays } from '../../../api/controller/ui';
+import { FreeDay, FreeDayField } from '../../../api/model/application';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const FREE_DAY_DIALOG_ID = 'free-day-dialog-001';
 
 const FreeDayEditor = () => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<FreeDay[]>();
@@ -151,8 +149,8 @@ const FreeDayDialog = ({showDialog, freeDay, okHandler, cancelHandler}: {
     okHandler: (freeDay: FreeDay) => void,
     cancelHandler: () => void
 }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [name, setName] = useState('');
     const [nameValid, setNameValid] = useState(false);

@@ -1,20 +1,13 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
-import { setMaintenance as apiSetMaintenance } from '../../api/controller/config';
-import { readyz } from '../../api/controller/health';
-import { getMaintenance } from '../../api/controller/ui';
+import { HealthContext } from '../../';
+import { setMaintenance as apiSetMaintenance } from '../../../api/controller/config';
+import { readyz } from '../../../api/controller/health';
+import { getMaintenance } from '../../../api/controller/ui';
 
 const ACTUATOR_TIMEOUT = 60000;
 
-export interface HealthState {
-    up: boolean,
-    maintenance: boolean,
-    setMaintenance: (maintenance: boolean, token?: string) => Promise<void>
-}
-
-const healthStateContext = createContext<HealthState | undefined>(undefined);
-
-const HealthStateProvider = ({children}: { children: ReactNode }) => {
+const HealthProvider = ({children}: { children: ReactNode }) => {
     const [up, setUp] = useState(false);
     const [maintenance, setMaintenanceValue] = useState(true);
     const [actuatorCounter, setActuatorCounter] = useState(0);
@@ -50,7 +43,7 @@ const HealthStateProvider = ({children}: { children: ReactNode }) => {
     }
 
     return (
-        <healthStateContext.Provider
+        <HealthContext.Provider
             value={
                 {
                     up,
@@ -59,12 +52,8 @@ const HealthStateProvider = ({children}: { children: ReactNode }) => {
                 }
             }
         >{children}
-        </healthStateContext.Provider>
+        </HealthContext.Provider>
     );
 }
 
-export default HealthStateProvider;
-
-export const useHealthState = () => {
-    return useContext(healthStateContext);
-}
+export default HealthProvider;

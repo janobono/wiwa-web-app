@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import OrderPackageTypeValue from './order-package-type-value';
 import OrderStatusValue from './order-status-value';
@@ -9,7 +9,7 @@ import WiwaValueDate from '../ui/wiwa-value-date';
 import { getApplicationProperties } from '../../api/controller/ui';
 import { UnitId } from '../../api/model/application';
 import { Order, OrderField } from '../../api/model/order';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const OrderTable = ({fields, rows, selected, setSelected}: {
     fields: OrderField[],
@@ -38,7 +38,7 @@ const OrderTable = ({fields, rows, selected, setSelected}: {
 export default OrderTable;
 
 const TableHead = ({fields}: { fields: OrderField[] }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [weightSign, setWeightSign] = useState<string>();
     const [priceSign, setPriceSign] = useState<string>();

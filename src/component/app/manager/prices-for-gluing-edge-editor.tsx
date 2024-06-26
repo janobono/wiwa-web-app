@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit, Plus, Trash } from 'react-feather';
 
@@ -10,19 +10,16 @@ import WiwaFormInputDecimal from '../../ui/wiwa-form-input-decimal';
 import { getPricesForGluingEdge, setPricesForGluingEdge } from '../../../api/controller/config';
 import { getApplicationProperties } from '../../../api/controller/ui';
 import { PriceForGluingEdge, PriceForGluingEdgeField, UnitId } from '../../../api/model/application';
-import { DialogAnswer, DialogType } from '../../../model/ui';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const PRICES_FOR_GLUING_EDGE_DIALOG_ID = 'prices-for-gluing-edge-dialog-001';
 
 const PricesForGluingEdgeEditor = () => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<PriceForGluingEdge[]>();
@@ -152,8 +149,8 @@ const PricesForGluingEdgeDialog = ({showDialog, priceForGluingEdge, okHandler, c
     okHandler: (priceForGluingEdge: PriceForGluingEdge) => void,
     cancelHandler: () => void
 }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [lengthSign, setLengthSign] = useState<string>();
     const [priceSign, setPriceSign] = useState<string>();

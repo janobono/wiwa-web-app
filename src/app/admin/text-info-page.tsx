@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import {
     setBusinessConditions,
@@ -17,12 +17,12 @@ import {
 import MdEditor from '../../component/app/admin/md-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const TEXT_INFO_DIALOG_ID = 'admin-text-info-dialog-';
 
 const TextInfoPage = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [index, setIndex] = useState(0);
 

@@ -1,28 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit, Trash } from 'react-feather';
 
-import { useEdgeState } from '../edges-base-page';
+import { EdgeContext } from '../edges-base-page';
 import { deleteEdgeImage, setEdgeImage } from '../../../api/controller/edge';
 import { getEdgeImagePath } from '../../../api/controller/ui';
 import ImageDialog from '../../../component/dialog/image-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { DialogAnswer, DialogType } from '../../../model/ui';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const BOARD_IMAGE_DIALOG_ID = 'edge-image-dialog-001';
 
 const EdgeImagePage = () => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
-    const edgeState = useEdgeState();
+    const edgeState = useContext(EdgeContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<string>();
@@ -139,8 +136,8 @@ const EdgeImageDialog = ({busy, showDialog, okHandler, cancelHandler}: {
     okHandler: (file: File) => void,
     cancelHandler: () => void,
 }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [file, setFile] = useState<File>();
 

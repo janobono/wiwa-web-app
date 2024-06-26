@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import {
     getBoardMaterialCategory,
@@ -11,10 +11,10 @@ import CategoriesEditor from '../../component/app/manager/category/categories-ed
 import CategoryEditor from '../../component/app/manager/category/category-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const CategoriesPage = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [index, setIndex] = useState(0);
 

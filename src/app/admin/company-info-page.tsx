@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { setCompanyInfo } from '../../api/controller/config';
 import { getCompanyInfo } from '../../api/controller/ui';
@@ -9,14 +9,12 @@ import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
 import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import WiwaFormTextarea from '../../component/ui/wiwa-form-textarea';
 import { EMAIL_REGEX } from '../../const';
-import { useAuthState } from '../../state/auth';
-import { useErrorState } from '../../state/error';
-import { useResourceState } from '../../state/resource';
+import { AuthContext, ErrorContext, ResourceContext } from '../../context';
 
 const CompanyInfoPage = () => {
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<CompanyInfo>();

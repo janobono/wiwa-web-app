@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { getApplicationInfo, getWelcomeText } from '../api/controller/ui';
-import Navigation from '../component/layout/navigation';
 import Footer from '../component/layout/footer';
+import Navigation from '../component/layout/navigation';
 import WiwaMarkdownRenderer from '../component/ui/wiwa-markdown-renderer';
 
 const HomePage = () => {

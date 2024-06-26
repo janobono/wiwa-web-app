@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { OrderPackageType } from '../../api/model/order';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const OrderPackageTypeValue = ({value}: { value?: OrderPackageType }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [data, setData] = useState('');
 

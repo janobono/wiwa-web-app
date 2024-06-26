@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { useAuthState } from '../../state/auth';
-import { useResourceState } from '../../state/resource';
+import { AuthContext, ResourceContext } from '../../context';
 
 const RefreshToken = () => {
-    const authState = useAuthState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const resourceState = useContext(ResourceContext);
 
     const [show, setShow] = useState(false);
 

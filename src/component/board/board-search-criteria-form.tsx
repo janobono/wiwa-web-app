@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Search } from 'react-feather';
 
 import SelectCodeListItem from '../code-list/select-code-list-item';
@@ -12,13 +12,13 @@ import { getBoardCategories } from '../../api/controller/ui';
 import { Category } from '../../api/model';
 import { BoardSearchCriteria } from '../../api/model/board';
 import { CodeListItem } from '../../api/model/code-list';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const BoardSearchCriteriaForm = ({searchHandler, children}: {
     searchHandler: (criteria: BoardSearchCriteria) => void
     children?: ReactNode
 }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [boardCategories, setBoardCategories] = useState<Category[]>();
 

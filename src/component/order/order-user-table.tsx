@@ -1,6 +1,8 @@
+import { useContext } from 'react';
+
 import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
 import { OrderUser, OrderUserField } from '../../api/model/order';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const OrderUserTable = ({fields, rows, selected, setSelected}: {
     fields: OrderUserField[],
@@ -29,7 +31,7 @@ const OrderUserTable = ({fields, rows, selected, setSelected}: {
 export default OrderUserTable;
 
 const TableHead = ({fields}: { fields: OrderUserField[] }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <thead>

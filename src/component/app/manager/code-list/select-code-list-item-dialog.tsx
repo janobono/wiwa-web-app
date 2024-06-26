@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import SelectCodeList from './select-code-list';
@@ -6,8 +6,7 @@ import SelectCodeListItem from '../../../code-list/select-code-list-item';
 import BaseDialog from '../../../dialog/base-dialog';
 import WiwaButton from '../../../ui/wiwa-button';
 import { CodeList, CodeListItem } from '../../../../api/model/code-list';
-import { useResourceState } from '../../../../state/resource';
-import { useDialogState } from '../../../../state/dialog';
+import { DialogContext, ResourceContext } from '../../../../context';
 
 const SelectCodeListItemDialog = (
     {
@@ -24,8 +23,8 @@ const SelectCodeListItemDialog = (
         onSelectCodeListItem: (codeListItem: CodeListItem) => void
     }
 ) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [selectedCodeList, setSelectedCodeList] = useState<CodeList>();
     const [selectedCodeListItem, setSelectedCodeListItem] = useState<CodeListItem>();

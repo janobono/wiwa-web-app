@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Edit } from 'react-feather';
 
@@ -7,15 +7,12 @@ import { getWelcomeText } from '../../../api/controller/ui';
 import MdDialog from '../../../component/dialog/md-dialog';
 import WiwaMarkdownRenderer from '../../../component/ui/wiwa-markdown-renderer';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
 
 const WELCOME_TEXT_DIALOG_ID = 'admin-base-info-welcome-text-dialog-001';
 
 const WelcomeTextEditor = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     const [welcomeText, setWelcomeText] = useState<string>();
     const [showWelcomeTextDialog, setShowWelcomeTextDialog] = useState(false);
@@ -56,10 +53,10 @@ const WelcomeTextDialog = ({showDialog, closeHandler, defaultValue, setDefaultVa
     defaultValue: string,
     setDefaultValue: (defaultValue: string) => void
 }) => {
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState(defaultValue);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useParams } from 'react-router-dom';
 import { ArrowDown, ArrowUp, Edit, Plus, Trash } from 'react-feather';
@@ -18,21 +18,18 @@ import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
-import { DialogAnswer, DialogType } from '../../../model/ui';
-import { useAuthState } from '../../../state/auth';
-import { useDialogState } from '../../../state/dialog';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const CODE_LIST_ITEM_DIALOG_ID = 'code-list-item-dialog-001';
 
 const CodeListItemsPage = () => {
     const {codeListId} = useParams();
 
-    const authState = useAuthState();
-    const dialogState = useDialogState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const dialogState = useContext(DialogContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<CodeListItem[]>();
@@ -295,8 +292,8 @@ const CodeListItemDataDialog = (
         error?: string,
         submitting: boolean
     }) => {
-    const dialogState = useDialogState();
-    const resourceState = useResourceState();
+    const dialogState = useContext(DialogContext);
+    const resourceState = useContext(ResourceContext);
 
     const [code, setCode] = useState('');
     const [codeValid, setCodeValid] = useState(false);

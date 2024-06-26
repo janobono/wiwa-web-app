@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { getManufactureProperties, setManufactureProperties } from '../../../api/controller/config';
 import { Dimensions } from '../../../api/model';
@@ -6,14 +6,12 @@ import { ManufactureProperties, UnitId } from '../../../api/model/application';
 import WiwaButton from '../../ui/wiwa-button';
 import WiwaFormDimensions from '../../ui/wiwa-form-dimensions';
 import WiwaFormInputInteger from '../../ui/wiwa-form-input-integer';
-import { useAuthState } from '../../../state/auth';
-import { useErrorState } from '../../../state/error';
-import { useResourceState } from '../../../state/resource';
+import { AuthContext, ErrorContext, ResourceContext } from '../../../context';
 
 const ManufacturePropertiesEditor = () => {
-    const authState = useAuthState();
-    const errorState = useErrorState();
-    const resourceState = useResourceState();
+    const authState = useContext(AuthContext);
+    const errorState = useContext(ErrorContext);
+    const resourceState = useContext(ResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<ManufactureProperties>();

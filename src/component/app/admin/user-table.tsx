@@ -1,9 +1,11 @@
+import { useContext } from 'react';
+
 import WiwaFormCheckBox from '../../ui/wiwa-form-check-box';
 import WiwaUserAuthorities from '../../ui/wiwa-user-authorities';
 import WiwaValue from '../../ui/wiwa-value';
 import { User } from '../../../api/model';
 import { UserField } from '../../../api/model/user';
-import { useResourceState } from '../../../state/resource';
+import { ResourceContext } from '../../../context';
 
 const UserTable = ({fields, rows, selected, setSelected}: {
     fields: UserField[],
@@ -32,7 +34,7 @@ const UserTable = ({fields, rows, selected, setSelected}: {
 export default UserTable;
 
 const TableHead = ({fields}: { fields: UserField[] }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <thead>

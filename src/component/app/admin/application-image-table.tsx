@@ -1,6 +1,8 @@
+import { useContext } from 'react';
+
 import WiwaFormCheckBox from '../../ui/wiwa-form-check-box';
 import { ApplicationImageInfo, ApplicationImageInfoField } from '../../../api/model/application';
-import { useResourceState } from '../../../state/resource';
+import { ResourceContext } from '../../../context';
 
 const ApplicationImageInfoTable = ({fields, rows, selected, setSelected}: {
     fields: ApplicationImageInfoField[],
@@ -29,7 +31,7 @@ const ApplicationImageInfoTable = ({fields, rows, selected, setSelected}: {
 export default ApplicationImageInfoTable;
 
 const TableHead = ({fields}: { fields: ApplicationImageInfoField[] }) => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
 
     return (
         <thead>

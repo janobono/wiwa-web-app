@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Globe, Mail, Phone } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 
 import BaseFooter from './base-footer';
 import { getCompanyInfo } from '../../api/controller/ui';
 import { CompanyInfo } from '../../api/model/application';
-import { useResourceState } from '../../state/resource';
+import { ResourceContext } from '../../context';
 
 const Footer = () => {
-    const resourceState = useResourceState();
+    const resourceState = useContext(ResourceContext);
     const [companyInfo, setCompanyInfo] = useState<CompanyInfo>();
 
     useEffect(() => {
