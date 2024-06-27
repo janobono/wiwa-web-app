@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
-import { EMAIL_REGEX } from '../../const';
+import MaintenanceDefender from '../../component/layout/maintenance-defender';
+import { EMAIL_REGEX } from '../../component/ui';
 import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
@@ -67,64 +68,66 @@ const ResetPasswordPage = () => {
     }, [authState?.authUser, navigate]);
 
     return (
-        <div className="container p-5 mx-auto">
-            <div className="flex flex-col items-center justify-center">
-                <div className="text-lg md:text-xl font-bold text-center">
-                    {resourceState?.auth?.resetPassword.title}
+        <MaintenanceDefender>
+            <div className="container p-5 mx-auto">
+                <div className="flex flex-col items-center justify-center">
+                    <div className="text-lg md:text-xl font-bold text-center">
+                        {resourceState?.auth?.resetPassword.title}
+                    </div>
+                    {message ?
+                        <div className="max-w-sm text-sm md:text-base pt-5">{message}</div>
+                        :
+                        <form className="max-w-sm" onSubmit={(event) => {
+                            event.preventDefault();
+                            handleSubmit().then();
+                        }}>
+                            <WiwaFormInputEmail
+                                label={resourceState?.auth?.resetPassword.emailLabel}
+                                required={true}
+                                placeholder={resourceState?.auth?.resetPassword.emailPlaceholder}
+                                value={email}
+                                setValue={setEmail}
+                                setValid={setEmailValid}
+                                validate={() => {
+                                    if (email.trim().length === 0) {
+                                        return {
+                                            valid: false,
+                                            message: resourceState?.auth?.resetPassword.emailRequired
+                                        };
+                                    }
+                                    if (!EMAIL_REGEX.test(email)) {
+                                        return {
+                                            valid: false,
+                                            message: resourceState?.auth?.resetPassword.emailFormat
+                                        };
+                                    }
+                                    return {valid: true};
+                                }}
+                            />
+
+                            <WiwaFormCaptcha
+                                value={captchaText}
+                                setValue={setCaptchaText}
+                                token={captchaToken}
+                                setToken={setCaptchaToken}
+                                setValid={setCaptchaValid}
+                            />
+
+                            <WiwaButton
+                                type="submit"
+                                className="btn-primary w-full"
+                                disabled={authState?.busy || !isFormValid()}
+                            >{resourceState?.common?.action.submit}</WiwaButton>
+                            {formError &&
+                                <label className="label">
+                                    <span className="label-text-alt text-error">{formError}</span>
+                                </label>
+                            }
+                        </form>
+                    }
                 </div>
-                {message ?
-                    <div className="max-w-sm text-sm md:text-base pt-5">{message}</div>
-                    :
-                    <form className="max-w-sm" onSubmit={(event) => {
-                        event.preventDefault();
-                        handleSubmit().then();
-                    }}>
-                        <WiwaFormInputEmail
-                            label={resourceState?.auth?.resetPassword.emailLabel}
-                            required={true}
-                            placeholder={resourceState?.auth?.resetPassword.emailPlaceholder}
-                            value={email}
-                            setValue={setEmail}
-                            setValid={setEmailValid}
-                            validate={() => {
-                                if (email.trim().length === 0) {
-                                    return {
-                                        valid: false,
-                                        message: resourceState?.auth?.resetPassword.emailRequired
-                                    };
-                                }
-                                if (!EMAIL_REGEX.test(email)) {
-                                    return {
-                                        valid: false,
-                                        message: resourceState?.auth?.resetPassword.emailFormat
-                                    };
-                                }
-                                return {valid: true};
-                            }}
-                        />
-
-                        <WiwaFormCaptcha
-                            value={captchaText}
-                            setValue={setCaptchaText}
-                            token={captchaToken}
-                            setToken={setCaptchaToken}
-                            setValid={setCaptchaValid}
-                        />
-
-                        <WiwaButton
-                            type="submit"
-                            className="btn-primary w-full"
-                            disabled={authState?.busy || !isFormValid()}
-                        >{resourceState?.common?.action.submit}</WiwaButton>
-                        {formError &&
-                            <label className="label">
-                                <span className="label-text-alt text-error">{formError}</span>
-                            </label>
-                        }
-                    </form>
-                }
             </div>
-        </div>
+        </MaintenanceDefender>
     )
 }
 

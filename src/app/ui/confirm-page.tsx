@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
@@ -12,33 +12,35 @@ const ConfirmPage = () => {
     const errorState = useContext(ErrorContext);
     const resourceState = useContext(ResourceContext);
 
-    const [done, setDone] = useState(false);
+    const didMount = useRef(false);
     const [message, setMessage] = useState<string>();
 
     useEffect(() => {
+        if (didMount.current) {
+            return;
+        }
+
+        didMount.current = true;
+
         if (token) {
             const action = async () => {
-                try {
-                    const response = await authState?.confirm({token});
-                    if (response?.error) {
-                        switch (response?.error.code) {
-                            case WiwaErrorCode.UNSUPPORTED_VALIDATION_TOKEN:
-                                setMessage(resourceState?.common?.error.unsupportedValidationToken);
-                                break;
-                            default:
-                                errorState?.addError(response?.error);
-                                break;
-                        }
-                    } else {
-                        setMessage(resourceState?.ui?.confirm.message);
+                const response = await authState?.confirm({token});
+                if (response?.error) {
+                    switch (response?.error.code) {
+                        case WiwaErrorCode.UNSUPPORTED_VALIDATION_TOKEN:
+                            setMessage(resourceState?.common?.error.unsupportedValidationToken);
+                            break;
+                        default:
+                            errorState?.addError(response?.error);
+                            break;
                     }
-                } finally {
-                    setDone(true);
+                } else {
+                    setMessage(resourceState?.ui?.confirm.message);
                 }
             }
             action().then();
         }
-    }, [token, authState, resourceState?.ui, resourceState?.common]);
+    }, [token]);
 
     return (
         <div className="container p-5 mx-auto">
@@ -46,10 +48,10 @@ const ConfirmPage = () => {
                 <div className="text-lg md:text-xl font-bold text-center pb-5">
                     {resourceState?.ui?.confirm.title}
                 </div>
-                {done ?
-                    <div className="max-w-sm text-sm md:text-base">{message}</div>
-                    :
+                {authState?.busy ?
                     <WiwaSpinner/>
+                    :
+                    <div className="max-w-sm text-sm md:text-base">{message}</div>
                 }
             </div>
         </div>

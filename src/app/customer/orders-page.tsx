@@ -9,7 +9,7 @@ import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
 import { AuthContext, ErrorContext, ResourceContext } from '../../context';
 
-const IndexPage = () => {
+const OrdersPage = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
     const resourceState = useContext(ResourceContext);
@@ -78,11 +78,8 @@ const IndexPage = () => {
                             OrderField.orderNumber,
                             OrderField.created,
                             OrderField.status,
-                            OrderField.weight,
                             OrderField.total,
-                            OrderField.vatTotal,
-                            OrderField.deliveryDate,
-                            OrderField.packageType
+                            OrderField.vatTotal
                         ]}
                         rows={customerState?.data?.content}
                         selected={customerState?.selected}
@@ -106,4 +103,4 @@ const IndexPage = () => {
     )
 }
 
-export default IndexPage;
+export default OrdersPage;

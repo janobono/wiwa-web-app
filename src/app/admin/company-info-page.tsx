@@ -3,12 +3,12 @@ import { useContext, useEffect, useState } from 'react';
 import { setCompanyInfo } from '../../api/controller/config';
 import { getCompanyInfo } from '../../api/controller/ui';
 import { CompanyInfo } from '../../api/model/application';
+import { EMAIL_REGEX } from '../../component/ui';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
 import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import WiwaFormTextarea from '../../component/ui/wiwa-form-textarea';
-import { EMAIL_REGEX } from '../../const';
 import { AuthContext, ErrorContext, ResourceContext } from '../../context';
 
 const CompanyInfoPage = () => {

@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
-import AccessDefender from '../../component/layout/access-defender';
+import AuthDefender from '../../component/layout/auth-defender';
+import MaintenanceDefender from '../../component/layout/maintenance-defender';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
@@ -81,99 +82,101 @@ const ChangeDetailsPage = () => {
     }, [authState?.authUser]);
 
     return (
-        <AccessDefender>
-            <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.authNav.title || ''},
-                {
-                    key: 1,
-                    label: resourceState?.auth?.changeDetails.title || '',
-                    to: '/auth/change-details'
-                }
-            ]}/>
-            <div className="container p-5 mx-auto">
-                <div className="flex flex-col items-center justify-center">
-                    <form className="max-w-sm" onSubmit={(event) => {
-                        event.preventDefault();
-                        handleSubmit().then();
-                    }}>
-                        <WiwaFormInputString
-                            label={resourceState?.auth?.changeDetails.titleBeforeLabel}
-                            placeholder={resourceState?.auth?.changeDetails.titleBeforePlaceholder}
-                            value={titleBefore}
-                            setValue={setTitleBefore}
-                        />
+        <MaintenanceDefender>
+            <AuthDefender>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.authNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.auth?.changeDetails.title || '',
+                        to: '/auth/change-details'
+                    }
+                ]}/>
+                <div className="container p-5 mx-auto">
+                    <div className="flex flex-col items-center justify-center">
+                        <form className="max-w-sm" onSubmit={(event) => {
+                            event.preventDefault();
+                            handleSubmit().then();
+                        }}>
+                            <WiwaFormInputString
+                                label={resourceState?.auth?.changeDetails.titleBeforeLabel}
+                                placeholder={resourceState?.auth?.changeDetails.titleBeforePlaceholder}
+                                value={titleBefore}
+                                setValue={setTitleBefore}
+                            />
 
-                        <WiwaFormInputString
-                            label={resourceState?.auth?.changeDetails.firstNameLabel}
-                            required={true}
-                            placeholder={resourceState?.auth?.changeDetails.firstNamePlaceholder}
-                            value={firstName}
-                            setValue={setFirstName}
-                            setValid={setFirstNameValid}
-                            validate={() => {
-                                if (firstName.trim().length === 0) {
-                                    return {
-                                        valid: false,
-                                        message: resourceState?.auth?.changeDetails.firstNameRequired
-                                    };
-                                }
-                                return {valid: true};
-                            }}
-                        />
+                            <WiwaFormInputString
+                                label={resourceState?.auth?.changeDetails.firstNameLabel}
+                                required={true}
+                                placeholder={resourceState?.auth?.changeDetails.firstNamePlaceholder}
+                                value={firstName}
+                                setValue={setFirstName}
+                                setValid={setFirstNameValid}
+                                validate={() => {
+                                    if (firstName.trim().length === 0) {
+                                        return {
+                                            valid: false,
+                                            message: resourceState?.auth?.changeDetails.firstNameRequired
+                                        };
+                                    }
+                                    return {valid: true};
+                                }}
+                            />
 
-                        <WiwaFormInputString
-                            label={resourceState?.auth?.changeDetails.midNameLabel}
-                            placeholder={resourceState?.auth?.changeDetails.midNamePlaceholder}
-                            value={midName}
-                            setValue={setMidName}
-                        />
+                            <WiwaFormInputString
+                                label={resourceState?.auth?.changeDetails.midNameLabel}
+                                placeholder={resourceState?.auth?.changeDetails.midNamePlaceholder}
+                                value={midName}
+                                setValue={setMidName}
+                            />
 
-                        <WiwaFormInputString
-                            label={resourceState?.auth?.changeDetails.lastNameLabel}
-                            placeholder={resourceState?.auth?.changeDetails.lastNamePlaceholder}
-                            value={lastName}
-                            setValue={setLastName}
-                            setValid={setLastNameValid}
-                            validate={() => {
-                                if (lastName.trim().length === 0) {
-                                    return {
-                                        valid: false,
-                                        message: resourceState?.auth?.changeDetails.lastNameRequired
-                                    };
-                                }
-                                return {valid: true};
-                            }}
-                        />
+                            <WiwaFormInputString
+                                label={resourceState?.auth?.changeDetails.lastNameLabel}
+                                placeholder={resourceState?.auth?.changeDetails.lastNamePlaceholder}
+                                value={lastName}
+                                setValue={setLastName}
+                                setValid={setLastNameValid}
+                                validate={() => {
+                                    if (lastName.trim().length === 0) {
+                                        return {
+                                            valid: false,
+                                            message: resourceState?.auth?.changeDetails.lastNameRequired
+                                        };
+                                    }
+                                    return {valid: true};
+                                }}
+                            />
 
-                        <WiwaFormInputString
-                            label={resourceState?.auth?.changeDetails.titleAfterLabel}
-                            placeholder={resourceState?.auth?.changeDetails.titleAfterPlaceholder}
-                            value={titleAfter}
-                            setValue={setTitleAfter}
-                        />
+                            <WiwaFormInputString
+                                label={resourceState?.auth?.changeDetails.titleAfterLabel}
+                                placeholder={resourceState?.auth?.changeDetails.titleAfterPlaceholder}
+                                value={titleAfter}
+                                setValue={setTitleAfter}
+                            />
 
-                        <WiwaFormCaptcha
-                            value={captchaText}
-                            setValue={setCaptchaText}
-                            token={captchaToken}
-                            setToken={setCaptchaToken}
-                            setValid={setCaptchaValid}
-                        />
+                            <WiwaFormCaptcha
+                                value={captchaText}
+                                setValue={setCaptchaText}
+                                token={captchaToken}
+                                setToken={setCaptchaToken}
+                                setValid={setCaptchaValid}
+                            />
 
-                        <WiwaButton
-                            type="submit"
-                            className="btn-primary w-full"
-                            disabled={authState?.busy || !isFormValid()}
-                        >{resourceState?.common?.action.submit}</WiwaButton>
-                        {formError &&
-                            <label className="label">
-                                <span className="label-text-alt text-error">{formError}</span>
-                            </label>
-                        }
-                    </form>
+                            <WiwaButton
+                                type="submit"
+                                className="btn-primary w-full"
+                                disabled={authState?.busy || !isFormValid()}
+                            >{resourceState?.common?.action.submit}</WiwaButton>
+                            {formError &&
+                                <label className="label">
+                                    <span className="label-text-alt text-error">{formError}</span>
+                                </label>
+                            }
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </AccessDefender>
+            </AuthDefender>
+        </MaintenanceDefender>
     )
 }
 

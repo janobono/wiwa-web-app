@@ -1,18 +1,22 @@
 import { Outlet } from 'react-router-dom';
 
-import AccessDefender from '../../component/layout/access-defender';
+import { Authority } from '../../api/model';
+import AuthDefender from '../../component/layout/auth-defender';
 import BaseFooter from '../../component/layout/base-footer';
+import MaintenanceDefender from '../../component/layout/maintenance-defender';
 import Navigation from '../../component/layout/navigation';
 
 const EmployeePage = () => {
     return (
-        <AccessDefender>
-            <Navigation/>
-            <main className="w-full bg-base text-base-content">
-                <Outlet/>
-            </main>
-            <BaseFooter/>
-        </AccessDefender>
+        <MaintenanceDefender>
+            <AuthDefender authority={Authority.W_EMPLOYEE}>
+                <Navigation/>
+                <main className="w-full bg-base text-base-content">
+                    <Outlet/>
+                </main>
+                <BaseFooter/>
+            </AuthDefender>
+        </MaintenanceDefender>
     )
 }
 

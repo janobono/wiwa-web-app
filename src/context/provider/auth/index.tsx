@@ -27,14 +27,7 @@ import {
     SignInRequest,
     SignUpRequest
 } from '../../../api/model/auth';
-import {
-    decodeAccessToken,
-    getTimeToAccessExpiration,
-    hasAnyAuthority,
-    isAccessExpired,
-    isJwtPayloadExpired,
-    isRefreshExpired
-} from '../../../auth';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 const ACCESS_TOKEN = 'access-token';
 const REFRESH_TOKEN = 'refresh-token';
@@ -56,13 +49,6 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
     const [customerAuthority, setCustomerAuthority] = useState(false);
 
     const [refreshCounter, setRefreshCounter] = useState(0);
-
-    const cleanState = () => {
-        localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem(REFRESH_TOKEN);
-        setAuthToken(undefined);
-        setAuthUser(undefined);
-    }
 
     useEffect(() => {
         if (appState?.cookiesEnabled) {
@@ -95,9 +81,9 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
     }, [authToken]);
 
     useEffect(() => {
-        setCustomerAuthority(hasAnyAuthority(authUser, Authority.W_ADMIN, Authority.W_MANAGER, Authority.W_EMPLOYEE, Authority.W_CUSTOMER));
-        setEmployeeAuthority(hasAnyAuthority(authUser, Authority.W_ADMIN, Authority.W_MANAGER, Authority.W_EMPLOYEE));
-        setManagerAuthority(hasAnyAuthority(authUser, Authority.W_ADMIN, Authority.W_MANAGER));
+        setCustomerAuthority(hasAnyAuthority(authUser, Authority.W_CUSTOMER));
+        setEmployeeAuthority(hasAnyAuthority(authUser, Authority.W_EMPLOYEE));
+        setManagerAuthority(hasAnyAuthority(authUser, Authority.W_MANAGER));
         setAdminAuthority(hasAnyAuthority(authUser, Authority.W_ADMIN));
         setAccessExpired(isJwtPayloadExpired(authUser?.jwtPayload));
         setTimeToAccessExpiration(getTimeToAccessExpiration(authUser?.jwtPayload));
@@ -119,6 +105,58 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
         const timer = setInterval(() => setRefreshCounter(refreshCounter + 1), REFRESH_TIMEOUT);
         return () => clearTimeout(timer);
     }, [refreshCounter]);
+
+    const cleanState = () => {
+        localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(REFRESH_TOKEN);
+        setAuthToken(undefined);
+        setAuthUser(undefined);
+    }
+
+    const decodeAccessToken = (accessToken?: string): JwtPayload | undefined => {
+        let jwtPayload;
+        if (accessToken) {
+            jwtPayload = jwtDecode<JwtPayload>(accessToken);
+            if (isJwtPayloadExpired(jwtPayload)) {
+                jwtPayload = undefined;
+            }
+        }
+        return jwtPayload;
+    }
+
+    const isAccessExpired = (accessToken?: string) => {
+        return isJwtPayloadExpired(decodeAccessToken(accessToken));
+    }
+
+    const getTimeToAccessExpiration = (jwtPayload?: JwtPayload) => {
+        const result = jwtPayload ? (jwtPayload.exp || 0) * 1000 - Date.now() : 0;
+        return result < 0 ? 0 : result;
+    }
+
+    const isJwtPayloadExpired = (jwtPayload?: JwtPayload) => {
+        return getTimeToAccessExpiration(jwtPayload) <= 0;
+    }
+
+    const isRefreshExpired = (refreshToken?: string) => {
+        if (refreshToken) {
+            const decodedRefreshToken = jwtDecode<JwtPayload>(refreshToken);
+            return (decodedRefreshToken.exp || 0) * 1000 - Date.now() <= 0;
+        }
+        return true;
+    }
+
+    const hasAnyAuthority = (authUser: AuthUser | undefined, ...authorities: string[]) => {
+        if (authUser?.jwtPayload?.aud && authUser?.jwtPayload?.exp) {
+            let hasAuthority;
+            if (Array.isArray(authUser.jwtPayload.aud)) {
+                hasAuthority = authUser.jwtPayload.aud.some(a => authorities.includes(a));
+            } else {
+                hasAuthority = authorities.some(a => a === authUser.jwtPayload.aud);
+            }
+            return hasAuthority && authUser.user.confirmed && authUser.user.enabled && (authUser.jwtPayload.exp || 0) * 1000 - Date.now() > 0;
+        }
+        return false;
+    }
 
     const handleAuthenticationResponse = (response: ClientResponse<AuthenticationResponse>) => {
         if (response.data) {

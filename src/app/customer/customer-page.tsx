@@ -1,23 +1,26 @@
 import { createContext, ReactNode, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import AccessDefender from '../../component/layout/access-defender';
-import BaseFooter from '../../component/layout/base-footer';
-import Navigation from '../../component/layout/navigation';
-import { Page } from '../../api/model';
+import { Authority, Page } from '../../api/model';
 import { Order } from '../../api/model/order';
+import AuthDefender from '../../component/layout/auth-defender';
+import BaseFooter from '../../component/layout/base-footer';
+import MaintenanceDefender from '../../component/layout/maintenance-defender';
+import Navigation from '../../component/layout/navigation';
 
 const CustomerPage = () => {
     return (
-        <AccessDefender>
-            <Navigation/>
-            <main className="w-full bg-base text-base-content">
-                <CustomerProvider>
-                    <Outlet/>
-                </CustomerProvider>
-            </main>
-            <BaseFooter/>
-        </AccessDefender>
+        <MaintenanceDefender>
+            <AuthDefender authority={Authority.W_CUSTOMER}>
+                <Navigation/>
+                <main className="w-full bg-base text-base-content">
+                    <CustomerProvider>
+                        <Outlet/>
+                    </CustomerProvider>
+                </main>
+                <BaseFooter/>
+            </AuthDefender>
+        </MaintenanceDefender>
     )
 }
 

@@ -2,7 +2,8 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
-import AccessDefender from '../../component/layout/access-defender';
+import AuthDefender from '../../component/layout/auth-defender';
+import MaintenanceDefender from '../../component/layout/maintenance-defender';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
@@ -66,103 +67,105 @@ const ChangePasswordPage = () => {
     }
 
     return (
-        <AccessDefender>
-            <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.authNav.title || ''},
-                {
-                    key: 1,
-                    label: resourceState?.auth?.changePassword.title || '',
-                    to: '/auth/change-password'
-                }
-            ]}/>
-            <div className="container p-5 mx-auto">
-                <div className="flex flex-col items-center justify-center">
-                    <form className="max-w-sm" onSubmit={(event) => {
-                        event.preventDefault();
-                        handleSubmit().then();
-                    }}>
-                        <WiwaFormInputPassword
-                            label={resourceState?.auth?.changePassword.oldPasswordLabel}
-                            required={true}
-                            placeholder={resourceState?.auth?.changePassword.oldPasswordPlaceholder}
-                            value={oldPassword}
-                            setValue={setOldPassword}
-                            setValid={setOldPasswordValid}
-                            validate={() => {
-                                if (oldPassword.trim().length === 0) {
-                                    return {
-                                        valid: false,
-                                        message: resourceState?.auth?.changePassword.oldPasswordRequired
-                                    };
-                                }
-                                return {valid: true};
-                            }}
-                        />
+        <MaintenanceDefender>
+            <AuthDefender>
+                <WiwaBreadcrumb breadcrumbs={[
+                    {key: 0, label: resourceState?.common?.navigation.authNav.title || ''},
+                    {
+                        key: 1,
+                        label: resourceState?.auth?.changePassword.title || '',
+                        to: '/auth/change-password'
+                    }
+                ]}/>
+                <div className="container p-5 mx-auto">
+                    <div className="flex flex-col items-center justify-center">
+                        <form className="max-w-sm" onSubmit={(event) => {
+                            event.preventDefault();
+                            handleSubmit().then();
+                        }}>
+                            <WiwaFormInputPassword
+                                label={resourceState?.auth?.changePassword.oldPasswordLabel}
+                                required={true}
+                                placeholder={resourceState?.auth?.changePassword.oldPasswordPlaceholder}
+                                value={oldPassword}
+                                setValue={setOldPassword}
+                                setValid={setOldPasswordValid}
+                                validate={() => {
+                                    if (oldPassword.trim().length === 0) {
+                                        return {
+                                            valid: false,
+                                            message: resourceState?.auth?.changePassword.oldPasswordRequired
+                                        };
+                                    }
+                                    return {valid: true};
+                                }}
+                            />
 
-                        <WiwaFormInputPassword
-                            label={resourceState?.auth?.changePassword.passwordLabel}
-                            required={true}
-                            placeholder={resourceState?.auth?.changePassword.passwordPlaceholder}
-                            value={newPassword}
-                            setValue={setNewPassword}
-                            setValid={setNewPasswordValid}
-                            validate={() => {
-                                if (newPassword.trim().length === 0) {
-                                    return {
-                                        valid: false,
-                                        message: resourceState?.auth?.changePassword.passwordRequired
-                                    };
-                                }
-                                return {valid: true};
-                            }}
-                        />
+                            <WiwaFormInputPassword
+                                label={resourceState?.auth?.changePassword.passwordLabel}
+                                required={true}
+                                placeholder={resourceState?.auth?.changePassword.passwordPlaceholder}
+                                value={newPassword}
+                                setValue={setNewPassword}
+                                setValid={setNewPasswordValid}
+                                validate={() => {
+                                    if (newPassword.trim().length === 0) {
+                                        return {
+                                            valid: false,
+                                            message: resourceState?.auth?.changePassword.passwordRequired
+                                        };
+                                    }
+                                    return {valid: true};
+                                }}
+                            />
 
-                        <WiwaFormInputPassword
-                            label={resourceState?.auth?.changePassword.passwordConfirmationLabel}
-                            required={true}
-                            placeholder={resourceState?.auth?.changePassword.passwordConfirmationPlaceholder}
-                            value={passwordConfirmation}
-                            setValue={setPasswordConfirmation}
-                            setValid={setPasswordConfirmationValid}
-                            validate={() => {
-                                if (passwordConfirmation.trim().length === 0) {
-                                    return {
-                                        valid: false,
-                                        message: resourceState?.auth?.changePassword.passwordConfirmationRequired
-                                    };
-                                }
-                                if (passwordConfirmation !== newPassword) {
-                                    return {
-                                        valid: false,
-                                        message: resourceState?.auth?.changePassword.passwordConfirmationNotEquals
-                                    };
-                                }
-                                return {valid: true};
-                            }}
-                        />
+                            <WiwaFormInputPassword
+                                label={resourceState?.auth?.changePassword.passwordConfirmationLabel}
+                                required={true}
+                                placeholder={resourceState?.auth?.changePassword.passwordConfirmationPlaceholder}
+                                value={passwordConfirmation}
+                                setValue={setPasswordConfirmation}
+                                setValid={setPasswordConfirmationValid}
+                                validate={() => {
+                                    if (passwordConfirmation.trim().length === 0) {
+                                        return {
+                                            valid: false,
+                                            message: resourceState?.auth?.changePassword.passwordConfirmationRequired
+                                        };
+                                    }
+                                    if (passwordConfirmation !== newPassword) {
+                                        return {
+                                            valid: false,
+                                            message: resourceState?.auth?.changePassword.passwordConfirmationNotEquals
+                                        };
+                                    }
+                                    return {valid: true};
+                                }}
+                            />
 
-                        <WiwaFormCaptcha
-                            value={captchaText}
-                            setValue={setCaptchaText}
-                            token={captchaToken}
-                            setToken={setCaptchaToken}
-                            setValid={setCaptchaValid}
-                        />
+                            <WiwaFormCaptcha
+                                value={captchaText}
+                                setValue={setCaptchaText}
+                                token={captchaToken}
+                                setToken={setCaptchaToken}
+                                setValid={setCaptchaValid}
+                            />
 
-                        <WiwaButton
-                            type="submit"
-                            className="btn-primary w-full"
-                            disabled={authState?.busy || !isFormValid()}
-                        >{resourceState?.common?.action.submit}</WiwaButton>
-                        {formError &&
-                            <label className="label">
-                                <span className="label-text-alt text-error">{formError}</span>
-                            </label>
-                        }
-                    </form>
+                            <WiwaButton
+                                type="submit"
+                                className="btn-primary w-full"
+                                disabled={authState?.busy || !isFormValid()}
+                            >{resourceState?.common?.action.submit}</WiwaButton>
+                            {formError &&
+                                <label className="label">
+                                    <span className="label-text-alt text-error">{formError}</span>
+                                </label>
+                            }
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </AccessDefender>
+            </AuthDefender>
+        </MaintenanceDefender>
     )
 }
 

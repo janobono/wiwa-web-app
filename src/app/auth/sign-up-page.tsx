@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { WiwaErrorCode } from '../../api/model';
-import { EMAIL_REGEX } from '../../const';
+import MaintenanceDefender from '../../component/layout/maintenance-defender';
+import { EMAIL_REGEX } from '../../component/ui';
 import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
 import WiwaFormInputPassword from '../../component/ui/wiwa-form-input-password';
 import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
@@ -10,6 +11,7 @@ import WiwaFormCheckBox from '../../component/ui/wiwa-form-check-box';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
 import { AuthContext, ErrorContext, ResourceContext } from '../../context';
+
 
 const SignUpPage = () => {
     const navigate = useNavigate();
@@ -100,192 +102,195 @@ const SignUpPage = () => {
     }, [authState?.authUser, navigate]);
 
     return (
-        <div className="container p-5 mx-auto">
-            <div className="flex flex-col items-center justify-center">
-                <div className="text-lg md:text-xl font-bold text-center">
-                    {resourceState?.auth?.signUp.title}
-                </div>
-                <div className="text-sm md:text-base font-normal text-center pb-5">
-                    <span>{resourceState?.auth?.signUp.subtitle} </span>
-                    <NavLink
-                        className="link"
-                        to="/auth/sign-in"
-                    >{resourceState?.auth?.signUp.subtitleLink}
-                    </NavLink>
-                </div>
-                <form className="max-w-sm" onSubmit={(event) => {
-                    event.preventDefault();
-                    handleSubmit().then();
-                }}>
-                    <WiwaFormInputString
-                        label={resourceState?.auth?.signUp.usernameLabel}
-                        required={true}
-                        placeholder={resourceState?.auth?.signUp.usernamePlaceholder}
-                        value={username}
-                        setValue={setUsername}
-                        setValid={setUsernameValid}
-                        validate={() => {
-                            if (username.trim().length === 0) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.auth?.signUp.usernameRequired
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormInputPassword
-                        label={resourceState?.auth?.signUp.passwordLabel}
-                        required={true}
-                        placeholder={resourceState?.auth?.signUp.passwordPlaceholder}
-                        value={password}
-                        setValue={setPassword}
-                        setValid={setPasswordValid}
-                        validate={() => {
-                            if (password.trim().length === 0) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.auth?.signUp.passwordRequired
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormInputPassword
-                        label={resourceState?.auth?.signUp.passwordConfirmationLabel}
-                        required={true}
-                        placeholder={resourceState?.auth?.signUp.passwordConfirmationPlaceholder}
-                        value={passwordConfirmation}
-                        setValue={setPasswordConfirmation}
-                        setValid={setPasswordConfirmationValid}
-                        validate={() => {
-                            if (passwordConfirmation.trim().length === 0) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.auth?.signUp.passwordConfirmationRequired
-                                };
-                            }
-                            if (passwordConfirmation !== password) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.auth?.signUp.passwordConfirmationNotEquals
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormInputEmail
-                        label={resourceState?.auth?.signUp.emailLabel}
-                        required={true}
-                        placeholder={resourceState?.auth?.signUp.emailPlaceholder}
-                        value={email}
-                        setValue={setEmail}
-                        setValid={setEmailValid}
-                        validate={() => {
-                            if (email.trim().length === 0) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.auth?.signUp.emailRequired
-                                };
-                            }
-                            if (!EMAIL_REGEX.test(email)) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.auth?.signUp.emailFormat
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormInputString
-                        label={resourceState?.auth?.signUp.titleBeforeLabel}
-                        placeholder={resourceState?.auth?.signUp.titleBeforePlaceholder}
-                        value={titleBefore}
-                        setValue={setTitleBefore}
-                    />
-
-                    <WiwaFormInputString
-                        label={resourceState?.auth?.signUp.firstNameLabel}
-                        required={true}
-                        placeholder={resourceState?.auth?.signUp.firstNamePlaceholder}
-                        value={firstName}
-                        setValue={setFirstName}
-                        setValid={setFirstNameValid}
-                        validate={() => {
-                            if (firstName.trim().length === 0) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.auth?.signUp.firstNameRequired
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormInputString
-                        label={resourceState?.auth?.signUp.midNameLabel}
-                        placeholder={resourceState?.auth?.signUp.midNamePlaceholder}
-                        value={midName}
-                        setValue={setMidName}
-                    />
-
-                    <WiwaFormInputString
-                        label={resourceState?.auth?.signUp.lastNameLabel}
-                        placeholder={resourceState?.auth?.signUp.lastNamePlaceholder}
-                        value={lastName}
-                        setValue={setLastName}
-                        setValid={setLastNameValid}
-                        validate={() => {
-                            if (lastName.trim().length === 0) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.auth?.signUp.lastNameRequired
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormInputString
-                        label={resourceState?.auth?.signUp.titleAfterLabel}
-                        placeholder={resourceState?.auth?.signUp.titleAfterPlaceholder}
-                        value={titleAfter}
-                        setValue={setTitleAfter}
-                    />
-
-                    <WiwaFormCheckBox className="flex flex-row py-5" value={gdpr} setValue={setGdpr}>
+        <MaintenanceDefender>
+            <div className="container p-5 mx-auto">
+                <div className="flex flex-col items-center justify-center">
+                    <div className="text-lg md:text-xl font-bold text-center">
+                        {resourceState?.auth?.signUp.title}
+                    </div>
+                    <div className="text-sm md:text-base font-normal text-center pb-5">
+                        <span>{resourceState?.auth?.signUp.subtitle} </span>
                         <NavLink
-                            className="link text-sm md:text:xs pl-2"
-                            to="/ui/gdpr-info"
-                        >{resourceState?.auth?.signUp.gdprLabel}
+                            className="link"
+                            to="/auth/sign-in"
+                        >{resourceState?.auth?.signUp.subtitleLink}
                         </NavLink>
-                    </WiwaFormCheckBox>
+                    </div>
+                    <form className="max-w-sm" onSubmit={(event) => {
+                        event.preventDefault();
+                        handleSubmit().then();
+                    }}>
+                        <WiwaFormInputString
+                            label={resourceState?.auth?.signUp.usernameLabel}
+                            required={true}
+                            placeholder={resourceState?.auth?.signUp.usernamePlaceholder}
+                            value={username}
+                            setValue={setUsername}
+                            setValid={setUsernameValid}
+                            validate={() => {
+                                if (username.trim().length === 0) {
+                                    return {
+                                        valid: false,
+                                        message: resourceState?.auth?.signUp.usernameRequired
+                                    };
+                                }
+                                return {valid: true};
+                            }}
+                        />
 
-                    <WiwaFormCaptcha
-                        value={captchaText}
-                        setValue={setCaptchaText}
-                        token={captchaToken}
-                        setToken={setCaptchaToken}
-                        setValid={setCaptchaValid}
-                    />
+                        <WiwaFormInputPassword
+                            label={resourceState?.auth?.signUp.passwordLabel}
+                            required={true}
+                            placeholder={resourceState?.auth?.signUp.passwordPlaceholder}
+                            value={password}
+                            setValue={setPassword}
+                            setValid={setPasswordValid}
+                            validate={() => {
+                                if (password.trim().length === 0) {
+                                    return {
+                                        valid: false,
+                                        message: resourceState?.auth?.signUp.passwordRequired
+                                    };
+                                }
+                                return {valid: true};
+                            }}
+                        />
 
-                    <WiwaButton
-                        type="submit"
-                        className="btn-primary w-full"
-                        disabled={authState?.busy || !isFormValid()}
-                    >{resourceState?.common?.action.submit}</WiwaButton>
-                    {formError &&
-                        <label className="label">
-                            <span className="label-text-alt text-error">{formError}</span>
-                        </label>
-                    }
-                </form>
+                        <WiwaFormInputPassword
+                            label={resourceState?.auth?.signUp.passwordConfirmationLabel}
+                            required={true}
+                            placeholder={resourceState?.auth?.signUp.passwordConfirmationPlaceholder}
+                            value={passwordConfirmation}
+                            setValue={setPasswordConfirmation}
+                            setValid={setPasswordConfirmationValid}
+                            validate={() => {
+                                if (passwordConfirmation.trim().length === 0) {
+                                    return {
+                                        valid: false,
+                                        message: resourceState?.auth?.signUp.passwordConfirmationRequired
+                                    };
+                                }
+                                if (passwordConfirmation !== password) {
+                                    return {
+                                        valid: false,
+                                        message: resourceState?.auth?.signUp.passwordConfirmationNotEquals
+                                    };
+                                }
+                                return {valid: true};
+                            }}
+                        />
+
+                        <WiwaFormInputEmail
+                            label={resourceState?.auth?.signUp.emailLabel}
+                            required={true}
+                            placeholder={resourceState?.auth?.signUp.emailPlaceholder}
+                            value={email}
+                            setValue={setEmail}
+                            setValid={setEmailValid}
+                            validate={() => {
+                                if (email.trim().length === 0) {
+                                    return {
+                                        valid: false,
+                                        message: resourceState?.auth?.signUp.emailRequired
+                                    };
+                                }
+                                if (!EMAIL_REGEX.test(email)) {
+                                    return {
+                                        valid: false,
+                                        message: resourceState?.auth?.signUp.emailFormat
+                                    };
+                                }
+                                return {valid: true};
+                            }}
+                        />
+
+                        <WiwaFormInputString
+                            label={resourceState?.auth?.signUp.titleBeforeLabel}
+                            placeholder={resourceState?.auth?.signUp.titleBeforePlaceholder}
+                            value={titleBefore}
+                            setValue={setTitleBefore}
+                        />
+
+                        <WiwaFormInputString
+                            label={resourceState?.auth?.signUp.firstNameLabel}
+                            required={true}
+                            placeholder={resourceState?.auth?.signUp.firstNamePlaceholder}
+                            value={firstName}
+                            setValue={setFirstName}
+                            setValid={setFirstNameValid}
+                            validate={() => {
+                                if (firstName.trim().length === 0) {
+                                    return {
+                                        valid: false,
+                                        message: resourceState?.auth?.signUp.firstNameRequired
+                                    };
+                                }
+                                return {valid: true};
+                            }}
+                        />
+
+                        <WiwaFormInputString
+                            label={resourceState?.auth?.signUp.midNameLabel}
+                            placeholder={resourceState?.auth?.signUp.midNamePlaceholder}
+                            value={midName}
+                            setValue={setMidName}
+                        />
+
+                        <WiwaFormInputString
+                            label={resourceState?.auth?.signUp.lastNameLabel}
+                            required={true}
+                            placeholder={resourceState?.auth?.signUp.lastNamePlaceholder}
+                            value={lastName}
+                            setValue={setLastName}
+                            setValid={setLastNameValid}
+                            validate={() => {
+                                if (lastName.trim().length === 0) {
+                                    return {
+                                        valid: false,
+                                        message: resourceState?.auth?.signUp.lastNameRequired
+                                    };
+                                }
+                                return {valid: true};
+                            }}
+                        />
+
+                        <WiwaFormInputString
+                            label={resourceState?.auth?.signUp.titleAfterLabel}
+                            placeholder={resourceState?.auth?.signUp.titleAfterPlaceholder}
+                            value={titleAfter}
+                            setValue={setTitleAfter}
+                        />
+
+                        <WiwaFormCheckBox className="flex flex-row py-5" value={gdpr} setValue={setGdpr}>
+                            <NavLink
+                                className="link text-sm md:text:xs pl-2"
+                                to="/ui/gdpr-info"
+                            >{resourceState?.auth?.signUp.gdprLabel}
+                            </NavLink>
+                        </WiwaFormCheckBox>
+
+                        <WiwaFormCaptcha
+                            value={captchaText}
+                            setValue={setCaptchaText}
+                            token={captchaToken}
+                            setToken={setCaptchaToken}
+                            setValid={setCaptchaValid}
+                        />
+
+                        <WiwaButton
+                            type="submit"
+                            className="btn-primary w-full"
+                            disabled={authState?.busy || !isFormValid()}
+                        >{resourceState?.common?.action.submit}</WiwaButton>
+                        {formError &&
+                            <label className="label">
+                                <span className="label-text-alt text-error">{formError}</span>
+                            </label>
+                        }
+                    </form>
+                </div>
             </div>
-        </div>
+        </MaintenanceDefender>
     )
 }
 
