@@ -55,36 +55,30 @@ const TableHead = ({fields}: { fields: OrderField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === OrderField.id) &&
-                <th>{resourceState?.common?.orderTable.id}</th>
-            }
-            {fields?.find(item => item === OrderField.orderNumber) &&
-                <th>{resourceState?.common?.orderTable.orderNumber}</th>
-            }
-            {fields?.find(item => item === OrderField.creator) &&
-                <th>{resourceState?.common?.orderTable.creator}</th>
-            }
-            {fields?.find(item => item === OrderField.created) &&
-                <th>{resourceState?.common?.orderTable.created}</th>
-            }
-            {fields?.find(item => item === OrderField.status) &&
-                <th>{resourceState?.common?.orderTable.status}</th>
-            }
-            {fields?.find(item => item === OrderField.weight) &&
-                <th>{`${resourceState?.common?.orderTable.weight} ${weightSign}`}</th>
-            }
-            {fields?.find(item => item === OrderField.total) &&
-                <th>{`${resourceState?.common?.orderTable.total} ${priceSign}`}</th>
-            }
-            {fields?.find(item => item === OrderField.vatTotal) &&
-                <th>{`${resourceState?.common?.orderTable.vatTotal} ${priceSign}`}</th>
-            }
-            {fields?.find(item => item === OrderField.deliveryDate) &&
-                <th>{resourceState?.common?.orderTable.deliveryDate}</th>
-            }
-            {fields?.find(item => item === OrderField.packageType) &&
-                <th>{resourceState?.common?.orderTable.packageType}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case OrderField.id:
+                        return (<th key={field}>{resourceState?.common?.orderTable.id}</th>);
+                    case OrderField.creator:
+                        return (<th key={field}>{resourceState?.common?.orderTable.creator}</th>);
+                    case OrderField.created:
+                        return (<th key={field}>{resourceState?.common?.orderTable.created}</th>);
+                    case OrderField.status:
+                        return (<th key={field}>{resourceState?.common?.orderTable.status}</th>);
+                    case OrderField.orderNumber:
+                        return (<th key={field}>{resourceState?.common?.orderTable.orderNumber}</th>);
+                    case OrderField.weight:
+                        return (<th key={field}>{`${resourceState?.common?.orderTable.weight} ${weightSign}`}</th>);
+                    case OrderField.total:
+                        return (<th key={field}>{`${resourceState?.common?.orderTable.total} ${priceSign}`}</th>);
+                    case OrderField.vatTotal:
+                        return (<th key={field}>{`${resourceState?.common?.orderTable.vatTotal} ${priceSign}`}</th>);
+                    case OrderField.deliveryDate:
+                        return (<th key={field}>{resourceState?.common?.orderTable.deliveryDate}</th>);
+                    case OrderField.packageType:
+                        return (<th key={field}>{resourceState?.common?.orderTable.packageType}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -102,36 +96,30 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === OrderField.id) &&
-                <td>{row.id}</td>
-            }
-            {fields?.find(item => item === OrderField.orderNumber) &&
-                <td><WiwaValueNumber value={row.orderNumber}/></td>
-            }
-            {fields?.find(item => item === OrderField.creator) &&
-                <td><OrderUserValue value={row.creator}/></td>
-            }
-            {fields?.find(item => item === OrderField.created) &&
-                <td><WiwaValueDate value={row.created}/></td>
-            }
-            {fields?.find(item => item === OrderField.status) &&
-                <td><OrderStatusValue value={row.status}/></td>
-            }
-            {fields?.find(item => item === OrderField.weight) &&
-                <td><WiwaValueNumber value={row.weight}/></td>
-            }
-            {fields?.find(item => item === OrderField.total) &&
-                <td><WiwaValueNumber value={row.total}/></td>
-            }
-            {fields?.find(item => item === OrderField.vatTotal) &&
-                <td><WiwaValueNumber value={row.vatTotal}/></td>
-            }
-            {fields?.find(item => item === OrderField.deliveryDate) &&
-                <td><WiwaValueDate value={row.deliveryDate}/></td>
-            }
-            {fields?.find(item => item === OrderField.packageType) &&
-                <td><OrderPackageTypeValue value={row.packageType}/></td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case OrderField.id:
+                        return (<td key={field}>{row.id}</td>);
+                    case OrderField.creator:
+                        return (<td key={field}><OrderUserValue value={row.creator}/></td>);
+                    case OrderField.created:
+                        return (<td key={field}><WiwaValueDate value={row.created}/></td>);
+                    case OrderField.status:
+                        return (<td key={field}><OrderStatusValue value={row.status}/></td>);
+                    case OrderField.orderNumber:
+                        return (<td key={field}><WiwaValueNumber value={row.orderNumber}/></td>);
+                    case OrderField.weight:
+                        return (<td key={field}><WiwaValueNumber value={row.weight}/></td>);
+                    case OrderField.total:
+                        return (<td key={field}><WiwaValueNumber value={row.total}/></td>);
+                    case OrderField.vatTotal:
+                        return (<td key={field}><WiwaValueNumber value={row.vatTotal}/></td>);
+                    case OrderField.deliveryDate:
+                        return (<td key={field}><WiwaValueDate value={row.deliveryDate}/></td>);
+                    case OrderField.packageType:
+                        return (<td key={field}><OrderPackageTypeValue value={row.packageType}/></td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {

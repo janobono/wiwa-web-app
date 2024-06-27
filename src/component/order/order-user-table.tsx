@@ -36,27 +36,24 @@ const TableHead = ({fields}: { fields: OrderUserField[] }) => {
     return (
         <thead>
         <tr>
-            {fields?.find(item => item === OrderUserField.id) &&
-                <th>{resourceState?.common?.orderUserTable.id}</th>
-            }
-            {fields?.find(item => item === OrderUserField.titleBefore) &&
-                <th>{resourceState?.common?.orderUserTable.titleBefore}</th>
-            }
-            {fields?.find(item => item === OrderUserField.firstName) &&
-                <th>{resourceState?.common?.orderUserTable.firstName}</th>
-            }
-            {fields?.find(item => item === OrderUserField.midName) &&
-                <th>{resourceState?.common?.orderUserTable.midName}</th>
-            }
-            {fields?.find(item => item === OrderUserField.lastName) &&
-                <th>{resourceState?.common?.orderUserTable.lastName}</th>
-            }
-            {fields?.find(item => item === OrderUserField.titleAfter) &&
-                <th>{resourceState?.common?.orderUserTable.titleAfter}</th>
-            }
-            {fields?.find(item => item === OrderUserField.email) &&
-                <th>{resourceState?.common?.orderUserTable.email}</th>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case OrderUserField.id:
+                        return (<th key={field}>{resourceState?.common?.orderUserTable.id}</th>);
+                    case OrderUserField.titleBefore:
+                        return (<th key={field}>{resourceState?.common?.orderUserTable.titleBefore}</th>);
+                    case OrderUserField.firstName:
+                        return (<th key={field}>{resourceState?.common?.orderUserTable.firstName}</th>);
+                    case OrderUserField.midName:
+                        return (<th key={field}>{resourceState?.common?.orderUserTable.midName}</th>);
+                    case OrderUserField.lastName:
+                        return (<th key={field}>{resourceState?.common?.orderUserTable.lastName}</th>);
+                    case OrderUserField.titleAfter:
+                        return (<th key={field}>{resourceState?.common?.orderUserTable.titleAfter}</th>);
+                    case OrderUserField.email:
+                        return (<th key={field}>{resourceState?.common?.orderUserTable.email}</th>);
+                }
+            })}
             <th></th>
         </tr>
         </thead>
@@ -74,27 +71,24 @@ const TableRow = ({fields, row, selected, setSelected}: {
             className="hover"
             onClick={() => setSelected(row)}
         >
-            {fields?.find(item => item === OrderUserField.id) &&
-                <td>{row.id}</td>
-            }
-            {fields?.find(item => item === OrderUserField.titleBefore) &&
-                <td>{row.titleBefore}</td>
-            }
-            {fields?.find(item => item === OrderUserField.firstName) &&
-                <td>{row.firstName}</td>
-            }
-            {fields?.find(item => item === OrderUserField.midName) &&
-                <td>{row.midName}</td>
-            }
-            {fields?.find(item => item === OrderUserField.lastName) &&
-                <td>{row.lastName}</td>
-            }
-            {fields?.find(item => item === OrderUserField.titleAfter) &&
-                <td>{row.titleAfter}</td>
-            }
-            {fields?.find(item => item === OrderUserField.email) &&
-                <td>{row.email}</td>
-            }
+            {fields?.map(field => {
+                switch (field) {
+                    case OrderUserField.id:
+                        return (<td key={field}>{row.id}</td>);
+                    case OrderUserField.titleBefore:
+                        return (<td key={field}>{row.titleBefore}</td>);
+                    case OrderUserField.firstName:
+                        return (<td key={field}>{row.firstName}</td>);
+                    case OrderUserField.midName:
+                        return (<td key={field}>{row.midName}</td>);
+                    case OrderUserField.lastName:
+                        return (<td key={field}>{row.lastName}</td>);
+                    case OrderUserField.titleAfter:
+                        return (<td key={field}>{row.titleAfter}</td>);
+                    case OrderUserField.email:
+                        return (<td key={field}>{row.email}</td>);
+                }
+            })}
             <td>
                 <WiwaFormCheckBox value={row.id === selected?.id} setValue={(value) => {
                     if (value) {

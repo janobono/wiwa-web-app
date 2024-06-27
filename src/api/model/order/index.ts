@@ -161,10 +161,10 @@ export interface Order {
 
 export enum OrderField {
     id = 'id',
-    orderNumber = 'orderNumber',
     creator = 'creator',
     created = 'created',
     status = 'status',
+    orderNumber = 'orderNumber',
     weight = 'weight',
     total = 'total',
     vatTotal = 'vatTotal',
