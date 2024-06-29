@@ -185,6 +185,7 @@ export interface ResourceCommon {
             orderComments: string,
             orderDetail: string,
             orderEdit: string,
+            orderItemEdit: string,
             orderSubmit: string
         },
     },

@@ -2,13 +2,23 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import { Outlet } from 'react-router-dom';
 
 import * as orderApi from '../../api/controller/order';
-import { Authority } from '../../api/model';
-import { Order, OrderCommentChange, OrderField, OrderSearchCriteria, OrderStatus } from '../../api/model/order';
+import { Authority, WiwaError } from '../../api/model';
+import {
+    Order,
+    OrderCommentChange,
+    OrderField,
+    OrderItem,
+    OrderItemChange,
+    OrderSearchCriteria,
+    OrderStatus,
+    SendOrder
+} from '../../api/model/order';
 import AuthDefender from '../../component/layout/auth-defender';
 import BaseFooter from '../../component/layout/base-footer';
 import MaintenanceDefender from '../../component/layout/maintenance-defender';
 import Navigation from '../../component/layout/navigation';
 import { AuthContext, ErrorContext } from '../../context';
+import { ClientResponse } from '../../api/controller';
 
 const CustomerPage = () => {
     return (
@@ -43,9 +53,19 @@ export interface CustomerState {
     setSelected: (order?: Order) => void,
     getOrders: () => Promise<boolean>,
     addOrder: () => Promise<boolean>,
-    deleteOrder: () => Promise<boolean>,
+    sendOrder: (sendOrder: SendOrder) => Promise<WiwaError | undefined>,
+    deleteOrder: () => Promise<void>,
     getHtml: () => Promise<string>,
-    addComment: (orderCommentChange: OrderCommentChange) => Promise<void>;
+    addComment: (orderCommentChange: OrderCommentChange) => Promise<void>,
+    selectedItem?: OrderItem,
+    setSelectedItem: (orderItem?: OrderItem) => void,
+    editItemMode: boolean,
+    setEditItemMode: (editItemMode: boolean) => void,
+    addItem: (orderItemChange: OrderItemChange) => Promise<WiwaError | undefined>,
+    setItem: (orderItemChange: OrderItemChange) => Promise<WiwaError | undefined>,
+    moveUpItem: () => Promise<void>,
+    moveDownItem: () => Promise<void>,
+    deleteItem: () => Promise<void>
 }
 
 export const CustomerContext = createContext<CustomerState | undefined>(undefined);
@@ -64,6 +84,8 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
     const [criteria, setCriteria] = useState<OrderSearchCriteria>();
     const [data, setData] = useState<Order[]>();
     const [selected, setSelected] = useState<Order>();
+    const [selectedItem, setSelectedItem] = useState<OrderItem>();
+    const [editItemMode, setEditItemMode] = useState(false);
 
     useEffect(() => {
         setEditEnabled(false);
@@ -75,11 +97,18 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
                 setEditEnabled(data[index].status === OrderStatus.NEW);
                 setSubmitEnabled(data[index].status === OrderStatus.NEW && data[index].items.length > 0);
                 setOrderFinal(data[index].status === OrderStatus.CANCELLED || data[index].status === OrderStatus.FINISHED);
+                if (selectedItem) {
+                    const itemIndex = data[index].items.findIndex(item => item.id === selectedItem?.id);
+                    if (itemIndex !== -1) {
+                        setSelectedItem(data[index].items[itemIndex]);
+                    }
+                }
             }
         } else {
             setSelected(undefined);
+            setSelectedItem(undefined);
         }
-    }, [data, selected]);
+    }, [data, selected, selectedItem]);
 
     useEffect(() => {
         getOrders().then();
@@ -90,6 +119,17 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
             return [...data];
         }
         return [];
+    }
+
+    const handleResponse = (response: ClientResponse<Order>) => {
+        if (response.data) {
+            const newData = createData();
+            const index = newData.findIndex(item => item.id === selected?.id);
+            if (index !== -1) {
+                newData[index] = response.data;
+            }
+            setData(newData);
+        }
     }
 
     const getOrders = async () => {
@@ -114,13 +154,24 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
         setBusy(true);
         try {
             const response = await orderApi.addOrder(authState?.authToken?.accessToken);
-            if (data && response.data) {
+            if (response.data) {
                 const newData = [response.data, ...createData()];
                 setData(newData);
                 setSelected(response.data);
             }
             errorState?.addError(response.error);
             return response.error === undefined;
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const sendOrder = async (sendOrder: SendOrder) => {
+        setBusy(true);
+        try {
+            const response = await orderApi.sendOrder(selected?.id || -1, sendOrder, authState?.authToken?.accessToken);
+            handleResponse(response);
+            return response.error;
         } finally {
             setBusy(false);
         }
@@ -140,7 +191,6 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
                 setSelected(undefined);
             }
             errorState?.addError(response.error);
-            return response.error === undefined;
         } finally {
             setBusy(false);
         }
@@ -161,13 +211,63 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
         setBusy(true);
         try {
             const response = await orderApi.addComment(selected?.id || -1, orderCommentChange, authState?.authToken?.accessToken);
-            if (response.data) {
-                const newData = createData();
-                const index = newData.findIndex(item => item.id === response.data?.id);
-                if (index !== -1) {
-                    newData[index] = response.data;
-                }
-                setData(newData);
+            handleResponse(response);
+            errorState?.addError(response.error);
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const addItem = async (orderItemChange: OrderItemChange) => {
+        setBusy(true);
+        try {
+            const response = await orderApi.addItem(selected?.id || -1, orderItemChange, authState?.authToken?.accessToken);
+            handleResponse(response);
+            return response.error;
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const setItem = async (orderItemChange: OrderItemChange) => {
+        setBusy(true);
+        try {
+            const response = await orderApi.setItem(selected?.id || -1, selectedItem?.id || -1, orderItemChange, authState?.authToken?.accessToken);
+            handleResponse(response);
+            return response.error;
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const moveUpItem = async () => {
+        setBusy(true);
+        try {
+            const response = await orderApi.moveUpItem(selected?.id || -1, selectedItem?.id || -1, authState?.authToken?.accessToken);
+            handleResponse(response);
+            errorState?.addError(response.error);
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const moveDownItem = async () => {
+        setBusy(true);
+        try {
+            const response = await orderApi.moveDownItem(selected?.id || -1, selectedItem?.id || -1, authState?.authToken?.accessToken);
+            handleResponse(response);
+            errorState?.addError(response.error);
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    const deleteItem = async () => {
+        setBusy(true);
+        try {
+            const response = await orderApi.deleteItem(selected?.id || -1, selectedItem?.id || -1, authState?.authToken?.accessToken);
+            if (!response.error) {
+                setSelectedItem(undefined);
             }
             errorState?.addError(response.error);
         } finally {
@@ -197,9 +297,19 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
                     setSelected,
                     getOrders,
                     addOrder,
+                    sendOrder,
                     deleteOrder,
                     getHtml,
-                    addComment
+                    addComment,
+                    selectedItem,
+                    setSelectedItem,
+                    editItemMode,
+                    setEditItemMode,
+                    addItem,
+                    setItem,
+                    moveUpItem,
+                    moveDownItem,
+                    deleteItem
                 }
             }
         >{children}

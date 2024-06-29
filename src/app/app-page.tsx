@@ -29,6 +29,7 @@ import CustomerOrdersPage from './customer/orders-page';
 import CustomerOrderCommentsPage from './customer/order-comments-page';
 import CustomerOrderDetailPage from './customer/order-detail-page';
 import CustomerOrderEditPage from './customer/order-edit-page';
+import CustomerOrderItemEditPage from './customer/order-item-edit-page';
 import CustomerOrderSubmitPage from './customer/order-submit-page';
 
 import EmployeePage from './employee/employee-page';
@@ -93,6 +94,7 @@ const AppPage = () => {
                 <Route path="order-comments" element={<CustomerOrderCommentsPage/>}/>
                 <Route path="order-detail" element={<CustomerOrderDetailPage/>}/>
                 <Route path="order-edit" element={<CustomerOrderEditPage/>}/>
+                <Route path="order-item-edit" element={<CustomerOrderItemEditPage/>}/>
                 <Route path="order-submit" element={<CustomerOrderSubmitPage/>}/>
             </Route>
 

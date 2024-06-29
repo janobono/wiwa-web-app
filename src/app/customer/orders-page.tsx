@@ -4,7 +4,7 @@ import { Edit, List, MessageSquare, Plus, Send, Trash } from 'react-feather';
 
 import { CustomerContext } from './customer-page';
 import { OrderField } from '../../api/model/order';
-import CustomerOrderSearchCriteriaForm from '../../component/order/customer-order-search-criteria-form';
+import CustomerOrderSearchCriteriaForm from '../../component/app/customer/customer-order-search-criteria-form';
 import OrderTable from '../../component/order/order-table';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';

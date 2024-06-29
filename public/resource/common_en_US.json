@@ -185,6 +185,7 @@
       "orderComments": "Order comments",
       "orderDetail": "Order detail",
       "orderEdit": "Edit order",
+      "orderItemEdit": "Edit order item",
       "orderSubmit": "Order submit"
     }
   },

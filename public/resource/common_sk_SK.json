@@ -185,6 +185,7 @@
       "orderComments": "Komentáre objednávky",
       "orderDetail": "Detail objednávky",
       "orderEdit": "Upraviť objednávku",
+      "orderItemEdit": "Upraviť položku objednávky",
       "orderSubmit": "Odoslať objednávku"
     }
   },

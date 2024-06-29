@@ -1,12 +1,12 @@
 import { ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'react-feather';
 
-import OrderStatusValue from './order-status-value';
-import WiwaButton from '../ui/wiwa-button';
-import WiwaFormInputDatetime from '../ui/wiwa-form-input-datetime';
-import WiwaFormCheckBox from '../ui/wiwa-form-check-box.tsx';
-import { OrderSearchCriteria, OrderStatus } from '../../api/model/order';
-import { ResourceContext } from '../../context';
+import OrderStatusValue from '../../order/order-status-value';
+import WiwaButton from '../../ui/wiwa-button';
+import WiwaFormInputDatetime from '../../ui/wiwa-form-input-datetime';
+import WiwaFormCheckBox from '../../ui/wiwa-form-check-box.tsx';
+import { OrderSearchCriteria, OrderStatus } from '../../../api/model/order';
+import { ResourceContext } from '../../../context';
 
 const CustomerOrderSearchCriteriaForm = ({searchHandler, children}: {
     searchHandler: (criteria: OrderSearchCriteria) => void

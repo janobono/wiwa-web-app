@@ -16,6 +16,10 @@ export interface ResourceCustomer {
         deleteOrder: {
             title: string,
             message: string
+        },
+        deleteOrderItem: {
+            title: string,
+            message: string
         }
     }
 }

@@ -16,6 +16,10 @@
     "deleteOrder": {
       "title": "Delete order",
       "message": "Do you really want to delete order?"
+    },
+    "deleteOrderItem": {
+      "title": "Delete order item",
+      "message": "Do you really want to delete order item?"
     }
   }
 }

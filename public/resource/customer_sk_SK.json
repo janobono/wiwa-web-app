@@ -16,6 +16,10 @@
     "deleteOrder": {
       "title": "Zmazať objednávku",
       "message": "Naozaj si želáte zmazať objednávku?"
+    },
+    "deleteOrderItem": {
+      "title": "Zmazať položku objednávky",
+      "message": "Naozaj si želáte zmazať položku objednávky?"
     }
   }
 }
