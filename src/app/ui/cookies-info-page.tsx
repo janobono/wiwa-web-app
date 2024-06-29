@@ -1,5 +1,5 @@
-import MdPage from './md-page';
 import { getCookiesInfo } from '../../api/controller/ui';
+import MdPage from '../../component/app/ui/md-page';
 
 const CookiesInfoPage = () => {
     return (

@@ -1,5 +1,5 @@
-import MdPage from './md-page';
 import { getBusinessConditions } from '../../api/controller/ui';
+import MdPage from '../../component/app/ui/md-page';
 
 const BusinessConditionsPage = () => {
     return (

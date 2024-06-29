@@ -26,5 +26,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 </ResourceProvider>
             </AppProvider>
         </ErrorProvider>
-    </React.StrictMode>,
+    </React.StrictMode>
 )

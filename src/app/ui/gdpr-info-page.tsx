@@ -1,5 +1,5 @@
-import MdPage from './md-page';
 import { getGdprInfo } from '../../api/controller/ui';
+import MdPage from '../../component/app/ui/md-page';
 
 const GdprInfoPage = () => {
     return (

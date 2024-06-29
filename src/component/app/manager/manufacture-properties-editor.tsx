@@ -40,10 +40,6 @@ const ManufacturePropertiesEditor = () => {
     const [lengthSign, setLengthSign] = useState<string>();
 
     useEffect(() => {
-
-    }, [resourceState]);
-
-    useEffect(() => {
         setLengthSign(`[${resourceState?.getUnit(UnitId.MILLIMETER)}]`);
         getManufactureProperties(authState?.authToken?.accessToken).then(data => setValue(data.data));
     }, [authState?.authToken?.accessToken]);

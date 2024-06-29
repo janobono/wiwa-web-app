@@ -27,8 +27,9 @@ const SelectCodeList = (
     return (
         <WiwaSelect
             onChange={event => codeListChangeHandler(event)}
+            defaultValue={value?.id || -1}
         >
-            {placeholder && <option disabled selected={value === undefined}>{placeholder}</option>}
+            {placeholder && <option disabled value="-1">{placeholder}</option>}
             {codeLists?.map(codeList =>
                 <option
                     key={codeList.id}

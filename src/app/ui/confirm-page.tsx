@@ -12,15 +12,14 @@ const ConfirmPage = () => {
     const errorState = useContext(ErrorContext);
     const resourceState = useContext(ResourceContext);
 
-    const didMount = useRef(false);
+    const done = useRef(false);
     const [message, setMessage] = useState<string>();
 
     useEffect(() => {
-        if (didMount.current) {
+        if (done.current) {
             return;
         }
-
-        didMount.current = true;
+        done.current = true;
 
         if (token) {
             const action = async () => {

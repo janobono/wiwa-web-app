@@ -1,16 +1,12 @@
 import { useContext } from 'react';
 
-import { Order, OrderField } from '../../api/model/order';
+import { OrderField } from '../../api/model/order';
 import OrderTable from '../../component/order/order-table';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import { ResourceContext } from '../../context';
 
 const OrdersPage = () => {
     const resourceState = useContext(ResourceContext);
-
-    const setSelected = (selected?: Order) => {
-
-    }
 
     return (
         <>
@@ -29,7 +25,10 @@ const OrdersPage = () => {
                         fields={Object.values(OrderField)}
                         rows={[]}
                         selected={undefined}
-                        setSelected={setSelected}
+                        setSelected={(selected) => {
+                            //TODO
+                            console.log(selected);
+                        }}
                     />
                 </div>
 

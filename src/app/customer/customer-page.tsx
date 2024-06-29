@@ -121,6 +121,12 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
         return [];
     }
 
+    const createCriteria = () => {
+        const newCriteria: OrderSearchCriteria = {...criteria};
+        newCriteria.userIds = [authState?.authUser?.user.id || -1];
+        return newCriteria;
+    }
+
     const handleResponse = (response: ClientResponse<Order>) => {
         if (response.data) {
             const newData = createData();
@@ -135,7 +141,7 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
     const getOrders = async () => {
         setBusy(true);
         try {
-            const response = await orderApi.getOrders(criteria, {
+            const response = await orderApi.getOrders(createCriteria(), {
                 page,
                 size: 10,
                 sort: {field: OrderField.orderNumber, asc: false}
