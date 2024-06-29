@@ -14,7 +14,7 @@ import {
 } from 'react-feather';
 
 import { ClientResponse } from '../../api/controller';
-import { deleteUser, getUsers, setAuthorities, setConfirmed, setEnabled } from '../../api/controller/user';
+import * as apiUser from '../../api/controller/user';
 import { Authority, containsAuthority, Page, User } from '../../api/model';
 import { UserField, UserSearchCriteria } from '../../api/model/user';
 import UserTable from '../../component/app/admin/user-table';
@@ -66,7 +66,7 @@ const UsersPage = () => {
     const fetchData = async () => {
         setBusy(true);
         try {
-            const response = await getUsers(criteria, {page, size: 10}, authState?.authToken?.accessToken);
+            const response = await apiUser.getUsers(criteria, {page, size: 10}, authState?.authToken?.accessToken);
 
             setData(response.data);
 
@@ -94,7 +94,7 @@ const UsersPage = () => {
     const authoritiesHandler = async (id: number, authorities: Authority[]) => {
         setBusy(true);
         try {
-            const response = await setAuthorities(id, authorities, authState?.authToken?.accessToken);
+            const response = await apiUser.setAuthorities(id, authorities, authState?.authToken?.accessToken);
             handleResponse(response);
             errorState?.addError(response?.error);
         } finally {
@@ -105,7 +105,7 @@ const UsersPage = () => {
     const userEnabledHandler = async (id: number, enabled: boolean) => {
         setBusy(true);
         try {
-            const response = await setEnabled(id, enabled, authState?.authToken?.accessToken);
+            const response = await apiUser.setEnabled(id, enabled, authState?.authToken?.accessToken);
             handleResponse(response);
             errorState?.addError(response?.error);
         } finally {
@@ -116,7 +116,7 @@ const UsersPage = () => {
     const userConfirmedHandler = async (id: number, confirmed: boolean) => {
         setBusy(true);
         try {
-            const response = await setConfirmed(id, confirmed, authState?.authToken?.accessToken);
+            const response = await apiUser.setConfirmed(id, confirmed, authState?.authToken?.accessToken);
             handleResponse(response);
             errorState?.addError(response?.error);
         } finally {
@@ -127,7 +127,7 @@ const UsersPage = () => {
     const deleteHandler = async (id: number) => {
         setBusy(true);
         try {
-            const response = await deleteUser(id, authState?.authToken?.accessToken);
+            const response = await apiUser.deleteUser(id, authState?.authToken?.accessToken);
             setSelected(undefined);
             if (data) {
                 const newData = {...data};

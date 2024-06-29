@@ -180,7 +180,11 @@
       "orders": "Objednávky"
     },
     "customerNav": {
-      "title": "Moje objednávky"
+      "title": "Moje objednávky",
+      "orderComments": "Komentáre",
+      "orderDetail": "Detail",
+      "orderEdit": "Upraviť",
+      "orderSubmit": "Odoslať"
     }
   },
   "notFound": "404 Stránka nenájdená",

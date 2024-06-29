@@ -3,30 +3,9 @@ import { ReactNode, useContext, useEffect, useState } from 'react';
 import { AppContext, AuthContext } from '../../';
 import { AuthToken, AuthUser } from '../../model/auth';
 import { ClientResponse } from '../../../api/controller';
-import {
-    changeEmail as apiChangeEmail,
-    changePassword as apiChangePassword,
-    changeUserDetails as apiChangeUserDetails,
-    confirm as apiConfirm,
-    getUserDetail as apiGetUserDetail,
-    refresh as apiRefresh,
-    resendConfirmation as apiResendConfirmation,
-    resetPassword as apiResetPassword,
-    signIn as apiSignIn,
-    signUp as apiSignUp
-} from '../../../api/controller/auth';
+import * as authApi from '../../../api/controller/auth';
 import { Authority } from '../../../api/model';
-import {
-    AuthenticationResponse,
-    ChangeEmailRequest,
-    ChangePasswordRequest,
-    ChangeUserDetailsRequest,
-    ConfirmationRequest,
-    ResendConfirmationRequest,
-    ResetPasswordRequest,
-    SignInRequest,
-    SignUpRequest
-} from '../../../api/model/auth';
+import * as authModel from '../../../api/model/auth';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 const ACCESS_TOKEN = 'access-token';
@@ -66,7 +45,7 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
         const jwtPayload = decodeAccessToken(authToken?.accessToken);
         if (jwtPayload) {
             const fetchUser = async () => {
-                const response = await apiGetUserDetail(authToken?.accessToken);
+                const response = await authApi.getUserDetail(authToken?.accessToken);
                 if (response.data) {
                     setAuthUser({jwtPayload, user: response.data});
                 } else {
@@ -158,7 +137,7 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
         return false;
     }
 
-    const handleAuthenticationResponse = (response: ClientResponse<AuthenticationResponse>) => {
+    const handleAuthenticationResponse = (response: ClientResponse<authModel.AuthenticationResponse>) => {
         if (response.data) {
             if (appState?.cookiesEnabled) {
                 localStorage.setItem(ACCESS_TOKEN, response.data.token);
@@ -175,7 +154,7 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
     const refreshAuth = async () => {
         setBusy(true);
         try {
-            const response = await apiRefresh(authToken?.refreshToken);
+            const response = await authApi.refresh(authToken?.refreshToken);
             handleAuthenticationResponse(response);
             return response;
         } finally {
@@ -183,10 +162,10 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const signIn = async (signInRequest: SignInRequest) => {
+    const signIn = async (signInRequest: authModel.SignInRequest) => {
         setBusy(true);
         try {
-            const response = await apiSignIn(signInRequest);
+            const response = await authApi.signIn(signInRequest);
             handleAuthenticationResponse(response);
             return response;
         } finally {
@@ -203,10 +182,10 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const signUp = async (signUpRequest: SignUpRequest) => {
+    const signUp = async (signUpRequest: authModel.SignUpRequest) => {
         setBusy(true);
         try {
-            const response = await apiSignUp(signUpRequest);
+            const response = await authApi.signUp(signUpRequest);
             handleAuthenticationResponse(response);
             return response;
         } finally {
@@ -214,10 +193,10 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const confirm = async (confirmationRequest: ConfirmationRequest) => {
+    const confirm = async (confirmationRequest: authModel.ConfirmationRequest) => {
         setBusy(true);
         try {
-            const response = await apiConfirm(confirmationRequest);
+            const response = await authApi.confirm(confirmationRequest);
             handleAuthenticationResponse(response);
             return response;
         } finally {
@@ -225,28 +204,28 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const resendConfirmation = async (resendConfirmationRequest: ResendConfirmationRequest) => {
+    const resendConfirmation = async (resendConfirmationRequest: authModel.ResendConfirmationRequest) => {
         setBusy(true);
         try {
-            return await apiResendConfirmation(resendConfirmationRequest, authToken?.accessToken);
+            return await authApi.resendConfirmation(resendConfirmationRequest, authToken?.accessToken);
         } finally {
             setBusy(false);
         }
     }
 
-    const resetPassword = async (resetPasswordRequest: ResetPasswordRequest) => {
+    const resetPassword = async (resetPasswordRequest: authModel.ResetPasswordRequest) => {
         setBusy(true);
         try {
-            return await apiResetPassword(resetPasswordRequest);
+            return await authApi.resetPassword(resetPasswordRequest);
         } finally {
             setBusy(false);
         }
     }
 
-    const changePassword = async (changePasswordRequest: ChangePasswordRequest) => {
+    const changePassword = async (changePasswordRequest: authModel.ChangePasswordRequest) => {
         setBusy(true);
         try {
-            const response = await apiChangePassword(changePasswordRequest, authToken?.accessToken);
+            const response = await authApi.changePassword(changePasswordRequest, authToken?.accessToken);
             if (response.error === undefined) {
                 handleAuthenticationResponse(response);
             }
@@ -256,10 +235,10 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const changeEmail = async (changeEmailRequest: ChangeEmailRequest) => {
+    const changeEmail = async (changeEmailRequest: authModel.ChangeEmailRequest) => {
         setBusy(true);
         try {
-            const response = await apiChangeEmail(changeEmailRequest, authToken?.accessToken);
+            const response = await authApi.changeEmail(changeEmailRequest, authToken?.accessToken);
             if (response.error === undefined) {
                 handleAuthenticationResponse(response);
             }
@@ -269,10 +248,10 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
-    const changeUserDetails = async (changeUserDetailsRequest: ChangeUserDetailsRequest) => {
+    const changeUserDetails = async (changeUserDetailsRequest: authModel.ChangeUserDetailsRequest) => {
         setBusy(true);
         try {
-            const response = await apiChangeUserDetails(changeUserDetailsRequest, authToken?.accessToken);
+            const response = await authApi.changeUserDetails(changeUserDetailsRequest, authToken?.accessToken);
             if (response.error === undefined) {
                 handleAuthenticationResponse(response);
             }

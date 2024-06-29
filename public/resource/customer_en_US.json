@@ -2,5 +2,14 @@
   "orderCriteria": {
     "createdFromLabel": "Created from",
     "createdToLabel": "Created to"
+  },
+  "orders": {
+    "comments": {
+      "title": "Comments"
+    },
+    "deleteOrder": {
+      "title": "Delete order",
+      "message": "Do you really want to delete order?"
+    }
   }
 }

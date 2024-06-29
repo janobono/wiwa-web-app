@@ -1,19 +1,7 @@
 import { useContext, useState } from 'react';
 
-import {
-    setBusinessConditions,
-    setCookiesInfo,
-    setGdprInfo,
-    setOrderInfo,
-    setWorkingHours
-} from '../../api/controller/config';
-import {
-    getBusinessConditions,
-    getCookiesInfo,
-    getGdprInfo,
-    getOrderInfo,
-    getWorkingHours
-} from '../../api/controller/ui';
+import * as apiConfig from '../../api/controller/config';
+import * as apiUi from '../../api/controller/ui';
 import MdEditor from '../../component/app/admin/md-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
@@ -57,8 +45,8 @@ const TextInfoPage = () => {
                             valueLabel={resourceState?.admin?.textInfo.businessConditions.valueLabel || ''}
                             valuePlaceholder={resourceState?.admin?.textInfo.businessConditions.valuePlaceholder || ''}
                             valueRequired={resourceState?.admin?.textInfo.businessConditions.valueRequired || ''}
-                            loadValue={getBusinessConditions}
-                            saveValue={setBusinessConditions}
+                            loadValue={apiUi.getBusinessConditions}
+                            saveValue={apiConfig.setBusinessConditions}
                         />
                     }
                     {index == 2 &&
@@ -68,8 +56,8 @@ const TextInfoPage = () => {
                             valueLabel={resourceState?.admin?.textInfo.cookiesInfo.valueLabel || ''}
                             valuePlaceholder={resourceState?.admin?.textInfo.cookiesInfo.valuePlaceholder || ''}
                             valueRequired={resourceState?.admin?.textInfo.cookiesInfo.valueRequired || ''}
-                            loadValue={getCookiesInfo}
-                            saveValue={setCookiesInfo}
+                            loadValue={apiUi.getCookiesInfo}
+                            saveValue={apiConfig.setCookiesInfo}
                         />
                     }
                     {index == 3 &&
@@ -79,8 +67,8 @@ const TextInfoPage = () => {
                             valueLabel={resourceState?.admin?.textInfo.gdprInfo.valueLabel || ''}
                             valuePlaceholder={resourceState?.admin?.textInfo.gdprInfo.valuePlaceholder || ''}
                             valueRequired={resourceState?.admin?.textInfo.gdprInfo.valueRequired || ''}
-                            loadValue={getGdprInfo}
-                            saveValue={setGdprInfo}
+                            loadValue={apiUi.getGdprInfo}
+                            saveValue={apiConfig.setGdprInfo}
                         />
                     }
                     {index == 4 &&
@@ -90,8 +78,8 @@ const TextInfoPage = () => {
                             valueLabel={resourceState?.admin?.textInfo.orderInfo.valueLabel || ''}
                             valuePlaceholder={resourceState?.admin?.textInfo.orderInfo.valuePlaceholder || ''}
                             valueRequired={resourceState?.admin?.textInfo.orderInfo.valueRequired || ''}
-                            loadValue={getOrderInfo}
-                            saveValue={setOrderInfo}
+                            loadValue={apiUi.getOrderInfo}
+                            saveValue={apiConfig.setOrderInfo}
                         />
                     }
                     {index == 5 &&
@@ -101,8 +89,8 @@ const TextInfoPage = () => {
                             valueLabel={resourceState?.admin?.textInfo.workingHours.valueLabel || ''}
                             valuePlaceholder={resourceState?.admin?.textInfo.workingHours.valuePlaceholder || ''}
                             valueRequired={resourceState?.admin?.textInfo.workingHours.valueRequired || ''}
-                            loadValue={getWorkingHours}
-                            saveValue={setWorkingHours}
+                            loadValue={apiUi.getWorkingHours}
+                            saveValue={apiConfig.setWorkingHours}
                         />
                     }
                 </div>

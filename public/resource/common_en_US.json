@@ -180,7 +180,11 @@
       "orders": "Orders"
     },
     "customerNav": {
-      "title": "My orders"
+      "title": "My orders",
+      "orderComments": "Comments",
+      "orderDetail": "Detail",
+      "orderEdit": "Edit",
+      "orderSubmit": "Submit"
     }
   },
   "notFound": "404 Page not found",

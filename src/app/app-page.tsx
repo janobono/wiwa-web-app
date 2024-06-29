@@ -5,10 +5,10 @@ import MaintenancePage from './maintenance-page';
 import NotFoundPage from './not-found-page';
 
 import AdminPage from './admin/admin-page';
-import AdminApplicationImagesPage from './admin/application-images-page.tsx';
+import AdminApplicationImagesPage from './admin/application-images-page';
 import AdminBaseInfoPage from './admin/base-info-page';
 import AdminCompanyInfoPage from './admin/company-info-page';
-import AdminTextInfoPage from './admin/text-info-page.tsx';
+import AdminTextInfoPage from './admin/text-info-page';
 import AdminMailFormatPage from './admin/mail-format-page';
 import AdminOrderFormatPage from './admin/order-format-page';
 import AdminUnitsPage from './admin/units-page';
@@ -25,7 +25,11 @@ import AuthSignOutPage from './auth/sign-out-page';
 import AuthSignUpPage from './auth/sign-up-page';
 
 import CustomerPage from './customer/customer-page';
-import CustomerOrdersPage from './customer/orders-page.tsx';
+import CustomerOrdersPage from './customer/orders-page';
+import CustomerOrderCommentsPage from './customer/order-comments-page';
+import CustomerOrderDetailPage from './customer/order-detail-page';
+import CustomerOrderEditPage from './customer/order-edit-page';
+import CustomerOrderSubmitPage from './customer/order-submit-page';
 
 import EmployeePage from './employee/employee-page';
 import EmployeeOrdersPage from './employee/orders-page';
@@ -86,6 +90,10 @@ const AppPage = () => {
             <Route path="/customer" element={<CustomerPage/>}>
                 <Route index element={<Navigate to="index" replace/>}/>
                 <Route path="index" element={<CustomerOrdersPage/>}/>
+                <Route path="order-comments" element={<CustomerOrderCommentsPage/>}/>
+                <Route path="order-detail" element={<CustomerOrderDetailPage/>}/>
+                <Route path="order-edit" element={<CustomerOrderEditPage/>}/>
+                <Route path="order-submit" element={<CustomerOrderSubmitPage/>}/>
             </Route>
 
             <Route path="/employee" element={<EmployeePage/>}>

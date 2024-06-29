@@ -180,7 +180,11 @@ export interface ResourceCommon {
             orders: string
         },
         customerNav: {
-            title: string
+            title: string,
+            orderComments: string,
+            orderDetail: string,
+            orderEdit: string,
+            orderSubmit: string
         },
     },
     notFound: string,

@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useState } from 'react';
 
 import { HealthContext } from '../../';
-import { setMaintenance as apiSetMaintenance } from '../../../api/controller/config';
-import { readyz } from '../../../api/controller/health';
-import { getMaintenance } from '../../../api/controller/ui';
+import * as apiConfig from '../../../api/controller/config';
+import * as apiHealth from '../../../api/controller/health';
+import * as apiUi from '../../../api/controller/ui';
 
 const ACTUATOR_TIMEOUT = 60000;
 
@@ -14,7 +14,7 @@ const HealthProvider = ({children}: { children: ReactNode }) => {
 
     useEffect(() => {
         const fetchHealthStatus = async () => {
-            const response = await readyz();
+            const response = await apiHealth.readyz();
             if (response.data) {
                 setUp(response.data.status === 'OK');
             } else {
@@ -24,7 +24,7 @@ const HealthProvider = ({children}: { children: ReactNode }) => {
         fetchHealthStatus().then();
 
         const fetchMaintenance = async () => {
-            const response = await getMaintenance();
+            const response = await apiUi.getMaintenance();
             if (response.data) {
                 setMaintenanceValue(response.data.value);
             }
@@ -36,7 +36,7 @@ const HealthProvider = ({children}: { children: ReactNode }) => {
     }, [actuatorCounter]);
 
     const setMaintenance = async (maintenance: boolean, token?: string) => {
-        const response = await apiSetMaintenance(maintenance, token);
+        const response = await apiConfig.setMaintenance(maintenance, token);
         if (response.data) {
             setMaintenanceValue(response.data?.value)
         }

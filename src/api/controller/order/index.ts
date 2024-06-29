@@ -8,7 +8,7 @@ import {
     setPageableQueryParams,
     setQueryParam
 } from '../';
-import { Page, Pageable } from '../../model';
+import { Page, Pageable, SingleValueBody } from '../../model';
 import {
     Order,
     OrderCommentChange,
@@ -88,11 +88,11 @@ export const recountOrder = (id: number, accessToken?: string) => {
 }
 
 export const getHtml = (id: number, accessToken?: string) => {
-    return getData<string>(PATH + '/' + id + '/html', undefined, accessToken);
+    return getData<SingleValueBody<string>>(PATH + '/' + id + '/html', undefined, accessToken);
 }
 
 export const getCsv = (id: number, accessToken?: string) => {
-    return getData<string>(PATH + '/' + id + '/csv', undefined, accessToken);
+    return getData<SingleValueBody<string>>(PATH + '/' + id + '/csv', undefined, accessToken);
 }
 
 export const sendOrder = (id: number, sendOrder: SendOrder, accessToken?: string) => {

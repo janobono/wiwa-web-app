@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Copy, Plus, Trash } from 'react-feather';
 
-import { deleteApplicationImage, getApplicationImages, setApplicationImage } from '../../api/controller/config';
+import * as apiConfig from '../../api/controller/config';
 import { Page } from '../../api/model';
 import { ApplicationImageInfo, ApplicationImageInfoField } from '../../api/model/application';
 import ApplicationImageInfoTable from '../../component/app/admin/application-image-table';
@@ -50,7 +50,7 @@ const ApplicationImagesPage = () => {
     const fetchData = async (page: number) => {
         setBusy(true);
         try {
-            const response = await getApplicationImages({page, size: 10}, authState?.authToken?.accessToken);
+            const response = await apiConfig.getApplicationImages({page, size: 10}, authState?.authToken?.accessToken);
 
             setData(response?.data);
 
@@ -63,7 +63,7 @@ const ApplicationImagesPage = () => {
     const addHandler = async (file: File) => {
         setBusy(true);
         try {
-            const response = await setApplicationImage(file, authState?.authToken?.accessToken);
+            const response = await apiConfig.setApplicationImage(file, authState?.authToken?.accessToken);
 
             if (data && response?.data) {
                 const newData = {...data};
@@ -82,7 +82,7 @@ const ApplicationImagesPage = () => {
     const deleteHandler = async (filename: string) => {
         setBusy(true);
         try {
-            const response = await deleteApplicationImage(filename, authState?.authToken?.accessToken);
+            const response = await apiConfig.deleteApplicationImage(filename, authState?.authToken?.accessToken);
 
             if (data) {
                 const newData = {...data};

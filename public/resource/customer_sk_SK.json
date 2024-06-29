@@ -2,5 +2,14 @@
   "orderCriteria": {
     "createdFromLabel": "Vytvorená od",
     "createdToLabel": "Vytvorená do"
+  },
+  "orders": {
+    "comments": {
+      "title": "Komentáre"
+    },
+    "deleteOrder": {
+      "title": "Zmazať objednávku",
+      "message": "Naozaj si želáte zmazať objednávku?"
+    }
   }
 }
