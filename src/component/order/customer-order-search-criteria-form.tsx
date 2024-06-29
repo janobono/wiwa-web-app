@@ -1,10 +1,11 @@
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'react-feather';
+
+import OrderStatusValue from './order-status-value';
 import WiwaButton from '../ui/wiwa-button';
+import WiwaFormInputDatetime from '../ui/wiwa-form-input-datetime';
 import WiwaFormCheckBox from '../ui/wiwa-form-check-box.tsx';
-import OrderStatusValue from './order-status-value.tsx';
 import { OrderSearchCriteria, OrderStatus } from '../../api/model/order';
-import WiwaFormInputDate from '../ui/wiwa-form-input-date.tsx';
 import { ResourceContext } from '../../context';
 
 const CustomerOrderSearchCriteriaForm = ({searchHandler, children}: {
@@ -25,8 +26,43 @@ const CustomerOrderSearchCriteriaForm = ({searchHandler, children}: {
 
     const [extended, setExtended] = useState(false);
 
+    const didMount = useRef(false);
+
+    useEffect(() => {
+        if (!didMount.current) {
+            didMount.current = true;
+            return;
+        }
+        searchHandler(createCriteria());
+    }, [statusNew, statusSent, statusInProduction, statusReady, statusFinished, statusCancelled, createdFrom, createdTo]);
+
     const createCriteria = () => {
-        return {};
+        const criteria: OrderSearchCriteria = {statuses: []};
+        if (statusNew) {
+            criteria.statuses?.push(OrderStatus.NEW);
+        }
+        if (statusSent) {
+            criteria.statuses?.push(OrderStatus.SENT);
+        }
+        if (statusInProduction) {
+            criteria.statuses?.push(OrderStatus.IN_PRODUCTION);
+        }
+        if (statusReady) {
+            criteria.statuses?.push(OrderStatus.READY);
+        }
+        if (statusFinished) {
+            criteria.statuses?.push(OrderStatus.FINISHED);
+        }
+        if (statusCancelled) {
+            criteria.statuses?.push(OrderStatus.CANCELLED);
+        }
+        if (createdFrom) {
+            criteria.createdFrom = createdFrom.toISOString();
+        }
+        if (createdTo) {
+            criteria.createdTo = createdTo.toISOString();
+        }
+        return criteria;
     }
 
     return (
@@ -86,12 +122,12 @@ const CustomerOrderSearchCriteriaForm = ({searchHandler, children}: {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
-                        <WiwaFormInputDate
+                        <WiwaFormInputDatetime
                             label={resourceState?.customer?.orderCriteria.createdFromLabel}
                             value={createdFrom}
                             setValue={setCreatedFrom}
                         />
-                        <WiwaFormInputDate
+                        <WiwaFormInputDatetime
                             label={resourceState?.customer?.orderCriteria.createdToLabel}
                             value={createdTo}
                             setValue={setCreatedTo}

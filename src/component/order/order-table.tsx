@@ -6,6 +6,7 @@ import OrderUserValue from './order-user-value';
 import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
 import WiwaValueNumber from '../ui/wiwa-value-number';
 import WiwaValueDate from '../ui/wiwa-value-date';
+import WiwaValueDatetime from '../ui/wiwa-value-datetime';
 import { getApplicationProperties } from '../../api/controller/ui';
 import { UnitId } from '../../api/model/application';
 import { Order, OrderField } from '../../api/model/order';
@@ -103,7 +104,7 @@ const TableRow = ({fields, row, selected, setSelected}: {
                     case OrderField.creator:
                         return (<td key={field}><OrderUserValue value={row.creator}/></td>);
                     case OrderField.created:
-                        return (<td key={field}><WiwaValueDate value={row.created}/></td>);
+                        return (<td key={field}><WiwaValueDatetime value={row.created}/></td>);
                     case OrderField.status:
                         return (<td key={field}><OrderStatusValue value={row.status}/></td>);
                     case OrderField.orderNumber:

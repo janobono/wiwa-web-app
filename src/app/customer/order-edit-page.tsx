@@ -27,13 +27,13 @@ const OrderEditPage = () => {
                     to: '/customer/order-edit'
                 }
             ]}/>
-            <div className="flex flex-col gap-5 p-5 w-full">
+            <div className="flex flex-col p-5 gap-5 w-full">
                 {customerState?.editEnabled &&
                     <div className="flex flex-row gap-5 w-full">
                         <div className="join">
                             <WiwaButton
                                 className="join-item"
-                                title={resourceState?.common?.pageable.next}
+                                title={resourceState?.common?.navigation.customerNav.orderDetail}
                                 disabled={customerState?.busy}
                                 onClick={() => navigate('/customer/order-detail')}
                             ><ChevronsRight size={18}/>

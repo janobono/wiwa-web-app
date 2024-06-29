@@ -133,6 +133,7 @@ export interface ResourceCommon {
     mdDialog: {
         editor: string,
         preview: string,
+        example: string,
         ok: string,
         cancel: string
     },
@@ -188,6 +189,14 @@ export interface ResourceCommon {
         },
     },
     notFound: string,
+    orderItemTable: {
+        id: string,
+        sortNum: string,
+        name: string,
+        description: string,
+        orientation: string,
+        quantity: string
+    },
     orderPackageType: {
         noPackage: string,
         noPackageWithRemains: string,

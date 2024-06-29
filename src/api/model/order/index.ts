@@ -26,7 +26,7 @@ export interface OrderBoard {
 }
 
 export interface OrderCommentChange {
-    command: string
+    comment: string
 }
 
 export interface OrderComment {
@@ -94,6 +94,15 @@ export interface OrderItem {
     summary: OrderItemSummary
 }
 
+export enum OrderItemField {
+    id = 'id',
+    sortNum = 'sortNum',
+    name = 'name',
+    description = 'description',
+    orientation = 'orientation',
+    quantity = 'quantity',
+}
+
 export enum OrderPackageType {
     NO_PACKAGE = 'NO_PACKAGE',
     NO_PACKAGE_WITH_REMAINS = 'NO_PACKAGE_WITH_REMAINS',
@@ -117,7 +126,7 @@ export interface OrderStatusChange {
 }
 
 export interface OrderUser {
-    id: string,
+    id: number,
     titleBefore: string,
     firstName: string,
     midName: string,

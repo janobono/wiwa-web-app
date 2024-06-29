@@ -69,16 +69,30 @@ const MdDialog = (
                         >{resourceState?.common?.mdDialog.preview}</a>
                     </div>
                     {editor ?
-                        <WiwaFormTextarea
-                            label={label}
-                            required={required}
-                            placeholder={placeholder}
-                            value={value}
-                            setValue={setValue}
-                            validate={validate}
-                            setValid={setValid}
-                            rows={rows}
-                        />
+                        <>
+                            <WiwaButton
+                                className="btn-primary join-item"
+                                disabled={disabled || !valid}
+                                onClick={() => {
+                                    fetch('/example.md').then(response => {
+                                        response.text().then(text => {
+                                            setValue(text);
+                                        })
+                                    });
+                                }}
+                            >{resourceState?.common?.mdDialog.example}
+                            </WiwaButton>
+                            <WiwaFormTextarea
+                                label={label}
+                                required={required}
+                                placeholder={placeholder}
+                                value={value}
+                                setValue={setValue}
+                                validate={validate}
+                                setValid={setValid}
+                                rows={rows}
+                            />
+                        </>
                         :
                         <WiwaMarkdownRenderer className="prose max-w-none" md={value}/>
                     }

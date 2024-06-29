@@ -27,12 +27,12 @@ const OrderSubmitPage = () => {
                     to: '/customer/order-submit'
                 }
             ]}/>
-            <div className="flex flex-col gap-5 p-5 w-full">
+            <div className="flex flex-col p-5 gap-5 w-full">
                 {customerState?.editEnabled &&
                     <div className="flex flex-row gap-5 w-full">
                         <WiwaButton
                             className="join-item"
-                            title={resourceState?.common?.pageable.previous}
+                            title={resourceState?.common?.navigation.customerNav.orderComments}
                             disabled={customerState?.busy}
                             onClick={() => navigate('/customer/order-comments')}
                         ><ChevronsLeft size={18}/>

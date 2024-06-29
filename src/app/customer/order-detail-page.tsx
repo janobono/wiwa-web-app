@@ -33,20 +33,20 @@ const OrderDetailPage = () => {
                     to: '/customer/order-detail'
                 }
             ]}/>
-            <div className="flex flex-col gap-5 p-5 w-full">
+            <div className="flex flex-col p-5 gap-5 w-full">
                 {customerState?.editEnabled &&
                     <div className="flex flex-row gap-5 w-full">
                         <div className="join">
                             <WiwaButton
                                 className="join-item"
-                                title={resourceState?.common?.pageable.previous}
+                                title={resourceState?.common?.navigation.customerNav.orderEdit}
                                 disabled={customerState?.busy}
                                 onClick={() => navigate('/customer/order-edit')}
                             ><ChevronsLeft size={18}/>
                             </WiwaButton>
                             <WiwaButton
                                 className="join-item"
-                                title={resourceState?.common?.pageable.next}
+                                title={resourceState?.common?.navigation.customerNav.orderComments}
                                 disabled={customerState?.busy}
                                 onClick={() => navigate('/customer/order-comments')}
                             ><ChevronsRight size={18}/>
@@ -54,8 +54,11 @@ const OrderDetailPage = () => {
                         </div>
                     </div>
                 }
-
-                <div dangerouslySetInnerHTML={{__html: detail}}/>
+                <iframe
+                    className="w-full"
+                    height="500"
+                    srcDoc={detail}>
+                </iframe>
             </div>
         </>
     )

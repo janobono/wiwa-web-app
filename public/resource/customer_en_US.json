@@ -3,6 +3,12 @@
     "createdFromLabel": "Created from",
     "createdToLabel": "Created to"
   },
+  "orderCommentDialog": {
+    "title": "Order comment",
+    "valueLabel": "Comment",
+    "valuePlaceholder": "Enter comment",
+    "valueRequired": "Comment is required"
+  },
   "orders": {
     "comments": {
       "title": "Comments"

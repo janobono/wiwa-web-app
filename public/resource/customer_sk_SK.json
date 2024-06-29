@@ -3,6 +3,12 @@
     "createdFromLabel": "Vytvorená od",
     "createdToLabel": "Vytvorená do"
   },
+  "orderCommentDialog": {
+    "title": "Komentár objednávky",
+    "valueLabel": "Komentár",
+    "valuePlaceholder": "Zadajte komentár",
+    "valueRequired": "Vyžaduje sa komentár"
+  },
   "orders": {
     "comments": {
       "title": "Komentáre"

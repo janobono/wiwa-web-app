@@ -133,6 +133,7 @@
   "mdDialog": {
     "editor": "Editor",
     "preview": "Preview",
+    "example": "Example",
     "ok": "Ok",
     "cancel": "Cancel"
   },
@@ -181,13 +182,21 @@
     },
     "customerNav": {
       "title": "My orders",
-      "orderComments": "Comments",
-      "orderDetail": "Detail",
-      "orderEdit": "Edit",
-      "orderSubmit": "Submit"
+      "orderComments": "Order comments",
+      "orderDetail": "Order detail",
+      "orderEdit": "Edit order",
+      "orderSubmit": "Order submit"
     }
   },
   "notFound": "404 Page not found",
+  "orderItemTable": {
+    "id": "Id",
+    "sortNum": "Sort num",
+    "name": "Name",
+    "description": "Description",
+    "orientation": "Orientation",
+    "quantity": "Quantity"
+  },
   "orderPackageType": {
     "noPackage": "No package",
     "noPackageWithRemains": "No package with remains",

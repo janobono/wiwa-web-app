@@ -31,7 +31,7 @@ const OrdersPage = () => {
                     to: '/customer'
                 }
             ]}/>
-            <div className="flex flex-col gap-5 p-5 w-full">
+            <div className="flex flex-col p-5 gap-5 w-full">
                 <CustomerOrderSearchCriteriaForm
                     searchHandler={(criteria) => customerState?.setCriteria(criteria)}
                 >
@@ -82,7 +82,7 @@ const OrdersPage = () => {
                     <WiwaButton
                         title={resourceState?.common?.action.submit}
                         className="btn-primary join-item"
-                        disabled={customerState?.busy || !customerState?.editEnabled}
+                        disabled={customerState?.busy || !customerState?.submitEnabled}
                         onClick={() => {
                             navigate('/customer/order-submit');
                         }}

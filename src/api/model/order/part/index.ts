@@ -1,10 +1,29 @@
 import { Dimensions } from '../../';
 
+export interface PartCorner {
+    type: string,
+    edgeId?: number,
+}
+
+export interface PartCornerRounded extends PartCorner {
+    type: 'ROUNDED',
+    radius: number
+}
+
+export interface PartCornerStraight extends PartCorner {
+    type: 'STRAIGHT',
+    dimensions: Dimensions
+}
+
 export enum FrameType {
     HORIZONTAL = 'HORIZONTAL',
     VERTICAL = 'VERTICAL',
     HORIZONTAL_LONG = 'HORIZONTAL_LONG',
     HORIZONTAL_SHORT = 'HORIZONTAL_SHORT'
+}
+
+export interface Part {
+    type: string
 }
 
 export interface PartBasic extends Part {
@@ -20,21 +39,6 @@ export interface PartBasic extends Part {
     cornerA1B2?: PartCorner,
     cornerA2B1?: PartCorner,
     cornerA2B2?: PartCorner
-}
-
-export interface PartCornerRounded extends PartCorner {
-    type: 'ROUNDED',
-    radius: number
-}
-
-export interface PartCornerStraight extends PartCorner {
-    type: 'STRAIGHT',
-    dimensions: Dimensions
-}
-
-export interface PartCorner {
-    type: string,
-    edgeId?: number,
 }
 
 export interface PartDuplicatedBasic extends Part {
@@ -101,8 +105,4 @@ export interface PartFrame extends Part {
     dimensionsA2: Dimensions,
     dimensionsB1: Dimensions,
     dimensionsB2: Dimensions
-}
-
-export interface Part {
-    type: string
 }

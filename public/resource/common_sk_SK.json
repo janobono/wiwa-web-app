@@ -133,6 +133,7 @@
   "mdDialog": {
     "editor": "Editor",
     "preview": "Náhľad",
+    "example": "Ukážka",
     "ok": "Potvrdiť",
     "cancel": "Zrušiť"
   },
@@ -181,13 +182,21 @@
     },
     "customerNav": {
       "title": "Moje objednávky",
-      "orderComments": "Komentáre",
-      "orderDetail": "Detail",
-      "orderEdit": "Upraviť",
-      "orderSubmit": "Odoslať"
+      "orderComments": "Komentáre objednávky",
+      "orderDetail": "Detail objednávky",
+      "orderEdit": "Upraviť objednávku",
+      "orderSubmit": "Odoslať objednávku"
     }
   },
   "notFound": "404 Stránka nenájdená",
+  "orderItemTable": {
+    "id": "Id",
+    "sortNum": "P.č.",
+    "name": "Názov",
+    "description": "Popis",
+    "orientation": "Orientácia",
+    "quantity": "Množstvo"
+  },
   "orderPackageType": {
     "noPackage": "Bez balenia",
     "noPackageWithRemains": "Bez balenia so zvyškami",

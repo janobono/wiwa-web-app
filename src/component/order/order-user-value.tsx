@@ -8,17 +8,38 @@ const OrderUserValue = ({value}: { value?: OrderUser }) => {
 
     useEffect(() => {
         if (value) {
-            setData(
-                value.titleBefore ? value.titleBefore + ' ' : ''
-                + value.firstName + ' '
-                + value.midName ? value.midName + ' ' : ''
-                + value.lastName
-                + value.titleAfter ? ' ' + value.titleAfter : ''
-            );
+            let result = '';
+
+            if (!isBlank(value.titleBefore)) {
+                result += value.titleBefore + ' ';
+            }
+
+            result += value.firstName + ' ';
+
+            if (!isBlank(value.midName)) {
+                result += value.midName + ' ';
+            }
+
+            result += value.lastName;
+
+            if (!isBlank(value.titleAfter)) {
+                result += ' ' + value.titleAfter;
+            }
+            setData(result);
         } else {
             setData('');
         }
     }, [value]);
+
+    const isBlank = (s?: string) => {
+        if (s === undefined) {
+            return true;
+        }
+        if (s === null) {
+            return true;
+        }
+        return s.trim().length === 0;
+    }
 
     return (
         <>

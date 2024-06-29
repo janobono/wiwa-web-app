@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import * as orderApi from '../../api/controller/order';
 import { Authority } from '../../api/model';
-import { Order, OrderField, OrderSearchCriteria, OrderStatus } from '../../api/model/order';
+import { Order, OrderCommentChange, OrderField, OrderSearchCriteria, OrderStatus } from '../../api/model/order';
 import AuthDefender from '../../component/layout/auth-defender';
 import BaseFooter from '../../component/layout/base-footer';
 import MaintenanceDefender from '../../component/layout/maintenance-defender';
@@ -31,6 +31,8 @@ export default CustomerPage;
 export interface CustomerState {
     busy: boolean,
     editEnabled: boolean,
+    submitEnabled: boolean,
+    orderFinal: boolean,
     previous: boolean,
     next: boolean,
     page: number,
@@ -42,7 +44,8 @@ export interface CustomerState {
     getOrders: () => Promise<boolean>,
     addOrder: () => Promise<boolean>,
     deleteOrder: () => Promise<boolean>,
-    getHtml: () => Promise<string>
+    getHtml: () => Promise<string>,
+    addComment: (orderCommentChange: OrderCommentChange) => Promise<void>;
 }
 
 export const CustomerContext = createContext<CustomerState | undefined>(undefined);
@@ -53,6 +56,8 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
 
     const [busy, setBusy] = useState(false);
     const [editEnabled, setEditEnabled] = useState(false);
+    const [submitEnabled, setSubmitEnabled] = useState(false);
+    const [orderFinal, setOrderFinal] = useState(false);
     const [previous, setPrevious] = useState(false);
     const [next, setNext] = useState(false);
     const [page, setPage] = useState(0);
@@ -67,7 +72,9 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
             const index = data.findIndex(item => item.id === selected?.id);
             if (index !== -1) {
                 setSelected(data[index]);
-                setEditEnabled(data[index].status == OrderStatus.NEW);
+                setEditEnabled(data[index].status === OrderStatus.NEW);
+                setSubmitEnabled(data[index].status === OrderStatus.NEW && data[index].items.length > 0);
+                setOrderFinal(data[index].status === OrderStatus.CANCELLED || data[index].status === OrderStatus.FINISHED);
             }
         } else {
             setSelected(undefined);
@@ -93,8 +100,8 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
                 size: 10,
                 sort: {field: OrderField.orderNumber, asc: false}
             }, authState?.authToken?.accessToken);
-            setPrevious(response.data?.first || false);
-            setNext(response.data?.last || false);
+            setPrevious(!response.data?.first || false);
+            setNext(!response.data?.last || false);
             setData(response.data?.content);
             errorState?.addError(response.error);
             return response.error === undefined;
@@ -150,12 +157,32 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
         }
     }
 
+    const addComment = async (orderCommentChange: OrderCommentChange) => {
+        setBusy(true);
+        try {
+            const response = await orderApi.addComment(selected?.id || -1, orderCommentChange, authState?.authToken?.accessToken);
+            if (response.data) {
+                const newData = createData();
+                const index = newData.findIndex(item => item.id === response.data?.id);
+                if (index !== -1) {
+                    newData[index] = response.data;
+                }
+                setData(newData);
+            }
+            errorState?.addError(response.error);
+        } finally {
+            setBusy(false);
+        }
+    }
+
     return (
         <CustomerContext.Provider
             value={
                 {
                     busy,
                     editEnabled,
+                    submitEnabled,
+                    orderFinal,
                     previous,
                     next,
                     page,
@@ -171,7 +198,8 @@ const CustomerProvider = ({children}: { children: ReactNode }) => {
                     getOrders,
                     addOrder,
                     deleteOrder,
-                    getHtml
+                    getHtml,
+                    addComment
                 }
             }
         >{children}
