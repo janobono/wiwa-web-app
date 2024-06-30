@@ -1,34 +1,27 @@
 import { useContext, useEffect, useState } from 'react';
 import { Plus, Trash } from 'react-feather';
 
-import { BoardContext } from '../boards-base-page';
-import { setBoardCategoryItems } from '../../../api/controller/board';
 import { getBoardCategories } from '../../../api/controller/ui';
 import { CategoryItem, CategoryItemChange, CategoryItemField } from '../../../api/model';
 import { CodeList, CodeListItem } from '../../../api/model/code-list';
-import CategoryItemTable from '../../../component/app/manager/category/category-item-table';
-import SelectCodeListItemDialog from '../../../component/app/manager/code-list/select-code-list-item-dialog';
+import CategoryItemTable from '../../../component/app/manager/categories/category-item-table';
+import SelectCodeListItemDialog from '../../../component/app/manager/code-lists/select-code-list-item-dialog';
+import { BoardContext } from '../../../component/board/board-provider';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogContext, ResourceContext } from '../../../context';
 import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const BOARD_CATEGORIES_DIALOG_ID = 'board-categories-dialog-001';
 
 const BoardCategoriesPage = () => {
-    const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
-    const errorState = useContext(ErrorContext);
     const resourceState = useContext(ResourceContext);
-
     const boardState = useContext(BoardContext);
 
     const [codeLists, setCodeLists] = useState<CodeList[]>([]);
-
-    const [busy, setBusy] = useState(false);
     const [data, setData] = useState<CategoryItem[]>();
     const [selected, setSelected] = useState<CategoryItem>();
-
     const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
@@ -54,24 +47,13 @@ const BoardCategoriesPage = () => {
         }
     }, [data, selected]);
 
-    const submit = async (data: CategoryItemChange[]) => {
-        setBusy(true);
-        try {
-            const response = await setBoardCategoryItems(boardState?.selected?.id || -1, data, authState?.authToken?.accessToken);
-            boardState?.setSelected(response.data);
-            errorState?.addError(response.error);
-        } finally {
-            setBusy(false);
-        }
-    }
-
     const okHandler = async (codeListItem: CodeListItem) => {
         if (data) {
             const newData: CategoryItemChange[] = data.map(item => {
                 return {categoryId: item.category.id, itemId: item.id};
             });
             newData.push({categoryId: codeListItem.codeListId, itemId: codeListItem.id});
-            submit(newData).then();
+            boardState?.setBoardCategoryItems(newData).then();
         }
     }
 
@@ -81,7 +63,7 @@ const BoardCategoriesPage = () => {
             const index = newData.findIndex(item => item.id === categoryItem.id);
             if (index !== -1) {
                 newData.splice(index, 1);
-                submit(newData.map(item => {
+                boardState?.setBoardCategoryItems(newData.map(item => {
                     return {categoryId: item.category.id, itemId: item.id};
                 })).then();
             }
@@ -108,7 +90,7 @@ const BoardCategoriesPage = () => {
                     <WiwaButton
                         className="btn-primary join-item"
                         title={resourceState?.common?.action.add}
-                        disabled={busy}
+                        disabled={boardState?.busy || !boardState?.editEnabled}
                         onClick={() => setShowDialog(true)}
                     ><Plus size={18}/>
                     </WiwaButton>
@@ -116,7 +98,7 @@ const BoardCategoriesPage = () => {
                     <WiwaButton
                         className="btn-accent join-item"
                         title={resourceState?.common?.action.delete}
-                        disabled={busy || selected === undefined}
+                        disabled={boardState?.busy || !boardState?.editEnabled}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,

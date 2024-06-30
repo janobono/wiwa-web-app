@@ -1,125 +1,33 @@
 import { useContext, useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Edit, Image, List, Plus, Trash } from 'react-feather';
 
-import { EdgeContext } from '../edges-base-page';
-import { addEdge, deleteEdge, getEdges, setEdge } from '../../../api/controller/edge';
-import { getApplicationProperties } from '../../../api/controller/ui';
-import { UnitId } from '../../../api/model/application';
-import { Edge, EdgeChange, EdgeField, EdgeSearchCriteria } from '../../../api/model/edge';
+import { EdgeField } from '../../../api/model/edge';
+import EdgeChangeDialog from '../../../component/app/manager/edges/edge-change-dialog';
+import { EdgeContext } from '../../../component/edge/edge-provider';
 import EdgeTable from '../../../component/edge/edge-table';
 import EdgeSearchCriteriaForm from '../../../component/edge/edge-search-criteria-form';
-import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import WiwaFormInputDecimal from '../../../component/ui/wiwa-form-input-decimal';
-import WiwaFormInputInteger from '../../../component/ui/wiwa-form-input-integer';
-import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
-import WiwaFormTextarea from '../../../component/ui/wiwa-form-textarea';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogContext, ResourceContext } from '../../../context';
 import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
-const BOARD_DIALOG_ID = 'edge-dialog-001';
+const EDGE_DIALOG_ID = 'manager-edge-dialog-001';
 
 const EdgesPage = () => {
     const navigate = useNavigate();
 
-    const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
-    const errorState = useContext(ErrorContext);
     const resourceState = useContext(ResourceContext);
-
     const edgeState = useContext(EdgeContext);
-
-    const [criteria, setCriteria] = useState<EdgeSearchCriteria>();
-    const [page, setPage] = useState(0);
-    const [previous, setPrevious] = useState(false);
-    const [next, setNext] = useState(false);
 
     const [editMode, setEditMode] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
-        fetchData().then();
-    }, [criteria]);
-
-    useEffect(() => {
-        setPrevious(edgeState?.data !== undefined && !edgeState.data.first);
-        setNext(edgeState?.data !== undefined && !edgeState.data.last);
-
-        if (edgeState?.selected && edgeState?.data) {
-            const index = edgeState.data.content.findIndex(item => item.id === edgeState.selected?.id);
-            if (index !== -1) {
-                edgeState.setSelected(edgeState.data.content[index]);
-            }
-        } else {
-            edgeState?.setSelected(undefined);
-        }
-    }, [edgeState?.data, edgeState?.selected]);
-
-    const fetchData = async () => {
-        edgeState?.setBusy(true);
-        try {
-            const response = await getEdges(criteria, {page, size: 10}, authState?.authToken?.accessToken);
-            edgeState?.setData(response?.data);
-            errorState?.addError(response?.error);
-        } finally {
-            edgeState?.setBusy(false);
-        }
-    }
-
-    const okHandler = async (edgeChange: EdgeChange) => {
-        edgeState?.setBusy(true);
-        try {
-            let response;
-            if (editMode) {
-                if (edgeState?.selected) {
-                    response = await setEdge(edgeState?.selected.id, edgeChange, authState?.authToken?.accessToken);
-                }
-            } else {
-                response = await addEdge(edgeChange, authState?.authToken?.accessToken);
-            }
-
-            if (edgeState?.data && response?.data) {
-                const newData = {...edgeState?.data};
-                const index = newData.content.findIndex(item => item.id === response.data.id);
-                if (index !== -1) {
-                    newData.content[index] = response.data;
-                } else {
-                    newData.content.push(response.data);
-                }
-                edgeState?.setData(newData);
-            }
-
-            errorState?.addError(response?.error);
-        } finally {
-            edgeState?.setBusy(false);
-        }
-    }
-
-    const deleteHandler = async (id: number) => {
-        edgeState?.setBusy(true);
-        try {
-            const response = await deleteEdge(id, authState?.authToken?.accessToken);
-
-            edgeState?.setSelected(undefined);
-
-            if (edgeState?.data) {
-                const newData = {...edgeState?.data};
-                const index = newData.content.findIndex(item => item.id === id);
-                if (index !== -1) {
-                    newData.content.splice(index, 1);
-                }
-                edgeState?.setData(newData);
-            }
-
-            errorState?.addError(response?.error);
-        } finally {
-            edgeState?.setBusy(false);
-        }
-    }
+        edgeState?.getEdges().then();
+    }, []);
 
     return (
         <>
@@ -131,8 +39,8 @@ const EdgesPage = () => {
                     to: '/manager/edges'
                 }
             ]}/>
-            <div className="flex flex-col gap-5 p-5 w-full">
-                <EdgeSearchCriteriaForm searchHandler={setCriteria}>
+            <div className="flex flex-col p-5 gap-5 w-full">
+                <EdgeSearchCriteriaForm searchHandler={(criteria) => edgeState?.setCriteria(criteria)}>
                     <>
                         <WiwaButton
                             title={resourceState?.common?.action.add}
@@ -148,7 +56,7 @@ const EdgesPage = () => {
                         <WiwaButton
                             title={resourceState?.common?.action.edit}
                             className="btn-secondary join-item"
-                            disabled={edgeState?.busy || edgeState?.selected === undefined}
+                            disabled={edgeState?.busy || !edgeState?.editEnabled}
                             onClick={() => {
                                 setEditMode(true);
                                 setShowDialog(true);
@@ -159,7 +67,7 @@ const EdgesPage = () => {
                         <WiwaButton
                             title={resourceState?.common?.action.categories}
                             className="btn-ghost join-item"
-                            disabled={edgeState?.busy || edgeState?.selected === undefined}
+                            disabled={edgeState?.busy || !edgeState?.editEnabled}
                             onClick={() => {
                                 if (edgeState?.selected) {
                                     navigate('/manager/edges/categories');
@@ -171,7 +79,7 @@ const EdgesPage = () => {
                         <WiwaButton
                             title={resourceState?.common?.action.image}
                             className="btn-ghost join-item"
-                            disabled={edgeState?.busy || edgeState?.selected === undefined}
+                            disabled={edgeState?.busy || !edgeState?.editEnabled}
                             onClick={() => {
                                 if (edgeState?.selected) {
                                     navigate('/manager/edges/image');
@@ -183,7 +91,7 @@ const EdgesPage = () => {
                         <WiwaButton
                             className="btn-accent join-item"
                             title={resourceState?.common?.action.delete}
-                            disabled={edgeState?.busy || edgeState?.selected === undefined}
+                            disabled={edgeState?.busy || !edgeState?.editEnabled}
                             onClick={() => {
                                 dialogState?.showDialog({
                                     type: DialogType.YES_NO,
@@ -191,9 +99,7 @@ const EdgesPage = () => {
                                     message: resourceState?.manager?.edges.deleteEdge.message,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
-                                            if (edgeState?.selected) {
-                                                deleteHandler(edgeState?.selected.id).then();
-                                            }
+                                            edgeState?.deleteEdge().then();
                                         }
                                     }
                                 });
@@ -206,7 +112,7 @@ const EdgesPage = () => {
                 <div className="overflow-x-auto">
                     <EdgeTable
                         fields={Object.values(EdgeField)}
-                        rows={edgeState?.data?.content}
+                        rows={edgeState?.data}
                         selected={edgeState?.selected}
                         setSelected={(selected) => edgeState?.setSelected(selected)}
                     />
@@ -214,22 +120,27 @@ const EdgesPage = () => {
 
                 <div className="flex justify-center w-full">
                     <WiwaPageable
-                        isPrevious={previous}
-                        previousHandler={() => setPage(page + 1)}
-                        page={page + 1}
-                        pageHandler={() => fetchData()}
-                        isNext={next}
-                        nextHandler={() => setPage(page - 1)}
+                        isPrevious={edgeState?.previous || false}
+                        previousHandler={() => edgeState?.setPage(edgeState?.page + 1)}
+                        page={(edgeState?.page || 0) + 1}
+                        pageHandler={() => edgeState?.getEdges()}
+                        isNext={edgeState?.next || false}
+                        nextHandler={() => edgeState?.setPage(edgeState?.page - 1)}
                         disabled={edgeState?.busy}
                     />
                 </div>
             </div>
 
-            <EdgeDataDialog
+            <EdgeChangeDialog
+                dialogId={EDGE_DIALOG_ID}
                 showDialog={showDialog}
                 edge={editMode ? edgeState?.selected : undefined}
                 okHandler={(data) => {
-                    okHandler(data).then();
+                    if (editMode) {
+                        edgeState?.setEdge(data).then();
+                    } else {
+                        edgeState?.addEdge(data).then();
+                    }
                     setShowDialog(false);
                 }}
                 cancelHandler={() => setShowDialog(false)}
@@ -240,256 +151,3 @@ const EdgesPage = () => {
 }
 
 export default EdgesPage;
-
-const EdgeDataDialog = ({showDialog, edge, okHandler, cancelHandler, submitting}: {
-    showDialog: boolean,
-    edge?: Edge,
-    okHandler: (edgeChange: EdgeChange) => void,
-    cancelHandler: () => void,
-    submitting: boolean
-}) => {
-    const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
-
-    const [weightSign, setWeightSign] = useState<string>();
-    const [lengthSign, setLengthSign] = useState<string>();
-    const [priceSign, setPriceSign] = useState<string>();
-
-    const [code, setCode] = useState('');
-    const [codeValid, setCodeValid] = useState(false);
-
-    const [name, setName] = useState('');
-    const [nameValid, setNameValid] = useState(false);
-
-    const [description, setDescription] = useState('');
-
-    const [weight, setWeight] = useState<number>();
-    const [weightValid, setWeightValid] = useState(false);
-
-    const [width, setWidth] = useState<number>();
-    const [widthValid, setWidthValid] = useState(false);
-
-    const [thickness, setThickness] = useState<number>();
-    const [thicknessValid, setThicknessValid] = useState(false);
-
-    const [price, setPrice] = useState<number>();
-    const [priceValid, setPriceValid] = useState(false);
-
-    const [formValid, setFormValid] = useState(false);
-
-    useEffect(() => {
-        setWeightSign(unitSign(UnitId.KILOGRAM));
-        setLengthSign(unitSign(UnitId.MILLIMETER));
-        getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
-    }, [resourceState]);
-
-    useEffect(() => {
-        if (edge) {
-            setCode(edge.code);
-            setCodeValid(true);
-
-            setName(edge.name);
-            setNameValid(true);
-
-            setDescription(edge.description || '');
-
-            setWeight(edge.weight);
-            setWeightValid(true);
-
-            setWidth(edge.width);
-            setWidthValid(true);
-
-            setThickness(edge.thickness);
-            setThicknessValid(true);
-
-            setPrice(edge.price);
-            setPriceValid(true);
-        } else {
-            setCode('');
-            setCodeValid(true);
-
-            setName('');
-            setNameValid(true);
-
-            setDescription('');
-
-            setWeight(undefined);
-            setWeightValid(true);
-
-            setWidth(undefined);
-            setWidthValid(true);
-
-            setThickness(undefined);
-            setThicknessValid(true);
-
-            setPrice(undefined);
-            setPriceValid(true);
-        }
-    }, [showDialog, edge]);
-
-    useEffect(() => {
-        setFormValid(codeValid && nameValid && weightValid && widthValid && thicknessValid && priceValid);
-    }, [codeValid, nameValid, weightValid, widthValid, thicknessValid, priceValid]);
-
-    const unitSign = (unitId: UnitId) => {
-        return `[${resourceState?.getUnit(unitId)}]`;
-    }
-
-    return (!dialogState?.modalRoot ? null : createPortal(
-        <BaseDialog id={BOARD_DIALOG_ID} showDialog={showDialog} closeHandler={cancelHandler}>
-            <div className="container p-5 mx-auto">
-                <div className="flex flex-col items-center justify-center">
-                    <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.manager?.edges.edgeDialog.title}
-                    </div>
-
-                    <WiwaFormInputString
-                        label={resourceState?.manager?.edges.edgeDialog.codeLabel}
-                        required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.codePlaceholder}
-                        value={code}
-                        setValue={setCode}
-                        setValid={setCodeValid}
-                        validate={() => {
-                            if (code.trim().length === 0) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.codeRequired
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormInputString
-                        label={resourceState?.manager?.edges.edgeDialog.nameLabel}
-                        required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.namePlaceholder}
-                        value={name}
-                        setValue={setName}
-                        setValid={setNameValid}
-                        validate={() => {
-                            if (name.trim().length === 0) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.nameRequired
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormTextarea
-                        label={resourceState?.manager?.edges.edgeDialog.descriptionLabel}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.descriptionPlaceholder}
-                        value={description}
-                        setValue={setDescription}
-                    />
-
-                    <WiwaFormInputDecimal
-                        min="0"
-                        label={`${resourceState?.manager?.edges.edgeDialog.weightLabel} ${weightSign}`}
-                        required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.weightPlaceholder}
-                        value={weight}
-                        setValue={setWeight}
-                        setValid={setWeightValid}
-                        validate={() => {
-                            if (weight === undefined) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.weightRequired
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormInputInteger
-                        min="0"
-                        label={`${resourceState?.manager?.edges.edgeDialog.widthLabel} ${lengthSign}`}
-                        required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.widthPlaceholder}
-                        value={width}
-                        setValue={setWidth}
-                        setValid={setWidthValid}
-                        validate={() => {
-                            if (width === undefined) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.widthRequired
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormInputDecimal
-                        min="0"
-                        label={`${resourceState?.manager?.edges.edgeDialog.thicknessLabel} ${lengthSign}`}
-                        required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.thicknessPlaceholder}
-                        value={thickness}
-                        setValue={setThickness}
-                        setValid={setThicknessValid}
-                        validate={() => {
-                            if (thickness === undefined) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.thicknessRequired
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <WiwaFormInputDecimal
-                        min="0"
-                        label={`${resourceState?.manager?.edges.edgeDialog.priceLabel} ${priceSign}`}
-                        required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.pricePlaceholder}
-                        value={price}
-                        setValue={setPrice}
-                        setValid={setPriceValid}
-                        validate={() => {
-                            if (price === undefined) {
-                                return {
-                                    valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.priceRequired
-                                };
-                            }
-                            return {valid: true};
-                        }}
-                    />
-
-                    <div className="join pt-5">
-                        <WiwaButton
-                            className="btn-primary join-item"
-                            disabled={submitting || !formValid}
-                            onClick={() => {
-                                okHandler({
-                                    code,
-                                    name,
-                                    description,
-                                    weight: Number(weight),
-                                    width: Number(width),
-                                    thickness: Number(thickness),
-                                    price: Number(price)
-                                });
-                            }}
-                        >{resourceState?.common?.action.ok}
-                        </WiwaButton>
-                        <WiwaButton
-                            className="btn-accent join-item"
-                            disabled={submitting}
-                            onClick={() => {
-                                cancelHandler();
-                            }}
-                        >{resourceState?.common?.action.cancel}
-                        </WiwaButton>
-                    </div>
-                </div>
-            </div>
-        </BaseDialog>
-        , dialogState.modalRoot))
-}

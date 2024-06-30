@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronsLeft } from 'react-feather';
 
-import { CustomerContext } from './customer-page';
+import { CustomerContext } from '../../component/app/customer/customer-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import { ResourceContext } from '../../context';

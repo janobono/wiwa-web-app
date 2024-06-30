@@ -5,7 +5,7 @@ import { Edit } from 'react-feather';
 import { setUnits } from '../../api/controller/config';
 import { getUnits } from '../../api/controller/ui';
 import { Unit, UnitField } from '../../api/model/application';
-import UnitTable from '../../component/app/admin/unit-table';
+import UnitTable from '../../component/app/admin/units/unit-table';
 import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';

@@ -1,67 +1,31 @@
 import { useContext, useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { Edit, Trash } from 'react-feather';
 
-import { BoardContext } from '../boards-base-page';
-import { deleteBoardImage, setBoardImage } from '../../../api/controller/board';
 import { getBoardImagePath } from '../../../api/controller/ui';
-import ImageDialog from '../../../component/dialog/image-dialog';
+import BoardImageDialog from '../../../component/app/manager/boards/board-image-dialog';
+import { BoardContext } from '../../../component/board/board-provider';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogContext, ResourceContext } from '../../../context';
 import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const BOARD_IMAGE_DIALOG_ID = 'board-image-dialog-001';
 
 const BoardImagePage = () => {
-    const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
-    const errorState = useContext(ErrorContext);
     const resourceState = useContext(ResourceContext);
-
     const boardState = useContext(BoardContext);
 
-    const [busy, setBusy] = useState(false);
     const [data, setData] = useState<string>();
-
     const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
-        if (!busy && boardState?.selected !== undefined) {
+        if (boardState?.selected !== undefined) {
             setData(getBoardImagePath(boardState.selected.id));
         } else {
             setData(undefined);
         }
-    }, [boardState?.selected, busy]);
-
-    const cancelHandler = async () => {
-        setShowDialog(false);
-    }
-
-    const okHandler = async (file: File) => {
-        setBusy(true);
-        try {
-            if (boardState?.selected) {
-                const response = await setBoardImage(boardState.selected.id, file, authState?.authToken?.accessToken);
-                errorState?.addError(response?.error);
-            }
-        } finally {
-            setBusy(false);
-        }
-        setShowDialog(false);
-    }
-
-    const deleteHandler = async () => {
-        setBusy(true);
-        try {
-            if (boardState?.selected) {
-                const response = await deleteBoardImage(boardState.selected.id, authState?.authToken?.accessToken);
-                errorState?.addError(response?.error);
-            }
-        } finally {
-            setBusy(false);
-        }
-    }
+    }, [boardState?.selected, data]);
 
     return (
         <>
@@ -83,7 +47,7 @@ const BoardImagePage = () => {
                     <WiwaButton
                         title={resourceState?.common?.action.edit}
                         className="btn-secondary join-item"
-                        disabled={busy}
+                        disabled={boardState?.busy || !boardState?.editEnabled}
                         onClick={() => {
                             setShowDialog(true);
                         }}
@@ -93,7 +57,7 @@ const BoardImagePage = () => {
                     <WiwaButton
                         className="btn-accent join-item"
                         title={resourceState?.common?.action.delete}
-                        disabled={busy}
+                        disabled={boardState?.busy || !boardState?.editEnabled}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
@@ -101,7 +65,11 @@ const BoardImagePage = () => {
                                 message: resourceState?.manager?.boards.boardImage.deleteMessage,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
-                                        deleteHandler().then();
+                                        boardState?.deleteBoardImage().then(
+                                            () => {
+                                                setData(undefined);
+                                            }
+                                        );
                                     }
                                 }
                             });
@@ -119,68 +87,21 @@ const BoardImagePage = () => {
             </div>
 
             <BoardImageDialog
-                busy={busy}
+                dialogId={BOARD_IMAGE_DIALOG_ID}
+                busy={boardState?.busy || false}
                 showDialog={showDialog}
-                okHandler={okHandler}
-                cancelHandler={cancelHandler}
+                okHandler={(file) => {
+                    boardState?.setBoardImage(file).then(
+                        () => {
+                            setData(undefined);
+                            setShowDialog(false);
+                        }
+                    );
+                }}
+                cancelHandler={() => setShowDialog(false)}
             />
         </>
     )
 }
 
 export default BoardImagePage;
-
-const BoardImageDialog = ({busy, showDialog, okHandler, cancelHandler}: {
-    busy: boolean,
-    showDialog: boolean,
-    okHandler: (file: File) => void,
-    cancelHandler: () => void,
-}) => {
-    const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
-
-    const [file, setFile] = useState<File>();
-
-    useEffect(() => {
-        if (!showDialog) {
-            setFile(undefined);
-        }
-    }, [showDialog]);
-
-    const submitHandler = () => {
-        if (file) {
-            okHandler(file);
-        }
-    }
-
-    return (!dialogState?.modalRoot ? null : createPortal(
-        <ImageDialog
-            disabled={busy}
-            id={BOARD_IMAGE_DIALOG_ID}
-            showDialog={showDialog}
-            title={resourceState?.manager?.boards.boardImage.editTitle}
-            label={resourceState?.manager?.boards.boardImage.editFileLabel}
-            required={true}
-            placeholder={resourceState?.manager?.boards.boardImage.editFilePlaceholder}
-            value={file}
-            setValue={setFile}
-            validate={() => {
-                if (file === undefined) {
-                    return {
-                        valid: false,
-                        message: resourceState?.manager?.boards.boardImage.editFileRequired
-                    }
-                }
-                if (!(file.type === 'image/jpeg' || file.type === 'image/png')) {
-                    return {
-                        valid: false,
-                        message: resourceState?.manager?.boards.boardImage.editFileFormat
-                    }
-                }
-                return {valid: true};
-            }}
-            okHandler={submitHandler}
-            cancelHandler={cancelHandler}
-        />
-        , dialogState.modalRoot))
-}

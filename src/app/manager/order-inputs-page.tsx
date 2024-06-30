@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react';
 
-import ManufacturePropertiesEditor from '../../component/app/manager/manufacture-properties-editor';
-import PriceForGluingLayerEditor from '../../component/app/manager/price-for-gluing-layer-editor';
-import PricesForGluingEdgeEditor from '../../component/app/manager/prices-for-gluing-edge-editor';
-import PricesForCuttingEditor from '../../component/app/manager/prices-for-cutting-editor';
-import FreeDayEditor from '../../component/app/manager/free-day-editor';
-import VatRateEditor from '../../component/app/manager/vat-rate-editor';
+import ManufacturePropertiesEditor from '../../component/app/manager/order-inputs/manufacture-properties-editor';
+import PriceForGluingLayerEditor from '../../component/app/manager/order-inputs/price-for-gluing-layer-editor';
+import PricesForGluingEdgeEditor from '../../component/app/manager/order-inputs/prices-for-gluing-edge-editor';
+import PricesForCuttingEditor from '../../component/app/manager/order-inputs/prices-for-cutting-editor';
+import FreeDayEditor from '../../component/app/manager/order-inputs/free-day-editor';
+import VatRateEditor from '../../component/app/manager/order-inputs/vat-rate-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
 import { ResourceContext } from '../../context';

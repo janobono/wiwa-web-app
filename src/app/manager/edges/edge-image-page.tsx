@@ -1,67 +1,31 @@
 import { useContext, useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { Edit, Trash } from 'react-feather';
 
-import { EdgeContext } from '../edges-base-page';
-import { deleteEdgeImage, setEdgeImage } from '../../../api/controller/edge';
 import { getEdgeImagePath } from '../../../api/controller/ui';
-import ImageDialog from '../../../component/dialog/image-dialog';
+import EdgeImageDialog from '../../../component/app/manager/edges/edge-image-dialog';
+import { EdgeContext } from '../../../component/edge/edge-provider';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import { DialogContext, ResourceContext } from '../../../context';
 import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
-const BOARD_IMAGE_DIALOG_ID = 'edge-image-dialog-001';
+const EDGE_IMAGE_DIALOG_ID = 'edge-image-dialog-001';
 
 const EdgeImagePage = () => {
-    const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
-    const errorState = useContext(ErrorContext);
     const resourceState = useContext(ResourceContext);
-
     const edgeState = useContext(EdgeContext);
 
-    const [busy, setBusy] = useState(false);
     const [data, setData] = useState<string>();
-
     const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
-        if (!busy && edgeState?.selected !== undefined) {
+        if (edgeState?.selected !== undefined) {
             setData(getEdgeImagePath(edgeState.selected.id));
         } else {
             setData(undefined);
         }
-    }, [edgeState?.selected, busy]);
-
-    const cancelHandler = async () => {
-        setShowDialog(false);
-    }
-
-    const okHandler = async (file: File) => {
-        setBusy(true);
-        try {
-            if (edgeState?.selected) {
-                const response = await setEdgeImage(edgeState.selected.id, file, authState?.authToken?.accessToken);
-                errorState?.addError(response?.error);
-            }
-        } finally {
-            setBusy(false);
-        }
-        setShowDialog(false);
-    }
-
-    const deleteHandler = async () => {
-        setBusy(true);
-        try {
-            if (edgeState?.selected) {
-                const response = await deleteEdgeImage(edgeState.selected.id, authState?.authToken?.accessToken);
-                errorState?.addError(response?.error);
-            }
-        } finally {
-            setBusy(false);
-        }
-    }
+    }, [edgeState?.selected, data]);
 
     return (
         <>
@@ -83,7 +47,7 @@ const EdgeImagePage = () => {
                     <WiwaButton
                         title={resourceState?.common?.action.edit}
                         className="btn-secondary join-item"
-                        disabled={busy}
+                        disabled={edgeState?.busy || !edgeState?.editEnabled}
                         onClick={() => {
                             setShowDialog(true);
                         }}
@@ -93,7 +57,7 @@ const EdgeImagePage = () => {
                     <WiwaButton
                         className="btn-accent join-item"
                         title={resourceState?.common?.action.delete}
-                        disabled={busy}
+                        disabled={edgeState?.busy || !edgeState?.editEnabled}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
@@ -101,7 +65,11 @@ const EdgeImagePage = () => {
                                 message: resourceState?.manager?.edges.edgeImage.deleteMessage,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
-                                        deleteHandler().then();
+                                        edgeState?.deleteEdgeImage().then(
+                                            () => {
+                                                setData(undefined);
+                                            }
+                                        );
                                     }
                                 }
                             });
@@ -119,68 +87,21 @@ const EdgeImagePage = () => {
             </div>
 
             <EdgeImageDialog
-                busy={busy}
+                dialogId={EDGE_IMAGE_DIALOG_ID}
+                busy={edgeState?.busy || false}
                 showDialog={showDialog}
-                okHandler={okHandler}
-                cancelHandler={cancelHandler}
+                okHandler={(file) => {
+                    edgeState?.setEdgeImage(file).then(
+                        () => {
+                            setData(undefined);
+                            setShowDialog(false);
+                        }
+                    );
+                }}
+                cancelHandler={() => setShowDialog(false)}
             />
         </>
     )
 }
 
 export default EdgeImagePage;
-
-const EdgeImageDialog = ({busy, showDialog, okHandler, cancelHandler}: {
-    busy: boolean,
-    showDialog: boolean,
-    okHandler: (file: File) => void,
-    cancelHandler: () => void,
-}) => {
-    const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
-
-    const [file, setFile] = useState<File>();
-
-    useEffect(() => {
-        if (!showDialog) {
-            setFile(undefined);
-        }
-    }, [showDialog]);
-
-    const submitHandler = () => {
-        if (file) {
-            okHandler(file);
-        }
-    }
-
-    return (!dialogState?.modalRoot ? null : createPortal(
-        <ImageDialog
-            disabled={busy}
-            id={BOARD_IMAGE_DIALOG_ID}
-            showDialog={showDialog}
-            title={resourceState?.manager?.edges.edgeImage.editTitle}
-            label={resourceState?.manager?.edges.edgeImage.editFileLabel}
-            required={true}
-            placeholder={resourceState?.manager?.edges.edgeImage.editFilePlaceholder}
-            value={file}
-            setValue={setFile}
-            validate={() => {
-                if (file === undefined) {
-                    return {
-                        valid: false,
-                        message: resourceState?.manager?.edges.edgeImage.editFileRequired
-                    }
-                }
-                if (!(file.type === 'image/jpeg' || file.type === 'image/png')) {
-                    return {
-                        valid: false,
-                        message: resourceState?.manager?.edges.edgeImage.editFileFormat
-                    }
-                }
-                return {valid: true};
-            }}
-            okHandler={submitHandler}
-            cancelHandler={cancelHandler}
-        />
-        , dialogState.modalRoot))
-}

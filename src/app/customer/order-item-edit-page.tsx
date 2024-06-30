@@ -1,16 +1,29 @@
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+
+import { CustomerContext } from '../../component/app/customer/customer-provider';
+import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import { ResourceContext } from '../../context';
-import { CustomerContext } from './customer-page.tsx';
-import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb.tsx';
-import WiwaButton from '../../component/ui/wiwa-button.tsx';
-import { ChevronsLeft } from 'react-feather';
+import { Part } from '../../api/model/order/part';
 
 const OrderItemEditPage = () => {
     const navigate = useNavigate();
 
     const resourceState = useContext(ResourceContext);
     const customerState = useContext(CustomerContext);
+
+    const [name, setName] = useState('');
+    const [nameValid, setNameValid] = useState(false);
+
+    const [description, setDescription] = useState('');
+
+    const [orientation, setOrientation] = useState(false);
+
+    const [quantity, setQuantity] = useState<number>();
+    const [quantityValid, setQuantityValid] = useState(false);
+
+    const [part, setPart] = useState<Part>();
+    const [partValid, setPartValid] = useState(false);
 
     return (
         <>
@@ -32,17 +45,7 @@ const OrderItemEditPage = () => {
                 }
             ]}/>
             <div className="flex flex-col p-5 gap-5 w-full">
-                {customerState?.editEnabled &&
-                    <div className="flex flex-row gap-5 w-full">
-                        <WiwaButton
-                            className="join-item"
-                            title={resourceState?.common?.navigation.customerNav.orderEdit}
-                            disabled={customerState?.busy}
-                            onClick={() => navigate('/customer/order-edit')}
-                        ><ChevronsLeft size={18}/>
-                        </WiwaButton>
-                    </div>
-                }
+
             </div>
         </>
     )

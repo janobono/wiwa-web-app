@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import LogoEditor from '../../component/app/admin/logo-editor';
-import TitleEditor from '../../component/app/admin/title-editor';
-import WelcomeTextEditor from '../../component/app/admin/welcome-text-editor';
-import ApplicationInfoEditor from '../../component/app/admin/application-info-editor';
+import LogoEditor from '../../component/app/admin/base-info/logo-editor';
+import TitleEditor from '../../component/app/admin/base-info/title-editor';
+import WelcomeTextEditor from '../../component/app/admin/base-info/welcome-text-editor';
+import ApplicationInfoEditor from '../../component/app/admin/base-info/application-info-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import { ResourceContext } from '../../context';
 

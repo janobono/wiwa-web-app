@@ -14,9 +14,9 @@ import {
     OrderPattern,
     OrderProperties
 } from '../../api/model/application';
-import EntriesEditor from '../../component/app/admin/entries-editor.tsx';
-import CsvReplacementsEditor from '../../component/app/admin/csv-replacements-editor';
-import CsvSeparatorEditor from '../../component/app/admin/csv-separator-editor';
+import EntriesEditor from '../../component/app/admin/order-format/entries-editor.tsx';
+import CsvReplacementsEditor from '../../component/app/admin/order-format/csv-replacements-editor';
+import CsvSeparatorEditor from '../../component/app/admin/order-format/csv-separator-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
 import { AuthContext, ErrorContext, ResourceContext } from '../../context';

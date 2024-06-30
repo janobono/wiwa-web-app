@@ -6,7 +6,7 @@ import { Edit, List, Plus, Search, Trash } from 'react-feather';
 import { addCodeList, deleteCodeList, getCodeLists, setCodeList } from '../../../api/controller/code-list';
 import { Page } from '../../../api/model';
 import { CodeList, CodeListChange, CodeListField } from '../../../api/model/code-list';
-import CodeListTable from '../../../component/app/manager/code-list/code-list-table';
+import CodeListTable from '../../../component/app/manager/code-lists/code-list-table';
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
@@ -16,7 +16,7 @@ import WiwaPageable from '../../../component/ui/wiwa-pageable';
 import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
 import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
-const CODE_LIST_DIALOG_ID = 'code-list-dialog-001';
+const CODE_LIST_DIALOG_ID = 'code-lists-dialog-001';
 
 const CodeListsPage = () => {
     const navigate = useNavigate();

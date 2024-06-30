@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 
 import * as apiConfig from '../../api/controller/config';
 import * as apiUi from '../../api/controller/ui';
-import MdEditor from '../../component/app/admin/md-editor';
+import MdEditor from '../../component/app/admin/text-info/md-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
 import { ResourceContext } from '../../context';

@@ -2,8 +2,8 @@ import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit, List, MessageSquare, Plus, Send, Trash } from 'react-feather';
 
-import { CustomerContext } from './customer-page';
 import { OrderField } from '../../api/model/order';
+import { CustomerContext } from '../../component/app/customer/customer-provider';
 import CustomerOrderSearchCriteriaForm from '../../component/app/customer/customer-order-search-criteria-form';
 import OrderTable from '../../component/order/order-table';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
