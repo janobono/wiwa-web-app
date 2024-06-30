@@ -190,6 +190,17 @@
     }
   },
   "notFound": "404 Page not found",
+  "orderItemEditor": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Enter name",
+    "nameRequired": "Name is required",
+    "orientationLabel": "Orientation",
+    "quantityLabel": "Quantity",
+    "quantityPlaceholder": "Enter quantity",
+    "quantityRequired": "Quantity is required",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Enter description"
+  },
   "orderItemTable": {
     "id": "Id",
     "sortNum": "Sort num",

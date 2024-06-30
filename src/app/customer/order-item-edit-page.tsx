@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CustomerContext } from '../../component/app/customer/customer-provider';
+import OrderItemEditor from '../../component/order/order-item-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import { ResourceContext } from '../../context';
-import { Part } from '../../api/model/order/part';
 
 const OrderItemEditPage = () => {
     const navigate = useNavigate();
@@ -12,18 +12,6 @@ const OrderItemEditPage = () => {
     const resourceState = useContext(ResourceContext);
     const customerState = useContext(CustomerContext);
 
-    const [name, setName] = useState('');
-    const [nameValid, setNameValid] = useState(false);
-
-    const [description, setDescription] = useState('');
-
-    const [orientation, setOrientation] = useState(false);
-
-    const [quantity, setQuantity] = useState<number>();
-    const [quantityValid, setQuantityValid] = useState(false);
-
-    const [part, setPart] = useState<Part>();
-    const [partValid, setPartValid] = useState(false);
 
     return (
         <>
@@ -45,7 +33,18 @@ const OrderItemEditPage = () => {
                 }
             ]}/>
             <div className="flex flex-col p-5 gap-5 w-full">
-
+                <OrderItemEditor
+                    disabled={customerState?.busy || !customerState?.editEnabled}
+                    orderItem={customerState?.editItemMode ? customerState?.selectedItem : undefined}
+                    setOrderItemChange={(orderItemChange) => {
+                        if (customerState?.editItemMode) {
+                            customerState?.setItem(orderItemChange);
+                        } else {
+                            customerState?.addItem(orderItemChange);
+                        }
+                        navigate('/customer/order-edit');
+                    }}
+                />
             </div>
         </>
     )

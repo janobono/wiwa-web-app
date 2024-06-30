@@ -190,6 +190,17 @@
     }
   },
   "notFound": "404 Stránka nenájdená",
+  "orderItemEditor": {
+    "nameLabel": "Názov",
+    "namePlaceholder": "Zadajte názov",
+    "nameRequired": "Vyžaduje sa názov",
+    "orientationLabel": "Orientácia",
+    "quantityLabel": "Množstvo",
+    "quantityPlaceholder": "Zadajte množstvo",
+    "quantityRequired": "Vyžaduje sa množstvo",
+    "descriptionLabel": "Popis",
+    "descriptionPlaceholder": "Zadajte popis"
+  },
   "orderItemTable": {
     "id": "Id",
     "sortNum": "P.č.",

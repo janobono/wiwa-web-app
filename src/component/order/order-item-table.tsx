@@ -1,9 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
 import { OrderItem, OrderItemField } from '../../api/model/order';
 import { ResourceContext } from '../../context';
 import WiwaValue from '../ui/wiwa-value.tsx';
+import { UnitId } from '../../api/model/application';
 
 const OrderItemTable = ({fields, rows, selected, setSelected}: {
     fields: OrderItemField[],
@@ -34,6 +35,12 @@ export default OrderItemTable;
 const TableHead = ({fields}: { fields: OrderItemField[] }) => {
     const resourceState = useContext(ResourceContext);
 
+    const [quantitySign, setQuantitySign] = useState<string>();
+
+    useEffect(() => {
+        setQuantitySign(`[${resourceState?.getUnit(UnitId.PIECE)}]`);
+    }, [resourceState]);
+
     return (
         <thead>
         <tr>
@@ -50,7 +57,8 @@ const TableHead = ({fields}: { fields: OrderItemField[] }) => {
                     case OrderItemField.orientation:
                         return (<th key={field}>{resourceState?.common?.orderItemTable.orientation}</th>);
                     case OrderItemField.quantity:
-                        return (<th key={field}>{resourceState?.common?.orderItemTable.quantity}</th>);
+                        return (
+                            <th key={field}>{`${resourceState?.common?.orderItemTable.quantity} ${quantitySign}`}</th>);
                 }
             })}
             <th></th>

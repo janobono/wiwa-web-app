@@ -190,6 +190,17 @@ export interface ResourceCommon {
         },
     },
     notFound: string,
+    orderItemEditor: {
+        nameLabel: string,
+        namePlaceholder: string,
+        nameRequired: string,
+        orientationLabel: string,
+        quantityLabel: string,
+        quantityPlaceholder: string,
+        quantityRequired: string,
+        descriptionLabel: string,
+        descriptionPlaceholder: string
+    },
     orderItemTable: {
         id: string,
         sortNum: string,

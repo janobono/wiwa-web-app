@@ -1,6 +1,6 @@
 import { Part } from '../../api/model/order/part';
 
-const PartForm = (
+const PartEditor = (
     {
         part,
         setPart,
@@ -19,4 +19,4 @@ const PartForm = (
     )
 }
 
-export default PartForm;
+export default PartEditor;

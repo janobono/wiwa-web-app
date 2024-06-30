@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useRef, useState } from 'react';
 import { ValidationResult } from './';
 import WiwaInput from './wiwa-input';
 
-const WiwaFormInputDecimal = (
+const WiwaFormInputInteger = (
     {
         label,
         required = false,
@@ -92,4 +92,4 @@ const WiwaFormInputDecimal = (
     )
 }
 
-export default WiwaFormInputDecimal;
+export default WiwaFormInputInteger;
