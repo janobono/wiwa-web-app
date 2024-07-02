@@ -1,14 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
+
+import PartEditor from './part/part-editor';
+import WiwaFormInputInteger from '../ui/wiwa-form-input-integer';
+import WiwaFormInputString from '../ui/wiwa-form-input-string';
+import WiwaButton from '../ui/wiwa-button';
+import WiwaSelect from '../ui/wiwa-select';
+import WiwaFormTextarea from '../ui/wiwa-form-textarea';
+import { UnitId } from '../../api/model/application';
 import { Part } from '../../api/model/order/part';
 import { OrderItem, OrderItemChange } from '../../api/model/order';
 import { ResourceContext } from '../../context';
-import WiwaFormInputString from '../ui/wiwa-form-input-string.tsx';
-import WiwaFormTextarea from '../ui/wiwa-form-textarea.tsx';
-import WiwaFormInputInteger from '../ui/wiwa-form-input-integer.tsx';
-import WiwaSelect from '../ui/wiwa-select.tsx';
-import { UnitId } from '../../api/model/application';
-import PartEditor from './part-editor.tsx';
-import WiwaButton from '../ui/wiwa-button.tsx';
 
 const OrderItemEditor = (
     {

@@ -249,6 +249,15 @@
     "page": "Page",
     "previous": "Previous"
   },
+  "partEditor": {
+    "option": {
+      "select": "Part type",
+      "basic": "Basic",
+      "duplicatedBasic": "Duplicated basic",
+      "duplicatedFrame": "Duplicated frame",
+      "frame": "Frame"
+    }
+  },
   "refreshToken": {
     "action": "Refresh",
     "text": "Login expired."

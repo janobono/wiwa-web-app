@@ -249,6 +249,15 @@
     "page": "Stránka",
     "next": "Nasledujúca"
   },
+  "partEditor": {
+    "option": {
+      "select": "Typ dielca",
+      "basic": "Základný",
+      "duplicatedBasic": "Zdvojený plný",
+      "duplicatedFrame": "Zdvojený kraje",
+      "frame": "Rámik"
+    }
+  },
   "refreshToken": {
     "action": "Obnoviť",
     "text": "Platnosť prihlásenia vypršala."

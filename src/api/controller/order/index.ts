@@ -51,12 +51,6 @@ export const getOrders = (criteria?: OrderSearchCriteria, pageable?: Pageable<Or
     return getData<Page<Order>>(PATH, queryParams, accessToken);
 }
 
-export const getOrderContacts = (pageable?: Pageable<OrderContactField>, accessToken?: string) => {
-    const queryParams = new URLSearchParams();
-    setPageableQueryParams(queryParams, pageable);
-    return getData<Page<OrderContact>>(PATH + '/contacts', queryParams, accessToken);
-}
-
 export const getOrderUsers = (criteria?: OrderUserSearchCriteria, pageable?: Pageable<OrderContactField>, accessToken?: string) => {
     const queryParams = new URLSearchParams();
     setPageableQueryParams(queryParams, pageable);
@@ -69,6 +63,10 @@ export const getOrderUsers = (criteria?: OrderUserSearchCriteria, pageable?: Pag
         }
     }
     return getData<Page<Order>>(PATH + '/users', queryParams, accessToken);
+}
+
+export const getLastContact = (accessToken?: string) => {
+    return getData<OrderContact>(PATH + '/last-contact', undefined, accessToken);
 }
 
 export const setOrderContact = (id: number, orderContact: OrderContact, accessToken?: string) => {

@@ -249,6 +249,15 @@ export interface ResourceCommon {
         page: string,
         previous: string
     },
+    partEditor: {
+        option: {
+            select: string,
+            basic: string,
+            duplicatedBasic: string,
+            duplicatedFrame: string,
+            frame: string
+        }
+    },
     refreshToken: {
         action: string,
         text: string

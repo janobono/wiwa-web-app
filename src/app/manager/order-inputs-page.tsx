@@ -40,14 +40,12 @@ const OrderInputsPage = () => {
                     <option value="6">{resourceState?.manager?.orderInputs.option.freeDays}</option>
                 </WiwaSelect>
 
-                <div>
-                    {index == 1 && <VatRateEditor/>}
-                    {index == 2 && <ManufacturePropertiesEditor/>}
-                    {index == 3 && <PriceForGluingLayerEditor/>}
-                    {index == 4 && <PricesForGluingEdgeEditor/>}
-                    {index == 5 && <PricesForCuttingEditor/>}
-                    {index == 6 && <FreeDayEditor/>}
-                </div>
+                {index == 1 && <VatRateEditor/>}
+                {index == 2 && <ManufacturePropertiesEditor/>}
+                {index == 3 && <PriceForGluingLayerEditor/>}
+                {index == 4 && <PricesForGluingEdgeEditor/>}
+                {index == 5 && <PricesForCuttingEditor/>}
+                {index == 6 && <FreeDayEditor/>}
             </div>
         </>
     )

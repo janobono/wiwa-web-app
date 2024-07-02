@@ -159,6 +159,7 @@ export interface Order {
     weight: number,
     total: number,
     vatTotal: number,
+    contact: OrderContact,
     deliveryDate: string,
     packageType: OrderPackageType,
     boards: OrderBoard[],
@@ -177,6 +178,7 @@ export enum OrderField {
     weight = 'weight',
     total = 'total',
     vatTotal = 'vatTotal',
+    contact = 'contact',
     deliveryDate = 'deliveryDate',
     packageType = 'packageType'
 }

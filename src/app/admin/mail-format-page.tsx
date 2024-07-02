@@ -37,13 +37,11 @@ const MailFormatPage = () => {
                     <option value="5">{resourceState?.admin?.mailFormat.option.orderStatusMail}</option>
                 </WiwaSelect>
 
-                <div>
-                    {index == 1 && <SignUpMailEditor/>}
-                    {index == 2 && <ResetPasswordMailEditor/>}
-                    {index == 3 && <OrderCommentMailEditor/>}
-                    {index == 4 && <OrderSendMailEditor/>}
-                    {index == 5 && <OrderStatusMailEditor/>}
-                </div>
+                {index == 1 && <SignUpMailEditor/>}
+                {index == 2 && <ResetPasswordMailEditor/>}
+                {index == 3 && <OrderCommentMailEditor/>}
+                {index == 4 && <OrderSendMailEditor/>}
+                {index == 5 && <OrderStatusMailEditor/>}
             </div>
         </>
     )

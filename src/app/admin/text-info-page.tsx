@@ -37,63 +37,61 @@ const TextInfoPage = () => {
                     <option value="5">{resourceState?.admin?.textInfo.option.workingHours}</option>
                 </WiwaSelect>
 
-                <div>
-                    {index == 1 &&
-                        <MdEditor
-                            dialogId={TEXT_INFO_DIALOG_ID + index}
-                            title={resourceState?.admin?.textInfo.businessConditions.title || ''}
-                            valueLabel={resourceState?.admin?.textInfo.businessConditions.valueLabel || ''}
-                            valuePlaceholder={resourceState?.admin?.textInfo.businessConditions.valuePlaceholder || ''}
-                            valueRequired={resourceState?.admin?.textInfo.businessConditions.valueRequired || ''}
-                            loadValue={apiUi.getBusinessConditions}
-                            saveValue={apiConfig.setBusinessConditions}
-                        />
-                    }
-                    {index == 2 &&
-                        <MdEditor
-                            dialogId={TEXT_INFO_DIALOG_ID + index}
-                            title={resourceState?.admin?.textInfo.cookiesInfo.title || ''}
-                            valueLabel={resourceState?.admin?.textInfo.cookiesInfo.valueLabel || ''}
-                            valuePlaceholder={resourceState?.admin?.textInfo.cookiesInfo.valuePlaceholder || ''}
-                            valueRequired={resourceState?.admin?.textInfo.cookiesInfo.valueRequired || ''}
-                            loadValue={apiUi.getCookiesInfo}
-                            saveValue={apiConfig.setCookiesInfo}
-                        />
-                    }
-                    {index == 3 &&
-                        <MdEditor
-                            dialogId={TEXT_INFO_DIALOG_ID + index}
-                            title={resourceState?.admin?.textInfo.gdprInfo.title || ''}
-                            valueLabel={resourceState?.admin?.textInfo.gdprInfo.valueLabel || ''}
-                            valuePlaceholder={resourceState?.admin?.textInfo.gdprInfo.valuePlaceholder || ''}
-                            valueRequired={resourceState?.admin?.textInfo.gdprInfo.valueRequired || ''}
-                            loadValue={apiUi.getGdprInfo}
-                            saveValue={apiConfig.setGdprInfo}
-                        />
-                    }
-                    {index == 4 &&
-                        <MdEditor
-                            dialogId={TEXT_INFO_DIALOG_ID + index}
-                            title={resourceState?.admin?.textInfo.orderInfo.title || ''}
-                            valueLabel={resourceState?.admin?.textInfo.orderInfo.valueLabel || ''}
-                            valuePlaceholder={resourceState?.admin?.textInfo.orderInfo.valuePlaceholder || ''}
-                            valueRequired={resourceState?.admin?.textInfo.orderInfo.valueRequired || ''}
-                            loadValue={apiUi.getOrderInfo}
-                            saveValue={apiConfig.setOrderInfo}
-                        />
-                    }
-                    {index == 5 &&
-                        <MdEditor
-                            dialogId={TEXT_INFO_DIALOG_ID + index}
-                            title={resourceState?.admin?.textInfo.workingHours.title || ''}
-                            valueLabel={resourceState?.admin?.textInfo.workingHours.valueLabel || ''}
-                            valuePlaceholder={resourceState?.admin?.textInfo.workingHours.valuePlaceholder || ''}
-                            valueRequired={resourceState?.admin?.textInfo.workingHours.valueRequired || ''}
-                            loadValue={apiUi.getWorkingHours}
-                            saveValue={apiConfig.setWorkingHours}
-                        />
-                    }
-                </div>
+                {index == 1 &&
+                    <MdEditor
+                        dialogId={TEXT_INFO_DIALOG_ID + index}
+                        title={resourceState?.admin?.textInfo.businessConditions.title || ''}
+                        valueLabel={resourceState?.admin?.textInfo.businessConditions.valueLabel || ''}
+                        valuePlaceholder={resourceState?.admin?.textInfo.businessConditions.valuePlaceholder || ''}
+                        valueRequired={resourceState?.admin?.textInfo.businessConditions.valueRequired || ''}
+                        loadValue={apiUi.getBusinessConditions}
+                        saveValue={apiConfig.setBusinessConditions}
+                    />
+                }
+                {index == 2 &&
+                    <MdEditor
+                        dialogId={TEXT_INFO_DIALOG_ID + index}
+                        title={resourceState?.admin?.textInfo.cookiesInfo.title || ''}
+                        valueLabel={resourceState?.admin?.textInfo.cookiesInfo.valueLabel || ''}
+                        valuePlaceholder={resourceState?.admin?.textInfo.cookiesInfo.valuePlaceholder || ''}
+                        valueRequired={resourceState?.admin?.textInfo.cookiesInfo.valueRequired || ''}
+                        loadValue={apiUi.getCookiesInfo}
+                        saveValue={apiConfig.setCookiesInfo}
+                    />
+                }
+                {index == 3 &&
+                    <MdEditor
+                        dialogId={TEXT_INFO_DIALOG_ID + index}
+                        title={resourceState?.admin?.textInfo.gdprInfo.title || ''}
+                        valueLabel={resourceState?.admin?.textInfo.gdprInfo.valueLabel || ''}
+                        valuePlaceholder={resourceState?.admin?.textInfo.gdprInfo.valuePlaceholder || ''}
+                        valueRequired={resourceState?.admin?.textInfo.gdprInfo.valueRequired || ''}
+                        loadValue={apiUi.getGdprInfo}
+                        saveValue={apiConfig.setGdprInfo}
+                    />
+                }
+                {index == 4 &&
+                    <MdEditor
+                        dialogId={TEXT_INFO_DIALOG_ID + index}
+                        title={resourceState?.admin?.textInfo.orderInfo.title || ''}
+                        valueLabel={resourceState?.admin?.textInfo.orderInfo.valueLabel || ''}
+                        valuePlaceholder={resourceState?.admin?.textInfo.orderInfo.valuePlaceholder || ''}
+                        valueRequired={resourceState?.admin?.textInfo.orderInfo.valueRequired || ''}
+                        loadValue={apiUi.getOrderInfo}
+                        saveValue={apiConfig.setOrderInfo}
+                    />
+                }
+                {index == 5 &&
+                    <MdEditor
+                        dialogId={TEXT_INFO_DIALOG_ID + index}
+                        title={resourceState?.admin?.textInfo.workingHours.title || ''}
+                        valueLabel={resourceState?.admin?.textInfo.workingHours.valueLabel || ''}
+                        valuePlaceholder={resourceState?.admin?.textInfo.workingHours.valuePlaceholder || ''}
+                        valueRequired={resourceState?.admin?.textInfo.workingHours.valueRequired || ''}
+                        loadValue={apiUi.getWorkingHours}
+                        saveValue={apiConfig.setWorkingHours}
+                    />
+                }
             </div>
         </>
     )

@@ -167,11 +167,11 @@ export const setOrderStatusMail = (orderStatusMail: OrderStatusMail, accessToken
 }
 
 export const getBoardMaterialCategory = (accessToken?: string) => {
-    return getData<Category>(PATH + '/board-material-categories', undefined, accessToken);
+    return getData<Category>(PATH + '/board-material-category', undefined, accessToken);
 }
 
 export const setBoardMaterialCategory = (categoryId: number, accessToken?: string) => {
-    return postData<Category>(PATH + '/board-material-categories', {value: categoryId}, accessToken);
+    return postData<Category>(PATH + '/board-material-category', {value: categoryId}, accessToken);
 }
 
 export const setBoardCategories = (categoryIds: number[], accessToken?: string) => {

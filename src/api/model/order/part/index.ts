@@ -15,6 +15,13 @@ export interface PartCornerStraight extends PartCorner {
     dimensions: Dimensions
 }
 
+export enum PartType {
+    BASIC = 'BASIC',
+    DUPLICATED_BASIC = 'DUPLICATED_BASIC',
+    DUPLICATED_FRAME = 'DUPLICATED_FRAME',
+    FRAME = 'FRAME'
+}
+
 export enum FrameType {
     HORIZONTAL = 'HORIZONTAL',
     VERTICAL = 'VERTICAL',
@@ -27,7 +34,7 @@ export interface Part {
 }
 
 export interface PartBasic extends Part {
-    type: 'BASIC',
+    type: PartType.BASIC,
     rotate: boolean,
     boardId: number,
     edgeIdA1?: number,
@@ -42,7 +49,7 @@ export interface PartBasic extends Part {
 }
 
 export interface PartDuplicatedBasic extends Part {
-    type: 'DUPLICATED_BASIC',
+    type: PartType.DUPLICATED_BASIC,
     rotate: boolean,
     boardId: number,
     boardIdBottom: number,
@@ -58,7 +65,7 @@ export interface PartDuplicatedBasic extends Part {
 }
 
 export interface PartDuplicatedFrame extends Part {
-    type: 'DUPLICATED_FRAME',
+    type: PartType.DUPLICATED_FRAME,
     frameType: FrameType,
     rotate: boolean,
     boardId: number,
@@ -86,7 +93,7 @@ export interface PartDuplicatedFrame extends Part {
 }
 
 export interface PartFrame extends Part {
-    type: 'FRAME',
+    type: PartType.FRAME,
     frameType: FrameType,
     boardIdA1: number,
     boardIdA2: number,
