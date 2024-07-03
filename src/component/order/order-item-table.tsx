@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from 'react';
 import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
 import { OrderItem, OrderItemField } from '../../api/model/order';
 import { ResourceContext } from '../../context';
-import WiwaValue from '../ui/wiwa-value.tsx';
 import { UnitId } from '../../api/model/application';
 
 const OrderItemTable = ({fields, rows, selected, setSelected}: {
@@ -54,8 +53,6 @@ const TableHead = ({fields}: { fields: OrderItemField[] }) => {
                         return (<th key={field}>{resourceState?.common?.orderItemTable.name}</th>);
                     case OrderItemField.description:
                         return (<th key={field}>{resourceState?.common?.orderItemTable.description}</th>);
-                    case OrderItemField.orientation:
-                        return (<th key={field}>{resourceState?.common?.orderItemTable.orientation}</th>);
                     case OrderItemField.quantity:
                         return (
                             <th key={field}>{`${resourceState?.common?.orderItemTable.quantity} ${quantitySign}`}</th>);
@@ -88,8 +85,6 @@ const TableRow = ({fields, row, selected, setSelected}: {
                         return (<td key={field}>{row.name}</td>);
                     case OrderItemField.description:
                         return (<td key={field}>{row.description}</td>);
-                    case OrderItemField.orientation:
-                        return (<td key={field}><WiwaValue value={`${row.orientation}`}/></td>);
                     case OrderItemField.quantity:
                         return (<td key={field}>{row.quantity}</td>);
                 }

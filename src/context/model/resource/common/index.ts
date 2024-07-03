@@ -194,7 +194,6 @@ export interface ResourceCommon {
         nameLabel: string,
         namePlaceholder: string,
         nameRequired: string,
-        orientationLabel: string,
         quantityLabel: string,
         quantityPlaceholder: string,
         quantityRequired: string,
@@ -206,7 +205,6 @@ export interface ResourceCommon {
         sortNum: string,
         name: string,
         description: string,
-        orientation: string,
         quantity: string
     },
     orderPackageType: {
@@ -256,7 +254,9 @@ export interface ResourceCommon {
             duplicatedBasic: string,
             duplicatedFrame: string,
             frame: string
-        }
+        },
+        valuePlaceholder: string,
+        valueRequired: string
     },
     refreshToken: {
         action: string,

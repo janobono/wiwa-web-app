@@ -194,7 +194,6 @@
     "nameLabel": "Názov",
     "namePlaceholder": "Zadajte názov",
     "nameRequired": "Vyžaduje sa názov",
-    "orientationLabel": "Orientácia",
     "quantityLabel": "Množstvo",
     "quantityPlaceholder": "Zadajte množstvo",
     "quantityRequired": "Vyžaduje sa množstvo",
@@ -206,7 +205,6 @@
     "sortNum": "P.č.",
     "name": "Názov",
     "description": "Popis",
-    "orientation": "Orientácia",
     "quantity": "Množstvo"
   },
   "orderPackageType": {
@@ -253,10 +251,12 @@
     "option": {
       "select": "Typ dielca",
       "basic": "Základný",
-      "duplicatedBasic": "Zdvojený plný",
-      "duplicatedFrame": "Zdvojený kraje",
-      "frame": "Rámik"
-    }
+      "duplicatedBasic": "Zdvojený základný",
+      "duplicatedFrame": "Zdvojený rám",
+      "frame": "Rám"
+    },
+    "valuePlaceholder": "Zadajte hodnotu",
+    "valueRequired": "sa vyžaduje"
   },
   "refreshToken": {
     "action": "Obnoviť",

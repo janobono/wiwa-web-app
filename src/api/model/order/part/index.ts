@@ -1,17 +1,22 @@
 import { Dimensions } from '../../';
 
+export enum PartCornerType {
+    ROUNDED = 'ROUNDED',
+    STRAIGHT = 'STRAIGHT'
+}
+
 export interface PartCorner {
-    type: string,
+    type: PartCornerType,
     edgeId?: number,
 }
 
 export interface PartCornerRounded extends PartCorner {
-    type: 'ROUNDED',
+    type: PartCornerType.ROUNDED,
     radius: number
 }
 
 export interface PartCornerStraight extends PartCorner {
-    type: 'STRAIGHT',
+    type: PartCornerType.STRAIGHT,
     dimensions: Dimensions
 }
 

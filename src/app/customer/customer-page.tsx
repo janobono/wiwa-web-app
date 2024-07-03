@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Authority } from '../../api/model';
 import CustomerProvider from '../../component/app/customer/customer-provider';
 import AuthDefender from '../../component/layout/auth-defender';
-import BaseFooter from '../../component/layout/base-footer';
+import Footer from '../../component/layout/footer';
 import MaintenanceDefender from '../../component/layout/maintenance-defender';
 import Navigation from '../../component/layout/navigation';
 
@@ -17,7 +17,7 @@ const CustomerPage = () => {
                         <Outlet/>
                     </CustomerProvider>
                 </main>
-                <BaseFooter/>
+                <Footer/>
             </AuthDefender>
         </MaintenanceDefender>
     )

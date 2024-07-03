@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import BaseFooter from '../../component/layout/base-footer';
+import Footer from '../../component/layout/footer';
 import Navigation from '../../component/layout/navigation';
 
 const AuthPage = () => {
@@ -10,7 +10,7 @@ const AuthPage = () => {
             <main className="w-full bg-base text-base-content">
                 <Outlet/>
             </main>
-            <BaseFooter/>
+            <Footer/>
         </>
     )
 }

@@ -4,7 +4,6 @@ import PartEditor from './part/part-editor';
 import WiwaFormInputInteger from '../ui/wiwa-form-input-integer';
 import WiwaFormInputString from '../ui/wiwa-form-input-string';
 import WiwaButton from '../ui/wiwa-button';
-import WiwaSelect from '../ui/wiwa-select';
 import WiwaFormTextarea from '../ui/wiwa-form-textarea';
 import { UnitId } from '../../api/model/application';
 import { Part } from '../../api/model/order/part';
@@ -29,8 +28,6 @@ const OrderItemEditor = (
     const [name, setName] = useState('');
     const [nameValid, setNameValid] = useState(false);
 
-    const [orientation, setOrientation] = useState(false);
-
     const [quantity, setQuantity] = useState<number>();
     const [quantityValid, setQuantityValid] = useState(false);
 
@@ -48,8 +45,6 @@ const OrderItemEditor = (
             setName(orderItem.name)
             setNameValid(true);
 
-            setOrientation(orderItem.orientation);
-
             setQuantity(orderItem.quantity);
             setQuantityValid(true);
 
@@ -60,8 +55,6 @@ const OrderItemEditor = (
         } else {
             setName('')
             setNameValid(false);
-
-            setOrientation(false);
 
             setQuantity(undefined);
             setQuantityValid(false);
@@ -98,21 +91,6 @@ const OrderItemEditor = (
                             return {valid: true};
                         }}
                     />
-
-                    <div className="form-control w-full">
-                        <label className="label">
-                            <span className="label-text">
-                                {resourceState?.common?.orderItemEditor.orientationLabel}
-                            </span>
-                        </label>
-                        <WiwaSelect
-                            defaultValue={orientation ? '1' : '0'}
-                            onChange={event => setOrientation(Number(event.currentTarget.value) === 1)}
-                        >
-                            <option value="1">{resourceState?.common?.value.yes}</option>
-                            <option value="0">{resourceState?.common?.value.no}</option>
-                        </WiwaSelect>
-                    </div>
 
                     <WiwaFormInputInteger
                         min="0"
@@ -156,7 +134,6 @@ const OrderItemEditor = (
                     onClick={() => {
                         setOrderItemChange({
                             name,
-                            orientation,
                             quantity: quantity || 0,
                             description,
                             part: part || {type: 'UNKNOWN'}

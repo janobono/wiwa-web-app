@@ -194,7 +194,6 @@
     "nameLabel": "Name",
     "namePlaceholder": "Enter name",
     "nameRequired": "Name is required",
-    "orientationLabel": "Orientation",
     "quantityLabel": "Quantity",
     "quantityPlaceholder": "Enter quantity",
     "quantityRequired": "Quantity is required",
@@ -206,7 +205,6 @@
     "sortNum": "Sort num",
     "name": "Name",
     "description": "Description",
-    "orientation": "Orientation",
     "quantity": "Quantity"
   },
   "orderPackageType": {
@@ -256,7 +254,9 @@
       "duplicatedBasic": "Duplicated basic",
       "duplicatedFrame": "Duplicated frame",
       "frame": "Frame"
-    }
+    },
+    "valuePlaceholder": "Enter value",
+    "valueRequired": "is required"
   },
   "refreshToken": {
     "action": "Refresh",

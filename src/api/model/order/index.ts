@@ -73,7 +73,6 @@ export interface OrderEdge {
 export interface OrderItemChange {
     name: string,
     description?: string,
-    orientation: boolean,
     quantity: number,
     part: Part
 }
@@ -88,7 +87,6 @@ export interface OrderItem {
     sortNum: number,
     name: string,
     description: string,
-    orientation: boolean,
     quantity: number,
     part: Part,
     summary: OrderItemSummary
@@ -99,7 +97,6 @@ export enum OrderItemField {
     sortNum = 'sortNum',
     name = 'name',
     description = 'description',
-    orientation = 'orientation',
     quantity = 'quantity',
 }
 

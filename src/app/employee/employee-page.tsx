@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 import { Authority } from '../../api/model';
 import AuthDefender from '../../component/layout/auth-defender';
-import BaseFooter from '../../component/layout/base-footer';
+import Footer from '../../component/layout/footer';
 import MaintenanceDefender from '../../component/layout/maintenance-defender';
 import Navigation from '../../component/layout/navigation';
 
@@ -14,7 +14,7 @@ const EmployeePage = () => {
                 <main className="w-full bg-base text-base-content">
                     <Outlet/>
                 </main>
-                <BaseFooter/>
+                <Footer/>
             </AuthDefender>
         </MaintenanceDefender>
     )
