@@ -11,7 +11,7 @@ import WiwaSelect from '../../../ui/wiwa-select';
 import WiwaFormInputDecimal from '../../../ui/wiwa-form-input-decimal';
 import WiwaFormInputInteger from '../../../ui/wiwa-form-input-integer';
 import WiwaButton from '../../../ui/wiwa-button';
-import { DialogContext, ResourceContext } from '../../../../context';
+import { CommonResourceContext, DialogContext, ManagerResourceContext } from '../../../../context';
 
 const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandler, submitting}: {
     dialogId: string,
@@ -22,7 +22,8 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
     submitting: boolean
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [weightSign, setWeightSign] = useState<string>();
     const [lengthSign, setLengthSign] = useState<string>();
@@ -65,7 +66,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
         setWeightSign(unitSign(UnitId.KILOGRAM));
         setLengthSign(unitSign(UnitId.MILLIMETER));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
-    }, [resourceState]);
+    }, [commonResourceState]);
 
     useEffect(() => {
         if (board) {
@@ -139,7 +140,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
     }, [codeValid, nameValid, boardCodeValid, structureCodeValid, weightValid, lengthValid, widthValid, thicknessValid, priceValid]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${resourceState?.getUnit(unitId)}]`;
+        return `[${commonResourceState?.getUnit(unitId)}]`;
     }
 
     return (!dialogState?.modalRoot ? null : createPortal(
@@ -147,13 +148,13 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.manager?.boards.boardDialog.title}
+                        {managerResourceState?.resource?.boards.boardDialog.title}
                     </div>
 
                     <WiwaFormInputString
-                        label={resourceState?.manager?.boards.boardDialog.codeLabel}
+                        label={managerResourceState?.resource?.boards.boardDialog.codeLabel}
                         required={true}
-                        placeholder={resourceState?.manager?.boards.boardDialog.codePlaceholder}
+                        placeholder={managerResourceState?.resource?.boards.boardDialog.codePlaceholder}
                         value={code}
                         setValue={setCode}
                         setValid={setCodeValid}
@@ -161,7 +162,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                             if (code.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.boards.boardDialog.codeRequired
+                                    message: managerResourceState?.resource?.boards.boardDialog.codeRequired
                                 };
                             }
                             return {valid: true};
@@ -169,9 +170,9 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                     />
 
                     <WiwaFormInputString
-                        label={resourceState?.manager?.boards.boardDialog.nameLabel}
+                        label={managerResourceState?.resource?.boards.boardDialog.nameLabel}
                         required={true}
-                        placeholder={resourceState?.manager?.boards.boardDialog.namePlaceholder}
+                        placeholder={managerResourceState?.resource?.boards.boardDialog.namePlaceholder}
                         value={name}
                         setValue={setName}
                         setValid={setNameValid}
@@ -179,7 +180,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                             if (name.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.boards.boardDialog.nameRequired
+                                    message: managerResourceState?.resource?.boards.boardDialog.nameRequired
                                 };
                             }
                             return {valid: true};
@@ -187,16 +188,16 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                     />
 
                     <WiwaFormTextarea
-                        label={resourceState?.manager?.boards.boardDialog.descriptionLabel}
-                        placeholder={resourceState?.manager?.boards.boardDialog.descriptionPlaceholder}
+                        label={managerResourceState?.resource?.boards.boardDialog.descriptionLabel}
+                        placeholder={managerResourceState?.resource?.boards.boardDialog.descriptionPlaceholder}
                         value={description}
                         setValue={setDescription}
                     />
 
                     <WiwaFormInputString
-                        label={resourceState?.manager?.boards.boardDialog.boardCodeLabel}
+                        label={managerResourceState?.resource?.boards.boardDialog.boardCodeLabel}
                         required={true}
-                        placeholder={resourceState?.manager?.boards.boardDialog.boardCodePlaceholder}
+                        placeholder={managerResourceState?.resource?.boards.boardDialog.boardCodePlaceholder}
                         value={boardCode}
                         setValue={setBoardCode}
                         setValid={setBoardCodeValid}
@@ -204,7 +205,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                             if (boardCode.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.boards.boardDialog.boardCodeRequired
+                                    message: managerResourceState?.resource?.boards.boardDialog.boardCodeRequired
                                 };
                             }
                             return {valid: true};
@@ -212,9 +213,9 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                     />
 
                     <WiwaFormInputString
-                        label={resourceState?.manager?.boards.boardDialog.structureCodeLabel}
+                        label={managerResourceState?.resource?.boards.boardDialog.structureCodeLabel}
                         required={true}
-                        placeholder={resourceState?.manager?.boards.boardDialog.structureCodePlaceholder}
+                        placeholder={managerResourceState?.resource?.boards.boardDialog.structureCodePlaceholder}
                         value={structureCode}
                         setValue={setStructureCode}
                         setValid={setStructureCodeValid}
@@ -222,7 +223,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                             if (structureCode.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.boards.boardDialog.structureCodeRequired
+                                    message: managerResourceState?.resource?.boards.boardDialog.structureCodeRequired
                                 };
                             }
                             return {valid: true};
@@ -232,23 +233,23 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                     <div className="form-control w-full">
                         <label className="label">
                             <span className="label-text">
-                                {resourceState?.manager?.boards.boardDialog.orientationLabel}
+                                {managerResourceState?.resource?.boards.boardDialog.orientationLabel}
                             </span>
                         </label>
                         <WiwaSelect
                             defaultValue={orientation ? '1' : '0'}
                             onChange={event => setOrientation(Number(event.currentTarget.value) === 1)}
                         >
-                            <option value="1">{resourceState?.common?.value.yes}</option>
-                            <option value="0">{resourceState?.common?.value.no}</option>
+                            <option value="1">{commonResourceState?.resource?.value.yes}</option>
+                            <option value="0">{commonResourceState?.resource?.value.no}</option>
                         </WiwaSelect>
                     </div>
 
                     <WiwaFormInputDecimal
                         min="0"
-                        label={`${resourceState?.manager?.boards.boardDialog.weightLabel} ${weightSign}`}
+                        label={`${managerResourceState?.resource?.boards.boardDialog.weightLabel} ${weightSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.boards.boardDialog.weightPlaceholder}
+                        placeholder={managerResourceState?.resource?.boards.boardDialog.weightPlaceholder}
                         value={weight}
                         setValue={setWeight}
                         setValid={setWeightValid}
@@ -256,7 +257,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                             if (weight === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.boards.boardDialog.weightRequired
+                                    message: managerResourceState?.resource?.boards.boardDialog.weightRequired
                                 };
                             }
                             return {valid: true};
@@ -265,9 +266,9 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
 
                     <WiwaFormInputInteger
                         min="0"
-                        label={`${resourceState?.manager?.boards.boardDialog.lengthLabel} ${lengthSign}`}
+                        label={`${managerResourceState?.resource?.boards.boardDialog.lengthLabel} ${lengthSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.boards.boardDialog.lengthPlaceholder}
+                        placeholder={managerResourceState?.resource?.boards.boardDialog.lengthPlaceholder}
                         value={length}
                         setValue={setLength}
                         setValid={setLengthValid}
@@ -275,7 +276,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                             if (length === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.boards.boardDialog.lengthRequired
+                                    message: managerResourceState?.resource?.boards.boardDialog.lengthRequired
                                 };
                             }
                             return {valid: true};
@@ -284,9 +285,9 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
 
                     <WiwaFormInputInteger
                         min="0"
-                        label={`${resourceState?.manager?.boards.boardDialog.widthLabel} ${lengthSign}`}
+                        label={`${managerResourceState?.resource?.boards.boardDialog.widthLabel} ${lengthSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.boards.boardDialog.widthPlaceholder}
+                        placeholder={managerResourceState?.resource?.boards.boardDialog.widthPlaceholder}
                         value={width}
                         setValue={setWidth}
                         setValid={setWidthValid}
@@ -294,7 +295,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                             if (width === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.boards.boardDialog.widthRequired
+                                    message: managerResourceState?.resource?.boards.boardDialog.widthRequired
                                 };
                             }
                             return {valid: true};
@@ -303,9 +304,9 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
 
                     <WiwaFormInputInteger
                         min="0"
-                        label={`${resourceState?.manager?.boards.boardDialog.thicknessLabel} ${lengthSign}`}
+                        label={`${managerResourceState?.resource?.boards.boardDialog.thicknessLabel} ${lengthSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.boards.boardDialog.thicknessPlaceholder}
+                        placeholder={managerResourceState?.resource?.boards.boardDialog.thicknessPlaceholder}
                         value={thickness}
                         setValue={setThickness}
                         setValid={setThicknessValid}
@@ -313,7 +314,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                             if (thickness === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.boards.boardDialog.thicknessRequired
+                                    message: managerResourceState?.resource?.boards.boardDialog.thicknessRequired
                                 };
                             }
                             return {valid: true};
@@ -322,9 +323,9 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
 
                     <WiwaFormInputDecimal
                         min="0"
-                        label={`${resourceState?.manager?.boards.boardDialog.priceLabel} ${priceSign}`}
+                        label={`${managerResourceState?.resource?.boards.boardDialog.priceLabel} ${priceSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.boards.boardDialog.pricePlaceholder}
+                        placeholder={managerResourceState?.resource?.boards.boardDialog.pricePlaceholder}
                         value={price}
                         setValue={setPrice}
                         setValid={setPriceValid}
@@ -332,7 +333,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                             if (price === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.boards.boardDialog.priceRequired
+                                    message: managerResourceState?.resource?.boards.boardDialog.priceRequired
                                 };
                             }
                             return {valid: true};
@@ -358,7 +359,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                                     price: price ? price : 0
                                 });
                             }}
-                        >{resourceState?.common?.action.ok}
+                        >{commonResourceState?.resource?.action.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
@@ -366,7 +367,7 @@ const BoardChangeDialog = ({dialogId, showDialog, board, okHandler, cancelHandle
                             onClick={() => {
                                 cancelHandler();
                             }}
-                        >{resourceState?.common?.action.cancel}
+                        >{commonResourceState?.resource?.action.cancel}
                         </WiwaButton>
                     </div>
                 </div>

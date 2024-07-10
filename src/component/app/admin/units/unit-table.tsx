@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import { Unit, UnitField } from '../../../../api/model/application';
-import { ResourceContext } from '../../../../context';
+import { AdminResourceContext, CommonResourceContext } from '../../../../context';
 
 const UnitTable = ({fields, rows, selected, setSelected}: {
     fields: UnitField[],
@@ -31,7 +31,7 @@ const UnitTable = ({fields, rows, selected, setSelected}: {
 export default UnitTable;
 
 const TableHead = ({fields}: { fields: UnitField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
 
     return (
         <thead>
@@ -39,9 +39,9 @@ const TableHead = ({fields}: { fields: UnitField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case UnitField.id:
-                        return (<th key={field}>{resourceState?.admin?.unitTable.id}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.unitTable.id}</th>);
                     case UnitField.value:
-                        return (<th key={field}>{resourceState?.admin?.unitTable.value}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.unitTable.value}</th>);
                 }
             })}
             <th></th>
@@ -56,7 +56,7 @@ const TableRow = ({fields, row, selected, setSelected}: {
     selected?: Unit,
     setSelected: (unit?: Unit) => void
 }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <tr
@@ -66,7 +66,7 @@ const TableRow = ({fields, row, selected, setSelected}: {
             {fields?.map(field => {
                 switch (field) {
                     case UnitField.id:
-                        return (<td key={field}>{resourceState?.getUnitIdName(row.id)}</td>);
+                        return (<td key={field}>{commonResourceState?.getUnitIdName(row.id)}</td>);
                     case UnitField.value:
                         return (<td key={field}>{row.value}</td>);
                 }

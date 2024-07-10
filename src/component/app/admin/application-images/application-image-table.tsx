@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import { ApplicationImageInfo, ApplicationImageInfoField } from '../../../../api/model/application';
-import { ResourceContext } from '../../../../context';
+import { AdminResourceContext } from '../../../../context';
 
 const ApplicationImageInfoTable = ({fields, rows, selected, setSelected}: {
     fields: ApplicationImageInfoField[],
@@ -31,7 +31,7 @@ const ApplicationImageInfoTable = ({fields, rows, selected, setSelected}: {
 export default ApplicationImageInfoTable;
 
 const TableHead = ({fields}: { fields: ApplicationImageInfoField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
 
     return (
         <thead>
@@ -39,9 +39,9 @@ const TableHead = ({fields}: { fields: ApplicationImageInfoField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case ApplicationImageInfoField.fileName:
-                        return <th key={field}>{resourceState?.admin?.applicationImageInfoTable.fileName}</th>;
+                        return <th key={field}>{adminResourceState?.resource?.applicationImageInfoTable.fileName}</th>;
                     case ApplicationImageInfoField.thumbnail:
-                        return <th key={field}>{resourceState?.admin?.applicationImageInfoTable.thumbnail}</th>;
+                        return <th key={field}>{adminResourceState?.resource?.applicationImageInfoTable.thumbnail}</th>;
                 }
             })}
             <th></th>

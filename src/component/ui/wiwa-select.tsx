@@ -1,8 +1,7 @@
-import type { HTMLAttributes } from 'react';
-import { forwardRef } from 'react';
+import { forwardRef, SelectHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-const WiwaSelect = forwardRef<HTMLSelectElement, HTMLAttributes<HTMLSelectElement>>((
+const WiwaSelect = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>((
     {
         className,
         children,

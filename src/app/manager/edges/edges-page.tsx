@@ -10,7 +10,7 @@ import EdgeSearchCriteriaForm from '../../../component/edge/edge-search-criteria
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
-import { DialogContext, ResourceContext } from '../../../context';
+import { CommonResourceContext, DialogContext, ManagerResourceContext } from '../../../context';
 import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const EDGE_DIALOG_ID = 'manager-edge-dialog-001';
@@ -19,7 +19,8 @@ const EdgesPage = () => {
     const navigate = useNavigate();
 
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
     const edgeState = useContext(EdgeContext);
 
     const [editMode, setEditMode] = useState(false);
@@ -32,10 +33,10 @@ const EdgesPage = () => {
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.managerNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.managerNav.edges || '',
+                    label: commonResourceState?.resource?.navigation.managerNav.edges || '',
                     to: '/manager/edges'
                 }
             ]}/>
@@ -43,7 +44,7 @@ const EdgesPage = () => {
                 <EdgeSearchCriteriaForm searchHandler={(criteria) => edgeState?.setCriteria(criteria)}>
                     <>
                         <WiwaButton
-                            title={resourceState?.common?.action.add}
+                            title={commonResourceState?.resource?.action.add}
                             className="btn-primary join-item"
                             disabled={edgeState?.busy}
                             onClick={() => {
@@ -54,7 +55,7 @@ const EdgesPage = () => {
                             <Plus size={18}/>
                         </WiwaButton>
                         <WiwaButton
-                            title={resourceState?.common?.action.edit}
+                            title={commonResourceState?.resource?.action.edit}
                             className="btn-secondary join-item"
                             disabled={edgeState?.busy || !edgeState?.editEnabled}
                             onClick={() => {
@@ -65,7 +66,7 @@ const EdgesPage = () => {
                             <Edit size={18}/>
                         </WiwaButton>
                         <WiwaButton
-                            title={resourceState?.common?.action.categories}
+                            title={commonResourceState?.resource?.action.categories}
                             className="btn-ghost join-item"
                             disabled={edgeState?.busy || !edgeState?.editEnabled}
                             onClick={() => {
@@ -77,7 +78,7 @@ const EdgesPage = () => {
                             <List size={18}/>
                         </WiwaButton>
                         <WiwaButton
-                            title={resourceState?.common?.action.image}
+                            title={commonResourceState?.resource?.action.image}
                             className="btn-ghost join-item"
                             disabled={edgeState?.busy || !edgeState?.editEnabled}
                             onClick={() => {
@@ -90,13 +91,13 @@ const EdgesPage = () => {
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
-                            title={resourceState?.common?.action.delete}
+                            title={commonResourceState?.resource?.action.delete}
                             disabled={edgeState?.busy || !edgeState?.editEnabled}
                             onClick={() => {
                                 dialogState?.showDialog({
                                     type: DialogType.YES_NO,
-                                    title: resourceState?.manager?.edges.deleteEdge.title,
-                                    message: resourceState?.manager?.edges.deleteEdge.message,
+                                    title: managerResourceState?.resource?.edges.deleteEdge.title,
+                                    message: managerResourceState?.resource?.edges.deleteEdge.message,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
                                             edgeState?.deleteEdge().then();

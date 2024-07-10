@@ -329,3 +329,7 @@ export interface ResourceAdmin {
         }
     }
 }
+
+export interface AdminResourceState {
+    resource?: ResourceAdmin
+}

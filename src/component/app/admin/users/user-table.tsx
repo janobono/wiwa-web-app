@@ -5,7 +5,7 @@ import WiwaUserAuthorities from '../../../ui/wiwa-user-authorities';
 import WiwaValue from '../../../ui/wiwa-value';
 import { User } from '../../../../api/model';
 import { UserField } from '../../../../api/model/user';
-import { ResourceContext } from '../../../../context';
+import { AdminResourceContext } from '../../../../context';
 
 const UserTable = ({fields, rows, selected, setSelected}: {
     fields: UserField[],
@@ -34,7 +34,7 @@ const UserTable = ({fields, rows, selected, setSelected}: {
 export default UserTable;
 
 const TableHead = ({fields}: { fields: UserField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
 
     return (
         <thead>
@@ -42,27 +42,27 @@ const TableHead = ({fields}: { fields: UserField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case UserField.id:
-                        return (<th key={field}>{resourceState?.admin?.userTable.id}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.id}</th>);
                     case UserField.username:
-                        return (<th key={field}>{resourceState?.admin?.userTable.username}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.username}</th>);
                     case UserField.email:
-                        return (<th key={field}>{resourceState?.admin?.userTable.email}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.email}</th>);
                     case UserField.titleBefore:
-                        return (<th key={field}>{resourceState?.admin?.userTable.titleBefore}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.titleBefore}</th>);
                     case UserField.firstName:
-                        return (<th key={field}>{resourceState?.admin?.userTable.firstName}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.firstName}</th>);
                     case UserField.midName:
-                        return (<th key={field}>{resourceState?.admin?.userTable.midName}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.midName}</th>);
                     case UserField.lastName:
-                        return (<th key={field}>{resourceState?.admin?.userTable.lastName}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.lastName}</th>);
                     case UserField.titleAfter:
-                        return (<th key={field}>{resourceState?.admin?.userTable.titleAfter}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.titleAfter}</th>);
                     case UserField.authorities:
-                        return (<th key={field}>{resourceState?.admin?.userTable.authorities}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.authorities}</th>);
                     case UserField.confirmed:
-                        return (<th key={field}>{resourceState?.admin?.userTable.confirmed}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.confirmed}</th>);
                     case UserField.enabled:
-                        return (<th key={field}>{resourceState?.admin?.userTable.enabled}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.userTable.enabled}</th>);
                 }
             })}
             <th></th>

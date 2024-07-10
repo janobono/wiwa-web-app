@@ -5,18 +5,18 @@ import TitleEditor from '../../component/app/admin/base-info/title-editor';
 import WelcomeTextEditor from '../../component/app/admin/base-info/welcome-text-editor';
 import ApplicationInfoEditor from '../../component/app/admin/base-info/application-info-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const BaseInfoPage = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.adminNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.adminNav.baseInfo || '',
+                    label: commonResourceState?.resource?.navigation.adminNav.baseInfo || '',
                     to: '/admin/base-info'
                 }
             ]}/>

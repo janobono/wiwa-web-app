@@ -10,7 +10,7 @@ import WiwaButton from '../../../ui/wiwa-button';
 import { getApplicationProperties } from '../../../../api/controller/ui';
 import { UnitId } from '../../../../api/model/application';
 import { Edge, EdgeChange } from '../../../../api/model/edge';
-import { DialogContext, ResourceContext } from '../../../../context';
+import { CommonResourceContext, DialogContext, ManagerResourceContext } from '../../../../context';
 
 const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler, submitting}: {
     dialogId: string,
@@ -21,7 +21,8 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
     submitting: boolean
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [weightSign, setWeightSign] = useState<string>();
     const [lengthSign, setLengthSign] = useState<string>();
@@ -53,7 +54,7 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
         setWeightSign(unitSign(UnitId.KILOGRAM));
         setLengthSign(unitSign(UnitId.MILLIMETER));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
-    }, [resourceState]);
+    }, [commonResourceState]);
 
     useEffect(() => {
         if (edge) {
@@ -104,7 +105,7 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
     }, [codeValid, nameValid, weightValid, widthValid, thicknessValid, priceValid]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${resourceState?.getUnit(unitId)}]`;
+        return `[${commonResourceState?.getUnit(unitId)}]`;
     }
 
     return (!dialogState?.modalRoot ? null : createPortal(
@@ -112,13 +113,13 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.manager?.edges.edgeDialog.title}
+                        {managerResourceState?.resource?.edges.edgeDialog.title}
                     </div>
 
                     <WiwaFormInputString
-                        label={resourceState?.manager?.edges.edgeDialog.codeLabel}
+                        label={managerResourceState?.resource?.edges.edgeDialog.codeLabel}
                         required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.codePlaceholder}
+                        placeholder={managerResourceState?.resource?.edges.edgeDialog.codePlaceholder}
                         value={code}
                         setValue={setCode}
                         setValid={setCodeValid}
@@ -126,7 +127,7 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
                             if (code.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.codeRequired
+                                    message: managerResourceState?.resource?.edges.edgeDialog.codeRequired
                                 };
                             }
                             return {valid: true};
@@ -134,9 +135,9 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
                     />
 
                     <WiwaFormInputString
-                        label={resourceState?.manager?.edges.edgeDialog.nameLabel}
+                        label={managerResourceState?.resource?.edges.edgeDialog.nameLabel}
                         required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.namePlaceholder}
+                        placeholder={managerResourceState?.resource?.edges.edgeDialog.namePlaceholder}
                         value={name}
                         setValue={setName}
                         setValid={setNameValid}
@@ -144,7 +145,7 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
                             if (name.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.nameRequired
+                                    message: managerResourceState?.resource?.edges.edgeDialog.nameRequired
                                 };
                             }
                             return {valid: true};
@@ -152,17 +153,17 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
                     />
 
                     <WiwaFormTextarea
-                        label={resourceState?.manager?.edges.edgeDialog.descriptionLabel}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.descriptionPlaceholder}
+                        label={managerResourceState?.resource?.edges.edgeDialog.descriptionLabel}
+                        placeholder={managerResourceState?.resource?.edges.edgeDialog.descriptionPlaceholder}
                         value={description}
                         setValue={setDescription}
                     />
 
                     <WiwaFormInputDecimal
                         min="0"
-                        label={`${resourceState?.manager?.edges.edgeDialog.weightLabel} ${weightSign}`}
+                        label={`${managerResourceState?.resource?.edges.edgeDialog.weightLabel} ${weightSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.weightPlaceholder}
+                        placeholder={managerResourceState?.resource?.edges.edgeDialog.weightPlaceholder}
                         value={weight}
                         setValue={setWeight}
                         setValid={setWeightValid}
@@ -170,7 +171,7 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
                             if (weight === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.weightRequired
+                                    message: managerResourceState?.resource?.edges.edgeDialog.weightRequired
                                 };
                             }
                             return {valid: true};
@@ -179,9 +180,9 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
 
                     <WiwaFormInputInteger
                         min="0"
-                        label={`${resourceState?.manager?.edges.edgeDialog.widthLabel} ${lengthSign}`}
+                        label={`${managerResourceState?.resource?.edges.edgeDialog.widthLabel} ${lengthSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.widthPlaceholder}
+                        placeholder={managerResourceState?.resource?.edges.edgeDialog.widthPlaceholder}
                         value={width}
                         setValue={setWidth}
                         setValid={setWidthValid}
@@ -189,7 +190,7 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
                             if (width === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.widthRequired
+                                    message: managerResourceState?.resource?.edges.edgeDialog.widthRequired
                                 };
                             }
                             return {valid: true};
@@ -198,9 +199,9 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
 
                     <WiwaFormInputDecimal
                         min="0"
-                        label={`${resourceState?.manager?.edges.edgeDialog.thicknessLabel} ${lengthSign}`}
+                        label={`${managerResourceState?.resource?.edges.edgeDialog.thicknessLabel} ${lengthSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.thicknessPlaceholder}
+                        placeholder={managerResourceState?.resource?.edges.edgeDialog.thicknessPlaceholder}
                         value={thickness}
                         setValue={setThickness}
                         setValid={setThicknessValid}
@@ -208,7 +209,7 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
                             if (thickness === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.thicknessRequired
+                                    message: managerResourceState?.resource?.edges.edgeDialog.thicknessRequired
                                 };
                             }
                             return {valid: true};
@@ -217,9 +218,9 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
 
                     <WiwaFormInputDecimal
                         min="0"
-                        label={`${resourceState?.manager?.edges.edgeDialog.priceLabel} ${priceSign}`}
+                        label={`${managerResourceState?.resource?.edges.edgeDialog.priceLabel} ${priceSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.edges.edgeDialog.pricePlaceholder}
+                        placeholder={managerResourceState?.resource?.edges.edgeDialog.pricePlaceholder}
                         value={price}
                         setValue={setPrice}
                         setValid={setPriceValid}
@@ -227,7 +228,7 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
                             if (price === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.edges.edgeDialog.priceRequired
+                                    message: managerResourceState?.resource?.edges.edgeDialog.priceRequired
                                 };
                             }
                             return {valid: true};
@@ -249,7 +250,7 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
                                     price: Number(price)
                                 });
                             }}
-                        >{resourceState?.common?.action.ok}
+                        >{commonResourceState?.resource?.action.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
@@ -257,7 +258,7 @@ const EdgeChangeDialog = ({dialogId, showDialog, edge, okHandler, cancelHandler,
                             onClick={() => {
                                 cancelHandler();
                             }}
-                        >{resourceState?.common?.action.cancel}
+                        >{commonResourceState?.resource?.action.cancel}
                         </WiwaButton>
                     </div>
                 </div>

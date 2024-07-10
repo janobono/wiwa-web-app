@@ -18,7 +18,13 @@ import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaFormInputString from '../../../component/ui/wiwa-form-input-string';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../context';
+import {
+    AuthContext,
+    CommonResourceContext,
+    DialogContext,
+    ErrorContext,
+    ManagerResourceContext
+} from '../../../context';
 import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const CODE_LIST_ITEM_DIALOG_ID = 'code-lists-item-dialog-001';
@@ -29,7 +35,8 @@ const CodeListItemsPage = () => {
     const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<CodeListItem[]>();
@@ -153,15 +160,15 @@ const CodeListItemsPage = () => {
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.managerNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.managerNav.codeLists || '',
+                    label: commonResourceState?.resource?.navigation.managerNav.codeLists || '',
                     to: '/manager/code-lists'
                 },
                 {
                     key: 2,
-                    label: resourceState?.common?.navigation.managerNav.codeListItems || '',
+                    label: commonResourceState?.resource?.navigation.managerNav.codeListItems || '',
                     to: `/manager/code-lists/${codeListId}/items`
                 }
             ]}/>
@@ -170,7 +177,7 @@ const CodeListItemsPage = () => {
 
                 <div className="join join-vertical md:join-horizontal w-full">
                     <WiwaButton
-                        title={resourceState?.common?.action.add}
+                        title={commonResourceState?.resource?.action.add}
                         className="btn-primary join-item"
                         disabled={busy}
                         onClick={() => {
@@ -182,7 +189,7 @@ const CodeListItemsPage = () => {
                     </WiwaButton>
 
                     <WiwaButton
-                        title={resourceState?.common?.action.edit}
+                        title={commonResourceState?.resource?.action.edit}
                         className="btn-secondary join-item"
                         disabled={busy || selected === undefined}
                         onClick={() => {
@@ -196,7 +203,7 @@ const CodeListItemsPage = () => {
                     </WiwaButton>
 
                     <WiwaButton
-                        title={resourceState?.common?.action.moveUp}
+                        title={commonResourceState?.resource?.action.moveUp}
                         className="btn-ghost join-item"
                         disabled={busy || selected === undefined}
                         onClick={() => {
@@ -209,7 +216,7 @@ const CodeListItemsPage = () => {
                     </WiwaButton>
 
                     <WiwaButton
-                        title={resourceState?.common?.action.moveDown}
+                        title={commonResourceState?.resource?.action.moveDown}
                         className="btn-ghost join-item"
                         disabled={busy || selected === undefined}
                         onClick={() => {
@@ -223,13 +230,13 @@ const CodeListItemsPage = () => {
 
                     <WiwaButton
                         className="btn-accent join-item"
-                        title={resourceState?.common?.action.delete}
+                        title={commonResourceState?.resource?.action.delete}
                         disabled={busy || selected === undefined}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
-                                title: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.title,
-                                message: resourceState?.manager?.codeLists.codeListItems.deleteCodeListItem.message,
+                                title: managerResourceState?.resource?.codeLists.codeListItems.deleteCodeListItem.title,
+                                message: managerResourceState?.resource?.codeLists.codeListItems.deleteCodeListItem.message,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
                                         if (selected) {
@@ -293,7 +300,8 @@ const CodeListItemDataDialog = (
         submitting: boolean
     }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [code, setCode] = useState('');
     const [codeValid, setCodeValid] = useState(false);
@@ -328,13 +336,13 @@ const CodeListItemDataDialog = (
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.title}
+                        {managerResourceState?.resource?.codeLists.codeListItems.codeListItemDialog.title}
                     </div>
 
                     <WiwaFormInputString
-                        label={resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.codeLabel}
+                        label={managerResourceState?.resource?.codeLists.codeListItems.codeListItemDialog.codeLabel}
                         required={true}
-                        placeholder={resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.codePlaceholder}
+                        placeholder={managerResourceState?.resource?.codeLists.codeListItems.codeListItemDialog.codePlaceholder}
                         value={code}
                         setValue={setCode}
                         setValid={setCodeValid}
@@ -342,7 +350,7 @@ const CodeListItemDataDialog = (
                             if (code.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.codeRequired
+                                    message: managerResourceState?.resource?.codeLists.codeListItems.codeListItemDialog.codeRequired
                                 };
                             }
                             return {valid: true};
@@ -350,9 +358,9 @@ const CodeListItemDataDialog = (
                     />
 
                     <WiwaFormInputString
-                        label={resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.valueLabel}
+                        label={managerResourceState?.resource?.codeLists.codeListItems.codeListItemDialog.valueLabel}
                         required={true}
-                        placeholder={resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.valuePlaceholder}
+                        placeholder={managerResourceState?.resource?.codeLists.codeListItems.codeListItemDialog.valuePlaceholder}
                         value={value}
                         setValue={setValue}
                         setValid={setValueValid}
@@ -360,7 +368,7 @@ const CodeListItemDataDialog = (
                             if (value.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.codeLists.codeListItems.codeListItemDialog.valueRequired
+                                    message: managerResourceState?.resource?.codeLists.codeListItems.codeListItemDialog.valueRequired
                                 };
                             }
                             return {valid: true};
@@ -374,7 +382,7 @@ const CodeListItemDataDialog = (
                             onClick={() => {
                                 okHandler({codeListId, parentId: (parent ? parent.id : undefined), code, value});
                             }}
-                        >{resourceState?.common?.action.ok}
+                        >{commonResourceState?.resource?.action.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
@@ -382,7 +390,7 @@ const CodeListItemDataDialog = (
                             onClick={() => {
                                 cancelHandler();
                             }}
-                        >{resourceState?.common?.action.cancel}
+                        >{commonResourceState?.resource?.action.cancel}
                         </WiwaButton>
                     </div>
                     {error &&

@@ -10,14 +10,15 @@ import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
 import WiwaFormInputPassword from '../../component/ui/wiwa-form-input-password';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
-import { AuthContext, ErrorContext, ResourceContext } from '../../context';
+import { AuthContext, AuthResourceContext, CommonResourceContext, ErrorContext } from '../../context';
 
 const ChangeEmailPage = () => {
     const navigate = useNavigate();
 
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const authResourceState = useContext(AuthResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [email, setEmail] = useState('');
     const [emailValid, setEmailValid] = useState(false);
@@ -47,16 +48,16 @@ const ChangeEmailPage = () => {
             if (response?.error) {
                 switch (response?.error.code) {
                     case WiwaErrorCode.USER_IS_DISABLED:
-                        setFormError(resourceState?.common?.error.userIsDisabled);
+                        setFormError(commonResourceState?.resource?.error.userIsDisabled);
                         break;
                     case WiwaErrorCode.INVALID_CREDENTIALS:
-                        setFormError(resourceState?.common?.error.invalidCredentials);
+                        setFormError(commonResourceState?.resource?.error.invalidCredentials);
                         break;
                     case WiwaErrorCode.INVALID_CAPTCHA:
-                        setFormError(resourceState?.common?.error.invalidCaptcha);
+                        setFormError(commonResourceState?.resource?.error.invalidCaptcha);
                         break;
                     case WiwaErrorCode.USER_EMAIL_IS_USED:
-                        setFormError(resourceState?.common?.error.userEmailIsUsed);
+                        setFormError(commonResourceState?.resource?.error.userEmailIsUsed);
                         break;
                     default:
                         errorState?.addError(response?.error);
@@ -79,10 +80,10 @@ const ChangeEmailPage = () => {
         <MaintenanceDefender>
             <AuthDefender>
                 <WiwaBreadcrumb breadcrumbs={[
-                    {key: 0, label: resourceState?.common?.navigation.authNav.title || ''},
+                    {key: 0, label: commonResourceState?.resource?.navigation.authNav.title || ''},
                     {
                         key: 1,
-                        label: resourceState?.auth?.changeEmail.title || '',
+                        label: authResourceState?.resource?.changeEmail.title || '',
                         to: '/auth/change-email'
                     }
                 ]}/>
@@ -93,9 +94,9 @@ const ChangeEmailPage = () => {
                             handleSubmit().then();
                         }}>
                             <WiwaFormInputEmail
-                                label={resourceState?.auth?.changeEmail.emailLabel}
+                                label={authResourceState?.resource?.changeEmail.emailLabel}
                                 required={true}
-                                placeholder={resourceState?.auth?.changeEmail.emailPlaceholder}
+                                placeholder={authResourceState?.resource?.changeEmail.emailPlaceholder}
                                 value={email}
                                 setValue={setEmail}
                                 setValid={setEmailValid}
@@ -103,13 +104,13 @@ const ChangeEmailPage = () => {
                                     if (email.trim().length === 0) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.changeEmail.emailRequired
+                                            message: authResourceState?.resource?.changeEmail.emailRequired
                                         };
                                     }
                                     if (!EMAIL_REGEX.test(email)) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.changeEmail.emailFormat
+                                            message: authResourceState?.resource?.changeEmail.emailFormat
                                         };
                                     }
                                     return {valid: true};
@@ -117,9 +118,9 @@ const ChangeEmailPage = () => {
                             />
 
                             <WiwaFormInputPassword
-                                label={resourceState?.auth?.changeEmail.passwordLabel}
+                                label={authResourceState?.resource?.changeEmail.passwordLabel}
                                 required={true}
-                                placeholder={resourceState?.auth?.changeEmail.passwordPlaceholder}
+                                placeholder={authResourceState?.resource?.changeEmail.passwordPlaceholder}
                                 value={password}
                                 setValue={setPassword}
                                 setValid={setPasswordValid}
@@ -127,7 +128,7 @@ const ChangeEmailPage = () => {
                                     if (password.trim().length === 0) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.changeEmail.passwordRequired
+                                            message: authResourceState?.resource?.changeEmail.passwordRequired
                                         };
                                     }
                                     return {valid: true};
@@ -146,7 +147,7 @@ const ChangeEmailPage = () => {
                                 type="submit"
                                 className="btn-primary w-full"
                                 disabled={authState?.busy || !isFormValid()}
-                            >{resourceState?.common?.action.submit}</WiwaButton>
+                            >{commonResourceState?.resource?.action.submit}</WiwaButton>
                             {formError &&
                                 <label className="label">
                                     <span className="label-text-alt text-error">{formError}</span>

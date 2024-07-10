@@ -9,12 +9,13 @@ import OrderTable from '../../component/order/order-table';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import { DialogContext, ResourceContext } from '../../context';
+import { CommonResourceContext, CustomerResourceContext, DialogContext } from '../../context';
 import { DialogAnswer, DialogType } from '../../context/model/dialog';
 
 const OrdersPage = () => {
     const navigate = useNavigate();
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const customerResourceState = useContext(CustomerResourceContext);
     const customerState = useContext(CustomerContext);
     const dialogState = useContext(DialogContext);
 
@@ -27,7 +28,7 @@ const OrdersPage = () => {
             <WiwaBreadcrumb breadcrumbs={[
                 {
                     key: 0,
-                    label: resourceState?.common?.navigation.customerNav.title || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.title || '',
                     to: '/customer'
                 }
             ]}/>
@@ -36,7 +37,7 @@ const OrdersPage = () => {
                     searchHandler={(criteria) => customerState?.setCriteria(criteria)}
                 >
                     <WiwaButton
-                        title={resourceState?.common?.action.add}
+                        title={commonResourceState?.resource?.action.add}
                         className="btn-primary join-item"
                         disabled={customerState?.busy}
                         onClick={() => {
@@ -50,7 +51,7 @@ const OrdersPage = () => {
                         <Plus size={18}/>
                     </WiwaButton>
                     <WiwaButton
-                        title={resourceState?.common?.action.edit}
+                        title={commonResourceState?.resource?.action.edit}
                         className="btn-secondary join-item"
                         disabled={customerState?.busy || !customerState?.editEnabled}
                         onClick={() => {
@@ -60,7 +61,7 @@ const OrdersPage = () => {
                         <Edit size={18}/>
                     </WiwaButton>
                     <WiwaButton
-                        title={resourceState?.common?.action.items}
+                        title={commonResourceState?.resource?.action.items}
                         className="btn-ghost join-item"
                         disabled={customerState?.busy || customerState?.selected === undefined}
                         onClick={() => {
@@ -70,7 +71,7 @@ const OrdersPage = () => {
                         <List size={18}/>
                     </WiwaButton>
                     <WiwaButton
-                        title={resourceState?.customer?.orders.comments.title}
+                        title={customerResourceState?.resource?.orders.comments.title}
                         className="btn-ghost join-item"
                         disabled={customerState?.busy || customerState?.selected === undefined}
                         onClick={() => {
@@ -80,7 +81,7 @@ const OrdersPage = () => {
                         <MessageSquare size={18}/>
                     </WiwaButton>
                     <WiwaButton
-                        title={resourceState?.common?.action.submit}
+                        title={commonResourceState?.resource?.action.submit}
                         className="btn-primary join-item"
                         disabled={customerState?.busy || !customerState?.submitEnabled}
                         onClick={() => {
@@ -91,13 +92,13 @@ const OrdersPage = () => {
                     </WiwaButton>
                     <WiwaButton
                         className="btn-accent join-item"
-                        title={resourceState?.common?.action.delete}
+                        title={commonResourceState?.resource?.action.delete}
                         disabled={customerState?.busy || !customerState?.editEnabled}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
-                                title: resourceState?.customer?.orders.deleteOrder.title,
-                                message: resourceState?.customer?.orders.deleteOrder.message,
+                                title: customerResourceState?.resource?.orders.deleteOrder.title,
+                                message: customerResourceState?.resource?.orders.deleteOrder.message,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
                                         customerState?.deleteOrder().then();

@@ -7,7 +7,7 @@ import BaseDialog from '../../../dialog/base-dialog';
 import WiwaButton from '../../../ui/wiwa-button';
 import WiwaFormInputString from '../../../ui/wiwa-form-input-string';
 import { Entry, EntryField } from '../../../../api/model';
-import { DialogContext, ResourceContext } from '../../../../context';
+import { AdminResourceContext, CommonResourceContext, DialogContext } from '../../../../context';
 
 const CsvReplacementsEditor = ({dialogId, busy, entries, submitHandler}: {
     dialogId: string,
@@ -15,7 +15,7 @@ const CsvReplacementsEditor = ({dialogId, busy, entries, submitHandler}: {
     entries: Entry[],
     submitHandler: (entries: Entry[]) => Promise<void>
 }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [data, setData] = useState<Entry[]>();
     const [selected, setSelected] = useState<Entry>();
@@ -32,7 +32,7 @@ const CsvReplacementsEditor = ({dialogId, busy, entries, submitHandler}: {
             <div className="join">
                 <WiwaButton
                     className="btn-primary join-item"
-                    title={resourceState?.common?.action.add}
+                    title={commonResourceState?.resource?.action.add}
                     disabled={busy}
                     onClick={() => {
                         setShowDialog(true);
@@ -42,7 +42,7 @@ const CsvReplacementsEditor = ({dialogId, busy, entries, submitHandler}: {
 
                 <WiwaButton
                     className="btn-accent join-item"
-                    title={resourceState?.common?.action.delete}
+                    title={commonResourceState?.resource?.action.delete}
                     disabled={busy || selected === undefined}
                     onClick={() => {
                         if (data) {
@@ -76,7 +76,7 @@ const CsvReplacementsEditor = ({dialogId, busy, entries, submitHandler}: {
                             submitHandler(data).then();
                         }
                     }}
-                >{resourceState?.common?.action.submit}
+                >{commonResourceState?.resource?.action.submit}
                 </WiwaButton>
             </div>
 
@@ -110,7 +110,8 @@ const CsvReplacementDialog = ({dialogId, showDialog, okHandler, cancelHandler}: 
     cancelHandler: () => void
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [regex, setRegex] = useState('');
     const [regexValid, setRegexValid] = useState(false);
@@ -127,13 +128,13 @@ const CsvReplacementDialog = ({dialogId, showDialog, okHandler, cancelHandler}: 
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.admin?.orderFormat.csvReplacement.title}
+                        {adminResourceState?.resource?.orderFormat.csvReplacement.title}
                     </div>
 
                     <WiwaFormInputString
-                        label={resourceState?.admin?.orderFormat.csvReplacement.regexLabel}
+                        label={adminResourceState?.resource?.orderFormat.csvReplacement.regexLabel}
                         required={true}
-                        placeholder={resourceState?.admin?.orderFormat.csvReplacement.regexPlaceholder}
+                        placeholder={adminResourceState?.resource?.orderFormat.csvReplacement.regexPlaceholder}
                         value={regex}
                         setValue={setRegex}
                         setValid={setRegexValid}
@@ -141,7 +142,7 @@ const CsvReplacementDialog = ({dialogId, showDialog, okHandler, cancelHandler}: 
                             if (regex.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.admin?.orderFormat.csvReplacement.regexRequired
+                                    message: adminResourceState?.resource?.orderFormat.csvReplacement.regexRequired
                                 };
                             }
                             return {valid: true};
@@ -149,7 +150,7 @@ const CsvReplacementDialog = ({dialogId, showDialog, okHandler, cancelHandler}: 
                     />
 
                     <WiwaFormInputString
-                        label={resourceState?.admin?.orderFormat.csvReplacement.replacementLabel}
+                        label={adminResourceState?.resource?.orderFormat.csvReplacement.replacementLabel}
                         required={true}
                         value={replacement}
                         setValue={setReplacement}
@@ -160,12 +161,12 @@ const CsvReplacementDialog = ({dialogId, showDialog, okHandler, cancelHandler}: 
                             className="btn-primary join-item"
                             disabled={!regexValid}
                             onClick={() => okHandler({key: regex || '', value: replacement || ''})}
-                        >{resourceState?.common?.action.ok}
+                        >{commonResourceState?.resource?.action.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
                             onClick={cancelHandler}
-                        >{resourceState?.common?.action.cancel}
+                        >{commonResourceState?.resource?.action.cancel}
                         </WiwaButton>
                     </div>
                 </div>

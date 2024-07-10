@@ -4,12 +4,13 @@ import { getOrderSendMail, setOrderSendMail } from '../../../../api/controller/c
 import { OrderSendMail } from '../../../../api/model/application';
 import WiwaButton from '../../../ui/wiwa-button';
 import WiwaFormInputString from '../../../ui/wiwa-form-input-string';
-import { AuthContext, ErrorContext, ResourceContext } from '../../../../context';
+import { AdminResourceContext, AuthContext, CommonResourceContext, ErrorContext } from '../../../../context';
 
 const OrderSendMailEditor = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<OrderSendMail>();
@@ -83,8 +84,8 @@ const OrderSendMailEditor = () => {
         <div className="flex flex-col p-5 gap-5 w-full">
             <div className="flex flex-col items-center justify-center">
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderSend.subjectLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderSend.subjectPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderSend.subjectLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderSend.subjectPlaceholder}
                     value={subject}
                     setValue={setSubject}
                     setValid={setSubjectValid}
@@ -92,7 +93,7 @@ const OrderSendMailEditor = () => {
                         if (subject.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderSend.subjectRequired
+                                message: adminResourceState?.resource?.mailFormat.orderSend.subjectRequired
                             };
                         }
                         return {valid: true};
@@ -100,8 +101,8 @@ const OrderSendMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderSend.titleLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderSend.titlePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderSend.titleLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderSend.titlePlaceholder}
                     value={title}
                     setValue={setTitle}
                     setValid={setTitleValid}
@@ -109,7 +110,7 @@ const OrderSendMailEditor = () => {
                         if (title.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderSend.titleRequired
+                                message: adminResourceState?.resource?.mailFormat.orderSend.titleRequired
                             };
                         }
                         return {valid: true};
@@ -117,8 +118,8 @@ const OrderSendMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderSend.messageLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderSend.messagePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderSend.messageLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderSend.messagePlaceholder}
                     value={message}
                     setValue={setMessage}
                     setValid={setMessageValid}
@@ -126,7 +127,7 @@ const OrderSendMailEditor = () => {
                         if (message.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderSend.messageRequired
+                                message: adminResourceState?.resource?.mailFormat.orderSend.messageRequired
                             };
                         }
                         return {valid: true};
@@ -134,8 +135,8 @@ const OrderSendMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderSend.linkLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderSend.linkPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderSend.linkLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderSend.linkPlaceholder}
                     value={link}
                     setValue={setLink}
                     setValid={setLinkValid}
@@ -143,7 +144,7 @@ const OrderSendMailEditor = () => {
                         if (link.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderSend.linkRequired
+                                message: adminResourceState?.resource?.mailFormat.orderSend.linkRequired
                             };
                         }
                         return {valid: true};
@@ -151,8 +152,8 @@ const OrderSendMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderSend.attachmentLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderSend.attachmentPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderSend.attachmentLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderSend.attachmentPlaceholder}
                     value={attachment}
                     setValue={setAttachment}
                     setValid={setAttachmentValid}
@@ -160,7 +161,7 @@ const OrderSendMailEditor = () => {
                         if (attachment.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderSend.attachmentRequired
+                                message: adminResourceState?.resource?.mailFormat.orderSend.attachmentRequired
                             };
                         }
                         return {valid: true};
@@ -172,7 +173,7 @@ const OrderSendMailEditor = () => {
                         className="btn-primary join-item"
                         disabled={busy || !isFormValid()}
                         onClick={submit}
-                    >{resourceState?.common?.action.submit}
+                    >{commonResourceState?.resource?.action.submit}
                     </WiwaButton>
                 </div>
             </div>

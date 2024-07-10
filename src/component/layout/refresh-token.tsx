@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { AuthContext, ResourceContext } from '../../context';
+import { AuthContext, CommonResourceContext } from '../../context';
 
 const RefreshToken = () => {
     const authState = useContext(AuthContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [show, setShow] = useState(false);
 
@@ -18,13 +18,13 @@ const RefreshToken = () => {
 
     return (!show ? null :
             <div className="alert alert-warning text-xs md:text-base">
-                <span>{resourceState?.common?.refreshToken.text}</span>
+                <span>{commonResourceState?.resource?.refreshToken.text}</span>
                 <button
                     className="btn btn-sm normal-case text-xs md:text-base"
                     onClick={() => {
                         authState?.refreshAuth();
                     }}
-                >{resourceState?.common?.refreshToken.action}</button>
+                >{commonResourceState?.resource?.refreshToken.action}</button>
             </div>
     )
 }

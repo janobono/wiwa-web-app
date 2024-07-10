@@ -5,7 +5,7 @@ import SelectCodeListDialog from '../code-lists/select-code-list-dialog';
 import WiwaButton from '../../../ui/wiwa-button';
 import { ClientResponse } from '../../../../api/controller';
 import { Category } from '../../../../api/model';
-import { AuthContext, ErrorContext, ResourceContext } from '../../../../context';
+import { AuthContext, CommonResourceContext, ErrorContext } from '../../../../context';
 
 const CATEGORY_SELECT_CODE_LIST_DIALOG_ID = 'categories-select-code-lists-dialog-001';
 
@@ -15,7 +15,7 @@ const CategoryEditor = ({getCategory, setCategory}: {
 }) => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Category>();
@@ -45,7 +45,7 @@ const CategoryEditor = ({getCategory, setCategory}: {
                 }
                 <WiwaButton
                     className="btn-primary join-item"
-                    title={resourceState?.common?.action.edit}
+                    title={commonResourceState?.resource?.action.edit}
                     disabled={busy}
                     onClick={() => setShowDialog(true)}
                 ><Edit size={18}/>

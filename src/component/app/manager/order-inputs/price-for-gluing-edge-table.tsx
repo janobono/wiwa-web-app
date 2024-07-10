@@ -4,7 +4,7 @@ import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import WiwaValueNumber from '../../../ui/wiwa-value-number';
 import { getApplicationProperties } from '../../../../api/controller/ui';
 import { PriceForGluingEdge, PriceForGluingEdgeField, UnitId } from '../../../../api/model/application';
-import { ResourceContext } from '../../../../context';
+import { CommonResourceContext, ManagerResourceContext } from '../../../../context';
 
 const PriceForGluingEdgeTable = ({fields, rows, selected, setSelected}: {
     fields: PriceForGluingEdgeField[],
@@ -33,7 +33,8 @@ const PriceForGluingEdgeTable = ({fields, rows, selected, setSelected}: {
 export default PriceForGluingEdgeTable;
 
 const TableHead = ({fields}: { fields: PriceForGluingEdgeField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [lengthSign, setLengthSign] = useState<string>();
     const [priceSign, setPriceSign] = useState<string>();
@@ -41,10 +42,10 @@ const TableHead = ({fields}: { fields: PriceForGluingEdgeField[] }) => {
     useEffect(() => {
         setLengthSign(unitSign(UnitId.MILLIMETER));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
-    }, [resourceState]);
+    }, [commonResourceState]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${resourceState?.getUnit(unitId)}]`;
+        return `[${commonResourceState?.getUnit(unitId)}]`;
     }
 
     return (
@@ -54,11 +55,11 @@ const TableHead = ({fields}: { fields: PriceForGluingEdgeField[] }) => {
                 switch (field) {
                     case PriceForGluingEdgeField.width:
                         return (
-                            <th key={field}>{`${resourceState?.manager?.priceForGluingEdgeTable.width} ${lengthSign}`}</th>
+                            <th key={field}>{`${managerResourceState?.resource?.priceForGluingEdgeTable.width} ${lengthSign}`}</th>
                         );
                     case PriceForGluingEdgeField.price:
                         return (
-                            <th key={field}>{`${resourceState?.manager?.priceForGluingEdgeTable.price} ${priceSign}`}</th>
+                            <th key={field}>{`${managerResourceState?.resource?.priceForGluingEdgeTable.price} ${priceSign}`}</th>
                         );
                 }
             })}

@@ -1,7 +1,7 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { DialogContext, ResourceContext } from '../../';
+import { CommonResourceContext, DialogContext, } from '../../';
 import { DialogAnswer, DialogData, DialogType } from '../../model/dialog';
 import BaseDialog from '../../../component/dialog/base-dialog';
 import WiwaButton from '../../../component/ui/wiwa-button';
@@ -9,7 +9,7 @@ import WiwaButton from '../../../component/ui/wiwa-button';
 const DIALOG_ID = 'dialog-state-provider-dialog-001';
 
 const DialogProvider = ({children}: { children: ReactNode }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [data, setData] = useState<DialogData>();
     const [show, setShow] = useState(false);
@@ -60,7 +60,7 @@ const DialogProvider = ({children}: { children: ReactNode }) => {
                                         setShow(false);
                                         data.callback(DialogAnswer.OK);
                                     }}
-                                >{resourceState?.common?.dialogState.ok}
+                                >{commonResourceState?.resource?.dialogState.ok}
                                 </WiwaButton>
                             }
 
@@ -72,7 +72,7 @@ const DialogProvider = ({children}: { children: ReactNode }) => {
                                             setShow(false);
                                             data.callback(DialogAnswer.OK);
                                         }}
-                                    >{resourceState?.common?.dialogState.ok}
+                                    >{commonResourceState?.resource?.dialogState.ok}
                                     </WiwaButton>
                                     <WiwaButton
                                         className="btn-accent join-item"
@@ -80,7 +80,7 @@ const DialogProvider = ({children}: { children: ReactNode }) => {
                                             setShow(false);
                                             data.callback(DialogAnswer.CANCEL);
                                         }}
-                                    >{resourceState?.common?.dialogState.cancel}
+                                    >{commonResourceState?.resource?.dialogState.cancel}
                                     </WiwaButton>
                                 </div>
                             }
@@ -93,7 +93,7 @@ const DialogProvider = ({children}: { children: ReactNode }) => {
                                             setShow(false);
                                             data.callback(DialogAnswer.YES);
                                         }}
-                                    >{resourceState?.common?.dialogState.yes}
+                                    >{commonResourceState?.resource?.dialogState.yes}
                                     </WiwaButton>
                                     <WiwaButton
                                         className="btn-accent join-item"
@@ -101,7 +101,7 @@ const DialogProvider = ({children}: { children: ReactNode }) => {
                                             setShow(false);
                                             data.callback(DialogAnswer.NO);
                                         }}
-                                    >{resourceState?.common?.dialogState.no}
+                                    >{commonResourceState?.resource?.dialogState.no}
                                     </WiwaButton>
                                 </div>
                             }

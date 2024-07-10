@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { AuthContext, ResourceContext } from '../../context';
+import { AuthContext, CommonResourceContext } from '../../context';
 
 const DisabledAccount = () => {
     const authState = useContext(AuthContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [show, setShow] = useState(false);
 
@@ -18,7 +18,7 @@ const DisabledAccount = () => {
 
     return (!show ? null :
         <div className="alert alert-error text-xs md:text-base">
-            <span>{resourceState?.common?.disabledAccount.text}</span>
+            <span>{commonResourceState?.resource?.disabledAccount.text}</span>
         </div>)
 }
 

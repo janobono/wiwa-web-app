@@ -10,7 +10,7 @@ import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import WiwaFormCheckBox from '../../component/ui/wiwa-form-check-box';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { AuthContext, ErrorContext, ResourceContext } from '../../context';
+import { AuthContext, AuthResourceContext, CommonResourceContext, ErrorContext } from '../../context';
 
 
 const SignUpPage = () => {
@@ -18,7 +18,8 @@ const SignUpPage = () => {
 
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const authResourceState = useContext(AuthResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [username, setUsername] = useState('');
     const [usernameValid, setUsernameValid] = useState(false);
@@ -75,16 +76,16 @@ const SignUpPage = () => {
             if (response?.error) {
                 switch (response?.error.code) {
                     case WiwaErrorCode.USER_USERNAME_IS_USED:
-                        setFormError(resourceState?.common?.error.userUsernameIsUsed);
+                        setFormError(commonResourceState?.resource?.error.userUsernameIsUsed);
                         break;
                     case WiwaErrorCode.USER_EMAIL_IS_USED:
-                        setFormError(resourceState?.common?.error.userEmailIsUsed);
+                        setFormError(commonResourceState?.resource?.error.userEmailIsUsed);
                         break;
                     case WiwaErrorCode.GDPR:
-                        setFormError(resourceState?.common?.error.gdpr);
+                        setFormError(commonResourceState?.resource?.error.gdpr);
                         break;
                     case WiwaErrorCode.INVALID_CAPTCHA:
-                        setFormError(resourceState?.common?.error.invalidCaptcha);
+                        setFormError(commonResourceState?.resource?.error.invalidCaptcha);
                         break;
                     default:
                         errorState?.addError(response?.error);
@@ -106,14 +107,14 @@ const SignUpPage = () => {
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.auth?.signUp.title}
+                        {authResourceState?.resource?.signUp.title}
                     </div>
                     <div className="text-sm md:text-base font-normal text-center pb-5">
-                        <span>{resourceState?.auth?.signUp.subtitle} </span>
+                        <span>{authResourceState?.resource?.signUp.subtitle} </span>
                         <NavLink
                             className="link"
                             to="/auth/sign-in"
-                        >{resourceState?.auth?.signUp.subtitleLink}
+                        >{authResourceState?.resource?.signUp.subtitleLink}
                         </NavLink>
                     </div>
                     <form className="max-w-sm" onSubmit={(event) => {
@@ -121,9 +122,9 @@ const SignUpPage = () => {
                         handleSubmit().then();
                     }}>
                         <WiwaFormInputString
-                            label={resourceState?.auth?.signUp.usernameLabel}
+                            label={authResourceState?.resource?.signUp.usernameLabel}
                             required={true}
-                            placeholder={resourceState?.auth?.signUp.usernamePlaceholder}
+                            placeholder={authResourceState?.resource?.signUp.usernamePlaceholder}
                             value={username}
                             setValue={setUsername}
                             setValid={setUsernameValid}
@@ -131,7 +132,7 @@ const SignUpPage = () => {
                                 if (username.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.auth?.signUp.usernameRequired
+                                        message: authResourceState?.resource?.signUp.usernameRequired
                                     };
                                 }
                                 return {valid: true};
@@ -139,9 +140,9 @@ const SignUpPage = () => {
                         />
 
                         <WiwaFormInputPassword
-                            label={resourceState?.auth?.signUp.passwordLabel}
+                            label={authResourceState?.resource?.signUp.passwordLabel}
                             required={true}
-                            placeholder={resourceState?.auth?.signUp.passwordPlaceholder}
+                            placeholder={authResourceState?.resource?.signUp.passwordPlaceholder}
                             value={password}
                             setValue={setPassword}
                             setValid={setPasswordValid}
@@ -149,7 +150,7 @@ const SignUpPage = () => {
                                 if (password.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.auth?.signUp.passwordRequired
+                                        message: authResourceState?.resource?.signUp.passwordRequired
                                     };
                                 }
                                 return {valid: true};
@@ -157,9 +158,9 @@ const SignUpPage = () => {
                         />
 
                         <WiwaFormInputPassword
-                            label={resourceState?.auth?.signUp.passwordConfirmationLabel}
+                            label={authResourceState?.resource?.signUp.passwordConfirmationLabel}
                             required={true}
-                            placeholder={resourceState?.auth?.signUp.passwordConfirmationPlaceholder}
+                            placeholder={authResourceState?.resource?.signUp.passwordConfirmationPlaceholder}
                             value={passwordConfirmation}
                             setValue={setPasswordConfirmation}
                             setValid={setPasswordConfirmationValid}
@@ -167,13 +168,13 @@ const SignUpPage = () => {
                                 if (passwordConfirmation.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.auth?.signUp.passwordConfirmationRequired
+                                        message: authResourceState?.resource?.signUp.passwordConfirmationRequired
                                     };
                                 }
                                 if (passwordConfirmation !== password) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.auth?.signUp.passwordConfirmationNotEquals
+                                        message: authResourceState?.resource?.signUp.passwordConfirmationNotEquals
                                     };
                                 }
                                 return {valid: true};
@@ -181,9 +182,9 @@ const SignUpPage = () => {
                         />
 
                         <WiwaFormInputEmail
-                            label={resourceState?.auth?.signUp.emailLabel}
+                            label={authResourceState?.resource?.signUp.emailLabel}
                             required={true}
-                            placeholder={resourceState?.auth?.signUp.emailPlaceholder}
+                            placeholder={authResourceState?.resource?.signUp.emailPlaceholder}
                             value={email}
                             setValue={setEmail}
                             setValid={setEmailValid}
@@ -191,13 +192,13 @@ const SignUpPage = () => {
                                 if (email.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.auth?.signUp.emailRequired
+                                        message: authResourceState?.resource?.signUp.emailRequired
                                     };
                                 }
                                 if (!EMAIL_REGEX.test(email)) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.auth?.signUp.emailFormat
+                                        message: authResourceState?.resource?.signUp.emailFormat
                                     };
                                 }
                                 return {valid: true};
@@ -205,16 +206,16 @@ const SignUpPage = () => {
                         />
 
                         <WiwaFormInputString
-                            label={resourceState?.auth?.signUp.titleBeforeLabel}
-                            placeholder={resourceState?.auth?.signUp.titleBeforePlaceholder}
+                            label={authResourceState?.resource?.signUp.titleBeforeLabel}
+                            placeholder={authResourceState?.resource?.signUp.titleBeforePlaceholder}
                             value={titleBefore}
                             setValue={setTitleBefore}
                         />
 
                         <WiwaFormInputString
-                            label={resourceState?.auth?.signUp.firstNameLabel}
+                            label={authResourceState?.resource?.signUp.firstNameLabel}
                             required={true}
-                            placeholder={resourceState?.auth?.signUp.firstNamePlaceholder}
+                            placeholder={authResourceState?.resource?.signUp.firstNamePlaceholder}
                             value={firstName}
                             setValue={setFirstName}
                             setValid={setFirstNameValid}
@@ -222,7 +223,7 @@ const SignUpPage = () => {
                                 if (firstName.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.auth?.signUp.firstNameRequired
+                                        message: authResourceState?.resource?.signUp.firstNameRequired
                                     };
                                 }
                                 return {valid: true};
@@ -230,16 +231,16 @@ const SignUpPage = () => {
                         />
 
                         <WiwaFormInputString
-                            label={resourceState?.auth?.signUp.midNameLabel}
-                            placeholder={resourceState?.auth?.signUp.midNamePlaceholder}
+                            label={authResourceState?.resource?.signUp.midNameLabel}
+                            placeholder={authResourceState?.resource?.signUp.midNamePlaceholder}
                             value={midName}
                             setValue={setMidName}
                         />
 
                         <WiwaFormInputString
-                            label={resourceState?.auth?.signUp.lastNameLabel}
+                            label={authResourceState?.resource?.signUp.lastNameLabel}
                             required={true}
-                            placeholder={resourceState?.auth?.signUp.lastNamePlaceholder}
+                            placeholder={authResourceState?.resource?.signUp.lastNamePlaceholder}
                             value={lastName}
                             setValue={setLastName}
                             setValid={setLastNameValid}
@@ -247,7 +248,7 @@ const SignUpPage = () => {
                                 if (lastName.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.auth?.signUp.lastNameRequired
+                                        message: authResourceState?.resource?.signUp.lastNameRequired
                                     };
                                 }
                                 return {valid: true};
@@ -255,8 +256,8 @@ const SignUpPage = () => {
                         />
 
                         <WiwaFormInputString
-                            label={resourceState?.auth?.signUp.titleAfterLabel}
-                            placeholder={resourceState?.auth?.signUp.titleAfterPlaceholder}
+                            label={authResourceState?.resource?.signUp.titleAfterLabel}
+                            placeholder={authResourceState?.resource?.signUp.titleAfterPlaceholder}
                             value={titleAfter}
                             setValue={setTitleAfter}
                         />
@@ -265,7 +266,7 @@ const SignUpPage = () => {
                             <NavLink
                                 className="link text-sm md:text:xs pl-2"
                                 to="/ui/gdpr-info"
-                            >{resourceState?.auth?.signUp.gdprLabel}
+                            >{authResourceState?.resource?.signUp.gdprLabel}
                             </NavLink>
                         </WiwaFormCheckBox>
 
@@ -281,7 +282,7 @@ const SignUpPage = () => {
                             type="submit"
                             className="btn-primary w-full"
                             disabled={authState?.busy || !isFormValid()}
-                        >{resourceState?.common?.action.submit}</WiwaButton>
+                        >{commonResourceState?.resource?.action.submit}</WiwaButton>
                         {formError &&
                             <label className="label">
                                 <span className="label-text-alt text-error">{formError}</span>

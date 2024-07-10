@@ -2,11 +2,11 @@ import { useContext, useEffect } from 'react';
 
 import AuthDefender from '../../component/layout/auth-defender';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { AuthContext, ResourceContext } from '../../context';
+import { AuthContext, CommonResourceContext } from '../../context';
 
 const SignOutPage = () => {
     const authState = useContext(AuthContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     useEffect(() => {
         if (authState) {
@@ -21,7 +21,7 @@ const SignOutPage = () => {
                     className="btn-primary"
                     disabled={authState?.busy}
                     onClick={() => authState?.signOut()}
-                >{resourceState?.common?.navigation.authNav.signOut}</WiwaButton>
+                >{commonResourceState?.resource?.navigation.authNav.signOut}</WiwaButton>
             </div>
         </AuthDefender>
     )

@@ -10,7 +10,13 @@ import WiwaPageable from '../../../ui/wiwa-pageable';
 import { getCodeLists } from '../../../../api/controller/code-list';
 import { Page } from '../../../../api/model';
 import { CodeList, CodeListField } from '../../../../api/model/code-list';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../../context';
+import {
+    AuthContext,
+    CommonResourceContext,
+    DialogContext,
+    ErrorContext,
+    ManagerResourceContext
+} from '../../../../context';
 
 const SelectCodeListDialog = (
     {
@@ -28,7 +34,8 @@ const SelectCodeListDialog = (
     const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Page<CodeList>>();
@@ -65,14 +72,14 @@ const SelectCodeListDialog = (
                 <div className="container p-5 mx-auto">
                     <div className="flex flex-col items-center justify-center">
                         <div className="text-lg md:text-xl font-bold text-center">
-                            {resourceState?.manager?.selectCodeListDialog.title}
+                            {managerResourceState?.resource?.selectCodeListDialog.title}
                         </div>
                         <div className="flex flex-col p-5 w-full">
                             <div className="flex flex-row w-full items-center justify-center">
                                 <div className="join pb-5 w-2/3">
                                     <WiwaInput
                                         className="join-item"
-                                        placeholder={resourceState?.manager?.selectCodeListDialog.searchPlaceholder}
+                                        placeholder={managerResourceState?.resource?.selectCodeListDialog.searchPlaceholder}
                                         value={searchField}
                                         onChange={event => setSearchField(event.target.value)}
                                         onKeyUp={(event) => {
@@ -82,7 +89,7 @@ const SelectCodeListDialog = (
                                         }}
                                     />
                                     <WiwaButton
-                                        title={resourceState?.manager?.selectCodeListDialog.searchTitle}
+                                        title={managerResourceState?.resource?.selectCodeListDialog.searchTitle}
                                         className="join-item"
                                         onClick={fetchData}
                                     ><Search size={18}/></WiwaButton>
@@ -120,14 +127,14 @@ const SelectCodeListDialog = (
                                         setShowDialog(false);
                                     }
                                 }}
-                            >{resourceState?.common?.action.ok}
+                            >{commonResourceState?.resource?.action.ok}
                             </WiwaButton>
                             <WiwaButton
                                 className="btn-accent join-item"
                                 onClick={() => {
                                     setShowDialog(false);
                                 }}
-                            >{resourceState?.common?.action.cancel}
+                            >{commonResourceState?.resource?.action.cancel}
                             </WiwaButton>
                         </div>
                     </div>

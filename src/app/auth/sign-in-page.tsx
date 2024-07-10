@@ -5,14 +5,15 @@ import { WiwaErrorCode } from '../../api/model';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInputPassword from '../../component/ui/wiwa-form-input-password';
 import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
-import { AuthContext, ErrorContext, ResourceContext } from '../../context';
+import { AuthContext, AuthResourceContext, CommonResourceContext, ErrorContext } from '../../context';
 
 const SignInPage = () => {
     const navigate = useNavigate();
 
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const authResourceState = useContext(AuthResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [username, setUsername] = useState('');
     const [usernameValid, setUsernameValid] = useState(false);
@@ -33,13 +34,13 @@ const SignInPage = () => {
             if (response?.error) {
                 switch (response?.error.code) {
                     case WiwaErrorCode.USER_NOT_FOUND:
-                        setFormError(resourceState?.common?.error.userNotFound);
+                        setFormError(commonResourceState?.resource?.error.userNotFound);
                         break;
                     case WiwaErrorCode.USER_IS_DISABLED:
-                        setFormError(resourceState?.common?.error.userIsDisabled);
+                        setFormError(commonResourceState?.resource?.error.userIsDisabled);
                         break;
                     case WiwaErrorCode.INVALID_CREDENTIALS:
-                        setFormError(resourceState?.common?.error.invalidCredentials);
+                        setFormError(commonResourceState?.resource?.error.invalidCredentials);
                         break;
                     default:
                         errorState?.addError(response?.error);
@@ -60,14 +61,14 @@ const SignInPage = () => {
         <div className="container p-5 mx-auto">
             <div className="flex flex-col items-center justify-center">
                 <div className="text-lg md:text-xl font-bold text-center">
-                    {resourceState?.auth?.signIn.title}
+                    {authResourceState?.resource?.signIn.title}
                 </div>
                 <div className="text-sm md:text-base font-normal text-center pb-5">
-                    <span>{resourceState?.auth?.signIn.subtitle} </span>
+                    <span>{authResourceState?.resource?.signIn.subtitle} </span>
                     <NavLink
                         className="link"
                         to="/auth/sign-up"
-                    >{resourceState?.auth?.signIn.subtitleLink}
+                    >{authResourceState?.resource?.signIn.subtitleLink}
                     </NavLink>
                 </div>
                 <form className="max-w-sm" onSubmit={(event) => {
@@ -75,9 +76,9 @@ const SignInPage = () => {
                     handleSubmit().then();
                 }}>
                     <WiwaFormInputString
-                        label={resourceState?.auth?.signIn.usernameLabel}
+                        label={authResourceState?.resource?.signIn.usernameLabel}
                         required={true}
-                        placeholder={resourceState?.auth?.signIn.usernamePlaceholder}
+                        placeholder={authResourceState?.resource?.signIn.usernamePlaceholder}
                         value={username}
                         setValue={setUsername}
                         setValid={setUsernameValid}
@@ -85,7 +86,7 @@ const SignInPage = () => {
                             if (username.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.auth?.signIn.usernameRequired
+                                    message: authResourceState?.resource?.signIn.usernameRequired
                                 };
                             }
                             return {valid: true};
@@ -93,9 +94,9 @@ const SignInPage = () => {
                     />
 
                     <WiwaFormInputPassword
-                        label={resourceState?.auth?.signIn.passwordLabel}
+                        label={authResourceState?.resource?.signIn.passwordLabel}
                         required={true}
-                        placeholder={resourceState?.auth?.signIn.passwordPlaceholder}
+                        placeholder={authResourceState?.resource?.signIn.passwordPlaceholder}
                         value={password}
                         setValue={setPassword}
                         setValid={setPasswordValid}
@@ -103,7 +104,7 @@ const SignInPage = () => {
                             if (password.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.auth?.signIn.passwordRequired
+                                    message: authResourceState?.resource?.signIn.passwordRequired
                                 };
                             }
                             return {valid: true};
@@ -113,7 +114,7 @@ const SignInPage = () => {
                             <NavLink
                                 className="link text-sm md:text-base"
                                 to="/auth/reset-password"
-                            >{resourceState?.auth?.signIn.forgottenPasswordLink}</NavLink>
+                            >{authResourceState?.resource?.signIn.forgottenPasswordLink}</NavLink>
                         </div>
                     </WiwaFormInputPassword>
 
@@ -121,7 +122,7 @@ const SignInPage = () => {
                         type="submit"
                         className="btn-primary w-full"
                         disabled={authState?.busy || !isFormValid()}
-                    >{resourceState?.common?.action.submit}</WiwaButton>
+                    >{commonResourceState?.resource?.action.submit}</WiwaButton>
                     {formError &&
                         <label className="label">
                             <span className="label-text-alt text-error">{formError}</span>

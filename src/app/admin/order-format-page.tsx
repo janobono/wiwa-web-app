@@ -19,14 +19,15 @@ import CsvReplacementsEditor from '../../component/app/admin/order-format/csv-re
 import CsvSeparatorEditor from '../../component/app/admin/order-format/csv-separator-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
-import { AuthContext, ErrorContext, ResourceContext } from '../../context';
+import { AdminResourceContext, AuthContext, CommonResourceContext, ErrorContext } from '../../context';
 
 const ORDER_FORMAT_DIALOG_ID = 'order-format-dialog-';
 
 const OrderFormatPage = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [index, setIndex] = useState(0);
 
@@ -70,10 +71,10 @@ const OrderFormatPage = () => {
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.adminNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.adminNav.orderFormat || '',
+                    label: commonResourceState?.resource?.navigation.adminNav.orderFormat || '',
                     to: '/admin/order-format'
                 }
             ]}/>
@@ -82,17 +83,17 @@ const OrderFormatPage = () => {
                     defaultValue="0"
                     onChange={event => setIndex(Number(event.currentTarget.value))}
                 >
-                    <option disabled value="0">{resourceState?.admin?.orderFormat.option.select}</option>
-                    <option value="1">{resourceState?.admin?.orderFormat.option.dimensions}</option>
-                    <option value="2">{resourceState?.admin?.orderFormat.option.boards}</option>
-                    <option value="3">{resourceState?.admin?.orderFormat.option.edges}</option>
-                    <option value="4">{resourceState?.admin?.orderFormat.option.corners}</option>
-                    <option value="5">{resourceState?.admin?.orderFormat.option.pattern}</option>
-                    <option value="6">{resourceState?.admin?.orderFormat.option.content}</option>
-                    <option value="7">{resourceState?.admin?.orderFormat.option.packageType}</option>
-                    <option value="8">{resourceState?.admin?.orderFormat.option.csvSeparator}</option>
-                    <option value="9">{resourceState?.admin?.orderFormat.option.csvReplacements}</option>
-                    <option value="10">{resourceState?.admin?.orderFormat.option.csvColumns}</option>
+                    <option disabled value="0">{adminResourceState?.resource?.orderFormat.option.select}</option>
+                    <option value="1">{adminResourceState?.resource?.orderFormat.option.dimensions}</option>
+                    <option value="2">{adminResourceState?.resource?.orderFormat.option.boards}</option>
+                    <option value="3">{adminResourceState?.resource?.orderFormat.option.edges}</option>
+                    <option value="4">{adminResourceState?.resource?.orderFormat.option.corners}</option>
+                    <option value="5">{adminResourceState?.resource?.orderFormat.option.pattern}</option>
+                    <option value="6">{adminResourceState?.resource?.orderFormat.option.content}</option>
+                    <option value="7">{adminResourceState?.resource?.orderFormat.option.packageType}</option>
+                    <option value="8">{adminResourceState?.resource?.orderFormat.option.csvSeparator}</option>
+                    <option value="9">{adminResourceState?.resource?.orderFormat.option.csvReplacements}</option>
+                    <option value="10">{adminResourceState?.resource?.orderFormat.option.csvColumns}</option>
                 </WiwaSelect>
 
                 {index == 1 &&

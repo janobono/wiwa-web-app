@@ -190,6 +190,12 @@
     }
   },
   "notFound": "404 Stránka nenájdená",
+  "orderCommentDialog": {
+    "title": "Komentár objednávky",
+    "valueLabel": "Komentár",
+    "valuePlaceholder": "Zadajte komentár",
+    "valueRequired": "Vyžaduje sa komentár"
+  },
   "orderItemEditor": {
     "nameLabel": "Názov",
     "namePlaceholder": "Zadajte názov",
@@ -248,15 +254,38 @@
     "next": "Nasledujúca"
   },
   "partEditor": {
-    "option": {
-      "select": "Typ dielca",
+    "partLabel": "Typ dielca",
+    "valuePlaceholder": "Zadajte hodnotu",
+    "valueRequired": "sa vyžaduje",
+    "deleteCornerQuestionTitle": "Zamazať roh",
+    "deleteCornerQuestionMessage": "Naozaj si želáte zmazať roh?",
+    "deleteBoardDimensionsQuestionTitle": "Zamazať rozmery",
+    "deleteBoardDimensionsQuestionMessage": "Naozaj si želáte zmazať rozmery?",
+    "boardDimensionsDialogTitle": "Rozmery",
+    "corner": {
+      "none": "Žiadny",
+      "rounded": "Zaoblený",
+      "straight": "Priamy"
+    },
+    "cornerDialog": {
+      "title": "Roh",
+      "cornerLabel": "Typ rohu",
+      "radiusLabel": "Polomer",
+      "radiusPlaceholder": "Zadajte polomer",
+      "radiusRequired": "Vyžaduje sa polomer",
+      "radiusInvalid": "Polomer musí byť menší ako",
+      "cornerDimensionsLabel": "Rozmery",
+      "cornerDimensionsPlaceholderX": "Zadajte x",
+      "cornerDimensionsPlaceholderY": "Zadajte y",
+      "cornerDimensionsRequired": "Vyžadujú sa rozmery",
+      "cornerDimensionsInvalid": "Rozmery musia byť menšie ako"
+    },
+    "part": {
       "basic": "Základný",
       "duplicatedBasic": "Zdvojený základný",
       "duplicatedFrame": "Zdvojený rám",
       "frame": "Rám"
-    },
-    "valuePlaceholder": "Zadajte hodnotu",
-    "valueRequired": "sa vyžaduje"
+    }
   },
   "refreshToken": {
     "action": "Obnoviť",

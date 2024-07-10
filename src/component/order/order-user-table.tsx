@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
 import { OrderUser, OrderUserField } from '../../api/model/order';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const OrderUserTable = ({fields, rows, selected, setSelected}: {
     fields: OrderUserField[],
@@ -31,7 +31,7 @@ const OrderUserTable = ({fields, rows, selected, setSelected}: {
 export default OrderUserTable;
 
 const TableHead = ({fields}: { fields: OrderUserField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <thead>
@@ -39,19 +39,19 @@ const TableHead = ({fields}: { fields: OrderUserField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case OrderUserField.id:
-                        return (<th key={field}>{resourceState?.common?.orderUserTable.id}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderUserTable.id}</th>);
                     case OrderUserField.titleBefore:
-                        return (<th key={field}>{resourceState?.common?.orderUserTable.titleBefore}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderUserTable.titleBefore}</th>);
                     case OrderUserField.firstName:
-                        return (<th key={field}>{resourceState?.common?.orderUserTable.firstName}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderUserTable.firstName}</th>);
                     case OrderUserField.midName:
-                        return (<th key={field}>{resourceState?.common?.orderUserTable.midName}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderUserTable.midName}</th>);
                     case OrderUserField.lastName:
-                        return (<th key={field}>{resourceState?.common?.orderUserTable.lastName}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderUserTable.lastName}</th>);
                     case OrderUserField.titleAfter:
-                        return (<th key={field}>{resourceState?.common?.orderUserTable.titleAfter}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderUserTable.titleAfter}</th>);
                     case OrderUserField.email:
-                        return (<th key={field}>{resourceState?.common?.orderUserTable.email}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderUserTable.email}</th>);
                 }
             })}
             <th></th>

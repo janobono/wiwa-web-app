@@ -10,7 +10,13 @@ import WiwaFormInputString from '../../../ui/wiwa-form-input-string';
 import { setFreeDays } from '../../../../api/controller/config';
 import { getFreeDays } from '../../../../api/controller/ui';
 import { FreeDay, FreeDayField } from '../../../../api/model/application';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../../context';
+import {
+    AuthContext,
+    CommonResourceContext,
+    DialogContext,
+    ErrorContext,
+    ManagerResourceContext
+} from '../../../../context';
 import { DialogAnswer, DialogType } from '../../../../context/model/dialog';
 
 const FREE_DAY_DIALOG_ID = 'free-day-dialog-001';
@@ -19,7 +25,8 @@ const FreeDayEditor = () => {
     const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<FreeDay[]>();
@@ -79,7 +86,7 @@ const FreeDayEditor = () => {
                 <div className="join">
                     <WiwaButton
                         className="btn-primary join-item"
-                        title={resourceState?.common?.action.add}
+                        title={commonResourceState?.resource?.action.add}
                         disabled={busy}
                         onClick={() => {
                             setEdit(false);
@@ -89,7 +96,7 @@ const FreeDayEditor = () => {
                     </WiwaButton>
                     <WiwaButton
                         className="btn-secondary join-item"
-                        title={resourceState?.common?.action.edit}
+                        title={commonResourceState?.resource?.action.edit}
                         disabled={busy || selected === undefined}
                         onClick={() => {
                             setEdit(true);
@@ -99,13 +106,13 @@ const FreeDayEditor = () => {
                     </WiwaButton>
                     <WiwaButton
                         className="btn-accent join-item"
-                        title={resourceState?.common?.action.delete}
+                        title={commonResourceState?.resource?.action.delete}
                         disabled={busy || selected === undefined}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
-                                title: resourceState?.manager?.orderInputs.freeDay.deleteQuestionTitle,
-                                message: resourceState?.manager?.orderInputs.freeDay.deleteQuestionMessage,
+                                title: managerResourceState?.resource?.orderInputs.freeDay.deleteQuestionTitle,
+                                message: managerResourceState?.resource?.orderInputs.freeDay.deleteQuestionMessage,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
                                         if (selected) {
@@ -150,7 +157,8 @@ const FreeDayDialog = ({showDialog, freeDay, okHandler, cancelHandler}: {
     cancelHandler: () => void
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [name, setName] = useState('');
     const [nameValid, setNameValid] = useState(false);
@@ -180,13 +188,13 @@ const FreeDayDialog = ({showDialog, freeDay, okHandler, cancelHandler}: {
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.manager?.orderInputs.freeDay.title}
+                        {managerResourceState?.resource?.orderInputs.freeDay.title}
                     </div>
 
                     <WiwaFormInputString
-                        label={resourceState?.manager?.orderInputs.freeDay.nameLabel}
+                        label={managerResourceState?.resource?.orderInputs.freeDay.nameLabel}
                         required={true}
-                        placeholder={resourceState?.manager?.orderInputs.freeDay.namePlaceholder}
+                        placeholder={managerResourceState?.resource?.orderInputs.freeDay.namePlaceholder}
                         value={name}
                         setValue={setName}
                         setValid={setNameValid}
@@ -194,7 +202,7 @@ const FreeDayDialog = ({showDialog, freeDay, okHandler, cancelHandler}: {
                             if (name.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.orderInputs.freeDay.nameRequired
+                                    message: managerResourceState?.resource?.orderInputs.freeDay.nameRequired
                                 };
                             }
                             return {valid: true};
@@ -202,9 +210,9 @@ const FreeDayDialog = ({showDialog, freeDay, okHandler, cancelHandler}: {
                     />
 
                     <WiwaFormInputDate
-                        label={resourceState?.manager?.orderInputs.freeDay.dateLabel}
+                        label={managerResourceState?.resource?.orderInputs.freeDay.dateLabel}
                         required={true}
-                        placeholder={resourceState?.manager?.orderInputs.freeDay.datePlaceholder}
+                        placeholder={managerResourceState?.resource?.orderInputs.freeDay.datePlaceholder}
                         value={date}
                         setValue={setDate}
                         setValid={setDateValid}
@@ -212,7 +220,7 @@ const FreeDayDialog = ({showDialog, freeDay, okHandler, cancelHandler}: {
                             if (date === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.orderInputs.freeDay.dateRequired
+                                    message: managerResourceState?.resource?.orderInputs.freeDay.dateRequired
                                 };
                             }
                             return {valid: true};
@@ -230,12 +238,12 @@ const FreeDayDialog = ({showDialog, freeDay, okHandler, cancelHandler}: {
                                     month: date ? date.getMonth() + 1 : 1
                                 });
                             }}
-                        >{resourceState?.common?.action.ok}
+                        >{commonResourceState?.resource?.action.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
                             onClick={cancelHandler}
-                        >{resourceState?.common?.action.cancel}
+                        >{commonResourceState?.resource?.action.cancel}
                         </WiwaButton>
                     </div>
                 </div>

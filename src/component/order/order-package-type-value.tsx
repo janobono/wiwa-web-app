@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 
 import { OrderPackageType } from '../../api/model/order';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const OrderPackageTypeValue = ({value}: { value?: OrderPackageType }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [data, setData] = useState('');
 
@@ -12,16 +12,16 @@ const OrderPackageTypeValue = ({value}: { value?: OrderPackageType }) => {
         if (value) {
             switch (value) {
                 case OrderPackageType.NO_PACKAGE:
-                    setData(resourceState?.common?.orderPackageType.noPackage || '');
+                    setData(commonResourceState?.resource?.orderPackageType.noPackage || '');
                     break;
                 case OrderPackageType.NO_PACKAGE_WITH_REMAINS:
-                    setData(resourceState?.common?.orderPackageType.noPackageWithRemains || '');
+                    setData(commonResourceState?.resource?.orderPackageType.noPackageWithRemains || '');
                     break;
                 case OrderPackageType.PACKAGE:
-                    setData(resourceState?.common?.orderPackageType.package || '');
+                    setData(commonResourceState?.resource?.orderPackageType.package || '');
                     break;
                 case OrderPackageType.PACKAGE_WITH_REMAINS:
-                    setData(resourceState?.common?.orderPackageType.packageWithRemains || '');
+                    setData(commonResourceState?.resource?.orderPackageType.packageWithRemains || '');
                     break;
             }
         } else {

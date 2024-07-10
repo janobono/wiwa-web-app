@@ -7,12 +7,18 @@ import { getTitle } from '../../../../api/controller/ui';
 import BaseDialog from '../../../../component/dialog/base-dialog';
 import WiwaFormInputString from '../../../../component/ui/wiwa-form-input-string';
 import WiwaButton from '../../../../component/ui/wiwa-button';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../../context';
+import {
+    AdminResourceContext,
+    AuthContext,
+    CommonResourceContext,
+    DialogContext,
+    ErrorContext
+} from '../../../../context';
 
 const TITLE_DIALOG_ID = 'admin-base-info-title-dialog-001';
 
 const TitleEditor = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [title, setTitle] = useState<string>();
     const [showTitleDialog, setShowTitleDialog] = useState(false);
@@ -30,7 +36,7 @@ const TitleEditor = () => {
                 <div className="p-5 flex content-stretch justify-center items-center">
                     <WiwaButton
                         className="btn-primary"
-                        title={resourceState?.common?.action.edit}
+                        title={commonResourceState?.resource?.action.edit}
                         onClick={() => setShowTitleDialog(true)}
                     ><Edit size={18}/></WiwaButton>
                 </div>
@@ -57,7 +63,8 @@ const TitleDialog = ({showDialog, closeHandler, defaultValue, setDefaultValue}: 
     const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState(defaultValue);
@@ -86,13 +93,13 @@ const TitleDialog = ({showDialog, closeHandler, defaultValue, setDefaultValue}: 
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.admin?.baseInfo.title.title}
+                        {adminResourceState?.resource?.baseInfo.title.title}
                     </div>
 
                     <WiwaFormInputString
-                        label={resourceState?.admin?.baseInfo.title.titleLabel}
+                        label={adminResourceState?.resource?.baseInfo.title.titleLabel}
                         required={true}
-                        placeholder={resourceState?.admin?.baseInfo.title.titlePlaceholder}
+                        placeholder={adminResourceState?.resource?.baseInfo.title.titlePlaceholder}
                         value={value}
                         setValue={setValue}
                         setValid={setValid}
@@ -100,7 +107,7 @@ const TitleDialog = ({showDialog, closeHandler, defaultValue, setDefaultValue}: 
                             if ((value || '').trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.admin?.baseInfo.title.titleRequired
+                                    message: adminResourceState?.resource?.baseInfo.title.titleRequired
                                 };
                             }
                             return {valid: true};
@@ -112,13 +119,13 @@ const TitleDialog = ({showDialog, closeHandler, defaultValue, setDefaultValue}: 
                             className="btn-primary join-item"
                             disabled={busy || !valid}
                             onClick={submit}
-                        >{resourceState?.common?.action.submit}
+                        >{commonResourceState?.resource?.action.submit}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
                             disabled={busy}
                             onClick={closeHandler}
-                        >{resourceState?.common?.action.cancel}
+                        >{commonResourceState?.resource?.action.cancel}
                         </WiwaButton>
                     </div>
                 </div>

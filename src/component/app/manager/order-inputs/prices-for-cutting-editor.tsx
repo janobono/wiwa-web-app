@@ -10,7 +10,13 @@ import WiwaFormInputDecimal from '../../../ui/wiwa-form-input-decimal';
 import { getPricesForCutting, setPricesForCutting } from '../../../../api/controller/config';
 import { getApplicationProperties } from '../../../../api/controller/ui';
 import { PriceForCutting, PriceForCuttingField, UnitId } from '../../../../api/model/application';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../../context';
+import {
+    AuthContext,
+    CommonResourceContext,
+    DialogContext,
+    ErrorContext,
+    ManagerResourceContext
+} from '../../../../context';
 import { DialogAnswer, DialogType } from '../../../../context/model/dialog';
 
 const PRICES_FOR_CUTTING_DIALOG_ID = 'prices-for-cutting-dialog-001';
@@ -19,7 +25,8 @@ const PricesForCuttingEditor = () => {
     const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<PriceForCutting[]>();
@@ -79,7 +86,7 @@ const PricesForCuttingEditor = () => {
                 <div className="join">
                     <WiwaButton
                         className="btn-primary join-item"
-                        title={resourceState?.common?.action.add}
+                        title={commonResourceState?.resource?.action.add}
                         disabled={busy}
                         onClick={() => {
                             setEdit(false);
@@ -89,7 +96,7 @@ const PricesForCuttingEditor = () => {
                     </WiwaButton>
                     <WiwaButton
                         className="btn-secondary join-item"
-                        title={resourceState?.common?.action.edit}
+                        title={commonResourceState?.resource?.action.edit}
                         disabled={busy || selected === undefined}
                         onClick={() => {
                             setEdit(true);
@@ -99,13 +106,13 @@ const PricesForCuttingEditor = () => {
                     </WiwaButton>
                     <WiwaButton
                         className="btn-accent join-item"
-                        title={resourceState?.common?.action.delete}
+                        title={commonResourceState?.resource?.action.delete}
                         disabled={busy || selected === undefined}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
-                                title: resourceState?.manager?.orderInputs.pricesForCutting.deleteQuestionTitle,
-                                message: resourceState?.manager?.orderInputs.pricesForCutting.deleteQuestionMessage,
+                                title: managerResourceState?.resource?.orderInputs.pricesForCutting.deleteQuestionTitle,
+                                message: managerResourceState?.resource?.orderInputs.pricesForCutting.deleteQuestionMessage,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
                                         if (selected) {
@@ -150,7 +157,8 @@ const PricesForCuttingDialog = ({showDialog, priceForCutting, okHandler, cancelH
     cancelHandler: () => void
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [lengthSign, setLengthSign] = useState<string>();
     const [priceSign, setPriceSign] = useState<string>();
@@ -164,7 +172,7 @@ const PricesForCuttingDialog = ({showDialog, priceForCutting, okHandler, cancelH
     useEffect(() => {
         setLengthSign(unitSign(UnitId.MILLIMETER));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
-    }, [resourceState]);
+    }, [commonResourceState]);
 
     useEffect(() => {
         if (priceForCutting) {
@@ -181,7 +189,7 @@ const PricesForCuttingDialog = ({showDialog, priceForCutting, okHandler, cancelH
     }
 
     const unitSign = (unitId: UnitId) => {
-        return `[${resourceState?.getUnit(unitId)}]`;
+        return `[${commonResourceState?.getUnit(unitId)}]`;
     }
 
     return (!dialogState?.modalRoot ? null : createPortal(
@@ -189,13 +197,13 @@ const PricesForCuttingDialog = ({showDialog, priceForCutting, okHandler, cancelH
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.manager?.orderInputs.pricesForCutting.title}
+                        {managerResourceState?.resource?.orderInputs.pricesForCutting.title}
                     </div>
 
                     <WiwaFormInputInteger
-                        label={`${resourceState?.manager?.orderInputs.pricesForCutting.thicknessLabel} ${lengthSign}`}
+                        label={`${managerResourceState?.resource?.orderInputs.pricesForCutting.thicknessLabel} ${lengthSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.orderInputs.pricesForCutting.thicknessPlaceholder}
+                        placeholder={managerResourceState?.resource?.orderInputs.pricesForCutting.thicknessPlaceholder}
                         value={thickness}
                         setValue={setThickness}
                         setValid={setThicknessValid}
@@ -203,7 +211,7 @@ const PricesForCuttingDialog = ({showDialog, priceForCutting, okHandler, cancelH
                             if (thickness === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.orderInputs.pricesForCutting.thicknessRequired
+                                    message: managerResourceState?.resource?.orderInputs.pricesForCutting.thicknessRequired
                                 };
                             }
                             return {valid: true};
@@ -211,9 +219,9 @@ const PricesForCuttingDialog = ({showDialog, priceForCutting, okHandler, cancelH
                     />
 
                     <WiwaFormInputDecimal
-                        label={`${resourceState?.manager?.orderInputs.pricesForCutting.priceLabel} ${priceSign}`}
+                        label={`${managerResourceState?.resource?.orderInputs.pricesForCutting.priceLabel} ${priceSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.orderInputs.pricesForCutting.pricePlaceholder}
+                        placeholder={managerResourceState?.resource?.orderInputs.pricesForCutting.pricePlaceholder}
                         value={price}
                         setValue={setPrice}
                         setValid={setPriceValid}
@@ -221,7 +229,7 @@ const PricesForCuttingDialog = ({showDialog, priceForCutting, okHandler, cancelH
                             if (price === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.orderInputs.pricesForCutting.priceRequired
+                                    message: managerResourceState?.resource?.orderInputs.pricesForCutting.priceRequired
                                 };
                             }
                             return {valid: true};
@@ -238,12 +246,12 @@ const PricesForCuttingDialog = ({showDialog, priceForCutting, okHandler, cancelH
                                     price: price ? price : 0
                                 });
                             }}
-                        >{resourceState?.common?.action.ok}
+                        >{commonResourceState?.resource?.action.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
                             onClick={cancelHandler}
-                        >{resourceState?.common?.action.cancel}
+                        >{commonResourceState?.resource?.action.cancel}
                         </WiwaButton>
                     </div>
                 </div>

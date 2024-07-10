@@ -4,7 +4,7 @@ import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import WiwaValueNumber from '../../../ui/wiwa-value-number';
 import { getApplicationProperties } from '../../../../api/controller/ui';
 import { PriceForCutting, PriceForCuttingField, UnitId } from '../../../../api/model/application';
-import { ResourceContext } from '../../../../context';
+import { CommonResourceContext, ManagerResourceContext } from '../../../../context';
 
 const PriceForCuttingTable = ({fields, rows, selected, setSelected}: {
     fields: PriceForCuttingField[],
@@ -33,7 +33,8 @@ const PriceForCuttingTable = ({fields, rows, selected, setSelected}: {
 export default PriceForCuttingTable;
 
 const TableHead = ({fields}: { fields: PriceForCuttingField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [lengthSign, setLengthSign] = useState<string>();
     const [priceSign, setPriceSign] = useState<string>();
@@ -41,10 +42,10 @@ const TableHead = ({fields}: { fields: PriceForCuttingField[] }) => {
     useEffect(() => {
         setLengthSign(unitSign(UnitId.MILLIMETER));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
-    }, [resourceState]);
+    }, [commonResourceState]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${resourceState?.getUnit(unitId)}]`;
+        return `[${commonResourceState?.getUnit(unitId)}]`;
     }
 
     return (
@@ -54,11 +55,11 @@ const TableHead = ({fields}: { fields: PriceForCuttingField[] }) => {
                 switch (field) {
                     case PriceForCuttingField.thickness:
                         return (
-                            <th key={field}>{`${resourceState?.manager?.priceForCuttingTable.thickness} ${lengthSign}`}</th>
+                            <th key={field}>{`${managerResourceState?.resource?.priceForCuttingTable.thickness} ${lengthSign}`}</th>
                         );
                     case PriceForCuttingField.price:
                         return (
-                            <th key={field}>{`${resourceState?.manager?.priceForCuttingTable.price} ${priceSign}`}</th>
+                            <th key={field}>{`${managerResourceState?.resource?.priceForCuttingTable.price} ${priceSign}`}</th>
                         );
                 }
             })}

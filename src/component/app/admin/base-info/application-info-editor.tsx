@@ -7,14 +7,15 @@ import { getApplicationInfo } from '../../../../api/controller/ui';
 import MdDialog from '../../../../component/dialog/md-dialog';
 import WiwaButton from '../../../../component/ui/wiwa-button';
 import WiwaMarkdownRenderer from '../../../../component/ui/wiwa-markdown-renderer';
-import { AuthContext, DialogContext, ResourceContext } from '../../../../context';
+import { AdminResourceContext, AuthContext, CommonResourceContext, DialogContext } from '../../../../context';
 import { DialogAnswer, DialogType } from '../../../../context/model/dialog';
 
 const APP_INFO_DIALOG_ID = 'admin-app-info-item-dialog-001';
 
 const ApplicationInfoEditor = () => {
     const authState = useContext(AuthContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [busy, setBusy] = useState<boolean>();
     const [data, setData] = useState<string[]>();
@@ -81,13 +82,13 @@ const ApplicationInfoEditor = () => {
                     <div className="flex flex-row gap-5 w-full align-middle">
                         <div className="flex w-full items-center justify-center">
                             <span>
-                                {resourceState?.admin?.baseInfo.applicationInfo.title}
+                                {adminResourceState?.resource?.baseInfo.applicationInfo.title}
                             </span>
                         </div>
                         <div className="flex justify-end">
                             <WiwaButton
                                 className="btn-primary join-item"
-                                title={resourceState?.common?.action.add}
+                                title={commonResourceState?.resource?.action.add}
                                 disabled={busy}
                                 onClick={() => {
                                     editHandler();
@@ -146,7 +147,8 @@ const AppInfoItem = (
         disabled?: boolean
     }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <div className="flex flex-col border border-solid p-5 w-full">
@@ -154,7 +156,7 @@ const AppInfoItem = (
                 <div className="join">
                     <WiwaButton
                         className="btn-primary join-item"
-                        title={resourceState?.common?.action.edit}
+                        title={commonResourceState?.resource?.action.edit}
                         disabled={disabled}
                         onClick={() => {
                             editHandler(index);
@@ -163,13 +165,13 @@ const AppInfoItem = (
                     </WiwaButton>
                     <WiwaButton
                         className="btn-accent join-item"
-                        title={resourceState?.common?.action.delete}
+                        title={commonResourceState?.resource?.action.delete}
                         disabled={disabled}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
-                                title: resourceState?.admin?.baseInfo.applicationInfo.deleteItemQuestionTitle,
-                                message: resourceState?.admin?.baseInfo.applicationInfo.deleteItemQuestionMessage,
+                                title: adminResourceState?.resource?.baseInfo.applicationInfo.deleteItemQuestionTitle,
+                                message: adminResourceState?.resource?.baseInfo.applicationInfo.deleteItemQuestionMessage,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
                                         deleteHandler(index);
@@ -202,7 +204,7 @@ const AppInfoDialog = (
         cancelHandler: () => void,
     }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
 
     const [value, setValue] = useState('');
 
@@ -215,17 +217,17 @@ const AppInfoDialog = (
             disabled={false}
             id={APP_INFO_DIALOG_ID}
             showDialog={showDialog}
-            title={resourceState?.admin?.baseInfo.applicationInfo.editItemDialog.title}
-            label={resourceState?.admin?.baseInfo.applicationInfo.editItemDialog.valueLabel}
+            title={adminResourceState?.resource?.baseInfo.applicationInfo.editItemDialog.title}
+            label={adminResourceState?.resource?.baseInfo.applicationInfo.editItemDialog.valueLabel}
             required={true}
-            placeholder={resourceState?.admin?.baseInfo.applicationInfo.editItemDialog.valuePlaceholder}
+            placeholder={adminResourceState?.resource?.baseInfo.applicationInfo.editItemDialog.valuePlaceholder}
             value={value}
             setValue={setValue}
             validate={() => {
                 if (value.trim().length === 0) {
                     return {
                         valid: false,
-                        message: resourceState?.admin?.baseInfo.applicationInfo.editItemDialog.valueRequired
+                        message: adminResourceState?.resource?.baseInfo.applicationInfo.editItemDialog.valueRequired
                     };
                 }
                 return {valid: true};

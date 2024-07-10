@@ -7,12 +7,18 @@ import { getWelcomeText } from '../../../../api/controller/ui';
 import MdDialog from '../../../../component/dialog/md-dialog';
 import WiwaMarkdownRenderer from '../../../../component/ui/wiwa-markdown-renderer';
 import WiwaButton from '../../../../component/ui/wiwa-button';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../../context';
+import {
+    AdminResourceContext,
+    AuthContext,
+    CommonResourceContext,
+    DialogContext,
+    ErrorContext
+} from '../../../../context';
 
 const WELCOME_TEXT_DIALOG_ID = 'admin-base-info-welcome-text-dialog-001';
 
 const WelcomeTextEditor = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [welcomeText, setWelcomeText] = useState<string>();
     const [showWelcomeTextDialog, setShowWelcomeTextDialog] = useState(false);
@@ -30,7 +36,7 @@ const WelcomeTextEditor = () => {
                 <div className="p-5 flex content-stretch justify-center items-center">
                     <WiwaButton
                         className="btn-primary"
-                        title={resourceState?.common?.action.edit}
+                        title={commonResourceState?.resource?.action.edit}
                         onClick={() => setShowWelcomeTextDialog(true)}
                     ><Edit size={18}/></WiwaButton>
                 </div>
@@ -56,7 +62,7 @@ const WelcomeTextDialog = ({showDialog, closeHandler, defaultValue, setDefaultVa
     const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState(defaultValue);
@@ -85,10 +91,10 @@ const WelcomeTextDialog = ({showDialog, closeHandler, defaultValue, setDefaultVa
             disabled={busy || false}
             id={WELCOME_TEXT_DIALOG_ID}
             showDialog={showDialog}
-            title={resourceState?.admin?.baseInfo.welcomeText.title}
-            label={resourceState?.admin?.baseInfo.welcomeText.valueLabel}
+            title={adminResourceState?.resource?.baseInfo.welcomeText.title}
+            label={adminResourceState?.resource?.baseInfo.welcomeText.valueLabel}
             required={true}
-            placeholder={resourceState?.admin?.baseInfo.welcomeText.valuePlaceholder}
+            placeholder={adminResourceState?.resource?.baseInfo.welcomeText.valuePlaceholder}
             value={value}
             setValue={setValue}
             validate={() => {
@@ -96,7 +102,7 @@ const WelcomeTextDialog = ({showDialog, closeHandler, defaultValue, setDefaultVa
                     setValid(false);
                     return {
                         valid: false,
-                        message: resourceState?.admin?.baseInfo.welcomeText.valueRequired
+                        message: adminResourceState?.resource?.baseInfo.welcomeText.valueRequired
                     };
                 }
                 setValid(true);

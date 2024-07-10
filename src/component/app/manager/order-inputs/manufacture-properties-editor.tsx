@@ -6,12 +6,13 @@ import { ManufactureProperties, UnitId } from '../../../../api/model/application
 import WiwaButton from '../../../ui/wiwa-button';
 import WiwaFormDimensions from '../../../ui/wiwa-form-dimensions';
 import WiwaFormInputInteger from '../../../ui/wiwa-form-input-integer';
-import { AuthContext, ErrorContext, ResourceContext } from '../../../../context';
+import { AuthContext, CommonResourceContext, ErrorContext, ManagerResourceContext } from '../../../../context';
 
 const ManufacturePropertiesEditor = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<ManufactureProperties>();
@@ -40,7 +41,7 @@ const ManufacturePropertiesEditor = () => {
     const [lengthSign, setLengthSign] = useState<string>();
 
     useEffect(() => {
-        setLengthSign(`[${resourceState?.getUnit(UnitId.MILLIMETER)}]`);
+        setLengthSign(`[${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`);
         getManufactureProperties(authState?.authToken?.accessToken).then(data => setValue(data.data));
     }, [authState?.authToken?.accessToken]);
 
@@ -113,10 +114,10 @@ const ManufacturePropertiesEditor = () => {
         <div className="flex flex-col p-5 gap-5 w-full">
             <div className="flex flex-col items-center justify-center">
                 <WiwaFormDimensions
-                    label={`${resourceState?.manager?.orderInputs.manufactureProperties.minimalSystemDimensionsLabel} ${lengthSign}`}
+                    label={`${managerResourceState?.resource?.orderInputs.manufactureProperties.minimalSystemDimensionsLabel} ${lengthSign}`}
                     required={true}
-                    placeholderX={resourceState?.manager?.orderInputs.manufactureProperties.minimalSystemDimensionsPlaceholderX}
-                    placeholderY={resourceState?.manager?.orderInputs.manufactureProperties.minimalSystemDimensionsPlaceholderY}
+                    placeholderX={managerResourceState?.resource?.orderInputs.manufactureProperties.minimalSystemDimensionsPlaceholderX}
+                    placeholderY={managerResourceState?.resource?.orderInputs.manufactureProperties.minimalSystemDimensionsPlaceholderY}
                     value={minimalSystemDimensions}
                     setValue={setMinimalSystemDimensions}
                     setValid={setMinimalSystemDimensionsValid}
@@ -124,7 +125,7 @@ const ManufacturePropertiesEditor = () => {
                         if (minimalSystemDimensions === undefined) {
                             return {
                                 valid: false,
-                                message: resourceState?.manager?.orderInputs.manufactureProperties.minimalSystemDimensionsRequired
+                                message: managerResourceState?.resource?.orderInputs.manufactureProperties.minimalSystemDimensionsRequired
                             };
                         }
                         return {valid: true};
@@ -132,10 +133,10 @@ const ManufacturePropertiesEditor = () => {
                 />
 
                 <WiwaFormDimensions
-                    label={`${resourceState?.manager?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsLabel} ${lengthSign}`}
+                    label={`${managerResourceState?.resource?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsLabel} ${lengthSign}`}
                     required={true}
-                    placeholderX={resourceState?.manager?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsPlaceholderX}
-                    placeholderY={resourceState?.manager?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsPlaceholderY}
+                    placeholderX={managerResourceState?.resource?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsPlaceholderX}
+                    placeholderY={managerResourceState?.resource?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsPlaceholderY}
                     value={minimalEdgedBoardDimensions}
                     setValue={setMinimalEdgedBoardDimensions}
                     setValid={setMinimalEdgedBoardDimensionsValid}
@@ -143,7 +144,7 @@ const ManufacturePropertiesEditor = () => {
                         if (minimalEdgedBoardDimensions === undefined) {
                             return {
                                 valid: false,
-                                message: resourceState?.manager?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsRequired
+                                message: managerResourceState?.resource?.orderInputs.manufactureProperties.minimalEdgedBoardDimensionsRequired
                             };
                         }
                         return {valid: true};
@@ -151,10 +152,10 @@ const ManufacturePropertiesEditor = () => {
                 />
 
                 <WiwaFormDimensions
-                    label={`${resourceState?.manager?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsLabel} ${lengthSign}`}
+                    label={`${managerResourceState?.resource?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsLabel} ${lengthSign}`}
                     required={true}
-                    placeholderX={resourceState?.manager?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsPlaceholderX}
-                    placeholderY={resourceState?.manager?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsPlaceholderY}
+                    placeholderX={managerResourceState?.resource?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsPlaceholderX}
+                    placeholderY={managerResourceState?.resource?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsPlaceholderY}
                     value={minimalLayeredBoardDimensions}
                     setValue={setMinimalLayeredBoardDimensions}
                     setValid={setMinimalLayeredBoardDimensionsValid}
@@ -162,7 +163,7 @@ const ManufacturePropertiesEditor = () => {
                         if (minimalLayeredBoardDimensions === undefined) {
                             return {
                                 valid: false,
-                                message: resourceState?.manager?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsRequired
+                                message: managerResourceState?.resource?.orderInputs.manufactureProperties.minimalLayeredBoardDimensionsRequired
                             };
                         }
                         return {valid: true};
@@ -170,10 +171,10 @@ const ManufacturePropertiesEditor = () => {
                 />
 
                 <WiwaFormDimensions
-                    label={`${resourceState?.manager?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsLabel} ${lengthSign}`}
+                    label={`${managerResourceState?.resource?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsLabel} ${lengthSign}`}
                     required={true}
-                    placeholderX={resourceState?.manager?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsPlaceholderX}
-                    placeholderY={resourceState?.manager?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsPlaceholderY}
+                    placeholderX={managerResourceState?.resource?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsPlaceholderX}
+                    placeholderY={managerResourceState?.resource?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsPlaceholderY}
                     value={minimalFrameBoardDimensions}
                     setValue={setMinimalFrameBoardDimensions}
                     setValid={setMinimalFrameBoardDimensionsValid}
@@ -181,7 +182,7 @@ const ManufacturePropertiesEditor = () => {
                         if (minimalFrameBoardDimensions === undefined) {
                             return {
                                 valid: false,
-                                message: resourceState?.manager?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsRequired
+                                message: managerResourceState?.resource?.orderInputs.manufactureProperties.minimalFrameBoardDimensionsRequired
                             };
                         }
                         return {valid: true};
@@ -190,9 +191,9 @@ const ManufacturePropertiesEditor = () => {
 
                 <WiwaFormInputInteger
                     min="0"
-                    label={`${resourceState?.manager?.orderInputs.manufactureProperties.edgeWidthAppendLabel} ${lengthSign}`}
+                    label={`${managerResourceState?.resource?.orderInputs.manufactureProperties.edgeWidthAppendLabel} ${lengthSign}`}
                     required={true}
-                    placeholder={resourceState?.manager?.orderInputs.manufactureProperties.edgeWidthAppendPlaceholder}
+                    placeholder={managerResourceState?.resource?.orderInputs.manufactureProperties.edgeWidthAppendPlaceholder}
                     value={edgeWidthAppend}
                     setValue={setEdgeWidthAppend}
                     setValid={setEdgeWidthAppendValid}
@@ -200,7 +201,7 @@ const ManufacturePropertiesEditor = () => {
                         if (edgeWidthAppend === undefined) {
                             return {
                                 valid: false,
-                                message: resourceState?.manager?.orderInputs.manufactureProperties.edgeWidthAppendRequired
+                                message: managerResourceState?.resource?.orderInputs.manufactureProperties.edgeWidthAppendRequired
                             };
                         }
                         return {valid: true};
@@ -209,9 +210,9 @@ const ManufacturePropertiesEditor = () => {
 
                 <WiwaFormInputInteger
                     min="0"
-                    label={`${resourceState?.manager?.orderInputs.manufactureProperties.edgeLengthAppendLabel} ${lengthSign}`}
+                    label={`${managerResourceState?.resource?.orderInputs.manufactureProperties.edgeLengthAppendLabel} ${lengthSign}`}
                     required={true}
-                    placeholder={resourceState?.manager?.orderInputs.manufactureProperties.edgeLengthAppendPlaceholder}
+                    placeholder={managerResourceState?.resource?.orderInputs.manufactureProperties.edgeLengthAppendPlaceholder}
                     value={edgeLengthAppend}
                     setValue={setEdgeLengthAppend}
                     setValid={setEdgeLengthAppendValid}
@@ -219,7 +220,7 @@ const ManufacturePropertiesEditor = () => {
                         if (edgeLengthAppend === undefined) {
                             return {
                                 valid: false,
-                                message: resourceState?.manager?.orderInputs.manufactureProperties.edgeLengthAppendRequired
+                                message: managerResourceState?.resource?.orderInputs.manufactureProperties.edgeLengthAppendRequired
                             };
                         }
                         return {valid: true};
@@ -228,9 +229,9 @@ const ManufacturePropertiesEditor = () => {
 
                 <WiwaFormInputInteger
                     min="0"
-                    label={`${resourceState?.manager?.orderInputs.manufactureProperties.duplicatedBoardAppendLabel} ${lengthSign}`}
+                    label={`${managerResourceState?.resource?.orderInputs.manufactureProperties.duplicatedBoardAppendLabel} ${lengthSign}`}
                     required={true}
-                    placeholder={resourceState?.manager?.orderInputs.manufactureProperties.duplicatedBoardAppendPlaceholder}
+                    placeholder={managerResourceState?.resource?.orderInputs.manufactureProperties.duplicatedBoardAppendPlaceholder}
                     value={duplicatedBoardAppend}
                     setValue={setDuplicatedBoardAppend}
                     setValid={setDuplicatedBoardAppendValid}
@@ -238,7 +239,7 @@ const ManufacturePropertiesEditor = () => {
                         if (duplicatedBoardAppend === undefined) {
                             return {
                                 valid: false,
-                                message: resourceState?.manager?.orderInputs.manufactureProperties.duplicatedBoardAppendRequired
+                                message: managerResourceState?.resource?.orderInputs.manufactureProperties.duplicatedBoardAppendRequired
                             };
                         }
                         return {valid: true};
@@ -250,7 +251,7 @@ const ManufacturePropertiesEditor = () => {
                         className="btn-primary join-item"
                         disabled={busy || !isFormValid()}
                         onClick={submit}
-                    >{resourceState?.common?.action.submit}
+                    >{commonResourceState?.resource?.action.submit}
                     </WiwaButton>
                 </div>
             </div>

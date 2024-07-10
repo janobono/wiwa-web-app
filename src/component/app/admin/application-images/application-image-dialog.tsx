@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import ImageDialog from '../../../dialog/image-dialog';
-import { DialogContext, ResourceContext } from '../../../../context';
+import { AdminResourceContext, DialogContext } from '../../../../context';
 
 const ApplicationImageDialog = ({dialogId, showDialog, okHandler, cancelHandler, disabled}: {
     dialogId: string,
@@ -12,7 +12,7 @@ const ApplicationImageDialog = ({dialogId, showDialog, okHandler, cancelHandler,
     disabled?: boolean
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
 
     const [file, setFile] = useState<File>();
 
@@ -33,23 +33,23 @@ const ApplicationImageDialog = ({dialogId, showDialog, okHandler, cancelHandler,
             disabled={disabled}
             id={dialogId}
             showDialog={showDialog}
-            title={resourceState?.admin?.applicationImages.addAppImage.title}
-            label={resourceState?.admin?.applicationImages.addAppImage.fileLabel}
+            title={adminResourceState?.resource?.applicationImages.addAppImage.title}
+            label={adminResourceState?.resource?.applicationImages.addAppImage.fileLabel}
             required={true}
-            placeholder={resourceState?.admin?.applicationImages.addAppImage.filePlaceholder}
+            placeholder={adminResourceState?.resource?.applicationImages.addAppImage.filePlaceholder}
             value={file}
             setValue={setFile}
             validate={() => {
                 if (file === undefined) {
                     return {
                         valid: false,
-                        message: resourceState?.admin?.applicationImages.addAppImage.fileRequired
+                        message: adminResourceState?.resource?.applicationImages.addAppImage.fileRequired
                     }
                 }
                 if (!(file.type === 'image/jpeg' || file.type === 'image/png')) {
                     return {
                         valid: false,
-                        message: resourceState?.admin?.applicationImages.addAppImage.fileFormat
+                        message: adminResourceState?.resource?.applicationImages.addAppImage.fileFormat
                     }
                 }
                 return {valid: true};

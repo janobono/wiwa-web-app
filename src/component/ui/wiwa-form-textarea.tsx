@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
-import { ValidationResult } from './';
+import { alwaysValid, ValidationResult } from './';
 import WiwaTextArea from './wiwa-textarea';
 
 const WiwaFormTextarea = (
@@ -12,9 +12,7 @@ const WiwaFormTextarea = (
         value,
         setValue,
         setValid,
-        validate = () => {
-            return {valid: true}
-        },
+        validate = alwaysValid,
         rows = 5,
         children
     }: {

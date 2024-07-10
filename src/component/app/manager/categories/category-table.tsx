@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import { Category, CategoryField } from '../../../../api/model';
-import { ResourceContext } from '../../../../context';
+import { ManagerResourceContext } from '../../../../context';
 
 const CategoryTable = ({fields, rows, selected, setSelected}: {
     fields: CategoryField[],
@@ -31,7 +31,7 @@ const CategoryTable = ({fields, rows, selected, setSelected}: {
 export default CategoryTable;
 
 const TableHead = ({fields}: { fields: CategoryField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     return (
         <thead>
@@ -39,11 +39,11 @@ const TableHead = ({fields}: { fields: CategoryField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case CategoryField.id:
-                        return (<th key={field}>{resourceState?.manager?.categoryTable.id}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.categoryTable.id}</th>);
                     case CategoryField.code:
-                        return (<th key={field}>{resourceState?.manager?.categoryTable.code}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.categoryTable.code}</th>);
                     case CategoryField.name:
-                        return (<th key={field}>{resourceState?.manager?.categoryTable.name}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.categoryTable.name}</th>);
                 }
             })}
             <th></th>

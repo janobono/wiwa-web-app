@@ -4,3 +4,7 @@ export interface ValidationResult {
     valid: boolean,
     message?: string
 }
+
+export const alwaysValid = (): ValidationResult => {
+    return {valid: true};
+}

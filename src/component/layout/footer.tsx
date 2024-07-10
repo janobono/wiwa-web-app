@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom';
 
 import { getCompanyInfo, getLogoPath, getTitle } from '../../api/controller/ui';
 import { CompanyInfo } from '../../api/model/application';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const Footer = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
     const [companyInfo, setCompanyInfo] = useState<CompanyInfo>();
     const [title, setTitle] = useState<string>();
 
@@ -33,31 +33,31 @@ const Footer = () => {
                     <p>{title}</p>
                 </aside>
                 <nav>
-                    <header className="footer-title">{resourceState?.common?.footer.links.title}</header>
+                    <header className="footer-title">{commonResourceState?.resource?.footer.links.title}</header>
                     <NavLink
                         className="link"
                         to="/ui/contact-info"
-                    >{resourceState?.common?.footer.links.contactInfo}</NavLink>
+                    >{commonResourceState?.resource?.footer.links.contactInfo}</NavLink>
                     <NavLink
                         className="link"
                         to="/ui/cookies-info"
-                    >{resourceState?.common?.footer.links.cookiesInfo}</NavLink>
+                    >{commonResourceState?.resource?.footer.links.cookiesInfo}</NavLink>
                     <NavLink
                         className="link"
                         to="/ui/gdpr-info"
-                    >{resourceState?.common?.footer.links.gdprInfo}</NavLink>
+                    >{commonResourceState?.resource?.footer.links.gdprInfo}</NavLink>
                     <NavLink
                         className="link"
                         to="/ui/business-conditions"
-                    >{resourceState?.common?.footer.links.businessConditions}</NavLink>
+                    >{commonResourceState?.resource?.footer.links.businessConditions}</NavLink>
                     <NavLink
                         className="link"
                         to="/ui/order-info"
-                    >{resourceState?.common?.footer.links.orderInfo}</NavLink>
+                    >{commonResourceState?.resource?.footer.links.orderInfo}</NavLink>
                 </nav>
                 {companyInfo &&
                     <nav>
-                        <header className="footer-title">{resourceState?.common?.footer.contact.title}</header>
+                        <header className="footer-title">{commonResourceState?.resource?.footer.contact.title}</header>
                         <ul>
                             <li className="mb-2 leading-6">
                                 <div className="flex gap-1 text-gray-500 items-center">

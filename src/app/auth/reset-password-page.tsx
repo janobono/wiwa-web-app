@@ -7,14 +7,15 @@ import { EMAIL_REGEX } from '../../component/ui';
 import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { AuthContext, ErrorContext, ResourceContext } from '../../context';
+import { AuthContext, AuthResourceContext, CommonResourceContext, ErrorContext } from '../../context';
 
 const ResetPasswordPage = () => {
     const navigate = useNavigate();
 
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const authResourceState = useContext(AuthResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [email, setEmail] = useState('');
     const [emailValid, setEmailValid] = useState(false);
@@ -42,20 +43,20 @@ const ResetPasswordPage = () => {
             if (response?.error) {
                 switch (response?.error.code) {
                     case WiwaErrorCode.USER_NOT_FOUND:
-                        setFormError(resourceState?.common?.error.userNotFound);
+                        setFormError(commonResourceState?.resource?.error.userNotFound);
                         break;
                     case WiwaErrorCode.USER_IS_DISABLED:
-                        setFormError(resourceState?.common?.error.userIsDisabled);
+                        setFormError(commonResourceState?.resource?.error.userIsDisabled);
                         break;
                     case WiwaErrorCode.INVALID_CAPTCHA:
-                        setFormError(resourceState?.common?.error.invalidCaptcha);
+                        setFormError(commonResourceState?.resource?.error.invalidCaptcha);
                         break;
                     default:
                         errorState?.addError(response?.error);
                         break;
                 }
             } else {
-                setMessage(resourceState?.auth?.resetPassword.message);
+                setMessage(authResourceState?.resource?.resetPassword.message);
             }
         }
     }
@@ -72,7 +73,7 @@ const ResetPasswordPage = () => {
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.auth?.resetPassword.title}
+                        {authResourceState?.resource?.resetPassword.title}
                     </div>
                     {message ?
                         <div className="max-w-sm text-sm md:text-base pt-5">{message}</div>
@@ -82,9 +83,9 @@ const ResetPasswordPage = () => {
                             handleSubmit().then();
                         }}>
                             <WiwaFormInputEmail
-                                label={resourceState?.auth?.resetPassword.emailLabel}
+                                label={authResourceState?.resource?.resetPassword.emailLabel}
                                 required={true}
-                                placeholder={resourceState?.auth?.resetPassword.emailPlaceholder}
+                                placeholder={authResourceState?.resource?.resetPassword.emailPlaceholder}
                                 value={email}
                                 setValue={setEmail}
                                 setValid={setEmailValid}
@@ -92,13 +93,13 @@ const ResetPasswordPage = () => {
                                     if (email.trim().length === 0) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.resetPassword.emailRequired
+                                            message: authResourceState?.resource?.resetPassword.emailRequired
                                         };
                                     }
                                     if (!EMAIL_REGEX.test(email)) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.resetPassword.emailFormat
+                                            message: authResourceState?.resource?.resetPassword.emailFormat
                                         };
                                     }
                                     return {valid: true};
@@ -117,7 +118,7 @@ const ResetPasswordPage = () => {
                                 type="submit"
                                 className="btn-primary w-full"
                                 disabled={authState?.busy || !isFormValid()}
-                            >{resourceState?.common?.action.submit}</WiwaButton>
+                            >{commonResourceState?.resource?.action.submit}</WiwaButton>
                             {formError &&
                                 <label className="label">
                                     <span className="label-text-alt text-error">{formError}</span>

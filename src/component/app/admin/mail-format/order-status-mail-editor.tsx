@@ -4,12 +4,13 @@ import { getOrderStatusMail, setOrderStatusMail } from '../../../../api/controll
 import { OrderStatusMail } from '../../../../api/model/application';
 import WiwaButton from '../../../ui/wiwa-button';
 import WiwaFormInputString from '../../../ui/wiwa-form-input-string';
-import { AuthContext, ErrorContext, ResourceContext } from '../../../../context';
+import { AdminResourceContext, AuthContext, CommonResourceContext, ErrorContext } from '../../../../context';
 
 const OrderStatusMailEditor = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<OrderStatusMail>();
@@ -150,8 +151,8 @@ const OrderStatusMailEditor = () => {
         <div className="flex flex-col p-5 gap-5 w-full">
             <div className="flex flex-col items-center justify-center">
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.productionSubjectLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.productionSubjectPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.productionSubjectLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.productionSubjectPlaceholder}
                     value={productionSubject}
                     setValue={setProductionSubject}
                     setValid={setProductionSubjectValid}
@@ -159,7 +160,7 @@ const OrderStatusMailEditor = () => {
                         if (productionSubject.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.productionSubjectRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.productionSubjectRequired
                             };
                         }
                         return {valid: true};
@@ -167,8 +168,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.productionTitleLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.productionTitlePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.productionTitleLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.productionTitlePlaceholder}
                     value={productionTitle}
                     setValue={setProductionTitle}
                     setValid={setProductionTitleValid}
@@ -176,7 +177,7 @@ const OrderStatusMailEditor = () => {
                         if (productionTitle.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.productionTitleRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.productionTitleRequired
                             };
                         }
                         return {valid: true};
@@ -184,8 +185,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.productionMessageLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.productionMessagePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.productionMessageLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.productionMessagePlaceholder}
                     value={productionMessage}
                     setValue={setProductionMessage}
                     setValid={setProductionMessageValid}
@@ -193,7 +194,7 @@ const OrderStatusMailEditor = () => {
                         if (productionMessage.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.productionMessageRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.productionMessageRequired
                             };
                         }
                         return {valid: true};
@@ -201,8 +202,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.readySubjectLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.readySubjectPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.readySubjectLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.readySubjectPlaceholder}
                     value={readySubject}
                     setValue={setReadySubject}
                     setValid={setReadySubjectValid}
@@ -210,7 +211,7 @@ const OrderStatusMailEditor = () => {
                         if (readySubject.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.readySubjectRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.readySubjectRequired
                             };
                         }
                         return {valid: true};
@@ -218,8 +219,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.readyTitleLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.readyTitlePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.readyTitleLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.readyTitlePlaceholder}
                     value={readyTitle}
                     setValue={setReadyTitle}
                     setValid={setReadyTitleValid}
@@ -227,7 +228,7 @@ const OrderStatusMailEditor = () => {
                         if (readyTitle.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.readyTitleRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.readyTitleRequired
                             };
                         }
                         return {valid: true};
@@ -235,8 +236,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.readyMessageLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.readyMessagePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.readyMessageLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.readyMessagePlaceholder}
                     value={readyMessage}
                     setValue={setReadyMessage}
                     setValid={setReadyMessageValid}
@@ -244,7 +245,7 @@ const OrderStatusMailEditor = () => {
                         if (readyMessage.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.readyMessageRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.readyMessageRequired
                             };
                         }
                         return {valid: true};
@@ -252,8 +253,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.finishedSubjectLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.finishedSubjectPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.finishedSubjectLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.finishedSubjectPlaceholder}
                     value={finishedSubject}
                     setValue={setFinishedSubject}
                     setValid={setFinishedSubjectValid}
@@ -261,7 +262,7 @@ const OrderStatusMailEditor = () => {
                         if (finishedSubject.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.finishedSubjectRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.finishedSubjectRequired
                             };
                         }
                         return {valid: true};
@@ -269,8 +270,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.finishedTitleLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.finishedTitlePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.finishedTitleLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.finishedTitlePlaceholder}
                     value={finishedTitle}
                     setValue={setFinishedTitle}
                     setValid={setFinishedTitleValid}
@@ -278,7 +279,7 @@ const OrderStatusMailEditor = () => {
                         if (finishedTitle.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.finishedTitleRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.finishedTitleRequired
                             };
                         }
                         return {valid: true};
@@ -286,8 +287,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.finishedMessageLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.finishedMessagePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.finishedMessageLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.finishedMessagePlaceholder}
                     value={finishedMessage}
                     setValue={setFinishedMessage}
                     setValid={setFinishedMessageValid}
@@ -295,7 +296,7 @@ const OrderStatusMailEditor = () => {
                         if (finishedMessage.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.finishedMessageRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.finishedMessageRequired
                             };
                         }
                         return {valid: true};
@@ -303,8 +304,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.cancelledSubjectLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.cancelledSubjectPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.cancelledSubjectLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.cancelledSubjectPlaceholder}
                     value={cancelledSubject}
                     setValue={setCancelledSubject}
                     setValid={setCancelledSubjectValid}
@@ -312,7 +313,7 @@ const OrderStatusMailEditor = () => {
                         if (cancelledSubject.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.cancelledSubjectRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.cancelledSubjectRequired
                             };
                         }
                         return {valid: true};
@@ -320,8 +321,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.cancelledTitleLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.cancelledTitlePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.cancelledTitleLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.cancelledTitlePlaceholder}
                     value={cancelledTitle}
                     setValue={setCancelledTitle}
                     setValid={setCancelledTitleValid}
@@ -329,7 +330,7 @@ const OrderStatusMailEditor = () => {
                         if (cancelledTitle.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.cancelledTitleRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.cancelledTitleRequired
                             };
                         }
                         return {valid: true};
@@ -337,8 +338,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.cancelledMessageLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.cancelledMessagePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.cancelledMessageLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.cancelledMessagePlaceholder}
                     value={cancelledMessage}
                     setValue={setCancelledMessage}
                     setValid={setCancelledMessageValid}
@@ -346,7 +347,7 @@ const OrderStatusMailEditor = () => {
                         if (cancelledMessage.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.cancelledMessageRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.cancelledMessageRequired
                             };
                         }
                         return {valid: true};
@@ -354,8 +355,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.linkLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.linkPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.linkLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.linkPlaceholder}
                     value={link}
                     setValue={setLink}
                     setValid={setLinkValid}
@@ -363,7 +364,7 @@ const OrderStatusMailEditor = () => {
                         if (link.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.linkRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.linkRequired
                             };
                         }
                         return {valid: true};
@@ -371,8 +372,8 @@ const OrderStatusMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.orderStatus.attachmentLabel}
-                    placeholder={resourceState?.admin?.mailFormat.orderStatus.attachmentPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.orderStatus.attachmentLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.orderStatus.attachmentPlaceholder}
                     value={attachment}
                     setValue={setAttachment}
                     setValid={setAttachmentValid}
@@ -380,7 +381,7 @@ const OrderStatusMailEditor = () => {
                         if (attachment.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.orderStatus.attachmentRequired
+                                message: adminResourceState?.resource?.mailFormat.orderStatus.attachmentRequired
                             };
                         }
                         return {valid: true};
@@ -392,7 +393,7 @@ const OrderStatusMailEditor = () => {
                         className="btn-primary join-item"
                         disabled={busy || !isFormValid()}
                         onClick={submit}
-                    >{resourceState?.common?.action.submit}
+                    >{commonResourceState?.resource?.action.submit}
                     </WiwaButton>
                 </div>
             </div>

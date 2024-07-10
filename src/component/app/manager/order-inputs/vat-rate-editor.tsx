@@ -3,12 +3,13 @@ import { useContext, useEffect, useState } from 'react';
 import WiwaFormInputDecimal from '../../../ui/wiwa-form-input-decimal';
 import WiwaButton from '../../../ui/wiwa-button.tsx';
 import { getVatRate, setVatRate } from '../../../../api/controller/config';
-import { AuthContext, ErrorContext, ResourceContext } from '../../../../context';
+import { AuthContext, CommonResourceContext, ErrorContext, ManagerResourceContext } from '../../../../context';
 
 const VatRateEditor = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<number>();
@@ -32,9 +33,9 @@ const VatRateEditor = () => {
     return (
         <div className="container p-5 mx-auto">
             <WiwaFormInputDecimal
-                label={resourceState?.manager?.orderInputs.vatRate.label}
+                label={managerResourceState?.resource?.orderInputs.vatRate.label}
                 required={true}
-                placeholder={resourceState?.manager?.orderInputs.vatRate.placeholder}
+                placeholder={managerResourceState?.resource?.orderInputs.vatRate.placeholder}
                 value={value}
                 setValue={setValue}
                 setValid={setValueValid}
@@ -42,7 +43,7 @@ const VatRateEditor = () => {
                     if (value === undefined) {
                         return {
                             valid: false,
-                            message: resourceState?.manager?.orderInputs.vatRate.required
+                            message: managerResourceState?.resource?.orderInputs.vatRate.required
                         };
                     }
                     return {valid: true};
@@ -58,7 +59,7 @@ const VatRateEditor = () => {
                             submitHandler(Number(value)).then();
                         }
                     }}
-                >{resourceState?.common?.action.submit}
+                >{commonResourceState?.resource?.action.submit}
                 </WiwaButton>
             </div>
         </div>

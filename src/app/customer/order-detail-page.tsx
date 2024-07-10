@@ -5,12 +5,12 @@ import { ChevronsLeft, ChevronsRight } from 'react-feather';
 import { CustomerContext } from '../../component/app/customer/customer-provider';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const OrderDetailPage = () => {
     const navigate = useNavigate();
 
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
     const customerState = useContext(CustomerContext);
 
     const [detail, setDetail] = useState('');
@@ -24,12 +24,12 @@ const OrderDetailPage = () => {
             <WiwaBreadcrumb breadcrumbs={[
                 {
                     key: 0,
-                    label: resourceState?.common?.navigation.customerNav.title || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.title || '',
                     to: '/customer'
                 },
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.customerNav.orderDetail || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.orderDetail || '',
                     to: '/customer/order-detail'
                 }
             ]}/>
@@ -39,14 +39,14 @@ const OrderDetailPage = () => {
                         <div className="join">
                             <WiwaButton
                                 className="join-item"
-                                title={resourceState?.common?.navigation.customerNav.orderEdit}
+                                title={commonResourceState?.resource?.navigation.customerNav.orderEdit}
                                 disabled={customerState?.busy}
                                 onClick={() => navigate('/customer/order-edit')}
                             ><ChevronsLeft size={18}/>
                             </WiwaButton>
                             <WiwaButton
                                 className="join-item"
-                                title={resourceState?.common?.navigation.customerNav.orderComments}
+                                title={commonResourceState?.resource?.navigation.customerNav.orderComments}
                                 disabled={customerState?.busy}
                                 onClick={() => navigate('/customer/order-comments')}
                             ><ChevronsRight size={18}/>

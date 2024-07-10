@@ -95,3 +95,7 @@ export interface ResourceAuth {
         gdprLabel: string
     }
 }
+
+export interface AuthResourceState {
+    resource?: ResourceAuth
+}

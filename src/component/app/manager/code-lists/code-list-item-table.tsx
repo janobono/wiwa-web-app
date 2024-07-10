@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import WiwaValue from '../../../ui/wiwa-value';
 import { CodeListItem, CodeListItemField } from '../../../../api/model/code-list';
-import { ResourceContext } from '../../../../context';
+import { ManagerResourceContext } from '../../../../context';
 
 const CodeListItemTable = ({fields, rows, selected, setSelected}: {
     fields: CodeListItemField[],
@@ -32,7 +32,7 @@ const CodeListItemTable = ({fields, rows, selected, setSelected}: {
 export default CodeListItemTable;
 
 const TableHead = ({fields}: { fields: CodeListItemField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     return (
         <thead>
@@ -40,17 +40,17 @@ const TableHead = ({fields}: { fields: CodeListItemField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case CodeListItemField.id:
-                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.id}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.codeListItemTable.id}</th>);
                     case CodeListItemField.codeListId:
-                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.codeListId}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.codeListItemTable.codeListId}</th>);
                     case CodeListItemField.sortNum:
-                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.sortNum}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.codeListItemTable.sortNum}</th>);
                     case CodeListItemField.code:
-                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.code}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.codeListItemTable.code}</th>);
                     case CodeListItemField.value:
-                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.value}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.codeListItemTable.value}</th>);
                     case CodeListItemField.leafNode:
-                        return (<th key={field}>{resourceState?.manager?.codeListItemTable.leafNode}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.codeListItemTable.leafNode}</th>);
                 }
             })}
             <th></th>

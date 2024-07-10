@@ -11,20 +11,21 @@ import CategoriesEditor from '../../component/app/manager/categories/categories-
 import CategoryEditor from '../../component/app/manager/categories/category-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext, ManagerResourceContext } from '../../context';
 
 const CategoriesPage = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [index, setIndex] = useState(0);
 
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.managerNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.managerNav.categories || '',
+                    label: commonResourceState?.resource?.navigation.managerNav.categories || '',
                     to: '/manager/categories'
                 }
             ]}/>
@@ -33,10 +34,10 @@ const CategoriesPage = () => {
                     defaultValue="0"
                     onChange={event => setIndex(Number(event.currentTarget.value))}
                 >
-                    <option disabled value="0">{resourceState?.manager?.categories.option.select}</option>
-                    <option value="1">{resourceState?.manager?.categories.option.board}</option>
-                    <option value="2">{resourceState?.manager?.categories.option.edge}</option>
-                    <option value="3">{resourceState?.manager?.categories.option.material}</option>
+                    <option disabled value="0">{managerResourceState?.resource?.categories.option.select}</option>
+                    <option value="1">{managerResourceState?.resource?.categories.option.board}</option>
+                    <option value="2">{managerResourceState?.resource?.categories.option.edge}</option>
+                    <option value="3">{managerResourceState?.resource?.categories.option.material}</option>
                 </WiwaSelect>
 
                 {index == 1 &&

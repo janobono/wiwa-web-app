@@ -10,7 +10,13 @@ import WiwaFormInputDecimal from '../../../ui/wiwa-form-input-decimal';
 import { getPricesForGluingEdge, setPricesForGluingEdge } from '../../../../api/controller/config';
 import { getApplicationProperties } from '../../../../api/controller/ui';
 import { PriceForGluingEdge, PriceForGluingEdgeField, UnitId } from '../../../../api/model/application';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../../context';
+import {
+    AuthContext,
+    CommonResourceContext,
+    DialogContext,
+    ErrorContext,
+    ManagerResourceContext
+} from '../../../../context';
 import { DialogAnswer, DialogType } from '../../../../context/model/dialog';
 
 const PRICES_FOR_GLUING_EDGE_DIALOG_ID = 'prices-for-gluing-edge-dialog-001';
@@ -19,7 +25,8 @@ const PricesForGluingEdgeEditor = () => {
     const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<PriceForGluingEdge[]>();
@@ -79,7 +86,7 @@ const PricesForGluingEdgeEditor = () => {
                 <div className="join">
                     <WiwaButton
                         className="btn-primary join-item"
-                        title={resourceState?.common?.action.add}
+                        title={commonResourceState?.resource?.action.add}
                         disabled={busy}
                         onClick={() => {
                             setEdit(false);
@@ -89,7 +96,7 @@ const PricesForGluingEdgeEditor = () => {
                     </WiwaButton>
                     <WiwaButton
                         className="btn-secondary join-item"
-                        title={resourceState?.common?.action.edit}
+                        title={commonResourceState?.resource?.action.edit}
                         disabled={busy || selected === undefined}
                         onClick={() => {
                             setEdit(true);
@@ -99,13 +106,13 @@ const PricesForGluingEdgeEditor = () => {
                     </WiwaButton>
                     <WiwaButton
                         className="btn-accent join-item"
-                        title={resourceState?.common?.action.delete}
+                        title={commonResourceState?.resource?.action.delete}
                         disabled={busy || selected === undefined}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
-                                title: resourceState?.manager?.orderInputs.pricesForGluingEdge.deleteQuestionTitle,
-                                message: resourceState?.manager?.orderInputs.pricesForGluingEdge.deleteQuestionMessage,
+                                title: managerResourceState?.resource?.orderInputs.pricesForGluingEdge.deleteQuestionTitle,
+                                message: managerResourceState?.resource?.orderInputs.pricesForGluingEdge.deleteQuestionMessage,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
                                         if (selected) {
@@ -150,7 +157,8 @@ const PricesForGluingEdgeDialog = ({showDialog, priceForGluingEdge, okHandler, c
     cancelHandler: () => void
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [lengthSign, setLengthSign] = useState<string>();
     const [priceSign, setPriceSign] = useState<string>();
@@ -164,7 +172,7 @@ const PricesForGluingEdgeDialog = ({showDialog, priceForGluingEdge, okHandler, c
     useEffect(() => {
         setLengthSign(unitSign(UnitId.MILLIMETER));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
-    }, [resourceState]);
+    }, [commonResourceState]);
 
     useEffect(() => {
         if (priceForGluingEdge) {
@@ -181,7 +189,7 @@ const PricesForGluingEdgeDialog = ({showDialog, priceForGluingEdge, okHandler, c
     }
 
     const unitSign = (unitId: UnitId) => {
-        return `[${resourceState?.getUnit(unitId)}]`;
+        return `[${commonResourceState?.getUnit(unitId)}]`;
     }
 
     return (!dialogState?.modalRoot ? null : createPortal(
@@ -189,13 +197,13 @@ const PricesForGluingEdgeDialog = ({showDialog, priceForGluingEdge, okHandler, c
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.manager?.orderInputs.pricesForGluingEdge.title}
+                        {managerResourceState?.resource?.orderInputs.pricesForGluingEdge.title}
                     </div>
 
                     <WiwaFormInputInteger
-                        label={`${resourceState?.manager?.orderInputs.pricesForGluingEdge.widthLabel} ${lengthSign}`}
+                        label={`${managerResourceState?.resource?.orderInputs.pricesForGluingEdge.widthLabel} ${lengthSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.orderInputs.pricesForGluingEdge.widthPlaceholder}
+                        placeholder={managerResourceState?.resource?.orderInputs.pricesForGluingEdge.widthPlaceholder}
                         value={width}
                         setValue={setWidth}
                         setValid={setWidthValid}
@@ -203,7 +211,7 @@ const PricesForGluingEdgeDialog = ({showDialog, priceForGluingEdge, okHandler, c
                             if (width === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.orderInputs.pricesForGluingEdge.widthRequired
+                                    message: managerResourceState?.resource?.orderInputs.pricesForGluingEdge.widthRequired
                                 };
                             }
                             return {valid: true};
@@ -211,9 +219,9 @@ const PricesForGluingEdgeDialog = ({showDialog, priceForGluingEdge, okHandler, c
                     />
 
                     <WiwaFormInputDecimal
-                        label={`${resourceState?.manager?.orderInputs.pricesForGluingEdge.priceLabel} ${priceSign}`}
+                        label={`${managerResourceState?.resource?.orderInputs.pricesForGluingEdge.priceLabel} ${priceSign}`}
                         required={true}
-                        placeholder={resourceState?.manager?.orderInputs.pricesForGluingEdge.pricePlaceholder}
+                        placeholder={managerResourceState?.resource?.orderInputs.pricesForGluingEdge.pricePlaceholder}
                         value={price}
                         setValue={setPrice}
                         setValid={setPriceValid}
@@ -221,7 +229,7 @@ const PricesForGluingEdgeDialog = ({showDialog, priceForGluingEdge, okHandler, c
                             if (price === undefined) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.manager?.orderInputs.pricesForGluingEdge.priceRequired
+                                    message: managerResourceState?.resource?.orderInputs.pricesForGluingEdge.priceRequired
                                 };
                             }
                             return {valid: true};
@@ -238,12 +246,12 @@ const PricesForGluingEdgeDialog = ({showDialog, priceForGluingEdge, okHandler, c
                                     price: price ? price : 0
                                 });
                             }}
-                        >{resourceState?.common?.action.ok}
+                        >{commonResourceState?.resource?.action.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
                             onClick={cancelHandler}
-                        >{resourceState?.common?.action.cancel}
+                        >{commonResourceState?.resource?.action.cancel}
                         </WiwaButton>
                     </div>
                 </div>

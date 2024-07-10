@@ -1,21 +1,21 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const WiwaValue = ({value}: { value?: string }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [data, setData] = useState<string>();
 
     useEffect(() => {
         if (value === 'true') {
-            setData(resourceState?.common?.value.yes);
+            setData(commonResourceState?.resource?.value.yes);
         } else if (value === 'false') {
-            setData(resourceState?.common?.value.no);
+            setData(commonResourceState?.resource?.value.no);
         } else {
             setData(value);
         }
-    }, [resourceState?.common, value]);
+    }, [commonResourceState?.resource, value]);
 
     return (
         <>

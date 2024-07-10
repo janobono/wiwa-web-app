@@ -10,14 +10,14 @@ import BaseDialog from '../../component/dialog/base-dialog';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../context';
+import { AdminResourceContext, AuthContext, CommonResourceContext, DialogContext, ErrorContext } from '../../context';
 
 const UNIT_VALUE_DIALOG_ID = 'admin-unit-value-dialog-001';
 
 const UnitsPage = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Unit[]>();
@@ -52,10 +52,10 @@ const UnitsPage = () => {
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.adminNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.adminNav.units || '',
+                    label: commonResourceState?.resource?.navigation.adminNav.units || '',
                     to: '/admin/units'
                 }
             ]}/>
@@ -63,7 +63,7 @@ const UnitsPage = () => {
                 <div className="join">
                     <WiwaButton
                         className="btn-primary"
-                        title={resourceState?.common?.action.edit}
+                        title={commonResourceState?.resource?.action.edit}
                         disabled={busy || selected === undefined}
                         onClick={() => {
                             setShowDialog(true);
@@ -103,7 +103,8 @@ const UnitDialog = ({showDialog, unit, okHandler, cancelHandler}: {
     cancelHandler: () => void
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [value, setValue] = useState('');
     const [valueValid, setValueValid] = useState(false);
@@ -119,13 +120,13 @@ const UnitDialog = ({showDialog, unit, okHandler, cancelHandler}: {
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.admin?.units.editUnit.title}
+                        {adminResourceState?.resource?.units.editUnit.title}
                     </div>
 
                     <WiwaFormInputString
-                        label={unit ? resourceState?.getUnitIdName(unit.id) : ''}
+                        label={unit ? commonResourceState?.getUnitIdName(unit.id) : ''}
                         required={true}
-                        placeholder={resourceState?.admin?.units.editUnit.valuePlaceholder}
+                        placeholder={adminResourceState?.resource?.units.editUnit.valuePlaceholder}
                         value={value}
                         setValue={setValue}
                         setValid={setValueValid}
@@ -133,7 +134,7 @@ const UnitDialog = ({showDialog, unit, okHandler, cancelHandler}: {
                             if (value.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.admin?.units.editUnit.valueRequired
+                                    message: adminResourceState?.resource?.units.editUnit.valueRequired
                                 };
                             }
                             return {valid: true};
@@ -149,12 +150,12 @@ const UnitDialog = ({showDialog, unit, okHandler, cancelHandler}: {
                                     okHandler({id: unit.id, value});
                                 }
                             }}
-                        >{resourceState?.common?.action.ok}
+                        >{commonResourceState?.resource?.action.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
                             onClick={cancelHandler}
-                        >{resourceState?.common?.action.cancel}
+                        >{commonResourceState?.resource?.action.cancel}
                         </WiwaButton>
                     </div>
                 </div>

@@ -1,15 +1,15 @@
 import { useContext } from 'react';
 
-import { HealthContext, ResourceContext } from '../../context';
+import { CommonResourceContext, HealthContext } from '../../context';
 
 const MaintenanceInfo = () => {
     const healthState = useContext(HealthContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         healthState?.maintenance &&
         <div className="alert alert-warning text-xs md:text-base">
-            <span>{resourceState?.common?.maintenance}</span>
+            <span>{commonResourceState?.resource?.maintenance}</span>
         </div>
     )
 }

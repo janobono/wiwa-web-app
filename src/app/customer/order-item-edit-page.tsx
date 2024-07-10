@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { CustomerContext } from '../../component/app/customer/customer-provider';
 import OrderItemEditor from '../../component/order/order-item-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const OrderItemEditPage = () => {
     const navigate = useNavigate();
 
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
     const customerState = useContext(CustomerContext);
 
 
@@ -18,17 +18,17 @@ const OrderItemEditPage = () => {
             <WiwaBreadcrumb breadcrumbs={[
                 {
                     key: 0,
-                    label: resourceState?.common?.navigation.customerNav.title || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.title || '',
                     to: '/customer'
                 },
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.customerNav.orderEdit || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.orderEdit || '',
                     to: '/customer/order-edit'
                 },
                 {
                     key: 2,
-                    label: resourceState?.common?.navigation.customerNav.orderItemEdit || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.orderItemEdit || '',
                     to: '/customer/order-item-edit'
                 }
             ]}/>

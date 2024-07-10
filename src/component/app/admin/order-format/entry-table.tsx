@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import { Entry, EntryField } from '../../../../api/model';
-import { ResourceContext } from '../../../../context';
+import { AdminResourceContext } from '../../../../context';
 
 const EntryTable = ({fields, rows, selected, setSelected}: {
     fields: EntryField[],
@@ -31,7 +31,7 @@ const EntryTable = ({fields, rows, selected, setSelected}: {
 export default EntryTable;
 
 const TableHead = ({fields}: { fields: EntryField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
 
     return (
         <thead>
@@ -39,9 +39,9 @@ const TableHead = ({fields}: { fields: EntryField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case EntryField.key:
-                        return (<th key={field}>{resourceState?.admin?.entryTable.key}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.entryTable.key}</th>);
                     case EntryField.value:
-                        return (<th key={field}>{resourceState?.admin?.entryTable.value}</th>);
+                        return (<th key={field}>{adminResourceState?.resource?.entryTable.value}</th>);
                 }
             })}
             <th></th>

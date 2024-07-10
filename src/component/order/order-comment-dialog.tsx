@@ -5,7 +5,7 @@ import BaseDialog from '../dialog/base-dialog';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaFormTextarea from '../ui/wiwa-form-textarea';
 import { OrderCommentChange } from '../../api/model/order';
-import { DialogContext, ResourceContext } from '../../context';
+import { CommonResourceContext, DialogContext } from '../../context';
 
 const OrderCommentDialog = (
     {
@@ -21,7 +21,7 @@ const OrderCommentDialog = (
     }
 ) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [value, setValue] = useState('');
     const [valid, setValid] = useState(false);
@@ -39,19 +39,19 @@ const OrderCommentDialog = (
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.customer?.orderCommentDialog.title}
+                        {commonResourceState?.resource?.orderCommentDialog.title}
                     </div>
                     <WiwaFormTextarea
-                        label={resourceState?.customer?.orderCommentDialog.valueLabel}
+                        label={commonResourceState?.resource?.orderCommentDialog.valueLabel}
                         required={true}
-                        placeholder={resourceState?.customer?.orderCommentDialog.valuePlaceholder}
+                        placeholder={commonResourceState?.resource?.orderCommentDialog.valuePlaceholder}
                         value={value}
                         setValue={setValue}
                         validate={() => {
                             if (value.trim().length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.customer?.orderCommentDialog.valueRequired
+                                    message: commonResourceState?.resource?.orderCommentDialog.valueRequired
                                 };
                             }
                             return {valid: true};
@@ -67,12 +67,12 @@ const OrderCommentDialog = (
                                 okHandler({comment: value});
                                 setShowDialog(false);
                             }}
-                        >{resourceState?.common?.mdDialog.ok}
+                        >{commonResourceState?.resource?.mdDialog.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
                             onClick={closeHandler}
-                        >{resourceState?.common?.mdDialog.cancel}
+                        >{commonResourceState?.resource?.mdDialog.cancel}
                         </WiwaButton>
                     </div>
                 </div>

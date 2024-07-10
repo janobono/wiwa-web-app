@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-import { ValidationResult } from './';
+import { alwaysValid, ValidationResult } from './';
 
 const WiwaFormFile = (
     {
@@ -12,9 +12,7 @@ const WiwaFormFile = (
         value,
         setValue,
         setValid,
-        validate = () => {
-            return {valid: true}
-        },
+        validate = alwaysValid,
         children
     }: {
         label?: string,

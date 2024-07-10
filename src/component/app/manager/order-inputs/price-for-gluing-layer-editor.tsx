@@ -4,12 +4,13 @@ import { getPriceForGluingLayer, setPriceForGluingLayer } from '../../../../api/
 import { UnitId } from '../../../../api/model/application';
 import WiwaButton from '../../../ui/wiwa-button';
 import WiwaFormInputDecimal from '../../../ui/wiwa-form-input-decimal';
-import { AuthContext, ErrorContext, ResourceContext } from '../../../../context';
+import { AuthContext, CommonResourceContext, ErrorContext, ManagerResourceContext } from '../../../../context';
 
 const PriceForGluingLayerEditor = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<number>();
@@ -33,9 +34,9 @@ const PriceForGluingLayerEditor = () => {
     return (
         <div className="container p-5 mx-auto">
             <WiwaFormInputDecimal
-                label={`${resourceState?.manager?.orderInputs.priceForGluingLayer.label} 1[${resourceState?.getUnit(UnitId.SQUARE_METER)}]`}
+                label={`${managerResourceState?.resource?.orderInputs.priceForGluingLayer.label} 1[${commonResourceState?.getUnit(UnitId.SQUARE_METER)}]`}
                 required={true}
-                placeholder={resourceState?.manager?.orderInputs.priceForGluingLayer.placeholder}
+                placeholder={managerResourceState?.resource?.orderInputs.priceForGluingLayer.placeholder}
                 value={value}
                 setValue={setValue}
                 setValid={setValueValid}
@@ -43,7 +44,7 @@ const PriceForGluingLayerEditor = () => {
                     if (value === undefined) {
                         return {
                             valid: false,
-                            message: resourceState?.manager?.orderInputs.priceForGluingLayer.required
+                            message: managerResourceState?.resource?.orderInputs.priceForGluingLayer.required
                         };
                     }
                     return {valid: true};
@@ -59,7 +60,7 @@ const PriceForGluingLayerEditor = () => {
                             submitHandler(Number(value)).then();
                         }
                     }}
-                >{resourceState?.common?.action.submit}
+                >{commonResourceState?.resource?.action.submit}
                 </WiwaButton>
             </div>
         </div>

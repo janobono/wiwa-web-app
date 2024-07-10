@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { ChevronLeft, ChevronRight } from 'react-feather';
 
 import WiwaButton from './wiwa-button';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const WiwaPageable = (
     {
@@ -22,13 +22,13 @@ const WiwaPageable = (
         nextHandler: () => void,
         disabled?: boolean
     }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <div className="join">
             <WiwaButton
                 className="join-item"
-                title={resourceState?.common?.pageable.previous}
+                title={commonResourceState?.resource?.pageable.previous}
                 disabled={disabled || !isPrevious}
                 onClick={previousHandler}
             ><ChevronLeft size={18}/>
@@ -37,10 +37,10 @@ const WiwaPageable = (
                 className="join-item"
                 disabled={disabled}
                 onClick={pageHandler}
-            ><span>{resourceState?.common?.pageable.page}</span><span> </span>{page}</WiwaButton>
+            ><span>{commonResourceState?.resource?.pageable.page}</span><span> </span>{page}</WiwaButton>
             <WiwaButton
                 className="join-item"
-                title={resourceState?.common?.pageable.next}
+                title={commonResourceState?.resource?.pageable.next}
                 disabled={disabled || !isNext}
                 onClick={nextHandler}
             ><ChevronRight size={18}/>

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import ImageDialog from '../../../dialog/image-dialog';
-import { DialogContext, ResourceContext } from '../../../../context';
+import { DialogContext, ManagerResourceContext } from '../../../../context';
 
 const BoardImageDialog = ({dialogId, busy, showDialog, okHandler, cancelHandler}: {
     dialogId: string,
@@ -12,7 +12,7 @@ const BoardImageDialog = ({dialogId, busy, showDialog, okHandler, cancelHandler}
     cancelHandler: () => void,
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [file, setFile] = useState<File>();
 
@@ -33,23 +33,23 @@ const BoardImageDialog = ({dialogId, busy, showDialog, okHandler, cancelHandler}
             disabled={busy}
             id={dialogId}
             showDialog={showDialog}
-            title={resourceState?.manager?.boards.boardImage.editTitle}
-            label={resourceState?.manager?.boards.boardImage.editFileLabel}
+            title={managerResourceState?.resource?.boards.boardImage.editTitle}
+            label={managerResourceState?.resource?.boards.boardImage.editFileLabel}
             required={true}
-            placeholder={resourceState?.manager?.boards.boardImage.editFilePlaceholder}
+            placeholder={managerResourceState?.resource?.boards.boardImage.editFilePlaceholder}
             value={file}
             setValue={setFile}
             validate={() => {
                 if (file === undefined) {
                     return {
                         valid: false,
-                        message: resourceState?.manager?.boards.boardImage.editFileRequired
+                        message: managerResourceState?.resource?.boards.boardImage.editFileRequired
                     }
                 }
                 if (!(file.type === 'image/jpeg' || file.type === 'image/png')) {
                     return {
                         valid: false,
-                        message: resourceState?.manager?.boards.boardImage.editFileFormat
+                        message: managerResourceState?.resource?.boards.boardImage.editFileFormat
                     }
                 }
                 return {valid: true};

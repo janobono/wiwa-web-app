@@ -5,12 +5,12 @@ import { ChevronsLeft } from 'react-feather';
 import { CustomerContext } from '../../component/app/customer/customer-provider';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const OrderSubmitPage = () => {
     const navigate = useNavigate();
 
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
     const customerState = useContext(CustomerContext);
 
     return (
@@ -18,12 +18,12 @@ const OrderSubmitPage = () => {
             <WiwaBreadcrumb breadcrumbs={[
                 {
                     key: 0,
-                    label: resourceState?.common?.navigation.customerNav.title || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.title || '',
                     to: '/customer'
                 },
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.customerNav.orderSubmit || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.orderSubmit || '',
                     to: '/customer/order-submit'
                 }
             ]}/>
@@ -32,7 +32,7 @@ const OrderSubmitPage = () => {
                     <div className="flex flex-row gap-5 w-full">
                         <WiwaButton
                             className="join-item"
-                            title={resourceState?.common?.navigation.customerNav.orderComments}
+                            title={commonResourceState?.resource?.navigation.customerNav.orderComments}
                             disabled={customerState?.busy}
                             onClick={() => navigate('/customer/order-comments')}
                         ><ChevronsLeft size={18}/>

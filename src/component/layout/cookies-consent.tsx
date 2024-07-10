@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { AppContext, ResourceContext } from '../../context';
+import { AppContext, CommonResourceContext } from '../../context';
 
 const CookiesConsent = () => {
     const appState = useContext(AppContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [show, setShow] = useState(false);
 
@@ -21,17 +21,17 @@ const CookiesConsent = () => {
 
     return (!show ? null :
             <div className="alert alert-warning text-xs md:text-base">
-                <span>{resourceState?.common?.cookiesConsent.text}</span>
+                <span>{commonResourceState?.resource?.cookiesConsent.text}</span>
                 <NavLink
                     className="link"
                     to="/ui/cookies-info"
-                >{resourceState?.common?.cookiesConsent.link}</NavLink>
+                >{commonResourceState?.resource?.cookiesConsent.link}</NavLink>
                 <button
                     className="btn btn-sm normal-case text-xs md:text-base"
                     onClick={() => {
                         appState?.enableCookies();
                     }}
-                >{resourceState?.common?.cookiesConsent.action}</button>
+                >{commonResourceState?.resource?.cookiesConsent.action}</button>
             </div>
     )
 }

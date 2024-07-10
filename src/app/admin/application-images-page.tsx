@@ -10,21 +10,21 @@ import ApplicationImageInfoTable from '../../component/app/admin/application-ima
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import { DialogContext, ResourceContext } from '../../context';
+import { AdminResourceContext, CommonResourceContext, DialogContext } from '../../context';
 import { DialogAnswer, DialogType } from '../../context/model/dialog';
 
 const APPLICATION_IMAGE_DIALOG_ID = 'admin-application-image-dialog-001';
 
 const ApplicationImagesPage = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.adminNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.adminNav.applicationImages || '',
+                    label: commonResourceState?.resource?.navigation.adminNav.applicationImages || '',
                     to: '/admin/application-images'
                 }
             ]}/>
@@ -40,7 +40,8 @@ export default ApplicationImagesPage;
 const ApplicationImagesPageContent = () => {
     const applicationImageState = useContext(ApplicationImageContext);
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [showDialog, setShowDialog] = useState(false);
 
@@ -54,7 +55,7 @@ const ApplicationImagesPageContent = () => {
                 <div className="join">
                     <WiwaButton
                         className="btn-primary join-item"
-                        title={resourceState?.common?.action.add}
+                        title={commonResourceState?.resource?.action.add}
                         disabled={applicationImageState?.busy}
                         onClick={() => setShowDialog(true)}
                     ><Plus size={18}/>
@@ -62,7 +63,7 @@ const ApplicationImagesPageContent = () => {
 
                     <WiwaButton
                         className="btn-ghost join-item"
-                        title={resourceState?.common?.action.copy}
+                        title={commonResourceState?.resource?.action.copy}
                         disabled={applicationImageState?.busy || !applicationImageState?.editEnabled}
                         onClick={() => navigator.clipboard.writeText(
                             window.location.href
@@ -74,13 +75,13 @@ const ApplicationImagesPageContent = () => {
 
                     <WiwaButton
                         className="btn-accent join-item"
-                        title={resourceState?.common?.action.delete}
+                        title={commonResourceState?.resource?.action.delete}
                         disabled={applicationImageState?.busy || !applicationImageState?.editEnabled}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
-                                title: resourceState?.admin?.applicationImages.deleteImageQuestionTitle,
-                                message: resourceState?.admin?.applicationImages.deleteImageQuestionMessage,
+                                title: adminResourceState?.resource?.applicationImages.deleteImageQuestionTitle,
+                                message: adminResourceState?.resource?.applicationImages.deleteImageQuestionMessage,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
                                         applicationImageState?.deleteApplicationImage().then();

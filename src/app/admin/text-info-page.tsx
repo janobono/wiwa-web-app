@@ -5,22 +5,23 @@ import * as apiUi from '../../api/controller/ui';
 import MdEditor from '../../component/app/admin/text-info/md-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
-import { ResourceContext } from '../../context';
+import { AdminResourceContext, CommonResourceContext } from '../../context';
 
 const TEXT_INFO_DIALOG_ID = 'admin-text-info-dialog-';
 
 const TextInfoPage = () => {
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [index, setIndex] = useState(0);
 
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.adminNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.adminNav.textInfo || '',
+                    label: commonResourceState?.resource?.navigation.adminNav.textInfo || '',
                     to: '/admin/text-info'
                 }
             ]}/>
@@ -29,21 +30,21 @@ const TextInfoPage = () => {
                     defaultValue="0"
                     onChange={event => setIndex(Number(event.currentTarget.value))}
                 >
-                    <option disabled value="0">{resourceState?.admin?.textInfo.option.select}</option>
-                    <option value="1">{resourceState?.admin?.textInfo.option.businessConditions}</option>
-                    <option value="2">{resourceState?.admin?.textInfo.option.cookiesInfo}</option>
-                    <option value="3">{resourceState?.admin?.textInfo.option.gdprInfo}</option>
-                    <option value="4">{resourceState?.admin?.textInfo.option.orderInfo}</option>
-                    <option value="5">{resourceState?.admin?.textInfo.option.workingHours}</option>
+                    <option disabled value="0">{adminResourceState?.resource?.textInfo.option.select}</option>
+                    <option value="1">{adminResourceState?.resource?.textInfo.option.businessConditions}</option>
+                    <option value="2">{adminResourceState?.resource?.textInfo.option.cookiesInfo}</option>
+                    <option value="3">{adminResourceState?.resource?.textInfo.option.gdprInfo}</option>
+                    <option value="4">{adminResourceState?.resource?.textInfo.option.orderInfo}</option>
+                    <option value="5">{adminResourceState?.resource?.textInfo.option.workingHours}</option>
                 </WiwaSelect>
 
                 {index == 1 &&
                     <MdEditor
                         dialogId={TEXT_INFO_DIALOG_ID + index}
-                        title={resourceState?.admin?.textInfo.businessConditions.title || ''}
-                        valueLabel={resourceState?.admin?.textInfo.businessConditions.valueLabel || ''}
-                        valuePlaceholder={resourceState?.admin?.textInfo.businessConditions.valuePlaceholder || ''}
-                        valueRequired={resourceState?.admin?.textInfo.businessConditions.valueRequired || ''}
+                        title={adminResourceState?.resource?.textInfo.businessConditions.title || ''}
+                        valueLabel={adminResourceState?.resource?.textInfo.businessConditions.valueLabel || ''}
+                        valuePlaceholder={adminResourceState?.resource?.textInfo.businessConditions.valuePlaceholder || ''}
+                        valueRequired={adminResourceState?.resource?.textInfo.businessConditions.valueRequired || ''}
                         loadValue={apiUi.getBusinessConditions}
                         saveValue={apiConfig.setBusinessConditions}
                     />
@@ -51,10 +52,10 @@ const TextInfoPage = () => {
                 {index == 2 &&
                     <MdEditor
                         dialogId={TEXT_INFO_DIALOG_ID + index}
-                        title={resourceState?.admin?.textInfo.cookiesInfo.title || ''}
-                        valueLabel={resourceState?.admin?.textInfo.cookiesInfo.valueLabel || ''}
-                        valuePlaceholder={resourceState?.admin?.textInfo.cookiesInfo.valuePlaceholder || ''}
-                        valueRequired={resourceState?.admin?.textInfo.cookiesInfo.valueRequired || ''}
+                        title={adminResourceState?.resource?.textInfo.cookiesInfo.title || ''}
+                        valueLabel={adminResourceState?.resource?.textInfo.cookiesInfo.valueLabel || ''}
+                        valuePlaceholder={adminResourceState?.resource?.textInfo.cookiesInfo.valuePlaceholder || ''}
+                        valueRequired={adminResourceState?.resource?.textInfo.cookiesInfo.valueRequired || ''}
                         loadValue={apiUi.getCookiesInfo}
                         saveValue={apiConfig.setCookiesInfo}
                     />
@@ -62,10 +63,10 @@ const TextInfoPage = () => {
                 {index == 3 &&
                     <MdEditor
                         dialogId={TEXT_INFO_DIALOG_ID + index}
-                        title={resourceState?.admin?.textInfo.gdprInfo.title || ''}
-                        valueLabel={resourceState?.admin?.textInfo.gdprInfo.valueLabel || ''}
-                        valuePlaceholder={resourceState?.admin?.textInfo.gdprInfo.valuePlaceholder || ''}
-                        valueRequired={resourceState?.admin?.textInfo.gdprInfo.valueRequired || ''}
+                        title={adminResourceState?.resource?.textInfo.gdprInfo.title || ''}
+                        valueLabel={adminResourceState?.resource?.textInfo.gdprInfo.valueLabel || ''}
+                        valuePlaceholder={adminResourceState?.resource?.textInfo.gdprInfo.valuePlaceholder || ''}
+                        valueRequired={adminResourceState?.resource?.textInfo.gdprInfo.valueRequired || ''}
                         loadValue={apiUi.getGdprInfo}
                         saveValue={apiConfig.setGdprInfo}
                     />
@@ -73,10 +74,10 @@ const TextInfoPage = () => {
                 {index == 4 &&
                     <MdEditor
                         dialogId={TEXT_INFO_DIALOG_ID + index}
-                        title={resourceState?.admin?.textInfo.orderInfo.title || ''}
-                        valueLabel={resourceState?.admin?.textInfo.orderInfo.valueLabel || ''}
-                        valuePlaceholder={resourceState?.admin?.textInfo.orderInfo.valuePlaceholder || ''}
-                        valueRequired={resourceState?.admin?.textInfo.orderInfo.valueRequired || ''}
+                        title={adminResourceState?.resource?.textInfo.orderInfo.title || ''}
+                        valueLabel={adminResourceState?.resource?.textInfo.orderInfo.valueLabel || ''}
+                        valuePlaceholder={adminResourceState?.resource?.textInfo.orderInfo.valuePlaceholder || ''}
+                        valueRequired={adminResourceState?.resource?.textInfo.orderInfo.valueRequired || ''}
                         loadValue={apiUi.getOrderInfo}
                         saveValue={apiConfig.setOrderInfo}
                     />
@@ -84,10 +85,10 @@ const TextInfoPage = () => {
                 {index == 5 &&
                     <MdEditor
                         dialogId={TEXT_INFO_DIALOG_ID + index}
-                        title={resourceState?.admin?.textInfo.workingHours.title || ''}
-                        valueLabel={resourceState?.admin?.textInfo.workingHours.valueLabel || ''}
-                        valuePlaceholder={resourceState?.admin?.textInfo.workingHours.valuePlaceholder || ''}
-                        valueRequired={resourceState?.admin?.textInfo.workingHours.valueRequired || ''}
+                        title={adminResourceState?.resource?.textInfo.workingHours.title || ''}
+                        valueLabel={adminResourceState?.resource?.textInfo.workingHours.valueLabel || ''}
+                        valuePlaceholder={adminResourceState?.resource?.textInfo.workingHours.valuePlaceholder || ''}
+                        valueRequired={adminResourceState?.resource?.textInfo.workingHours.valueRequired || ''}
                         loadValue={apiUi.getWorkingHours}
                         saveValue={apiConfig.setWorkingHours}
                     />

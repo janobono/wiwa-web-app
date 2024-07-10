@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Part } from '../../../api/model/order/part';
-import { Entry } from '../../../api/model';
+import { Part, PartCorner } from '../../../api/model/order/part';
+import { Dimensions, Entry } from '../../../api/model';
 import {
     BoardDimension,
     BoardPosition,
@@ -12,7 +12,17 @@ import {
 } from '../../../api/model/application';
 import { getOrderProperties } from '../../../api/controller/ui';
 import { getManufactureProperties } from '../../../api/controller/config';
-import { AuthContext, ErrorContext, ResourceContext } from '../../../context';
+import { AuthContext, ErrorContext, CommonResourceContext } from '../../../context';
+
+export interface BoardDimensionsData {
+    boardPosition: BoardPosition,
+    dimensions: Dimensions
+}
+
+export interface PartCornerData {
+    cornerPosition: CornerPosition,
+    partCorner: PartCorner
+}
 
 export interface PartEditorState {
     part?: Part,
@@ -25,7 +35,13 @@ export interface PartEditorState {
     getDimensionName: (boardDimension: BoardDimension) => string,
     getBoardName: (boardPosition: BoardPosition) => string,
     getEdgeName: (edgePosition: EdgePosition) => string,
-    getCornerName: (cornerPosition: CornerPosition) => string
+    getCornerName: (cornerPosition: CornerPosition) => string,
+    partType?: string,
+    setPartType: (partType?: string) => void,
+    boardDimensionsData: BoardDimensionsData[],
+    setBoardDimensions: (boardPosition: BoardPosition, dimensions?: Dimensions) => void,
+    cornerData: PartCornerData[],
+    setPartCorner: (cornerPosition: CornerPosition, partCorner?: PartCorner) => void
 }
 
 export const PartEditorContext = createContext<PartEditorState | undefined>(undefined);
@@ -47,11 +63,16 @@ const PartEditorProvider = (
 ) => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [orderProperties, setOrderProperties] = useState<OrderProperties>();
     const [manufactureProperties, setManufactureProperties] = useState<ManufactureProperties>();
     const [lengthSign, setLengthSign] = useState<string>();
+
+    const [partType, setPartType] = useState<string>();
+
+    const [boardDimensionsData, setBoardDimensionsData] = useState<BoardDimensionsData[]>([]);
+    const [cornerData, setCornerData] = useState<PartCornerData[]>([]);
 
     useEffect(() => {
         getOrderProperties().then(response => {
@@ -66,8 +87,18 @@ const PartEditorProvider = (
             }
             errorState?.addError(response.error);
         });
-        setLengthSign(`[${resourceState?.getUnit(UnitId.MILLIMETER)}]`);
+        setLengthSign(`[${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`);
     }, []);
+
+    useEffect(() => {
+        if (part) {
+            setPartType(part.type);
+            // TODO
+        } else {
+            setPartType(undefined);
+            // TODO
+        }
+    }, [part]);
 
     const getEntryValue = (key: string, entries?: Entry[]) => {
         return entries?.find(entry => entry.key === key)?.value || '';
@@ -89,6 +120,30 @@ const PartEditorProvider = (
         return getEntryValue(cornerPosition, orderProperties?.corners);
     }
 
+    const setBoardDimensions = (boardPosition: BoardPosition, dimensions?: Dimensions) => {
+        const newData = [...boardDimensionsData];
+        const index = newData.findIndex(item => item.boardPosition === boardPosition);
+        if (index !== -1) {
+            newData.splice(index, 1);
+        }
+        if (dimensions) {
+            newData.push({boardPosition, dimensions});
+        }
+        setBoardDimensionsData(newData);
+    }
+
+    const setPartCorner = (cornerPosition: CornerPosition, partCorner?: PartCorner) => {
+        const newData = [...cornerData];
+        const index = newData.findIndex(item => item.cornerPosition === cornerPosition);
+        if (index !== -1) {
+            newData.splice(index, 1);
+        }
+        if (partCorner) {
+            newData.push({cornerPosition, partCorner});
+        }
+        setCornerData(newData);
+    }
+
     return (
         <PartEditorContext.Provider
             value={
@@ -103,7 +158,13 @@ const PartEditorProvider = (
                     getDimensionName,
                     getBoardName,
                     getEdgeName,
-                    getCornerName
+                    getCornerName,
+                    partType,
+                    setPartType,
+                    boardDimensionsData,
+                    setBoardDimensions,
+                    cornerData,
+                    setPartCorner
                 }
             }
         >{children}

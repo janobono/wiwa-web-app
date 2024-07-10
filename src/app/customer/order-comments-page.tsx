@@ -5,7 +5,7 @@ import { ChevronsLeft, ChevronsRight, Plus } from 'react-feather';
 import { CustomerContext } from '../../component/app/customer/customer-provider';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { AuthContext, ResourceContext } from '../../context';
+import { AuthContext, CommonResourceContext } from '../../context';
 import OrderUserValue from '../../component/order/order-user-value.tsx';
 import WiwaValueDatetime from '../../component/ui/wiwa-value-datetime.tsx';
 import OrderCommentDialog from '../../component/order/order-comment-dialog.tsx';
@@ -16,7 +16,7 @@ const OrderCommentsPage = () => {
     const navigate = useNavigate();
 
     const authState = useContext(AuthContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
     const customerState = useContext(CustomerContext);
 
     const [showDialog, setShowDialog] = useState(false);
@@ -26,12 +26,12 @@ const OrderCommentsPage = () => {
             <WiwaBreadcrumb breadcrumbs={[
                 {
                     key: 0,
-                    label: resourceState?.common?.navigation.customerNav.title || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.title || '',
                     to: '/customer'
                 },
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.customerNav.orderComments || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.orderComments || '',
                     to: '/customer/order-comments'
                 }
             ]}/>
@@ -43,7 +43,7 @@ const OrderCommentsPage = () => {
                             {customerState?.editEnabled &&
                                 <WiwaButton
                                     className="btn-ghost join-item"
-                                    title={resourceState?.common?.navigation.customerNav.orderDetail}
+                                    title={commonResourceState?.resource?.navigation.customerNav.orderDetail}
                                     disabled={customerState?.busy}
                                     onClick={() => navigate('/customer/order-detail')}
                                 ><ChevronsLeft size={18}/>
@@ -51,7 +51,7 @@ const OrderCommentsPage = () => {
                             }
                             <WiwaButton
                                 className="btn-primary join-item"
-                                title={resourceState?.common?.action.add}
+                                title={commonResourceState?.resource?.action.add}
                                 disabled={customerState?.busy || customerState?.orderFinal}
                                 onClick={() => setShowDialog(true)}
                             ><Plus size={18}/>
@@ -59,7 +59,7 @@ const OrderCommentsPage = () => {
                             {customerState?.submitEnabled &&
                                 <WiwaButton
                                     className="btn-ghost join-item"
-                                    title={resourceState?.common?.navigation.customerNav.orderSubmit}
+                                    title={commonResourceState?.resource?.navigation.customerNav.orderSubmit}
                                     disabled={customerState?.busy}
                                     onClick={() => navigate('/customer/order-submit')}
                                 ><ChevronsRight size={18}/>

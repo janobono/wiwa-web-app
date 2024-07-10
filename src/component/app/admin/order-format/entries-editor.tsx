@@ -7,7 +7,7 @@ import BaseDialog from '../../../dialog/base-dialog';
 import WiwaButton from '../../../ui/wiwa-button';
 import WiwaFormInputString from '../../../ui/wiwa-form-input-string';
 import { Entry, EntryField } from '../../../../api/model';
-import { DialogContext, ResourceContext } from '../../../../context';
+import { AdminResourceContext, CommonResourceContext, DialogContext } from '../../../../context';
 
 const EntriesEditor = ({dialogId, busy, entries, submitHandler}: {
     dialogId: string,
@@ -15,7 +15,7 @@ const EntriesEditor = ({dialogId, busy, entries, submitHandler}: {
     entries: Entry[],
     submitHandler: (entries: Entry[]) => Promise<void>
 }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [data, setData] = useState<Entry[]>();
     const [selected, setSelected] = useState<Entry>();
@@ -30,7 +30,7 @@ const EntriesEditor = ({dialogId, busy, entries, submitHandler}: {
             <div className="join">
                 <WiwaButton
                     className="btn-primary join-item"
-                    title={resourceState?.common?.action.edit}
+                    title={commonResourceState?.resource?.action.edit}
                     disabled={busy || selected === undefined}
                     onClick={() => {
                         setShowDialog(true);
@@ -57,7 +57,7 @@ const EntriesEditor = ({dialogId, busy, entries, submitHandler}: {
                             submitHandler(data).then();
                         }
                     }}
-                >{resourceState?.common?.action.submit}
+                >{commonResourceState?.resource?.action.submit}
                 </WiwaButton>
             </div>
 
@@ -94,7 +94,8 @@ const EntryDialog = ({dialogId, showDialog, entry, okHandler, cancelHandler}: {
     cancelHandler: () => void
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [value, setValue] = useState('');
     const [valueValid, setValueValid] = useState(false);
@@ -112,9 +113,9 @@ const EntryDialog = ({dialogId, showDialog, entry, okHandler, cancelHandler}: {
                     </div>
 
                     <WiwaFormInputString
-                        label={resourceState?.admin?.orderFormat.editEntry.label}
+                        label={adminResourceState?.resource?.orderFormat.editEntry.label}
                         required={true}
-                        placeholder={resourceState?.admin?.orderFormat.editEntry.placeholder}
+                        placeholder={adminResourceState?.resource?.orderFormat.editEntry.placeholder}
                         value={value}
                         setValue={setValue}
                         setValid={setValueValid}
@@ -122,7 +123,7 @@ const EntryDialog = ({dialogId, showDialog, entry, okHandler, cancelHandler}: {
                             if (value.length === 0) {
                                 return {
                                     valid: false,
-                                    message: resourceState?.admin?.orderFormat.editEntry.required
+                                    message: adminResourceState?.resource?.orderFormat.editEntry.required
                                 };
                             }
                             return {valid: true};
@@ -136,12 +137,12 @@ const EntryDialog = ({dialogId, showDialog, entry, okHandler, cancelHandler}: {
                             onClick={() => okHandler(
                                 {key: entry.key, value}
                             )}
-                        >{resourceState?.common?.action.ok}
+                        >{commonResourceState?.resource?.action.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
                             onClick={cancelHandler}
-                        >{resourceState?.common?.action.cancel}
+                        >{commonResourceState?.resource?.action.cancel}
                         </WiwaButton>
                     </div>
                 </div>

@@ -12,13 +12,13 @@ import { getBoardCategories } from '../../api/controller/ui';
 import { Category } from '../../api/model';
 import { BoardSearchCriteria } from '../../api/model/board';
 import { CodeListItem } from '../../api/model/code-list';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const BoardSearchCriteriaForm = ({searchHandler, children}: {
     searchHandler: (criteria: BoardSearchCriteria) => void
     children?: ReactNode
 }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [boardCategories, setBoardCategories] = useState<Category[]>();
 
@@ -69,7 +69,7 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
             <div className="join join-vertical md:join-horizontal w-full">
                 <WiwaInput
                     className="join-item w-full"
-                    placeholder={resourceState?.common?.boardCriteria.searchPlaceholder}
+                    placeholder={commonResourceState?.resource?.boardCriteria.searchPlaceholder}
                     value={searchField}
                     onChange={event => setSearchField(event.target.value)}
                     onKeyUp={(event) => {
@@ -79,12 +79,12 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                     }}
                 />
                 <WiwaButton
-                    title={resourceState?.common?.action.search}
+                    title={commonResourceState?.resource?.action.search}
                     className="join-item"
                     onClick={() => searchHandler(createCriteria())}
                 ><Search size={18}/></WiwaButton>
                 <WiwaButton
-                    title={resourceState?.common?.action.extendedSearch}
+                    title={commonResourceState?.resource?.action.extendedSearch}
                     className="join-item"
                     onClick={() => setExtended(!extended)}
                 >{extended ?
@@ -99,22 +99,22 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                 <>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full">
                         <WiwaFormInputString
-                            placeholder={resourceState?.common?.boardCriteria.codePlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.codePlaceholder}
                             value={code}
                             setValue={setCode}
                         />
                         <WiwaFormInputString
-                            placeholder={resourceState?.common?.boardCriteria.namePlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.namePlaceholder}
                             value={name}
                             setValue={setName}
                         />
                         <WiwaFormInputString
-                            placeholder={resourceState?.common?.boardCriteria.boardCodePlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.boardCodePlaceholder}
                             value={boardCode}
                             setValue={setBoardCode}
                         />
                         <WiwaFormInputString
-                            placeholder={resourceState?.common?.boardCriteria.structureCodePlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.structureCodePlaceholder}
                             value={structureCode}
                             setValue={setStructureCode}
                         />
@@ -125,58 +125,59 @@ const BoardSearchCriteriaForm = ({searchHandler, children}: {
                                 setOrientation(value === 0 ? undefined : value === 1);
                             }}
                         >
-                            <option value="0">{resourceState?.common?.boardCriteria.orientationPlaceholder}</option>
-                            <option value="1">{resourceState?.common?.value.yes}</option>
-                            <option value="2">{resourceState?.common?.value.no}</option>
+                            <option
+                                value="0">{commonResourceState?.resource?.boardCriteria.orientationPlaceholder}</option>
+                            <option value="1">{commonResourceState?.resource?.value.yes}</option>
+                            <option value="2">{commonResourceState?.resource?.value.no}</option>
                         </WiwaSelect>
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-5 w-full">
                         <WiwaFormInputInteger
                             min="0"
-                            placeholder={resourceState?.common?.boardCriteria.lengthFromPlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.lengthFromPlaceholder}
                             value={lengthFrom}
                             setValue={setLengthFrom}
                         />
                         <WiwaFormInputInteger
                             min="0"
-                            placeholder={resourceState?.common?.boardCriteria.lengthToPlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.lengthToPlaceholder}
                             value={lengthTo}
                             setValue={setLengthTo}
                         />
                         <WiwaFormInputInteger
                             min="0"
-                            placeholder={resourceState?.common?.boardCriteria.widthFromPlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.widthFromPlaceholder}
                             value={widthFrom}
                             setValue={setWidthFrom}
                         />
                         <WiwaFormInputInteger
                             min="0"
-                            placeholder={resourceState?.common?.boardCriteria.widthToPlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.widthToPlaceholder}
                             value={widthTo}
                             setValue={setWidthTo}
                         />
                         <WiwaFormInputInteger
                             min="0"
-                            placeholder={resourceState?.common?.boardCriteria.thicknessFromPlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.thicknessFromPlaceholder}
                             value={thicknessFrom}
                             setValue={setThicknessFrom}
                         />
                         <WiwaFormInputInteger
                             min="0"
-                            placeholder={resourceState?.common?.boardCriteria.thicknessToPlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.thicknessToPlaceholder}
                             value={thicknessTo}
                             setValue={setThicknessTo}
                         />
                         <WiwaFormInputDecimal
                             min="0"
-                            placeholder={resourceState?.common?.boardCriteria.priceFromPlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.priceFromPlaceholder}
                             value={priceFrom}
                             setValue={setPriceFrom}
                         />
                         <WiwaFormInputDecimal
                             min="0"
-                            placeholder={resourceState?.common?.boardCriteria.priceToPlaceholder}
+                            placeholder={commonResourceState?.resource?.boardCriteria.priceToPlaceholder}
                             value={priceTo}
                             setValue={setPriceTo}
                         />

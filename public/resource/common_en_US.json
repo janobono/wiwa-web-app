@@ -190,6 +190,12 @@
     }
   },
   "notFound": "404 Page not found",
+  "orderCommentDialog": {
+    "title": "Order comment",
+    "valueLabel": "Comment",
+    "valuePlaceholder": "Enter comment",
+    "valueRequired": "Comment is required"
+  },
   "orderItemEditor": {
     "nameLabel": "Name",
     "namePlaceholder": "Enter name",
@@ -248,15 +254,38 @@
     "previous": "Previous"
   },
   "partEditor": {
-    "option": {
-      "select": "Part type",
+    "partLabel": "Part type",
+    "valuePlaceholder": "Enter value",
+    "valueRequired": "is required",
+    "deleteCornerQuestionTitle": "Delete corner",
+    "deleteCornerQuestionMessage": "Do you really want to delete corner?",
+    "deleteBoardDimensionsQuestionTitle": "Delete dimensions",
+    "deleteBoardDimensionsQuestionMessage": "Do you really want to delete dimensions?",
+    "boardDimensionsDialogTitle": "Dimensions",
+    "corner": {
+      "none": "None",
+      "rounded": "Rounded",
+      "straight": "Straight"
+    },
+    "cornerDialog": {
+      "title": "Corner",
+      "cornerLabel": "Corner type",
+      "radiusLabel": "Radius",
+      "radiusPlaceholder": "Enter radius",
+      "radiusRequired": "Radius is required",
+      "radiusInvalid": "Radius must be less than",
+      "cornerDimensionsLabel": "Dimensions",
+      "cornerDimensionsPlaceholderX": "Enter x",
+      "cornerDimensionsPlaceholderY": "Enter y",
+      "cornerDimensionsRequired": "Dimensions are required",
+      "cornerDimensionsInvalid": "Dimensions must be less than"
+    },
+    "part": {
       "basic": "Basic",
       "duplicatedBasic": "Duplicated basic",
       "duplicatedFrame": "Duplicated frame",
       "frame": "Frame"
-    },
-    "valuePlaceholder": "Enter value",
-    "valueRequired": "is required"
+    }
   },
   "refreshToken": {
     "action": "Refresh",

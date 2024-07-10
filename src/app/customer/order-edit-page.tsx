@@ -5,7 +5,7 @@ import { ArrowDown, ArrowUp, ChevronsRight, Edit, Plus, Trash } from 'react-feat
 import { CustomerContext } from '../../component/app/customer/customer-provider';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { DialogContext, ResourceContext } from '../../context';
+import { CommonResourceContext, CustomerResourceContext, DialogContext } from '../../context';
 import OrderItemTable from '../../component/order/order-item-table.tsx';
 import { OrderItemField } from '../../api/model/order';
 import { DialogAnswer, DialogType } from '../../context/model/dialog';
@@ -14,7 +14,8 @@ const OrderEditPage = () => {
     const navigate = useNavigate();
 
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const customerResourceState = useContext(CustomerResourceContext);
     const customerState = useContext(CustomerContext);
 
     return (
@@ -22,12 +23,12 @@ const OrderEditPage = () => {
             <WiwaBreadcrumb breadcrumbs={[
                 {
                     key: 0,
-                    label: resourceState?.common?.navigation.customerNav.title || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.title || '',
                     to: '/customer'
                 },
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.customerNav.orderEdit || '',
+                    label: commonResourceState?.resource?.navigation.customerNav.orderEdit || '',
                     to: '/customer/order-edit'
                 }
             ]}/>
@@ -36,7 +37,7 @@ const OrderEditPage = () => {
                     <div className="flex flex-row gap-5 w-full">
                         <div className="join">
                             <WiwaButton
-                                title={resourceState?.common?.action.add}
+                                title={commonResourceState?.resource?.action.add}
                                 className="btn-primary join-item"
                                 disabled={customerState?.busy}
                                 onClick={() => {
@@ -48,7 +49,7 @@ const OrderEditPage = () => {
                             </WiwaButton>
 
                             <WiwaButton
-                                title={resourceState?.common?.action.edit}
+                                title={commonResourceState?.resource?.action.edit}
                                 className="btn-secondary join-item"
                                 disabled={customerState?.busy || customerState?.selectedItem === undefined}
                                 onClick={() => {
@@ -60,7 +61,7 @@ const OrderEditPage = () => {
                             </WiwaButton>
 
                             <WiwaButton
-                                title={resourceState?.common?.action.moveUp}
+                                title={commonResourceState?.resource?.action.moveUp}
                                 className="btn-ghost join-item"
                                 disabled={customerState?.busy || customerState?.selectedItem === undefined}
                                 onClick={() => {
@@ -71,7 +72,7 @@ const OrderEditPage = () => {
                             </WiwaButton>
 
                             <WiwaButton
-                                title={resourceState?.common?.action.moveDown}
+                                title={commonResourceState?.resource?.action.moveDown}
                                 className="btn-ghost join-item"
                                 disabled={customerState?.busy || customerState?.selectedItem === undefined}
                                 onClick={() => {
@@ -83,13 +84,13 @@ const OrderEditPage = () => {
 
                             <WiwaButton
                                 className="btn-accent join-item"
-                                title={resourceState?.common?.action.delete}
+                                title={commonResourceState?.resource?.action.delete}
                                 disabled={customerState?.busy || customerState?.selectedItem === undefined}
                                 onClick={() => {
                                     dialogState?.showDialog({
                                         type: DialogType.YES_NO,
-                                        title: resourceState?.customer?.orders.deleteOrderItem.title,
-                                        message: resourceState?.customer?.orders.deleteOrderItem.message,
+                                        title: customerResourceState?.resource?.orders.deleteOrderItem.title,
+                                        message: customerResourceState?.resource?.orders.deleteOrderItem.message,
                                         callback: (answer: DialogAnswer) => {
                                             if (answer === DialogAnswer.YES) {
                                                 customerState?.deleteItem();
@@ -102,7 +103,7 @@ const OrderEditPage = () => {
 
                             <WiwaButton
                                 className="join-item"
-                                title={resourceState?.common?.navigation.customerNav.orderDetail}
+                                title={commonResourceState?.resource?.navigation.customerNav.orderDetail}
                                 disabled={customerState?.busy}
                                 onClick={() => navigate('/customer/order-detail')}
                             ><ChevronsRight size={18}/>
@@ -113,7 +114,7 @@ const OrderEditPage = () => {
 
                 <div className="overflow-x-auto">
                     <OrderItemTable
-                        fields={[OrderItemField.sortNum, OrderItemField.name, OrderItemField.description, OrderItemField.orientation, OrderItemField.quantity]}
+                        fields={[OrderItemField.sortNum, OrderItemField.name, OrderItemField.description, OrderItemField.quantity]}
                         rows={customerState?.selected?.items}
                         selected={customerState?.selectedItem}
                         setSelected={(orderItem) => customerState?.setSelectedItem(orderItem)}

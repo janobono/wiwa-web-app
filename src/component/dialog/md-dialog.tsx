@@ -6,7 +6,7 @@ import { ValidationResult } from '../ui';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaFormTextarea from '../ui/wiwa-form-textarea';
 import WiwaMarkdownRenderer from '../ui/wiwa-markdown-renderer';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const MdDialog = (
     {
@@ -40,7 +40,7 @@ const MdDialog = (
         okHandler: () => void,
         cancelHandler: () => void
     }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [editor, setEditor] = useState(true);
     const [valid, setValid] = useState(false);
@@ -54,19 +54,19 @@ const MdDialog = (
     return (
         <BaseDialog id={id} showDialog={showDialog} closeHandler={cancelHandler} maxWidth={true}>
             <div className="container p-5 mx-auto">
-                <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-lg md:text-xl font-bold text-center">
                         {title}
                     </div>
-                    <div className="tabs tabs-bordered py-5">
+                    <div className="tabs tabs-bordered">
                         <a
                             className={twMerge(`tab tab-bordered ${editor ? 'tab-active' : ''}`)}
                             onClick={() => setEditor(true)}
-                        >{resourceState?.common?.mdDialog.editor}</a>
+                        >{commonResourceState?.resource?.mdDialog.editor}</a>
                         <a
                             className={twMerge(`tab tab-bordered ${editor ? '' : 'tab-active'}`)}
                             onClick={() => setEditor(false)}
-                        >{resourceState?.common?.mdDialog.preview}</a>
+                        >{commonResourceState?.resource?.mdDialog.preview}</a>
                     </div>
                     {editor ?
                         <>
@@ -80,7 +80,7 @@ const MdDialog = (
                                         })
                                     });
                                 }}
-                            >{resourceState?.common?.mdDialog.example}
+                            >{commonResourceState?.resource?.mdDialog.example}
                             </WiwaButton>
                             <WiwaFormTextarea
                                 label={label}
@@ -96,18 +96,18 @@ const MdDialog = (
                         :
                         <WiwaMarkdownRenderer className="prose max-w-none" md={value}/>
                     }
-                    <div className="join pt-5">
+                    <div className="join">
                         <WiwaButton
                             className="btn-primary join-item"
                             disabled={disabled || !valid}
                             onClick={okHandler}
-                        >{resourceState?.common?.mdDialog.ok}
+                        >{commonResourceState?.resource?.mdDialog.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
                             disabled={disabled}
                             onClick={cancelHandler}
-                        >{resourceState?.common?.mdDialog.cancel}
+                        >{commonResourceState?.resource?.mdDialog.cancel}
                         </WiwaButton>
                     </div>
                 </div>

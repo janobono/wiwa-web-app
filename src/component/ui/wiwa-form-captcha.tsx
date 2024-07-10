@@ -5,7 +5,7 @@ import WiwaButton from './wiwa-button';
 import WiwaInput from './wiwa-input';
 import WiwaSpinner from './wiwa-spinner';
 import { getCaptcha } from '../../api/controller/ui';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const WiwaFormCaptcha = (
     {
@@ -27,7 +27,7 @@ const WiwaFormCaptcha = (
         setToken: (value: string) => void,
         setValid?: (valid: boolean) => void,
     }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const didMount = useRef(false);
     const [busy, setBusy] = useState(false);
@@ -41,7 +41,7 @@ const WiwaFormCaptcha = (
         if (valid) {
             setMessage(undefined);
         } else {
-            setMessage(resourceState?.common?.captcha.required);
+            setMessage(commonResourceState?.resource?.captcha.required);
         }
 
         if (setValid) {
@@ -85,12 +85,13 @@ const WiwaFormCaptcha = (
         <div className="form-control w-full pb-2">
             <input type="hidden" id={tokenName} name={tokenName} value={token}/>
             <label className="label">
-                <span className="label-text">{resourceState?.common?.captcha.label + (required ? '*' : '')}</span>
+                <span
+                    className="label-text">{commonResourceState?.resource?.captcha.label + (required ? '*' : '')}</span>
             </label>
             <WiwaInput
                 id={valueName}
                 name={valueName}
-                placeholder={resourceState?.common?.captcha.placeholder}
+                placeholder={commonResourceState?.resource?.captcha.placeholder}
                 value={value}
                 onChange={event => setValue(event.target.value)}
                 onBlur={(event) => {
@@ -106,7 +107,7 @@ const WiwaFormCaptcha = (
                     {error ?
                         <div
                             className="font-normal flex-1 text-sm md:text-base text-error align-middle">
-                            {resourceState?.common?.captcha.error}
+                            {commonResourceState?.resource?.captcha.error}
                         </div>
                         :
                         <img
@@ -117,7 +118,7 @@ const WiwaFormCaptcha = (
                     }
                     <WiwaButton
                         className="btn-sm md:btn-md"
-                        title={resourceState?.common?.captcha.action}
+                        title={commonResourceState?.resource?.captcha.action}
                         onClick={() => reFetch()}
                     >
                         <RefreshCw size="16"/>

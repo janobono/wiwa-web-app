@@ -4,12 +4,13 @@ import { getSignUpMail, setSignUpMail } from '../../../../api/controller/config'
 import { SignUpMail } from '../../../../api/model/application';
 import WiwaButton from '../../../ui/wiwa-button';
 import WiwaFormInputString from '../../../ui/wiwa-form-input-string';
-import { AuthContext, ErrorContext, ResourceContext } from '../../../../context';
+import { AdminResourceContext, AuthContext, CommonResourceContext, ErrorContext } from '../../../../context';
 
 const SignUpMailEditor = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<SignUpMail>();
@@ -76,8 +77,8 @@ const SignUpMailEditor = () => {
         <div className="flex flex-col p-5 gap-5 w-full">
             <div className="flex flex-col items-center justify-center">
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.signUp.subjectLabel}
-                    placeholder={resourceState?.admin?.mailFormat.signUp.subjectPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.signUp.subjectLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.signUp.subjectPlaceholder}
                     value={subject}
                     setValue={setSubject}
                     setValid={setSubjectValid}
@@ -85,7 +86,7 @@ const SignUpMailEditor = () => {
                         if (subject.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.signUp.subjectRequired
+                                message: adminResourceState?.resource?.mailFormat.signUp.subjectRequired
                             };
                         }
                         return {valid: true};
@@ -93,8 +94,8 @@ const SignUpMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.signUp.titleLabel}
-                    placeholder={resourceState?.admin?.mailFormat.signUp.titlePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.signUp.titleLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.signUp.titlePlaceholder}
                     value={title}
                     setValue={setTitle}
                     setValid={setTitleValid}
@@ -102,7 +103,7 @@ const SignUpMailEditor = () => {
                         if (title.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.signUp.titleRequired
+                                message: adminResourceState?.resource?.mailFormat.signUp.titleRequired
                             };
                         }
                         return {valid: true};
@@ -110,8 +111,8 @@ const SignUpMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.signUp.messageLabel}
-                    placeholder={resourceState?.admin?.mailFormat.signUp.messagePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.signUp.messageLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.signUp.messagePlaceholder}
                     value={message}
                     setValue={setMessage}
                     setValid={setMessageValid}
@@ -119,7 +120,7 @@ const SignUpMailEditor = () => {
                         if (message.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.signUp.messageRequired
+                                message: adminResourceState?.resource?.mailFormat.signUp.messageRequired
                             };
                         }
                         return {valid: true};
@@ -127,8 +128,8 @@ const SignUpMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.signUp.linkLabel}
-                    placeholder={resourceState?.admin?.mailFormat.signUp.linkPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.signUp.linkLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.signUp.linkPlaceholder}
                     value={link}
                     setValue={setLink}
                     setValid={setLinkValid}
@@ -136,7 +137,7 @@ const SignUpMailEditor = () => {
                         if (link.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.signUp.linkRequired
+                                message: adminResourceState?.resource?.mailFormat.signUp.linkRequired
                             };
                         }
                         return {valid: true};
@@ -148,7 +149,7 @@ const SignUpMailEditor = () => {
                         className="btn-primary join-item"
                         disabled={busy || !isFormValid()}
                         onClick={submit}
-                    >{resourceState?.common?.action.submit}
+                    >{commonResourceState?.resource?.action.submit}
                     </WiwaButton>
                 </div>
             </div>

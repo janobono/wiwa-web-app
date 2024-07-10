@@ -3,10 +3,10 @@ import { useContext, useEffect, useState } from 'react';
 import { getCompanyInfo, getWorkingHours } from '../../api/controller/ui';
 import { CompanyInfo } from '../../api/model/application';
 import WiwaMarkdownRenderer from '../../component/ui/wiwa-markdown-renderer';
-import { ResourceContext } from '../../context';
+import { UiResourceContext } from '../../context';
 
 const ContactInfoPage = () => {
-    const resourceState = useContext(ResourceContext);
+    const uiResourceState = useContext(UiResourceContext);
 
     const [companyInfo, setCompanyInfo] = useState<CompanyInfo>();
     const [workingHours, setWorkingHours] = useState<string>();
@@ -53,7 +53,7 @@ const ContactInfoPage = () => {
                 <div className="border border-solid flex flex-row h-full w-full p-5">
                     {(companyInfo?.businessId || '').length > 0 ?
                         <p>
-                            <span>{resourceState?.ui?.contactInfo.businessId}:</span>
+                            <span>{uiResourceState?.resource?.contactInfo.businessId}:</span>
                             <span> </span>
                             <span>{companyInfo?.businessId}</span>
                         </p>
@@ -62,7 +62,7 @@ const ContactInfoPage = () => {
                 <div className="border border-solid flex flex-row h-full w-full p-5">
                     {(companyInfo?.taxId || '').length > 0 ?
                         <p>
-                            <span>{resourceState?.ui?.contactInfo.taxId}:</span>
+                            <span>{uiResourceState?.resource?.contactInfo.taxId}:</span>
                             <span> </span>
                             <span>{companyInfo?.taxId}</span>
                         </p>
@@ -71,7 +71,7 @@ const ContactInfoPage = () => {
                 <div className="border border-solid flex flex-row h-full w-full p-5">
                     {(companyInfo?.vatRegNo || '').length > 0 ?
                         <p>
-                            <span>{resourceState?.ui?.contactInfo.vatRegNo}:</span>
+                            <span>{uiResourceState?.resource?.contactInfo.vatRegNo}:</span>
                             <span> </span>
                             <span>{companyInfo?.vatRegNo}</span>
                         </p>

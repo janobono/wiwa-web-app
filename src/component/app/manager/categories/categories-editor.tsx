@@ -6,7 +6,13 @@ import SelectCodeListDialog from '../code-lists/select-code-list-dialog';
 import WiwaButton from '../../../ui/wiwa-button';
 import { ClientResponse } from '../../../../api/controller';
 import { Category, CategoryField } from '../../../../api/model';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../../context';
+import {
+    AuthContext,
+    CommonResourceContext,
+    DialogContext,
+    ErrorContext,
+    ManagerResourceContext
+} from '../../../../context';
 import { DialogAnswer, DialogType } from '../../../../context/model/dialog';
 
 const CATEGORIES_SELECT_CODE_LIST_DIALOG_ID = 'categories-select-code-lists-dialog-001';
@@ -18,7 +24,8 @@ const CategoriesEditor = ({getCategories, setCategories}: {
     const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [data, setData] = useState<Category[]>();
@@ -75,7 +82,7 @@ const CategoriesEditor = ({getCategories, setCategories}: {
             <div className="join">
                 <WiwaButton
                     className="btn-primary join-item"
-                    title={resourceState?.common?.action.add}
+                    title={commonResourceState?.resource?.action.add}
                     disabled={busy}
                     onClick={() => setShowDialog(true)}
                 ><Plus size={18}/>
@@ -83,13 +90,13 @@ const CategoriesEditor = ({getCategories, setCategories}: {
 
                 <WiwaButton
                     className="btn-accent join-item"
-                    title={resourceState?.common?.action.delete}
+                    title={commonResourceState?.resource?.action.delete}
                     disabled={busy || selected === undefined}
                     onClick={() => {
                         dialogState?.showDialog({
                             type: DialogType.YES_NO,
-                            title: resourceState?.manager?.categories.deleteCategoryQuestionTitle,
-                            message: resourceState?.manager?.categories.deleteCategoryQuestionMessage,
+                            title: managerResourceState?.resource?.categories.deleteCategoryQuestionTitle,
+                            message: managerResourceState?.resource?.categories.deleteCategoryQuestionMessage,
                             callback: (answer: DialogAnswer) => {
                                 if (answer === DialogAnswer.YES) {
                                     if (selected) {

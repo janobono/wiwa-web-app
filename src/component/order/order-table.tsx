@@ -10,7 +10,7 @@ import WiwaValueDatetime from '../ui/wiwa-value-datetime';
 import { getApplicationProperties } from '../../api/controller/ui';
 import { UnitId } from '../../api/model/application';
 import { Order, OrderField } from '../../api/model/order';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const OrderTable = ({fields, rows, selected, setSelected}: {
     fields: OrderField[],
@@ -39,7 +39,7 @@ const OrderTable = ({fields, rows, selected, setSelected}: {
 export default OrderTable;
 
 const TableHead = ({fields}: { fields: OrderField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [weightSign, setWeightSign] = useState<string>();
     const [priceSign, setPriceSign] = useState<string>();
@@ -47,10 +47,10 @@ const TableHead = ({fields}: { fields: OrderField[] }) => {
     useEffect(() => {
         setWeightSign(unitSign(UnitId.KILOGRAM));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
-    }, [resourceState]);
+    }, [commonResourceState]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${resourceState?.getUnit(unitId)}]`;
+        return `[${commonResourceState?.getUnit(unitId)}]`;
     }
 
     return (
@@ -59,25 +59,28 @@ const TableHead = ({fields}: { fields: OrderField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case OrderField.id:
-                        return (<th key={field}>{resourceState?.common?.orderTable.id}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderTable.id}</th>);
                     case OrderField.creator:
-                        return (<th key={field}>{resourceState?.common?.orderTable.creator}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderTable.creator}</th>);
                     case OrderField.created:
-                        return (<th key={field}>{resourceState?.common?.orderTable.created}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderTable.created}</th>);
                     case OrderField.status:
-                        return (<th key={field}>{resourceState?.common?.orderTable.status}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderTable.status}</th>);
                     case OrderField.orderNumber:
-                        return (<th key={field}>{resourceState?.common?.orderTable.orderNumber}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderTable.orderNumber}</th>);
                     case OrderField.weight:
-                        return (<th key={field}>{`${resourceState?.common?.orderTable.weight} ${weightSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.orderTable.weight} ${weightSign}`}</th>);
                     case OrderField.total:
-                        return (<th key={field}>{`${resourceState?.common?.orderTable.total} ${priceSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.orderTable.total} ${priceSign}`}</th>);
                     case OrderField.vatTotal:
-                        return (<th key={field}>{`${resourceState?.common?.orderTable.vatTotal} ${priceSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.orderTable.vatTotal} ${priceSign}`}</th>);
                     case OrderField.deliveryDate:
-                        return (<th key={field}>{resourceState?.common?.orderTable.deliveryDate}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderTable.deliveryDate}</th>);
                     case OrderField.packageType:
-                        return (<th key={field}>{resourceState?.common?.orderTable.packageType}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderTable.packageType}</th>);
                 }
             })}
             <th></th>

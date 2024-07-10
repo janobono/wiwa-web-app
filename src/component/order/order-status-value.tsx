@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 
 import { OrderStatus } from '../../api/model/order';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const OrderStatusValue = ({value}: { value?: OrderStatus }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [data, setData] = useState('');
 
@@ -12,22 +12,22 @@ const OrderStatusValue = ({value}: { value?: OrderStatus }) => {
         if (value) {
             switch (value) {
                 case OrderStatus.NEW:
-                    setData(resourceState?.common?.orderStatus.new || '');
+                    setData(commonResourceState?.resource?.orderStatus.new || '');
                     break;
                 case OrderStatus.SENT:
-                    setData(resourceState?.common?.orderStatus.sent || '');
+                    setData(commonResourceState?.resource?.orderStatus.sent || '');
                     break;
                 case OrderStatus.IN_PRODUCTION:
-                    setData(resourceState?.common?.orderStatus.inProduction || '');
+                    setData(commonResourceState?.resource?.orderStatus.inProduction || '');
                     break;
                 case OrderStatus.READY:
-                    setData(resourceState?.common?.orderStatus.ready || '');
+                    setData(commonResourceState?.resource?.orderStatus.ready || '');
                     break;
                 case OrderStatus.FINISHED:
-                    setData(resourceState?.common?.orderStatus.finished || '');
+                    setData(commonResourceState?.resource?.orderStatus.finished || '');
                     break;
                 case OrderStatus.CANCELLED:
-                    setData(resourceState?.common?.orderStatus.cancelled || '');
+                    setData(commonResourceState?.resource?.orderStatus.cancelled || '');
                     break;
             }
         } else {

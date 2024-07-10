@@ -9,21 +9,21 @@ import UserTable from '../../component/app/admin/users/user-table';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaPageable from '../../component/ui/wiwa-pageable';
-import { DialogContext, ResourceContext } from '../../context';
+import { AdminResourceContext, CommonResourceContext, DialogContext } from '../../context';
 import { DialogAnswer, DialogType } from '../../context/model/dialog';
 
 const AUTHORITIES_DIALOG_ID = 'admin-authorities-dialog-001';
 
 const UsersPage = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.adminNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.adminNav.users || '',
+                    label: commonResourceState?.resource?.navigation.adminNav.users || '',
                     to: '/admin/users'
                 }
             ]}/>
@@ -38,7 +38,8 @@ export default UsersPage;
 
 const UsersPageContent = () => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
     const userState = useContext(UserContext);
 
     const [showDialog, setShowDialog] = useState(false);
@@ -53,7 +54,7 @@ const UsersPageContent = () => {
                 <UserSearchCriteriaForm searchHandler={(criteria) => userState?.setCriteria(criteria)}>
                     <>
                         <WiwaButton
-                            title={resourceState?.admin?.users.userAuthorities.title}
+                            title={adminResourceState?.resource?.users.userAuthorities.title}
                             className="btn-primary join-item"
                             disabled={userState?.busy || !userState?.editEnabled}
                             onClick={() => {
@@ -64,15 +65,15 @@ const UsersPageContent = () => {
                         </WiwaButton>
                         <WiwaButton
                             className="btn-warning join-item"
-                            title={resourceState?.admin?.users.userConfirmed.dialogTitle}
+                            title={adminResourceState?.resource?.users.userConfirmed.dialogTitle}
                             disabled={userState?.busy || !userState?.editEnabled}
                             onClick={() => {
                                 dialogState?.showDialog({
                                     type: DialogType.YES_NO,
-                                    title: resourceState?.admin?.users.userConfirmed.dialogTitle,
+                                    title: adminResourceState?.resource?.users.userConfirmed.dialogTitle,
                                     message: userState?.selected?.confirmed ?
-                                        resourceState?.admin?.users.userConfirmed.denyQuestion :
-                                        resourceState?.admin?.users.userConfirmed.confirmQuestion,
+                                        adminResourceState?.resource?.users.userConfirmed.denyQuestion :
+                                        adminResourceState?.resource?.users.userConfirmed.confirmQuestion,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
                                             userState?.setConfirmed(!userState?.selected?.confirmed).then();
@@ -89,15 +90,15 @@ const UsersPageContent = () => {
                         </WiwaButton>
                         <WiwaButton
                             className="btn-error join-item"
-                            title={resourceState?.admin?.users.userEnabled.dialogTitle}
+                            title={adminResourceState?.resource?.users.userEnabled.dialogTitle}
                             disabled={userState?.busy || !userState?.editEnabled}
                             onClick={() => {
                                 dialogState?.showDialog({
                                     type: DialogType.YES_NO,
-                                    title: resourceState?.admin?.users.userEnabled.dialogTitle,
+                                    title: adminResourceState?.resource?.users.userEnabled.dialogTitle,
                                     message: userState?.selected?.enabled ?
-                                        resourceState?.admin?.users.userEnabled.disableQuestion :
-                                        resourceState?.admin?.users.userEnabled.enableQuestion,
+                                        adminResourceState?.resource?.users.userEnabled.disableQuestion :
+                                        adminResourceState?.resource?.users.userEnabled.enableQuestion,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
                                             userState?.setEnabled(!userState?.selected?.enabled).then();
@@ -114,13 +115,13 @@ const UsersPageContent = () => {
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
-                            title={resourceState?.common?.action.delete}
+                            title={commonResourceState?.resource?.action.delete}
                             disabled={userState?.busy || !userState?.editEnabled}
                             onClick={() => {
                                 dialogState?.showDialog({
                                     type: DialogType.YES_NO,
-                                    title: resourceState?.admin?.users.deleteUser.title,
-                                    message: resourceState?.admin?.users.deleteUser.message,
+                                    title: adminResourceState?.resource?.users.deleteUser.title,
+                                    message: adminResourceState?.resource?.users.deleteUser.message,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
                                             userState?.deleteUser().then();

@@ -6,12 +6,18 @@ import { setLogo } from '../../../../api/controller/config';
 import { getLogoPath } from '../../../../api/controller/ui';
 import ImageDialog from '../../../../component/dialog/image-dialog';
 import WiwaButton from '../../../../component/ui/wiwa-button';
-import { AuthContext, DialogContext, ErrorContext, ResourceContext } from '../../../../context';
+import {
+    AdminResourceContext,
+    AuthContext,
+    CommonResourceContext,
+    DialogContext,
+    ErrorContext
+} from '../../../../context';
 
 const LOGO_DIALOG_ID = 'admin-base-info-logo-dialog-001';
 
 const LogoEditor = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [showLogoDialog, setShowLogoDialog] = useState(false);
 
@@ -28,7 +34,7 @@ const LogoEditor = () => {
                 <div className="p-5 flex content-stretch justify-center items-center">
                     <WiwaButton
                         className="btn-primary"
-                        title={resourceState?.common?.action.edit}
+                        title={commonResourceState?.resource?.action.edit}
                         onClick={() => setShowLogoDialog(true)}
                     ><Edit size={18}/></WiwaButton>
                 </div>
@@ -50,7 +56,7 @@ const LogoDialog = ({showDialog, closeHandler}: {
     const authState = useContext(AuthContext);
     const dialogState = useContext(DialogContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [file, setFile] = useState<File>();
@@ -77,23 +83,23 @@ const LogoDialog = ({showDialog, closeHandler}: {
             disabled={busy}
             id={LOGO_DIALOG_ID}
             showDialog={showDialog}
-            title={resourceState?.admin?.baseInfo.logo.title}
-            label={resourceState?.admin?.baseInfo.logo.fileLabel}
+            title={adminResourceState?.resource?.baseInfo.logo.title}
+            label={adminResourceState?.resource?.baseInfo.logo.fileLabel}
             required={true}
-            placeholder={resourceState?.admin?.baseInfo.logo.filePlaceholder}
+            placeholder={adminResourceState?.resource?.baseInfo.logo.filePlaceholder}
             value={file}
             setValue={setFile}
             validate={() => {
                 if (file === undefined) {
                     return {
                         valid: false,
-                        message: resourceState?.admin?.baseInfo.logo.fileRequired
+                        message: adminResourceState?.resource?.baseInfo.logo.fileRequired
                     }
                 }
                 if (file.type !== 'image/png') {
                     return {
                         valid: false,
-                        message: resourceState?.admin?.baseInfo.logo.fileFormat
+                        message: adminResourceState?.resource?.baseInfo.logo.fileFormat
                     }
                 }
                 return {valid: true};

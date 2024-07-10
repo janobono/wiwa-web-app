@@ -9,14 +9,15 @@ import SelectCodeListItemDialog from '../../../component/app/manager/code-lists/
 import { BoardContext } from '../../../component/board/board-provider';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { DialogContext, ResourceContext } from '../../../context';
+import { CommonResourceContext, DialogContext, ManagerResourceContext } from '../../../context';
 import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const BOARD_CATEGORIES_DIALOG_ID = 'board-categories-dialog-001';
 
 const BoardCategoriesPage = () => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
     const boardState = useContext(BoardContext);
 
     const [codeLists, setCodeLists] = useState<CodeList[]>([]);
@@ -73,15 +74,15 @@ const BoardCategoriesPage = () => {
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.managerNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.managerNav.boards || '',
+                    label: commonResourceState?.resource?.navigation.managerNav.boards || '',
                     to: '/manager/boards'
                 },
                 {
                     key: 2,
-                    label: resourceState?.common?.navigation.managerNav.boardCategories || '',
+                    label: commonResourceState?.resource?.navigation.managerNav.boardCategories || '',
                     to: '/manager/boards/categories'
                 }
             ]}/>
@@ -89,7 +90,7 @@ const BoardCategoriesPage = () => {
                 <div className="join">
                     <WiwaButton
                         className="btn-primary join-item"
-                        title={resourceState?.common?.action.add}
+                        title={commonResourceState?.resource?.action.add}
                         disabled={boardState?.busy || !boardState?.editEnabled}
                         onClick={() => setShowDialog(true)}
                     ><Plus size={18}/>
@@ -97,13 +98,13 @@ const BoardCategoriesPage = () => {
 
                     <WiwaButton
                         className="btn-accent join-item"
-                        title={resourceState?.common?.action.delete}
+                        title={commonResourceState?.resource?.action.delete}
                         disabled={boardState?.busy || !boardState?.editEnabled}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
-                                title: resourceState?.manager?.boards.boardCategories.deleteTitle,
-                                message: resourceState?.manager?.boards.boardCategories.deleteMessage,
+                                title: managerResourceState?.resource?.boards.boardCategories.deleteTitle,
+                                message: managerResourceState?.resource?.boards.boardCategories.deleteMessage,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
                                         if (selected) {

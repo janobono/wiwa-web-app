@@ -8,14 +8,15 @@ import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaButton from '../../component/ui/wiwa-button';
-import { AuthContext, ErrorContext, ResourceContext } from '../../context';
+import { AuthContext, AuthResourceContext, CommonResourceContext, ErrorContext } from '../../context';
 
 const ChangeDetailsPage = () => {
     const navigate = useNavigate();
 
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const authResourceState = useContext(AuthResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [titleBefore, setTitleBefore] = useState('');
 
@@ -55,10 +56,10 @@ const ChangeDetailsPage = () => {
             if (response?.error) {
                 switch (response?.error.code) {
                     case WiwaErrorCode.USER_IS_DISABLED:
-                        setFormError(resourceState?.common?.error.userIsDisabled);
+                        setFormError(commonResourceState?.resource?.error.userIsDisabled);
                         break;
                     case WiwaErrorCode.INVALID_CAPTCHA:
-                        setFormError(resourceState?.common?.error.invalidCaptcha);
+                        setFormError(commonResourceState?.resource?.error.invalidCaptcha);
                         break;
                     default:
                         errorState?.addError(response?.error);
@@ -85,10 +86,10 @@ const ChangeDetailsPage = () => {
         <MaintenanceDefender>
             <AuthDefender>
                 <WiwaBreadcrumb breadcrumbs={[
-                    {key: 0, label: resourceState?.common?.navigation.authNav.title || ''},
+                    {key: 0, label: commonResourceState?.resource?.navigation.authNav.title || ''},
                     {
                         key: 1,
-                        label: resourceState?.auth?.changeDetails.title || '',
+                        label: authResourceState?.resource?.changeDetails.title || '',
                         to: '/auth/change-details'
                     }
                 ]}/>
@@ -99,16 +100,16 @@ const ChangeDetailsPage = () => {
                             handleSubmit().then();
                         }}>
                             <WiwaFormInputString
-                                label={resourceState?.auth?.changeDetails.titleBeforeLabel}
-                                placeholder={resourceState?.auth?.changeDetails.titleBeforePlaceholder}
+                                label={authResourceState?.resource?.changeDetails.titleBeforeLabel}
+                                placeholder={authResourceState?.resource?.changeDetails.titleBeforePlaceholder}
                                 value={titleBefore}
                                 setValue={setTitleBefore}
                             />
 
                             <WiwaFormInputString
-                                label={resourceState?.auth?.changeDetails.firstNameLabel}
+                                label={authResourceState?.resource?.changeDetails.firstNameLabel}
                                 required={true}
-                                placeholder={resourceState?.auth?.changeDetails.firstNamePlaceholder}
+                                placeholder={authResourceState?.resource?.changeDetails.firstNamePlaceholder}
                                 value={firstName}
                                 setValue={setFirstName}
                                 setValid={setFirstNameValid}
@@ -116,7 +117,7 @@ const ChangeDetailsPage = () => {
                                     if (firstName.trim().length === 0) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.changeDetails.firstNameRequired
+                                            message: authResourceState?.resource?.changeDetails.firstNameRequired
                                         };
                                     }
                                     return {valid: true};
@@ -124,15 +125,15 @@ const ChangeDetailsPage = () => {
                             />
 
                             <WiwaFormInputString
-                                label={resourceState?.auth?.changeDetails.midNameLabel}
-                                placeholder={resourceState?.auth?.changeDetails.midNamePlaceholder}
+                                label={authResourceState?.resource?.changeDetails.midNameLabel}
+                                placeholder={authResourceState?.resource?.changeDetails.midNamePlaceholder}
                                 value={midName}
                                 setValue={setMidName}
                             />
 
                             <WiwaFormInputString
-                                label={resourceState?.auth?.changeDetails.lastNameLabel}
-                                placeholder={resourceState?.auth?.changeDetails.lastNamePlaceholder}
+                                label={authResourceState?.resource?.changeDetails.lastNameLabel}
+                                placeholder={authResourceState?.resource?.changeDetails.lastNamePlaceholder}
                                 value={lastName}
                                 setValue={setLastName}
                                 setValid={setLastNameValid}
@@ -140,7 +141,7 @@ const ChangeDetailsPage = () => {
                                     if (lastName.trim().length === 0) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.changeDetails.lastNameRequired
+                                            message: authResourceState?.resource?.changeDetails.lastNameRequired
                                         };
                                     }
                                     return {valid: true};
@@ -148,8 +149,8 @@ const ChangeDetailsPage = () => {
                             />
 
                             <WiwaFormInputString
-                                label={resourceState?.auth?.changeDetails.titleAfterLabel}
-                                placeholder={resourceState?.auth?.changeDetails.titleAfterPlaceholder}
+                                label={authResourceState?.resource?.changeDetails.titleAfterLabel}
+                                placeholder={authResourceState?.resource?.changeDetails.titleAfterPlaceholder}
                                 value={titleAfter}
                                 setValue={setTitleAfter}
                             />
@@ -166,7 +167,7 @@ const ChangeDetailsPage = () => {
                                 type="submit"
                                 className="btn-primary w-full"
                                 disabled={authState?.busy || !isFormValid()}
-                            >{resourceState?.common?.action.submit}</WiwaButton>
+                            >{commonResourceState?.resource?.action.submit}</WiwaButton>
                             {formError &&
                                 <label className="label">
                                     <span className="label-text-alt text-error">{formError}</span>

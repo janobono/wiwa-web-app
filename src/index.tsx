@@ -9,13 +9,13 @@ import AuthProvider from './context/provider/auth';
 import DialogProvider from './context/provider/dialog';
 import ErrorProvider from './context/provider/error';
 import HealthProvider from './context/provider/health';
-import ResourceProvider from './context/provider/resource';
+import CommonResourceProvider from './context/provider/resource/common';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <ErrorProvider>
             <AppProvider>
-                <ResourceProvider>
+                <CommonResourceProvider>
                     <DialogProvider>
                         <HealthProvider>
                             <AuthProvider>
@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                             </AuthProvider>
                         </HealthProvider>
                     </DialogProvider>
-                </ResourceProvider>
+                </CommonResourceProvider>
             </AppProvider>
         </ErrorProvider>
     </React.StrictMode>

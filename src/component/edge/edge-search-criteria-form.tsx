@@ -11,13 +11,13 @@ import { getEdgeCategories } from '../../api/controller/ui';
 import { Category } from '../../api/model';
 import { EdgeSearchCriteria } from '../../api/model/edge';
 import { CodeListItem } from '../../api/model/code-list';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const EdgeSearchCriteriaForm = ({searchHandler, children}: {
     searchHandler: (criteria: EdgeSearchCriteria) => void
     children?: ReactNode
 }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [edgeCategories, setEdgeCategories] = useState<Category[]>();
 
@@ -58,7 +58,7 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
             <div className="join join-vertical md:join-horizontal w-full">
                 <WiwaInput
                     className="join-item w-full"
-                    placeholder={resourceState?.common?.edgeCriteria.searchPlaceholder}
+                    placeholder={commonResourceState?.resource?.edgeCriteria.searchPlaceholder}
                     value={searchField}
                     onChange={event => setSearchField(event.target.value)}
                     onKeyUp={(event) => {
@@ -68,12 +68,12 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
                     }}
                 />
                 <WiwaButton
-                    title={resourceState?.common?.action.search}
+                    title={commonResourceState?.resource?.action.search}
                     className="join-item"
                     onClick={() => searchHandler(createCriteria())}
                 ><Search size={18}/></WiwaButton>
                 <WiwaButton
-                    title={resourceState?.common?.action.extendedSearch}
+                    title={commonResourceState?.resource?.action.extendedSearch}
                     className="join-item"
                     onClick={() => setExtended(!extended)}
                 >{extended ?
@@ -89,48 +89,48 @@ const EdgeSearchCriteriaForm = ({searchHandler, children}: {
                 <>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-5 w-full">
                         <WiwaFormInputString
-                            placeholder={resourceState?.common?.edgeCriteria.codePlaceholder}
+                            placeholder={commonResourceState?.resource?.edgeCriteria.codePlaceholder}
                             value={code}
                             setValue={setCode}
                         />
                         <WiwaFormInputString
-                            placeholder={resourceState?.common?.edgeCriteria.namePlaceholder}
+                            placeholder={commonResourceState?.resource?.edgeCriteria.namePlaceholder}
                             value={name}
                             setValue={setName}
                         />
                         <WiwaFormInputDecimal
                             min="0"
-                            placeholder={resourceState?.common?.edgeCriteria.priceFromPlaceholder}
+                            placeholder={commonResourceState?.resource?.edgeCriteria.priceFromPlaceholder}
                             value={priceFrom}
                             setValue={setPriceFrom}
                         />
                         <WiwaFormInputDecimal
                             min="0"
-                            placeholder={resourceState?.common?.edgeCriteria.priceToPlaceholder}
+                            placeholder={commonResourceState?.resource?.edgeCriteria.priceToPlaceholder}
                             value={priceTo}
                             setValue={setPriceTo}
                         />
                         <WiwaFormInputInteger
                             min="0"
-                            placeholder={resourceState?.common?.edgeCriteria.widthFromPlaceholder}
+                            placeholder={commonResourceState?.resource?.edgeCriteria.widthFromPlaceholder}
                             value={widthFrom}
                             setValue={setWidthFrom}
                         />
                         <WiwaFormInputInteger
                             min="0"
-                            placeholder={resourceState?.common?.edgeCriteria.widthToPlaceholder}
+                            placeholder={commonResourceState?.resource?.edgeCriteria.widthToPlaceholder}
                             value={widthTo}
                             setValue={setWidthTo}
                         />
                         <WiwaFormInputDecimal
                             min="0"
-                            placeholder={resourceState?.common?.edgeCriteria.thicknessFromPlaceholder}
+                            placeholder={commonResourceState?.resource?.edgeCriteria.thicknessFromPlaceholder}
                             value={thicknessFrom}
                             setValue={setThicknessFrom}
                         />
                         <WiwaFormInputDecimal
                             min="0"
-                            placeholder={resourceState?.common?.edgeCriteria.thicknessToPlaceholder}
+                            placeholder={commonResourceState?.resource?.edgeCriteria.thicknessToPlaceholder}
                             value={thicknessTo}
                             setValue={setThicknessTo}
                         />

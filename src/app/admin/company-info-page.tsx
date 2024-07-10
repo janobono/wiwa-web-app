@@ -9,12 +9,13 @@ import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormInputEmail from '../../component/ui/wiwa-form-input-email';
 import WiwaFormInputString from '../../component/ui/wiwa-form-input-string';
 import WiwaFormTextarea from '../../component/ui/wiwa-form-textarea';
-import { AuthContext, ErrorContext, ResourceContext } from '../../context';
+import { AdminResourceContext, AuthContext, CommonResourceContext, ErrorContext } from '../../context';
 
 const CompanyInfoPage = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<CompanyInfo>();
@@ -128,10 +129,10 @@ const CompanyInfoPage = () => {
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.adminNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.adminNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.adminNav.companyInfo || '',
+                    label: commonResourceState?.resource?.navigation.adminNav.companyInfo || '',
                     to: '/admin/company-info'
                 }
             ]}/>
@@ -139,8 +140,8 @@ const CompanyInfoPage = () => {
                 <div className="flex flex-col items-center justify-center">
                     <div className="md:grid md:grid-cols-2 md:gap-5 w-full">
                         <WiwaFormInputString
-                            label={resourceState?.admin?.companyInfo.nameLabel}
-                            placeholder={resourceState?.admin?.companyInfo.namePlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.nameLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.namePlaceholder}
                             value={name}
                             setValue={setName}
                             setValid={setNameValid}
@@ -148,7 +149,7 @@ const CompanyInfoPage = () => {
                                 if (name.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.admin?.companyInfo.nameRequired
+                                        message: adminResourceState?.resource?.companyInfo.nameRequired
                                     };
                                 }
                                 return {valid: true};
@@ -156,8 +157,8 @@ const CompanyInfoPage = () => {
                         />
 
                         <WiwaFormInputString
-                            label={resourceState?.admin?.companyInfo.streetLabel}
-                            placeholder={resourceState?.admin?.companyInfo.streetPlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.streetLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.streetPlaceholder}
                             value={street}
                             setValue={setStreet}
                             setValid={setStreetValid}
@@ -165,7 +166,7 @@ const CompanyInfoPage = () => {
                                 if (street.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.admin?.companyInfo.stateRequired
+                                        message: adminResourceState?.resource?.companyInfo.stateRequired
                                     };
                                 }
                                 return {valid: true};
@@ -175,8 +176,8 @@ const CompanyInfoPage = () => {
 
                     <div className="md:grid md:grid-cols-3 md:gap-5 w-full">
                         <WiwaFormInputString
-                            label={resourceState?.admin?.companyInfo.cityLabel}
-                            placeholder={resourceState?.admin?.companyInfo.cityPlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.cityLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.cityPlaceholder}
                             value={city}
                             setValue={setCity}
                             setValid={setCityValid}
@@ -184,7 +185,7 @@ const CompanyInfoPage = () => {
                                 if (city.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.admin?.companyInfo.cityRequired
+                                        message: adminResourceState?.resource?.companyInfo.cityRequired
                                     };
                                 }
                                 return {valid: true};
@@ -192,8 +193,8 @@ const CompanyInfoPage = () => {
                         />
 
                         <WiwaFormInputString
-                            label={resourceState?.admin?.companyInfo.zipCodeLabel}
-                            placeholder={resourceState?.admin?.companyInfo.zipCodePlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.zipCodeLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.zipCodePlaceholder}
                             value={zipCode}
                             setValue={setZipCode}
                             setValid={setZipCodeValid}
@@ -201,7 +202,7 @@ const CompanyInfoPage = () => {
                                 if (zipCode.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.admin?.companyInfo.zipCodeRequired
+                                        message: adminResourceState?.resource?.companyInfo.zipCodeRequired
                                     };
                                 }
                                 return {valid: true};
@@ -209,8 +210,8 @@ const CompanyInfoPage = () => {
                         />
 
                         <WiwaFormInputString
-                            label={resourceState?.admin?.companyInfo.stateLabel}
-                            placeholder={resourceState?.admin?.companyInfo.statePlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.stateLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.statePlaceholder}
                             value={state}
                             setValue={setState}
                             setValid={setStateValid}
@@ -218,7 +219,7 @@ const CompanyInfoPage = () => {
                                 if (state.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.admin?.companyInfo.stateRequired
+                                        message: adminResourceState?.resource?.companyInfo.stateRequired
                                     };
                                 }
                                 return {valid: true};
@@ -228,8 +229,8 @@ const CompanyInfoPage = () => {
 
                     <div className="md:grid md:grid-cols-2 md:gap-5 w-full">
                         <WiwaFormInputString
-                            label={resourceState?.admin?.companyInfo.phoneLabel}
-                            placeholder={resourceState?.admin?.companyInfo.phonePlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.phoneLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.phonePlaceholder}
                             value={phone}
                             setValue={setPhone}
                             setValid={setPhoneValid}
@@ -237,7 +238,7 @@ const CompanyInfoPage = () => {
                                 if (phone.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.admin?.companyInfo.phoneRequired
+                                        message: adminResourceState?.resource?.companyInfo.phoneRequired
                                     };
                                 }
                                 return {valid: true};
@@ -245,8 +246,8 @@ const CompanyInfoPage = () => {
                         />
 
                         <WiwaFormInputEmail
-                            label={resourceState?.admin?.companyInfo.mailLabel}
-                            placeholder={resourceState?.admin?.companyInfo.mailPlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.mailLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.mailPlaceholder}
                             value={mail}
                             setValue={setMail}
                             setValid={setMailValid}
@@ -254,13 +255,13 @@ const CompanyInfoPage = () => {
                                 if (mail.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.admin?.companyInfo.mailRequired
+                                        message: adminResourceState?.resource?.companyInfo.mailRequired
                                     };
                                 }
                                 if (!EMAIL_REGEX.test(mail)) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.admin?.companyInfo.mailFormat
+                                        message: adminResourceState?.resource?.companyInfo.mailFormat
                                     };
                                 }
                                 return {valid: true};
@@ -270,38 +271,38 @@ const CompanyInfoPage = () => {
 
                     <div className="md:grid md:grid-cols-3 md:gap-5 w-full">
                         <WiwaFormInputString
-                            label={resourceState?.admin?.companyInfo.businessIdLabel}
-                            placeholder={resourceState?.admin?.companyInfo.businessIdPlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.businessIdLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.businessIdPlaceholder}
                             value={businessId}
                             setValue={setBusinessId}
                         />
 
                         <WiwaFormInputString
-                            label={resourceState?.admin?.companyInfo.taxIdLabel}
-                            placeholder={resourceState?.admin?.companyInfo.taxIdPlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.taxIdLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.taxIdPlaceholder}
                             value={taxId}
                             setValue={setTaxId}
                         />
 
                         <WiwaFormInputString
-                            label={resourceState?.admin?.companyInfo.vatRegNoLabel}
-                            placeholder={resourceState?.admin?.companyInfo.vatRegNoPlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.vatRegNoLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.vatRegNoPlaceholder}
                             value={vatRegNo}
                             setValue={setVatRegNo}
                         />
                     </div>
 
                     <WiwaFormInputString
-                        label={resourceState?.admin?.companyInfo.commercialRegisterInfoLabel}
-                        placeholder={resourceState?.admin?.companyInfo.commercialRegisterInfoPlaceholder}
+                        label={adminResourceState?.resource?.companyInfo.commercialRegisterInfoLabel}
+                        placeholder={adminResourceState?.resource?.companyInfo.commercialRegisterInfoPlaceholder}
                         value={commercialRegisterInfo}
                         setValue={setCommercialRegisterInfo}
                     />
 
                     <div className="md:grid md:grid-cols-2 md:gap-5 w-full">
                         <WiwaFormTextarea
-                            label={resourceState?.admin?.companyInfo.mapUrlLabel}
-                            placeholder={resourceState?.admin?.companyInfo.mapUrlPlaceholder}
+                            label={adminResourceState?.resource?.companyInfo.mapUrlLabel}
+                            placeholder={adminResourceState?.resource?.companyInfo.mapUrlPlaceholder}
                             value={mapUrl}
                             setValue={setMapUrl}
                             setValid={setMapUrlValid}
@@ -309,7 +310,7 @@ const CompanyInfoPage = () => {
                                 if (mapUrl.trim().length === 0) {
                                     return {
                                         valid: false,
-                                        message: resourceState?.admin?.companyInfo.mailRequired
+                                        message: adminResourceState?.resource?.companyInfo.mailRequired
                                     };
                                 }
                                 return {valid: true};
@@ -329,7 +330,7 @@ const CompanyInfoPage = () => {
                             className="btn-primary"
                             disabled={busy || !isFormValid()}
                             onClick={submit}
-                        >{resourceState?.common?.action.submit}
+                        >{commonResourceState?.resource?.action.submit}
                         </WiwaButton>
                     </div>
                 </div>

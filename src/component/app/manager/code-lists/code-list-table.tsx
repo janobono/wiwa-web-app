@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import { CodeList, CodeListField } from '../../../../api/model/code-list';
-import { ResourceContext } from '../../../../context';
+import { ManagerResourceContext } from '../../../../context';
 
 const CodeListTable = ({fields, rows, selected, setSelected}: {
     fields: CodeListField[],
@@ -31,7 +31,7 @@ const CodeListTable = ({fields, rows, selected, setSelected}: {
 export default CodeListTable;
 
 const TableHead = ({fields}: { fields: CodeListField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     return (
         <thead>
@@ -39,11 +39,11 @@ const TableHead = ({fields}: { fields: CodeListField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case CodeListField.id:
-                        return (<th key={field}>{resourceState?.manager?.codeListTable.id}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.codeListTable.id}</th>);
                     case CodeListField.code:
-                        return (<th key={field}>{resourceState?.manager?.codeListTable.code}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.codeListTable.code}</th>);
                     case CodeListField.name:
-                        return (<th key={field}>{resourceState?.manager?.codeListTable.name}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.codeListTable.name}</th>);
                 }
             })}
             <th></th>

@@ -2,14 +2,15 @@ import { useContext, useEffect, useState } from 'react';
 
 import WiwaButton from '../../../ui/wiwa-button';
 import WiwaFormInputString from '../../../ui/wiwa-form-input-string';
-import { ResourceContext } from '../../../../context';
+import { AdminResourceContext, CommonResourceContext } from '../../../../context';
 
 const CsvSeparatorEditor = ({busy, separator, submitHandler}: {
     busy: boolean,
     separator: string,
     submitHandler: (separator: string) => Promise<void>
 }) => {
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [value, setValue] = useState('');
     const [valueValid, setValueValid] = useState(false);
@@ -21,9 +22,9 @@ const CsvSeparatorEditor = ({busy, separator, submitHandler}: {
     return (
         <div className="container p-5 mx-auto">
             <WiwaFormInputString
-                label={resourceState?.admin?.orderFormat.editEntry.label}
+                label={adminResourceState?.resource?.orderFormat.editEntry.label}
                 required={true}
-                placeholder={resourceState?.admin?.orderFormat.editEntry.placeholder}
+                placeholder={adminResourceState?.resource?.orderFormat.editEntry.placeholder}
                 value={value}
                 setValue={setValue}
                 setValid={setValueValid}
@@ -31,7 +32,7 @@ const CsvSeparatorEditor = ({busy, separator, submitHandler}: {
                     if (value.trim().length === 0) {
                         return {
                             valid: false,
-                            message: resourceState?.admin?.orderFormat.editEntry.required
+                            message: adminResourceState?.resource?.orderFormat.editEntry.required
                         };
                     }
                     return {valid: true};
@@ -45,7 +46,7 @@ const CsvSeparatorEditor = ({busy, separator, submitHandler}: {
                     onClick={() => {
                         submitHandler(separator).then();
                     }}
-                >{resourceState?.common?.action.submit}
+                >{commonResourceState?.resource?.action.submit}
                 </WiwaButton>
             </div>
         </div>

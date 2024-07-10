@@ -8,20 +8,21 @@ import FreeDayEditor from '../../component/app/manager/order-inputs/free-day-edi
 import VatRateEditor from '../../component/app/manager/order-inputs/vat-rate-editor';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaSelect from '../../component/ui/wiwa-select';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext, ManagerResourceContext } from '../../context';
 
 const OrderInputsPage = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [index, setIndex] = useState(0);
 
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.managerNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.managerNav.orderInputs || '',
+                    label: commonResourceState?.resource?.navigation.managerNav.orderInputs || '',
                     to: '/manager/order-inputs'
                 }
             ]}/>
@@ -31,13 +32,14 @@ const OrderInputsPage = () => {
                     defaultValue="0"
                     onChange={event => setIndex(Number(event.currentTarget.value))}
                 >
-                    <option disabled value="0">{resourceState?.manager?.orderInputs.option.select}</option>
-                    <option value="1">{resourceState?.manager?.orderInputs.option.vatRate}</option>
-                    <option value="2">{resourceState?.manager?.orderInputs.option.manufactureProperties}</option>
-                    <option value="3">{resourceState?.manager?.orderInputs.option.priceForGluingLayer}</option>
-                    <option value="4">{resourceState?.manager?.orderInputs.option.pricesForGluingEdge}</option>
-                    <option value="5">{resourceState?.manager?.orderInputs.option.pricesForCutting}</option>
-                    <option value="6">{resourceState?.manager?.orderInputs.option.freeDays}</option>
+                    <option disabled value="0">{managerResourceState?.resource?.orderInputs.option.select}</option>
+                    <option value="1">{managerResourceState?.resource?.orderInputs.option.vatRate}</option>
+                    <option
+                        value="2">{managerResourceState?.resource?.orderInputs.option.manufactureProperties}</option>
+                    <option value="3">{managerResourceState?.resource?.orderInputs.option.priceForGluingLayer}</option>
+                    <option value="4">{managerResourceState?.resource?.orderInputs.option.pricesForGluingEdge}</option>
+                    <option value="5">{managerResourceState?.resource?.orderInputs.option.pricesForCutting}</option>
+                    <option value="6">{managerResourceState?.resource?.orderInputs.option.freeDays}</option>
                 </WiwaSelect>
 
                 {index == 1 && <VatRateEditor/>}

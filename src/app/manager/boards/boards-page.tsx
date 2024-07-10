@@ -10,7 +10,7 @@ import BoardSearchCriteriaForm from '../../../component/board/board-search-crite
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
 import WiwaPageable from '../../../component/ui/wiwa-pageable';
-import { DialogContext, ResourceContext } from '../../../context';
+import { CommonResourceContext, DialogContext, ManagerResourceContext } from '../../../context';
 import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const BOARD_DIALOG_ID = 'manager-board-dialog-001';
@@ -19,7 +19,8 @@ const BoardsPage = () => {
     const navigate = useNavigate();
 
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
     const boardState = useContext(BoardContext);
 
     const [editMode, setEditMode] = useState(false);
@@ -32,10 +33,10 @@ const BoardsPage = () => {
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.managerNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.managerNav.boards || '',
+                    label: commonResourceState?.resource?.navigation.managerNav.boards || '',
                     to: '/manager/boards'
                 }
             ]}/>
@@ -43,7 +44,7 @@ const BoardsPage = () => {
                 <BoardSearchCriteriaForm searchHandler={(criteria) => boardState?.setCriteria(criteria)}>
                     <>
                         <WiwaButton
-                            title={resourceState?.common?.action.add}
+                            title={commonResourceState?.resource?.action.add}
                             className="btn-primary join-item"
                             disabled={boardState?.busy}
                             onClick={() => {
@@ -54,7 +55,7 @@ const BoardsPage = () => {
                             <Plus size={18}/>
                         </WiwaButton>
                         <WiwaButton
-                            title={resourceState?.common?.action.edit}
+                            title={commonResourceState?.resource?.action.edit}
                             className="btn-secondary join-item"
                             disabled={boardState?.busy || !boardState?.editEnabled}
                             onClick={() => {
@@ -65,7 +66,7 @@ const BoardsPage = () => {
                             <Edit size={18}/>
                         </WiwaButton>
                         <WiwaButton
-                            title={resourceState?.common?.action.categories}
+                            title={commonResourceState?.resource?.action.categories}
                             className="btn-ghost join-item"
                             disabled={boardState?.busy || !boardState?.editEnabled}
                             onClick={() => {
@@ -77,7 +78,7 @@ const BoardsPage = () => {
                             <List size={18}/>
                         </WiwaButton>
                         <WiwaButton
-                            title={resourceState?.common?.action.image}
+                            title={commonResourceState?.resource?.action.image}
                             className="btn-ghost join-item"
                             disabled={boardState?.busy || !boardState?.editEnabled}
                             onClick={() => {
@@ -90,13 +91,13 @@ const BoardsPage = () => {
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
-                            title={resourceState?.common?.action.delete}
+                            title={commonResourceState?.resource?.action.delete}
                             disabled={boardState?.busy || !boardState?.editEnabled}
                             onClick={() => {
                                 dialogState?.showDialog({
                                     type: DialogType.YES_NO,
-                                    title: resourceState?.manager?.boards.deleteBoard.title,
-                                    message: resourceState?.manager?.boards.deleteBoard.message,
+                                    title: managerResourceState?.resource?.boards.deleteBoard.title,
+                                    message: managerResourceState?.resource?.boards.deleteBoard.message,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
                                             boardState?.deleteBoard().then();

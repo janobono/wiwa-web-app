@@ -8,7 +8,7 @@ import FlagSk from '../ui/icon/flag-sk';
 import FlagUs from '../ui/icon/flag-us';
 import { getApplicationProperties, getTitle } from '../../api/controller/ui';
 import { ApplicationProperties } from '../../api/model/application';
-import { AppContext, AuthContext, HealthContext, ResourceContext } from '../../context';
+import { AppContext, AuthContext, CommonResourceContext, HealthContext } from '../../context';
 import { LOCALE_EN } from '../../context/provider/app';
 
 const Navigation = () => {
@@ -53,7 +53,7 @@ export default Navigation;
 const AuthNav = () => {
     const authState = useContext(AuthContext);
     const healthState = useContext(HealthContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [menuDisplay, setMenuDisplay] = useState(true);
     const [displayMenuStyle, setDisplayMenuStyle] = useState('');
@@ -72,7 +72,7 @@ const AuthNav = () => {
             <label
                 tabIndex={0}
                 className="btn btn-ghost btn-circle"
-                title={!authState?.accessExpired ? resourceState?.common?.navigation.authNav.title : resourceState?.common?.navigation.authNav.signIn}
+                title={!authState?.accessExpired ? commonResourceState?.resource?.navigation.authNav.title : commonResourceState?.resource?.navigation.authNav.signIn}
             >
                 {!authState?.accessExpired ? <User size="24"/> : <LogIn size="24"/>}
             </label>
@@ -82,12 +82,12 @@ const AuthNav = () => {
                 {authState?.accessExpired &&
                     <>
                         <WiwaMenuItem
-                            label={resourceState?.common?.navigation.authNav.signIn}
+                            label={commonResourceState?.resource?.navigation.authNav.signIn}
                             to="/auth/sign-in"
                         />
                         {!healthState?.maintenance &&
                             <WiwaMenuItem
-                                label={resourceState?.common?.navigation.authNav.signUp}
+                                label={commonResourceState?.resource?.navigation.authNav.signUp}
                                 to="/auth/sign-up"
                             />
                         }
@@ -98,21 +98,21 @@ const AuthNav = () => {
                         {authState?.customerAuthority &&
                             <>
                                 <WiwaMenuItem
-                                    label={resourceState?.common?.navigation.authNav.changeDetails}
+                                    label={commonResourceState?.resource?.navigation.authNav.changeDetails}
                                     to="/auth/change-details"
                                 />
                                 <WiwaMenuItem
-                                    label={resourceState?.common?.navigation.authNav.changeEmail}
+                                    label={commonResourceState?.resource?.navigation.authNav.changeEmail}
                                     to="/auth/change-email"
                                 />
                                 <WiwaMenuItem
-                                    label={resourceState?.common?.navigation.authNav.changePassword}
+                                    label={commonResourceState?.resource?.navigation.authNav.changePassword}
                                     to="/auth/change-password"
                                 />
                             </>
                         }
                         <WiwaMenuItem
-                            label={resourceState?.common?.navigation.authNav.signOut}
+                            label={commonResourceState?.resource?.navigation.authNav.signOut}
                             to="/auth/sign-out"
                         />
                     </>
@@ -123,7 +123,7 @@ const AuthNav = () => {
 }
 
 const AdminNav = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [menuDisplay, setMenuDisplay] = useState(true);
     const [displayMenuStyle, setDisplayMenuStyle] = useState('');
@@ -142,7 +142,7 @@ const AdminNav = () => {
             <label
                 tabIndex={0}
                 className="btn btn-ghost btn-circle"
-                title={resourceState?.common?.navigation.adminNav.title}
+                title={commonResourceState?.resource?.navigation.adminNav.title}
             >
                 <Settings size="24"/>
             </label>
@@ -150,35 +150,35 @@ const AdminNav = () => {
                 style={{display: displayMenuStyle}}
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-44">
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.adminNav.applicationImages}
+                    label={commonResourceState?.resource?.navigation.adminNav.applicationImages}
                     to="/admin/application-images"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.adminNav.baseInfo}
+                    label={commonResourceState?.resource?.navigation.adminNav.baseInfo}
                     to="/admin/base-info"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.adminNav.companyInfo}
+                    label={commonResourceState?.resource?.navigation.adminNav.companyInfo}
                     to="/admin/company-info"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.adminNav.mailFormat}
+                    label={commonResourceState?.resource?.navigation.adminNav.mailFormat}
                     to="/admin/mail-format"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.adminNav.orderFormat}
+                    label={commonResourceState?.resource?.navigation.adminNav.orderFormat}
                     to="/admin/order-format"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.adminNav.textInfo}
+                    label={commonResourceState?.resource?.navigation.adminNav.textInfo}
                     to="/admin/text-info"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.adminNav.units}
+                    label={commonResourceState?.resource?.navigation.adminNav.units}
                     to="/admin/units"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.adminNav.users}
+                    label={commonResourceState?.resource?.navigation.adminNav.users}
                     to="/admin/users"
                 />
             </ul>
@@ -187,7 +187,7 @@ const AdminNav = () => {
 }
 
 const ManagerNav = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [menuDisplay, setMenuDisplay] = useState(true);
     const [displayMenuStyle, setDisplayMenuStyle] = useState('');
@@ -206,7 +206,7 @@ const ManagerNav = () => {
             <label
                 tabIndex={0}
                 className="btn btn-ghost btn-circle"
-                title={resourceState?.common?.navigation.managerNav.title}
+                title={commonResourceState?.resource?.navigation.managerNav.title}
             >
                 <PieChart size="24"/>
             </label>
@@ -214,27 +214,27 @@ const ManagerNav = () => {
                 style={{display: displayMenuStyle}}
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-44">
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.managerNav.codeLists}
+                    label={commonResourceState?.resource?.navigation.managerNav.codeLists}
                     to="/manager/code-lists/index"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.managerNav.categories}
+                    label={commonResourceState?.resource?.navigation.managerNav.categories}
                     to="/manager/categories"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.managerNav.boards}
+                    label={commonResourceState?.resource?.navigation.managerNav.boards}
                     to="/manager/boards/index"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.managerNav.edges}
+                    label={commonResourceState?.resource?.navigation.managerNav.edges}
                     to="/manager/edges/index"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.managerNav.orderInputs}
+                    label={commonResourceState?.resource?.navigation.managerNav.orderInputs}
                     to="/manager/order-inputs"
                 />
                 <WiwaMenuItem
-                    label={resourceState?.common?.navigation.managerNav.orders}
+                    label={commonResourceState?.resource?.navigation.managerNav.orders}
                     to="/manager/orders/index"
                 />
             </ul>
@@ -243,12 +243,12 @@ const ManagerNav = () => {
 }
 
 const EmployeeNav = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <NavLink
             className="btn btn-ghost btn-circle"
-            title={resourceState?.common?.navigation.employeeNav.title}
+            title={commonResourceState?.resource?.navigation.employeeNav.title}
             to="/employee"
         >
             <Tool size="24"/>
@@ -257,12 +257,12 @@ const EmployeeNav = () => {
 }
 
 const CustomerNav = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <NavLink
             className="btn btn-ghost btn-circle"
-            title={resourceState?.common?.navigation.customerNav.title}
+            title={commonResourceState?.resource?.navigation.customerNav.title}
             to="/customer"
         >
             <ShoppingCart size="24"/>
@@ -273,13 +273,13 @@ const CustomerNav = () => {
 const NavigationSwitch = () => {
     const authState = useContext(AuthContext);
     const healthState = useContext(HealthContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <div className="flex flex-row pl-2 items-center justify-center">
             <WiwaButton
                 className="btn-ghost btn-circle"
-                title={resourceState?.common?.navigation.maintenanceSwitch}
+                title={commonResourceState?.resource?.navigation.maintenanceSwitch}
                 onClick={() => healthState?.setMaintenance(!healthState?.maintenance, authState?.authToken?.accessToken)}
             >
                 {healthState?.maintenance
@@ -293,13 +293,13 @@ const NavigationSwitch = () => {
 
 const LocaleSwitch = () => {
     const appState = useContext(AppContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <div className="flex flex-row pl-2 items-center justify-center">
             <WiwaButton
                 className="btn-ghost btn-circle"
-                title={resourceState?.common?.navigation.localeSwitch}
+                title={commonResourceState?.resource?.navigation.localeSwitch}
                 onClick={() => appState?.switchLocale()}
             >
                 {appState?.locale === LOCALE_EN
@@ -313,7 +313,7 @@ const LocaleSwitch = () => {
 
 const UserCard = () => {
     const authState = useContext(AuthContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [applicationProperties, setApplicationProperties] = useState<ApplicationProperties>();
     const [value, setValue] = useState(0);
@@ -341,7 +341,7 @@ const UserCard = () => {
             className={`flex flex-col gap-1 justify-center items-center px-1 ${authState?.authUser ? 'visible' : 'invisible'}`}>
             <button
                 className="btn btn-xs w-16"
-                title={resourceState?.common?.navigation.refreshToken}
+                title={commonResourceState?.resource?.navigation.refreshToken}
                 disabled={authState?.accessExpired}
                 onClick={() => {
                     authState?.refreshAuth();

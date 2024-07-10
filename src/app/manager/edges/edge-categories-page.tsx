@@ -9,14 +9,15 @@ import SelectCodeListItemDialog from '../../../component/app/manager/code-lists/
 import { EdgeContext } from '../../../component/edge/edge-provider';
 import WiwaBreadcrumb from '../../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../../component/ui/wiwa-button';
-import { DialogContext, ResourceContext } from '../../../context';
+import { CommonResourceContext, DialogContext, ManagerResourceContext } from '../../../context';
 import { DialogAnswer, DialogType } from '../../../context/model/dialog';
 
 const EDGE_CATEGORIES_DIALOG_ID = 'edge-categories-dialog-001';
 
 const EdgeCategoriesPage = () => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
     const edgeState = useContext(EdgeContext);
 
     const [codeLists, setCodeLists] = useState<CodeList[]>([]);
@@ -73,15 +74,15 @@ const EdgeCategoriesPage = () => {
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.managerNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.managerNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.managerNav.edges || '',
+                    label: commonResourceState?.resource?.navigation.managerNav.edges || '',
                     to: '/manager/edges'
                 },
                 {
                     key: 2,
-                    label: resourceState?.common?.navigation.managerNav.edgeCategories || '',
+                    label: commonResourceState?.resource?.navigation.managerNav.edgeCategories || '',
                     to: '/manager/edges/categories'
                 }
             ]}/>
@@ -89,7 +90,7 @@ const EdgeCategoriesPage = () => {
                 <div className="join">
                     <WiwaButton
                         className="btn-primary join-item"
-                        title={resourceState?.common?.action.add}
+                        title={commonResourceState?.resource?.action.add}
                         disabled={edgeState?.busy || !edgeState?.editEnabled}
                         onClick={() => setShowDialog(true)}
                     ><Plus size={18}/>
@@ -97,13 +98,13 @@ const EdgeCategoriesPage = () => {
 
                     <WiwaButton
                         className="btn-accent join-item"
-                        title={resourceState?.common?.action.delete}
+                        title={commonResourceState?.resource?.action.delete}
                         disabled={edgeState?.busy || !edgeState?.editEnabled}
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
-                                title: resourceState?.manager?.edges.edgeCategories.deleteTitle,
-                                message: resourceState?.manager?.edges.edgeCategories.deleteMessage,
+                                title: managerResourceState?.resource?.edges.edgeCategories.deleteTitle,
+                                message: managerResourceState?.resource?.edges.edgeCategories.deleteMessage,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
                                         if (selected) {

@@ -6,7 +6,7 @@ import WiwaValueNumber from '../ui/wiwa-value-number';
 import { getApplicationProperties, getBoardImagePath } from '../../api/controller/ui';
 import { UnitId } from '../../api/model/application';
 import { Board, BoardField } from '../../api/model/board';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const BoardTable = ({fields, rows, selected, setSelected}: {
     fields: BoardField[],
@@ -35,7 +35,7 @@ const BoardTable = ({fields, rows, selected, setSelected}: {
 export default BoardTable;
 
 const TableHead = ({fields}: { fields: BoardField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [saleSign, setSaleSign] = useState<string>();
     const [weightSign, setWeightSign] = useState<string>();
@@ -47,10 +47,10 @@ const TableHead = ({fields}: { fields: BoardField[] }) => {
         setWeightSign(unitSign(UnitId.KILOGRAM));
         setLengthSign(unitSign(UnitId.MILLIMETER));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
-    }, [resourceState]);
+    }, [commonResourceState]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${resourceState?.getUnit(unitId)}]`;
+        return `[${commonResourceState?.getUnit(unitId)}]`;
     }
 
     return (
@@ -59,37 +59,43 @@ const TableHead = ({fields}: { fields: BoardField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case BoardField.id:
-                        return (<th key={field}>{resourceState?.common?.boardTable.id}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.boardTable.id}</th>);
                     case BoardField.code:
-                        return (<th key={field}>{resourceState?.common?.boardTable.code}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.boardTable.code}</th>);
                     case BoardField.name:
-                        return (<th key={field}>{resourceState?.common?.boardTable.name}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.boardTable.name}</th>);
                     case BoardField.description:
-                        return (<th key={field}>{resourceState?.common?.boardTable.description}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.boardTable.description}</th>);
                     case BoardField.boardCode:
-                        return (<th key={field}>{resourceState?.common?.boardTable.boardCode}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.boardTable.boardCode}</th>);
                     case BoardField.structureCode:
-                        return (<th key={field}>{resourceState?.common?.boardTable.structureCode}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.boardTable.structureCode}</th>);
                     case BoardField.orientation:
-                        return (<th key={field}>{resourceState?.common?.boardTable.orientation}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.boardTable.orientation}</th>);
                     case BoardField.sale:
-                        return (<th key={field}>{`${resourceState?.common?.boardTable.sale} ${saleSign}`}</th>);
+                        return (<th key={field}>{`${commonResourceState?.resource?.boardTable.sale} ${saleSign}`}</th>);
                     case BoardField.weight:
-                        return (<th key={field}>{`${resourceState?.common?.boardTable.weight} ${weightSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.boardTable.weight} ${weightSign}`}</th>);
                     case BoardField.length:
-                        return (<th key={field}>{`${resourceState?.common?.boardTable.length} ${lengthSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.boardTable.length} ${lengthSign}`}</th>);
                     case BoardField.width:
-                        return (<th key={field}>{`${resourceState?.common?.boardTable.width} ${lengthSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.boardTable.width} ${lengthSign}`}</th>);
                     case BoardField.thickness:
-                        return (<th key={field}>{`${resourceState?.common?.boardTable.thickness} ${lengthSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.boardTable.thickness} ${lengthSign}`}</th>);
                     case BoardField.price:
-                        return (<th key={field}>{`${resourceState?.common?.boardTable.price} ${priceSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.boardTable.price} ${priceSign}`}</th>);
                     case BoardField.vatPrice:
-                        return (<th key={field}>{`${resourceState?.common?.boardTable.vatPrice} ${priceSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.boardTable.vatPrice} ${priceSign}`}</th>);
                     case BoardField.codeListItems:
-                        return (<th key={field}>{resourceState?.common?.boardTable.codeListItems}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.boardTable.codeListItems}</th>);
                     case BoardField.image:
-                        return (<th key={field}>{resourceState?.common?.boardTable.image}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.boardTable.image}</th>);
                 }
             })}
             <th></th>

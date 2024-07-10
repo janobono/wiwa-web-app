@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import ImageDialog from '../../../dialog/image-dialog';
-import { DialogContext, ResourceContext } from '../../../../context';
+import { DialogContext, ManagerResourceContext } from '../../../../context';
 
 const EdgeImageDialog = ({dialogId, busy, showDialog, okHandler, cancelHandler}: {
     dialogId: string,
@@ -12,7 +12,7 @@ const EdgeImageDialog = ({dialogId, busy, showDialog, okHandler, cancelHandler}:
     cancelHandler: () => void,
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     const [file, setFile] = useState<File>();
 
@@ -33,23 +33,23 @@ const EdgeImageDialog = ({dialogId, busy, showDialog, okHandler, cancelHandler}:
             disabled={busy}
             id={dialogId}
             showDialog={showDialog}
-            title={resourceState?.manager?.edges.edgeImage.editTitle}
-            label={resourceState?.manager?.edges.edgeImage.editFileLabel}
+            title={managerResourceState?.resource?.edges.edgeImage.editTitle}
+            label={managerResourceState?.resource?.edges.edgeImage.editFileLabel}
             required={true}
-            placeholder={resourceState?.manager?.edges.edgeImage.editFilePlaceholder}
+            placeholder={managerResourceState?.resource?.edges.edgeImage.editFilePlaceholder}
             value={file}
             setValue={setFile}
             validate={() => {
                 if (file === undefined) {
                     return {
                         valid: false,
-                        message: resourceState?.manager?.edges.edgeImage.editFileRequired
+                        message: managerResourceState?.resource?.edges.edgeImage.editFileRequired
                     }
                 }
                 if (!(file.type === 'image/jpeg' || file.type === 'image/png')) {
                     return {
                         valid: false,
-                        message: resourceState?.manager?.edges.edgeImage.editFileFormat
+                        message: managerResourceState?.resource?.edges.edgeImage.editFileFormat
                     }
                 }
                 return {valid: true};

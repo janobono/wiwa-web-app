@@ -5,7 +5,7 @@ import { PieChart, Settings, ShoppingCart, Tool } from 'react-feather';
 import BaseDialog from '../../../dialog/base-dialog';
 import WiwaButton from '../../../ui/wiwa-button';
 import { Authority, containsAuthority } from '../../../../api/model';
-import { DialogContext, ResourceContext } from '../../../../context';
+import { AdminResourceContext, CommonResourceContext, DialogContext } from '../../../../context';
 
 const AuthoritiesDialog = ({dialogId, showDialog, authorities, okHandler, cancelHandler}: {
     dialogId: string,
@@ -15,7 +15,8 @@ const AuthoritiesDialog = ({dialogId, showDialog, authorities, okHandler, cancel
     cancelHandler: () => void
 }) => {
     const dialogState = useContext(DialogContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [customerAuthority, setCustomerAuthority] = useState(false);
     const [employeeAuthority, setEmployeeAuthority] = useState(false);
@@ -34,7 +35,7 @@ const AuthoritiesDialog = ({dialogId, showDialog, authorities, okHandler, cancel
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {resourceState?.admin?.users.userAuthorities.title}
+                        {adminResourceState?.resource?.users.userAuthorities.title}
                     </div>
                     <form
                         className="max-w-sm"
@@ -65,7 +66,7 @@ const AuthoritiesDialog = ({dialogId, showDialog, authorities, okHandler, cancel
                                     className="checkbox"
                                 />
                                 <ShoppingCart size="18"/>
-                                <span>{resourceState?.admin?.users.userAuthorities.customer}</span>
+                                <span>{adminResourceState?.resource?.users.userAuthorities.customer}</span>
                             </div>
                         </div>
 
@@ -78,7 +79,7 @@ const AuthoritiesDialog = ({dialogId, showDialog, authorities, okHandler, cancel
                                     className="checkbox"
                                 />
                                 <Tool size="18"/>
-                                <span>{resourceState?.admin?.users.userAuthorities.employee}</span>
+                                <span>{adminResourceState?.resource?.users.userAuthorities.employee}</span>
                             </div>
                         </div>
 
@@ -91,7 +92,7 @@ const AuthoritiesDialog = ({dialogId, showDialog, authorities, okHandler, cancel
                                     className="checkbox"
                                 />
                                 <PieChart size="18"/>
-                                <span>{resourceState?.admin?.users.userAuthorities.manager}</span>
+                                <span>{adminResourceState?.resource?.users.userAuthorities.manager}</span>
                             </div>
                         </div>
 
@@ -104,7 +105,7 @@ const AuthoritiesDialog = ({dialogId, showDialog, authorities, okHandler, cancel
                                     className="checkbox"
                                 />
                                 <Settings size="18"/>
-                                <span>{resourceState?.admin?.users.userAuthorities.admin}</span>
+                                <span>{adminResourceState?.resource?.users.userAuthorities.admin}</span>
                             </div>
                         </div>
 
@@ -112,14 +113,14 @@ const AuthoritiesDialog = ({dialogId, showDialog, authorities, okHandler, cancel
                             <WiwaButton
                                 className="btn-primary join-item"
                                 type="submit"
-                            >{resourceState?.common?.action.submit}
+                            >{commonResourceState?.resource?.action.submit}
                             </WiwaButton>
                             <WiwaButton
                                 className="btn-accent join-item"
                                 onClick={() => {
                                     cancelHandler();
                                 }}
-                            >{resourceState?.common?.action.cancel}
+                            >{commonResourceState?.resource?.action.cancel}
                             </WiwaButton>
                         </div>
                     </form>

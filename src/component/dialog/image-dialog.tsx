@@ -4,7 +4,7 @@ import BaseDialog from './base-dialog';
 import { ValidationResult } from '../ui';
 import WiwaButton from '../ui/wiwa-button';
 import WiwaFormFile from '../ui/wiwa-form-file';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const ImageDialog = (
     {
@@ -34,7 +34,7 @@ const ImageDialog = (
         okHandler: () => void,
         cancelHandler: () => void
     }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [valid, setValid] = useState(false);
     const [preview, setPreview] = useState<string>()
@@ -55,7 +55,7 @@ const ImageDialog = (
     return (
         <BaseDialog id={id} showDialog={showDialog} closeHandler={cancelHandler}>
             <div className="container p-5 mx-auto">
-                <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-lg md:text-xl font-bold text-center">
                         {title}
                     </div>
@@ -71,23 +71,23 @@ const ImageDialog = (
                     />
 
                     <img
-                        className="flex-none w-48 h-48 object-scale-down object-center p-5"
+                        className="flex-none w-48 h-48 object-scale-down object-center"
                         src={preview}
-                        alt={resourceState?.common?.imageDialog.alt}
+                        alt={commonResourceState?.resource?.imageDialog.alt}
                     />
 
-                    <div className="join pt-5">
+                    <div className="join">
                         <WiwaButton
                             className="btn-primary join-item"
                             disabled={disabled || !valid}
                             onClick={okHandler}
-                        >{resourceState?.common?.imageDialog.ok}
+                        >{commonResourceState?.resource?.imageDialog.ok}
                         </WiwaButton>
                         <WiwaButton
                             className="btn-accent join-item"
                             disabled={disabled}
                             onClick={cancelHandler}
-                        >{resourceState?.common?.imageDialog.cancel}
+                        >{commonResourceState?.resource?.imageDialog.cancel}
                         </WiwaButton>
                     </div>
                 </div>

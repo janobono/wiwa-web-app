@@ -6,7 +6,7 @@ import WiwaValueNumber from '../ui/wiwa-value-number';
 import { getApplicationProperties, getEdgeImagePath } from '../../api/controller/ui';
 import { UnitId } from '../../api/model/application';
 import { Edge, EdgeField } from '../../api/model/edge';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const EdgeTable = ({fields, rows, selected, setSelected}: {
     fields: EdgeField[],
@@ -35,7 +35,7 @@ const EdgeTable = ({fields, rows, selected, setSelected}: {
 export default EdgeTable;
 
 const TableHead = ({fields}: { fields: EdgeField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [saleSign, setSaleSign] = useState<string>();
     const [weightSign, setWeightSign] = useState<string>();
@@ -47,10 +47,10 @@ const TableHead = ({fields}: { fields: EdgeField[] }) => {
         setWeightSign(unitSign(UnitId.KILOGRAM));
         setLengthSign(unitSign(UnitId.MILLIMETER));
         getApplicationProperties().then(data => setPriceSign(`[${data?.data?.currency?.symbol}]`));
-    }, [resourceState]);
+    }, [commonResourceState]);
 
     const unitSign = (unitId: UnitId) => {
-        return `[${resourceState?.getUnit(unitId)}]`;
+        return `[${commonResourceState?.getUnit(unitId)}]`;
     }
 
     return (
@@ -59,29 +59,34 @@ const TableHead = ({fields}: { fields: EdgeField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case EdgeField.id:
-                        return (<th key={field}>{resourceState?.common?.edgeTable.id}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.edgeTable.id}</th>);
                     case EdgeField.code:
-                        return (<th key={field}>{resourceState?.common?.edgeTable.code}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.edgeTable.code}</th>);
                     case EdgeField.name:
-                        return (<th key={field}>{resourceState?.common?.edgeTable.name}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.edgeTable.name}</th>);
                     case EdgeField.description:
-                        return (<th key={field}>{resourceState?.common?.edgeTable.description}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.edgeTable.description}</th>);
                     case EdgeField.sale:
-                        return (<th key={field}>{`${resourceState?.common?.edgeTable.sale} ${saleSign}`}</th>);
+                        return (<th key={field}>{`${commonResourceState?.resource?.edgeTable.sale} ${saleSign}`}</th>);
                     case EdgeField.weight:
-                        return (<th key={field}>{`${resourceState?.common?.edgeTable.weight} ${weightSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.edgeTable.weight} ${weightSign}`}</th>);
                     case EdgeField.width:
-                        return (<th key={field}>{`${resourceState?.common?.edgeTable.width} ${lengthSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.edgeTable.width} ${lengthSign}`}</th>);
                     case EdgeField.thickness:
-                        return (<th key={field}>{`${resourceState?.common?.edgeTable.thickness} ${lengthSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.edgeTable.thickness} ${lengthSign}`}</th>);
                     case EdgeField.price:
-                        return (<th key={field}>{`${resourceState?.common?.edgeTable.price} ${priceSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.edgeTable.price} ${priceSign}`}</th>);
                     case EdgeField.vatPrice:
-                        return (<th key={field}>{`${resourceState?.common?.edgeTable.vatPrice} ${priceSign}`}</th>);
+                        return (
+                            <th key={field}>{`${commonResourceState?.resource?.edgeTable.vatPrice} ${priceSign}`}</th>);
                     case EdgeField.codeListItems:
-                        return (<th key={field}>{resourceState?.common?.edgeTable.codeListItems}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.edgeTable.codeListItems}</th>);
                     case EdgeField.image:
-                        return (<th key={field}>{resourceState?.common?.edgeTable.image}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.edgeTable.image}</th>);
                 }
             })}
             <th></th>

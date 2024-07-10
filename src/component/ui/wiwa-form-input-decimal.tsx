@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
-import { ValidationResult } from './';
+import { alwaysValid, ValidationResult } from './';
 import WiwaInput from './wiwa-input';
 
 const WiwaFormInputDecimal = (
@@ -12,9 +12,7 @@ const WiwaFormInputDecimal = (
         value,
         setValue,
         setValid,
-        validate = () => {
-            return {valid: true}
-        },
+        validate = alwaysValid,
         children,
         disabled,
         min,

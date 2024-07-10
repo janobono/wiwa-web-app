@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import WiwaFormCheckBox from '../ui/wiwa-form-check-box';
 import { OrderItem, OrderItemField } from '../../api/model/order';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 import { UnitId } from '../../api/model/application';
 
 const OrderItemTable = ({fields, rows, selected, setSelected}: {
@@ -32,13 +32,13 @@ const OrderItemTable = ({fields, rows, selected, setSelected}: {
 export default OrderItemTable;
 
 const TableHead = ({fields}: { fields: OrderItemField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [quantitySign, setQuantitySign] = useState<string>();
 
     useEffect(() => {
-        setQuantitySign(`[${resourceState?.getUnit(UnitId.PIECE)}]`);
-    }, [resourceState]);
+        setQuantitySign(`[${commonResourceState?.getUnit(UnitId.PIECE)}]`);
+    }, [commonResourceState]);
 
     return (
         <thead>
@@ -46,16 +46,16 @@ const TableHead = ({fields}: { fields: OrderItemField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case OrderItemField.id:
-                        return (<th key={field}>{resourceState?.common?.orderItemTable.id}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderItemTable.id}</th>);
                     case OrderItemField.sortNum:
-                        return (<th key={field}>{resourceState?.common?.orderItemTable.sortNum}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderItemTable.sortNum}</th>);
                     case OrderItemField.name:
-                        return (<th key={field}>{resourceState?.common?.orderItemTable.name}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderItemTable.name}</th>);
                     case OrderItemField.description:
-                        return (<th key={field}>{resourceState?.common?.orderItemTable.description}</th>);
+                        return (<th key={field}>{commonResourceState?.resource?.orderItemTable.description}</th>);
                     case OrderItemField.quantity:
                         return (
-                            <th key={field}>{`${resourceState?.common?.orderItemTable.quantity} ${quantitySign}`}</th>);
+                            <th key={field}>{`${commonResourceState?.resource?.orderItemTable.quantity} ${quantitySign}`}</th>);
                 }
             })}
             <th></th>

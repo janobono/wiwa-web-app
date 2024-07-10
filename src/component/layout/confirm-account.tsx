@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { AuthContext, ResourceContext } from '../../context';
+import { AuthContext, CommonResourceContext } from '../../context';
 
 const ConfirmAccount = () => {
     const authState = useContext(AuthContext);
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [show, setShow] = useState(false);
 
@@ -20,13 +20,13 @@ const ConfirmAccount = () => {
     return (!show ? null :
         <div className="alert alert-warning text-xs md:text-base">
             <span>
-                <span>{resourceState?.common?.confirmAccount.text}</span>
+                <span>{commonResourceState?.resource?.confirmAccount.text}</span>
                 <span> </span>
             </span>
             <NavLink
                 className="btn btn-sm normal-case text-xs md:text-base"
                 to="/auth/resend-confirmation"
-            >{resourceState?.common?.confirmAccount.action}</NavLink>
+            >{commonResourceState?.resource?.confirmAccount.action}</NavLink>
         </div>)
 }
 

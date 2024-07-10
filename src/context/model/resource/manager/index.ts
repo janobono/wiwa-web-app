@@ -273,3 +273,7 @@ export interface ResourceManager {
         codeListPlaceholder: string
     }
 }
+
+export interface ManagerResourceState {
+    resource?: ResourceManager
+}

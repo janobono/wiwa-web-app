@@ -4,12 +4,13 @@ import { getResetPasswordMail, setResetPasswordMail } from '../../../../api/cont
 import { ResetPasswordMail } from '../../../../api/model/application';
 import WiwaButton from '../../../ui/wiwa-button';
 import WiwaFormInputString from '../../../ui/wiwa-form-input-string';
-import { AuthContext, ErrorContext, ResourceContext } from '../../../../context';
+import { AdminResourceContext, AuthContext, CommonResourceContext, ErrorContext } from '../../../../context';
 
 const ResetPasswordMailEditor = () => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const adminResourceState = useContext(AdminResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [busy, setBusy] = useState(false);
     const [value, setValue] = useState<ResetPasswordMail>();
@@ -83,8 +84,8 @@ const ResetPasswordMailEditor = () => {
         <div className="flex flex-col p-5 gap-5 w-full">
             <div className="flex flex-col items-center justify-center">
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.resetPassword.subjectLabel}
-                    placeholder={resourceState?.admin?.mailFormat.resetPassword.subjectPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.resetPassword.subjectLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.resetPassword.subjectPlaceholder}
                     value={subject}
                     setValue={setSubject}
                     setValid={setSubjectValid}
@@ -92,7 +93,7 @@ const ResetPasswordMailEditor = () => {
                         if (subject.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.resetPassword.subjectRequired
+                                message: adminResourceState?.resource?.mailFormat.resetPassword.subjectRequired
                             };
                         }
                         return {valid: true};
@@ -100,8 +101,8 @@ const ResetPasswordMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.resetPassword.titleLabel}
-                    placeholder={resourceState?.admin?.mailFormat.resetPassword.titlePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.resetPassword.titleLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.resetPassword.titlePlaceholder}
                     value={title}
                     setValue={setTitle}
                     setValid={setTitleValid}
@@ -109,7 +110,7 @@ const ResetPasswordMailEditor = () => {
                         if (title.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.resetPassword.titleRequired
+                                message: adminResourceState?.resource?.mailFormat.resetPassword.titleRequired
                             };
                         }
                         return {valid: true};
@@ -117,8 +118,8 @@ const ResetPasswordMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.resetPassword.messageLabel}
-                    placeholder={resourceState?.admin?.mailFormat.resetPassword.messagePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.resetPassword.messageLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.resetPassword.messagePlaceholder}
                     value={message}
                     setValue={setMessage}
                     setValid={setMessageValid}
@@ -126,7 +127,7 @@ const ResetPasswordMailEditor = () => {
                         if (message.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.resetPassword.messageRequired
+                                message: adminResourceState?.resource?.mailFormat.resetPassword.messageRequired
                             };
                         }
                         return {valid: true};
@@ -134,8 +135,8 @@ const ResetPasswordMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.resetPassword.passwordMessageLabel}
-                    placeholder={resourceState?.admin?.mailFormat.resetPassword.passwordMessagePlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.resetPassword.passwordMessageLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.resetPassword.passwordMessagePlaceholder}
                     value={passwordMessage}
                     setValue={setPasswordMessage}
                     setValid={setPasswordMessageValid}
@@ -143,7 +144,7 @@ const ResetPasswordMailEditor = () => {
                         if (passwordMessage.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.resetPassword.passwordMessageRequired
+                                message: adminResourceState?.resource?.mailFormat.resetPassword.passwordMessageRequired
                             };
                         }
                         return {valid: true};
@@ -151,8 +152,8 @@ const ResetPasswordMailEditor = () => {
                 />
 
                 <WiwaFormInputString
-                    label={resourceState?.admin?.mailFormat.resetPassword.linkLabel}
-                    placeholder={resourceState?.admin?.mailFormat.resetPassword.linkPlaceholder}
+                    label={adminResourceState?.resource?.mailFormat.resetPassword.linkLabel}
+                    placeholder={adminResourceState?.resource?.mailFormat.resetPassword.linkPlaceholder}
                     value={link}
                     setValue={setLink}
                     setValid={setLinkValid}
@@ -160,7 +161,7 @@ const ResetPasswordMailEditor = () => {
                         if (link.trim().length === 0) {
                             return {
                                 valid: false,
-                                message: resourceState?.admin?.mailFormat.resetPassword.linkRequired
+                                message: adminResourceState?.resource?.mailFormat.resetPassword.linkRequired
                             };
                         }
                         return {valid: true};
@@ -172,7 +173,7 @@ const ResetPasswordMailEditor = () => {
                         className="btn-primary join-item"
                         disabled={busy || !isFormValid()}
                         onClick={submit}
-                    >{resourceState?.common?.action.submit}
+                    >{commonResourceState?.resource?.action.submit}
                     </WiwaButton>
                 </div>
             </div>

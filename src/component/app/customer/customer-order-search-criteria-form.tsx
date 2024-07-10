@@ -6,13 +6,14 @@ import WiwaButton from '../../ui/wiwa-button';
 import WiwaFormInputDatetime from '../../ui/wiwa-form-input-datetime';
 import WiwaFormCheckBox from '../../ui/wiwa-form-check-box.tsx';
 import { OrderSearchCriteria, OrderStatus } from '../../../api/model/order';
-import { ResourceContext } from '../../../context';
+import { CommonResourceContext, CustomerResourceContext } from '../../../context';
 
 const CustomerOrderSearchCriteriaForm = ({searchHandler, children}: {
     searchHandler: (criteria: OrderSearchCriteria) => void
     children?: ReactNode
 }) => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
+    const customerResourceState = useContext(CustomerResourceContext);
 
     const [statusNew, setStatusNew] = useState(false);
     const [statusSent, setStatusSent] = useState(false);
@@ -69,7 +70,7 @@ const CustomerOrderSearchCriteriaForm = ({searchHandler, children}: {
         <>
             <div className="join join-vertical md:join-horizontal w-full">
                 <WiwaButton
-                    title={resourceState?.common?.action.extendedSearch}
+                    title={commonResourceState?.resource?.action.extendedSearch}
                     className="join-item"
                     onClick={() => setExtended(!extended)}
                 >{extended ?
@@ -123,12 +124,12 @@ const CustomerOrderSearchCriteriaForm = ({searchHandler, children}: {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
                         <WiwaFormInputDatetime
-                            label={resourceState?.customer?.orderCriteria.createdFromLabel}
+                            label={customerResourceState?.resource?.orderCriteria.createdFromLabel}
                             value={createdFrom}
                             setValue={setCreatedFrom}
                         />
                         <WiwaFormInputDatetime
-                            label={resourceState?.customer?.orderCriteria.createdToLabel}
+                            label={customerResourceState?.resource?.orderCriteria.createdToLabel}
                             value={createdTo}
                             setValue={setCreatedTo}
                         />

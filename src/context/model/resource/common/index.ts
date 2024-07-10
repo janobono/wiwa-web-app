@@ -1,3 +1,5 @@
+import { UnitId } from '../../../../api/model/application';
+
 export interface ResourceCommon {
     action: {
         add: string,
@@ -190,6 +192,12 @@ export interface ResourceCommon {
         },
     },
     notFound: string,
+    orderCommentDialog: {
+        title: string,
+        valueLabel: string,
+        valuePlaceholder: string,
+        valueRequired: string
+    },
     orderItemEditor: {
         nameLabel: string,
         namePlaceholder: string,
@@ -248,15 +256,36 @@ export interface ResourceCommon {
         previous: string
     },
     partEditor: {
-        option: {
-            select: string,
+        partLabel: string,
+        valuePlaceholder: string,
+        valueRequired: string,
+        deleteCornerQuestionTitle: string,
+        deleteCornerQuestionMessage: string,
+        deleteBoardDimensionsQuestionTitle: string,
+        deleteBoardDimensionsQuestionMessage: string,
+        boardDimensionsDialogTitle: string,
+        corner: {
+            rounded: string,
+            straight: string
+        },
+        cornerDialog: {
+            title: string,
+            radiusLabel: string,
+            radiusPlaceholder: string,
+            radiusRequired: string,
+            radiusInvalid: string,
+            cornerDimensionsLabel: string,
+            cornerDimensionsPlaceholderX: string,
+            cornerDimensionsPlaceholderY: string,
+            cornerDimensionsRequired: string,
+            cornerDimensionsInvalid: string
+        },
+        part: {
             basic: string,
             duplicatedBasic: string,
             duplicatedFrame: string,
             frame: string
-        },
-        valuePlaceholder: string,
-        valueRequired: string
+        }
     },
     refreshToken: {
         action: string,
@@ -273,4 +302,10 @@ export interface ResourceCommon {
         no: string,
         yes: string
     }
+}
+
+export interface CommonResourceState {
+    resource?: ResourceCommon,
+    getUnitIdName: (unitId: UnitId) => string | undefined,
+    getUnit: (unitId: UnitId) => string | undefined
 }

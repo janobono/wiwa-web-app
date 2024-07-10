@@ -9,3 +9,7 @@ export interface ResourceUi {
         vatRegNo: string
     }
 }
+
+export interface UiResourceState {
+    resource?: ResourceUi
+}

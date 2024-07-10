@@ -8,14 +8,15 @@ import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
 import WiwaButton from '../../component/ui/wiwa-button';
 import WiwaFormCaptcha from '../../component/ui/wiwa-form-captcha';
 import WiwaFormInputPassword from '../../component/ui/wiwa-form-input-password';
-import { AuthContext, ErrorContext, ResourceContext } from '../../context';
+import { AuthContext, AuthResourceContext, CommonResourceContext, ErrorContext } from '../../context';
 
 const ChangePasswordPage = () => {
     const navigate = useNavigate();
 
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const resourceState = useContext(ResourceContext);
+    const authResourceState = useContext(AuthResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [oldPassword, setOldPassword] = useState('');
     const [oldPasswordValid, setOldPasswordValid] = useState(false);
@@ -48,13 +49,13 @@ const ChangePasswordPage = () => {
             if (response?.error) {
                 switch (response?.error.code) {
                     case WiwaErrorCode.USER_IS_DISABLED:
-                        setFormError(resourceState?.common?.error.userIsDisabled);
+                        setFormError(commonResourceState?.resource?.error.userIsDisabled);
                         break;
                     case WiwaErrorCode.INVALID_CREDENTIALS:
-                        setFormError(resourceState?.common?.error.invalidCredentials);
+                        setFormError(commonResourceState?.resource?.error.invalidCredentials);
                         break;
                     case WiwaErrorCode.INVALID_CAPTCHA:
-                        setFormError(resourceState?.common?.error.invalidCaptcha);
+                        setFormError(commonResourceState?.resource?.error.invalidCaptcha);
                         break;
                     default:
                         errorState?.addError(response?.error);
@@ -70,10 +71,10 @@ const ChangePasswordPage = () => {
         <MaintenanceDefender>
             <AuthDefender>
                 <WiwaBreadcrumb breadcrumbs={[
-                    {key: 0, label: resourceState?.common?.navigation.authNav.title || ''},
+                    {key: 0, label: commonResourceState?.resource?.navigation.authNav.title || ''},
                     {
                         key: 1,
-                        label: resourceState?.auth?.changePassword.title || '',
+                        label: authResourceState?.resource?.changePassword.title || '',
                         to: '/auth/change-password'
                     }
                 ]}/>
@@ -84,9 +85,9 @@ const ChangePasswordPage = () => {
                             handleSubmit().then();
                         }}>
                             <WiwaFormInputPassword
-                                label={resourceState?.auth?.changePassword.oldPasswordLabel}
+                                label={authResourceState?.resource?.changePassword.oldPasswordLabel}
                                 required={true}
-                                placeholder={resourceState?.auth?.changePassword.oldPasswordPlaceholder}
+                                placeholder={authResourceState?.resource?.changePassword.oldPasswordPlaceholder}
                                 value={oldPassword}
                                 setValue={setOldPassword}
                                 setValid={setOldPasswordValid}
@@ -94,7 +95,7 @@ const ChangePasswordPage = () => {
                                     if (oldPassword.trim().length === 0) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.changePassword.oldPasswordRequired
+                                            message: authResourceState?.resource?.changePassword.oldPasswordRequired
                                         };
                                     }
                                     return {valid: true};
@@ -102,9 +103,9 @@ const ChangePasswordPage = () => {
                             />
 
                             <WiwaFormInputPassword
-                                label={resourceState?.auth?.changePassword.passwordLabel}
+                                label={authResourceState?.resource?.changePassword.passwordLabel}
                                 required={true}
-                                placeholder={resourceState?.auth?.changePassword.passwordPlaceholder}
+                                placeholder={authResourceState?.resource?.changePassword.passwordPlaceholder}
                                 value={newPassword}
                                 setValue={setNewPassword}
                                 setValid={setNewPasswordValid}
@@ -112,7 +113,7 @@ const ChangePasswordPage = () => {
                                     if (newPassword.trim().length === 0) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.changePassword.passwordRequired
+                                            message: authResourceState?.resource?.changePassword.passwordRequired
                                         };
                                     }
                                     return {valid: true};
@@ -120,9 +121,9 @@ const ChangePasswordPage = () => {
                             />
 
                             <WiwaFormInputPassword
-                                label={resourceState?.auth?.changePassword.passwordConfirmationLabel}
+                                label={authResourceState?.resource?.changePassword.passwordConfirmationLabel}
                                 required={true}
-                                placeholder={resourceState?.auth?.changePassword.passwordConfirmationPlaceholder}
+                                placeholder={authResourceState?.resource?.changePassword.passwordConfirmationPlaceholder}
                                 value={passwordConfirmation}
                                 setValue={setPasswordConfirmation}
                                 setValid={setPasswordConfirmationValid}
@@ -130,13 +131,13 @@ const ChangePasswordPage = () => {
                                     if (passwordConfirmation.trim().length === 0) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.changePassword.passwordConfirmationRequired
+                                            message: authResourceState?.resource?.changePassword.passwordConfirmationRequired
                                         };
                                     }
                                     if (passwordConfirmation !== newPassword) {
                                         return {
                                             valid: false,
-                                            message: resourceState?.auth?.changePassword.passwordConfirmationNotEquals
+                                            message: authResourceState?.resource?.changePassword.passwordConfirmationNotEquals
                                         };
                                     }
                                     return {valid: true};
@@ -155,7 +156,7 @@ const ChangePasswordPage = () => {
                                 type="submit"
                                 className="btn-primary w-full"
                                 disabled={authState?.busy || !isFormValid()}
-                            >{resourceState?.common?.action.submit}</WiwaButton>
+                            >{commonResourceState?.resource?.action.submit}</WiwaButton>
                             {formError &&
                                 <label className="label">
                                     <span className="label-text-alt text-error">{formError}</span>

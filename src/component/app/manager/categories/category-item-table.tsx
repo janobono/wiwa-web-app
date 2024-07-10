@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import { CategoryItem, CategoryItemField } from '../../../../api/model';
-import { ResourceContext } from '../../../../context';
+import { ManagerResourceContext } from '../../../../context';
 
 const CategoryItemTable = ({fields, rows, selected, setSelected}: {
     fields: CategoryItemField[],
@@ -31,7 +31,7 @@ const CategoryItemTable = ({fields, rows, selected, setSelected}: {
 export default CategoryItemTable;
 
 const TableHead = ({fields}: { fields: CategoryItemField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     return (
         <thead>
@@ -39,13 +39,13 @@ const TableHead = ({fields}: { fields: CategoryItemField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case CategoryItemField.id:
-                        return (<th key={field}>{resourceState?.manager?.categoryItemTable.id}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.categoryItemTable.id}</th>);
                     case CategoryItemField.code:
-                        return (<th key={field}>{resourceState?.manager?.categoryItemTable.code}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.categoryItemTable.code}</th>);
                     case CategoryItemField.name:
-                        return (<th key={field}>{resourceState?.manager?.categoryItemTable.name}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.categoryItemTable.name}</th>);
                     case CategoryItemField.category:
-                        return (<th key={field}>{resourceState?.manager?.categoryItemTable.category}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.categoryItemTable.category}</th>);
                 }
             })}
             <th></th>

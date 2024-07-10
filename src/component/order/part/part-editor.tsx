@@ -7,7 +7,7 @@ import PartDuplicatedFrameEditor from './part-duplicated-frame-editor';
 import PartFrameEditor from './part-frame-editor';
 import WiwaSelect from '../../ui/wiwa-select';
 import { Part, PartType } from '../../../api/model/order/part';
-import { ResourceContext } from '../../../context';
+import { CommonResourceContext } from '../../../context';
 
 const PartEditor = (
     {
@@ -38,29 +38,38 @@ export default PartEditor;
 
 const PartEditorForm = () => {
     const partEditorState = useContext(PartEditorContext)
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [index, setIndex] = useState('NONE');
 
     useEffect(() => {
-        if (partEditorState?.part) {
-            setIndex(partEditorState?.part.type);
+        const partType = partEditorState?.partType;
+        if (partType) {
+            setIndex(partType);
+        } else {
+            setIndex('NONE');
         }
-    }, [partEditorState?.part]);
+    }, [partEditorState?.partType]);
 
     return (
         <>
             <WiwaSelect
-                defaultValue="NONE"
-                onChange={event => setIndex(event.currentTarget.value)}
+                value={index}
+                onChange={event => partEditorState?.setPartType(event.currentTarget.value)}
             >
-                <option disabled value="NONE">{resourceState?.common?.partEditor.option.select}</option>
-                <option value={PartType.BASIC}>{resourceState?.common?.partEditor.option.basic}</option>
-                <option
-                    value={PartType.DUPLICATED_BASIC}>{resourceState?.common?.partEditor.option.duplicatedBasic}</option>
-                <option
-                    value={PartType.DUPLICATED_FRAME}>{resourceState?.common?.partEditor.option.duplicatedFrame}</option>
-                <option value={PartType.FRAME}>{resourceState?.common?.partEditor.option.frame}</option>
+                <option value="NONE" disabled>{commonResourceState?.resource?.partEditor.partLabel}</option>
+                <option value={PartType.BASIC}>
+                    {commonResourceState?.resource?.partEditor.part.basic}
+                </option>
+                <option value={PartType.DUPLICATED_BASIC}>
+                    {commonResourceState?.resource?.partEditor.part.duplicatedBasic}
+                </option>
+                <option value={PartType.DUPLICATED_FRAME}>
+                    {commonResourceState?.resource?.partEditor.part.duplicatedFrame}
+                </option>
+                <option value={PartType.FRAME}>
+                    {commonResourceState?.resource?.partEditor.part.frame}
+                </option>
             </WiwaSelect>
             {index === PartType.BASIC && <PartBasicEditor/>}
             {index === PartType.DUPLICATED_BASIC && <PartDuplicatedBasicEditor/>}

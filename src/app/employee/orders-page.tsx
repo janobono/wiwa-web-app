@@ -3,18 +3,18 @@ import { useContext } from 'react';
 import { OrderField } from '../../api/model/order';
 import OrderTable from '../../component/order/order-table';
 import WiwaBreadcrumb from '../../component/ui/wiwa-breadcrumb';
-import { ResourceContext } from '../../context';
+import { CommonResourceContext } from '../../context';
 
 const OrdersPage = () => {
-    const resourceState = useContext(ResourceContext);
+    const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <>
             <WiwaBreadcrumb breadcrumbs={[
-                {key: 0, label: resourceState?.common?.navigation.employeeNav.title || ''},
+                {key: 0, label: commonResourceState?.resource?.navigation.employeeNav.title || ''},
                 {
                     key: 1,
-                    label: resourceState?.common?.navigation.employeeNav.orders || '',
+                    label: commonResourceState?.resource?.navigation.employeeNav.orders || '',
                     to: '/employee'
                 }
             ]}/>

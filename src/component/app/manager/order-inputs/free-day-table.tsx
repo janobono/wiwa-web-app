@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import WiwaFormCheckBox from '../../../ui/wiwa-form-check-box';
 import { FreeDay, FreeDayField } from '../../../../api/model/application';
-import { ResourceContext } from '../../../../context';
+import { ManagerResourceContext } from '../../../../context';
 
 const FreeDayTable = ({fields, rows, selected, setSelected}: {
     fields: FreeDayField[],
@@ -31,7 +31,7 @@ const FreeDayTable = ({fields, rows, selected, setSelected}: {
 export default FreeDayTable;
 
 const TableHead = ({fields}: { fields: FreeDayField[] }) => {
-    const resourceState = useContext(ResourceContext);
+    const managerResourceState = useContext(ManagerResourceContext);
 
     return (
         <thead>
@@ -39,11 +39,11 @@ const TableHead = ({fields}: { fields: FreeDayField[] }) => {
             {fields?.map(field => {
                 switch (field) {
                     case FreeDayField.name:
-                        return (<th key={field}>{resourceState?.manager?.freeDayTable.name}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.freeDayTable.name}</th>);
                     case FreeDayField.day:
-                        return (<th key={field}>{resourceState?.manager?.freeDayTable.day}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.freeDayTable.day}</th>);
                     case FreeDayField.month:
-                        return (<th key={field}>{resourceState?.manager?.freeDayTable.month}</th>);
+                        return (<th key={field}>{managerResourceState?.resource?.freeDayTable.month}</th>);
                 }
             })}
             <th></th>
