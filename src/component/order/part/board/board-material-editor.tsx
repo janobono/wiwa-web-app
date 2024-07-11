@@ -1,38 +1,39 @@
 import { useContext, useEffect, useState } from 'react';
 import { Edit, Trash } from 'react-feather';
 
-import BoardDimensionValue from './board-dimension-value';
-import BoardDimensionsDialog from './board-dimensions-dialog';
+import BoardMaterialValue from './board-material-value';
+import BoardMaterialDialog from './board-material-dialog';
 import { PartEditorContext } from '../part-editor-provider';
 import WiwaButton from '../../../ui/wiwa-button';
-import { Dimensions } from '../../../../api/model';
-import { BoardDimension, BoardPosition } from '../../../../api/model/application';
+import { BoardPosition } from '../../../../api/model/application';
+import { Board } from '../../../../api/model/board';
 import { CommonResourceContext, DialogContext } from '../../../../context';
 import { DialogAnswer, DialogType } from '../../../../context/model/dialog';
+import BoardProvider from '../../../board/board-provider.tsx';
 
-const BoardDimensionEditor = (
+const BoardMaterialEditor = (
     {
         boardPosition,
-        boardDimension
+        rotate
     }: {
         boardPosition: BoardPosition,
-        boardDimension: BoardDimension
+        rotate: boolean,
     }
 ) => {
     const dialogState = useContext(DialogContext);
     const partEditorState = useContext(PartEditorContext)
     const commonResourceState = useContext(CommonResourceContext);
 
-    const [dimensions, setDimensions] = useState<Dimensions>();
+    const [board, setBoard] = useState<Board>();
     const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
-        setDimensions(partEditorState?.boardDimensionsData.find(item => item.boardPosition === boardPosition)?.dimensions);
-    }, [boardPosition, partEditorState?.boardDimensionsData]);
+        setBoard(partEditorState?.boardMaterialData.find(item => item.boardPosition === boardPosition)?.board);
+    }, [boardPosition, partEditorState?.boardMaterialData]);
 
     return (
         <>
-            <BoardDimensionValue boardPosition={boardPosition} boardDimension={boardDimension}>
+            <BoardMaterialValue boardPosition={boardPosition} rotate={rotate}>
                 <div className="join">
                     <WiwaButton
                         title={commonResourceState?.resource?.action.edit}
@@ -42,17 +43,17 @@ const BoardDimensionEditor = (
                         <Edit size={12}/>
                     </WiwaButton>
                     <WiwaButton
-                        disabled={dimensions === undefined}
+                        disabled={board === undefined}
                         title={commonResourceState?.resource?.action.delete}
                         className="btn-accent btn-xs join-item"
                         onClick={() => {
                             dialogState?.showDialog({
                                 type: DialogType.YES_NO,
-                                title: `${commonResourceState?.resource?.partEditor.deleteBoardDimensionsQuestionTitle} ${partEditorState?.getBoardName(boardPosition)}`,
-                                message: commonResourceState?.resource?.partEditor.deleteBoardDimensionsQuestionMessage,
+                                title: `${commonResourceState?.resource?.partEditor.deleteBoardMaterialQuestionTitle} ${partEditorState?.getBoardName(boardPosition)}`,
+                                message: commonResourceState?.resource?.partEditor.deleteBoardMaterialQuestionMessage,
                                 callback: (answer: DialogAnswer) => {
                                     if (answer === DialogAnswer.YES) {
-                                        partEditorState?.setBoardDimensions(boardPosition, undefined);
+                                        partEditorState?.setBoardMaterial(boardPosition, undefined);
                                     }
                                 }
                             });
@@ -61,15 +62,17 @@ const BoardDimensionEditor = (
                         <Trash size={12}/>
                     </WiwaButton>
                 </div>
-            </BoardDimensionValue>
+            </BoardMaterialValue>
 
-            <BoardDimensionsDialog
-                boardPosition={boardPosition}
-                showDialog={showDialog}
-                setShowDialog={setShowDialog}
-            />
+            <BoardProvider>
+                <BoardMaterialDialog
+                    boardPosition={boardPosition}
+                    showDialog={showDialog}
+                    setShowDialog={setShowDialog}
+                />
+            </BoardProvider>
         </>
     )
 }
 
-export default BoardDimensionEditor;
+export default BoardMaterialEditor;

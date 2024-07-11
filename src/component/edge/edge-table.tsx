@@ -145,7 +145,7 @@ const TableRow = ({fields, row, selected, setSelected}: {
                                 <img
                                     className="flex-none w-24 h-24 object-scale-down object-center"
                                     src={getEdgeImagePath(row.id)}
-                                    alt="Logo"
+                                    alt="Edge image"
                                 />
                             </td>
                         );

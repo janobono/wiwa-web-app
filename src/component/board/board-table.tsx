@@ -162,7 +162,7 @@ const TableRow = ({fields, row, selected, setSelected}: {
                                 <img
                                     className="flex-none w-24 h-24 object-scale-down object-center"
                                     src={getBoardImagePath(row.id)}
-                                    alt="Logo"
+                                    alt="Board image"
                                 />
                             </td>
                         );

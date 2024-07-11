@@ -12,11 +12,23 @@ import {
 } from '../../../api/model/application';
 import { getOrderProperties } from '../../../api/controller/ui';
 import { getManufactureProperties } from '../../../api/controller/config';
-import { AuthContext, ErrorContext, CommonResourceContext } from '../../../context';
+import { AuthContext, CommonResourceContext, ErrorContext } from '../../../context';
+import { Board } from '../../../api/model/board';
+import { Edge } from '../../../api/model/edge';
 
 export interface BoardDimensionsData {
     boardPosition: BoardPosition,
     dimensions: Dimensions
+}
+
+export interface BoardMaterialData {
+    boardPosition: BoardPosition,
+    board: Board
+}
+
+export interface EdgeMaterialData {
+    edgePosition: EdgePosition,
+    edge: Edge
 }
 
 export interface PartCornerData {
@@ -40,6 +52,10 @@ export interface PartEditorState {
     setPartType: (partType?: string) => void,
     boardDimensionsData: BoardDimensionsData[],
     setBoardDimensions: (boardPosition: BoardPosition, dimensions?: Dimensions) => void,
+    boardMaterialData: BoardMaterialData[],
+    setBoardMaterial: (boardPosition: BoardPosition, board?: Board) => void,
+    edgeMaterialData: EdgeMaterialData[],
+    setEdgeMaterial: (edgePosition: EdgePosition, edge?: Edge) => void,
     cornerData: PartCornerData[],
     setPartCorner: (cornerPosition: CornerPosition, partCorner?: PartCorner) => void
 }
@@ -72,6 +88,8 @@ const PartEditorProvider = (
     const [partType, setPartType] = useState<string>();
 
     const [boardDimensionsData, setBoardDimensionsData] = useState<BoardDimensionsData[]>([]);
+    const [boardMaterialData, setBoardMaterialData] = useState<BoardMaterialData[]>([]);
+    const [edgeMaterialData, setEdgeMaterialData] = useState<EdgeMaterialData[]>([]);
     const [cornerData, setCornerData] = useState<PartCornerData[]>([]);
 
     useEffect(() => {
@@ -132,6 +150,30 @@ const PartEditorProvider = (
         setBoardDimensionsData(newData);
     }
 
+    const setBoardMaterial = (boardPosition: BoardPosition, board?: Board) => {
+        const newData = [...boardMaterialData];
+        const index = newData.findIndex(item => item.boardPosition === boardPosition);
+        if (index !== -1) {
+            newData.splice(index, 1);
+        }
+        if (board) {
+            newData.push({boardPosition, board});
+        }
+        setBoardMaterialData(newData);
+    }
+
+    const setEdgeMaterial = (edgePosition: EdgePosition, edge?: Edge) => {
+        const newData = [...edgeMaterialData];
+        const index = newData.findIndex(item => item.edgePosition === edgePosition);
+        if (index !== -1) {
+            newData.splice(index, 1);
+        }
+        if (edge) {
+            newData.push({edgePosition, edge});
+        }
+        setEdgeMaterialData(newData);
+    }
+
     const setPartCorner = (cornerPosition: CornerPosition, partCorner?: PartCorner) => {
         const newData = [...cornerData];
         const index = newData.findIndex(item => item.cornerPosition === cornerPosition);
@@ -163,6 +205,10 @@ const PartEditorProvider = (
                     setPartType,
                     boardDimensionsData,
                     setBoardDimensions,
+                    boardMaterialData,
+                    setBoardMaterial,
+                    edgeMaterialData,
+                    setEdgeMaterial,
                     cornerData,
                     setPartCorner
                 }

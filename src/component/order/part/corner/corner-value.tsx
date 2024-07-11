@@ -7,11 +7,9 @@ import { CornerPosition } from '../../../../api/model/application';
 
 const CornerValue = (
     {
-        size,
         cornerPosition,
         children
     }: {
-        size: number,
         cornerPosition: CornerPosition,
         children?: ReactNode
     }
@@ -25,22 +23,19 @@ const CornerValue = (
     }, [cornerPosition, partEditorState?.cornerData]);
 
     return (
-        <div className="flex flex-row gap-2 items-center">
-            {(cornerPosition === CornerPosition.A1B1 || cornerPosition === CornerPosition.A2B1) &&
-                <>
-                    {children}
+        <div className="flex flex-col gap-2 items-center">
+            <div className="flex flex-row gap-2 items-center">
+                {[CornerPosition.A1B1, CornerPosition.A2B1].includes(cornerPosition) &&
                     <span className="text-xs">{partEditorState?.getCornerName(cornerPosition)}</span>
-                </>
-            }
-            {type === 'NONE' && <Square size={size}/>}
-            {type === PartCornerType.STRAIGHT && <Octagon size={size}/>}
-            {type === PartCornerType.ROUNDED && <Circle size={size}/>}
-            {(cornerPosition === CornerPosition.A1B2 || cornerPosition === CornerPosition.A2B2) &&
-                <>
+                }
+                {type === 'NONE' && <Square size={28}/>}
+                {type === PartCornerType.STRAIGHT && <Octagon size={28}/>}
+                {type === PartCornerType.ROUNDED && <Circle size={28}/>}
+                {[CornerPosition.A1B2, CornerPosition.A2B2].includes(cornerPosition) &&
                     <span className="text-xs">{partEditorState?.getCornerName(cornerPosition)}</span>
-                    {children}
-                </>
-            }
+                }
+            </div>
+            {children}
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'react-feather';
+import { twMerge } from 'tailwind-merge';
 
 import { PartEditorContext } from '../part-editor-provider';
 import { BoardDimension, BoardPosition, UnitId } from '../../../../api/model/application';
@@ -7,12 +8,10 @@ import { CommonResourceContext } from '../../../../context';
 
 const BoardDimensionValue = (
     {
-        size,
         boardPosition,
         boardDimension,
         children
     }: {
-        size: number,
         boardPosition: BoardPosition,
         boardDimension: BoardDimension,
         children?: ReactNode
@@ -37,63 +36,24 @@ const BoardDimensionValue = (
     }, [boardPosition, boardDimension, partEditorState?.boardDimensionsData]);
 
     return (
-        <>
-            {boardDimension === BoardDimension.X &&
-                <HorizontalDimension size={size} text={text}>
-                    {children}
-                </HorizontalDimension>
+        <div
+            className={twMerge(`flex gap-2 items-center ${boardDimension === BoardDimension.X ? 'flex-row' : 'flex-col'}`)}>
+            {boardDimension === BoardDimension.X ?
+                <ArrowLeft size={28}/>
+                :
+                <ArrowUp size={28}/>
             }
-            {boardDimension === BoardDimension.Y &&
-                <VerticalDimension size={size} text={text}>
-                    {children}
-                </VerticalDimension>
+            <div className="flex flex-col gap-2 items-center">
+                <span className="text-xs">{text}</span>
+                {children}
+            </div>
+            {boardDimension === BoardDimension.X ?
+                <ArrowRight size={28}/>
+                :
+                <ArrowDown size={28}/>
             }
-        </>
+        </div>
     )
 }
 
 export default BoardDimensionValue;
-
-const HorizontalDimension = (
-    {
-        size,
-        text,
-        children
-    }: {
-        size: number,
-        text?: string,
-        children?: ReactNode
-    }
-) => {
-    return (
-        <div className="flex flex-row gap-2 items-center">
-            <ArrowLeft size={size}/>
-            <span className="text-xs">{text}</span>
-            {children}
-            <ArrowRight size={size}/>
-        </div>
-    )
-}
-
-const VerticalDimension = (
-    {
-        size,
-        text,
-        children
-    }: {
-        size: number,
-        text?: string,
-        children?: ReactNode
-    }
-) => {
-    return (
-        <div className="flex flex-col gap-2 items-center align-middle">
-            <ArrowUp size={size}/>
-            <div className="flex flex-row gap-2 items-center">
-                <span className="text-xs">{text}</span>
-                {children}
-            </div>
-            <ArrowDown size={size}/>
-        </div>
-    )
-}
