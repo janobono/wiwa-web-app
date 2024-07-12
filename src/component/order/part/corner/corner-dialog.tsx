@@ -8,8 +8,8 @@ import WiwaFormInputInteger from '../../../ui/wiwa-form-input-integer';
 import WiwaFormDimensions from '../../../ui/wiwa-form-dimensions';
 import WiwaSelect from '../../../ui/wiwa-select';
 import { Dimensions } from '../../../../api/model';
-import { BoardPosition, CornerPosition, UnitId } from '../../../../api/model/application';
-import { PartCornerRounded, PartCornerStraight, PartCornerType } from '../../../../api/model/order/part';
+import { CornerPosition, UnitId } from '../../../../api/model/application';
+import { PartCornerType } from '../../../../api/model/order/part';
 import { CommonResourceContext, DialogContext } from '../../../../context';
 
 const CornerDialog = ({cornerPosition, showDialog, setShowDialog}: {
@@ -36,16 +36,16 @@ const CornerDialog = ({cornerPosition, showDialog, setShowDialog}: {
         setRadius(undefined);
         setCornerDimensions(undefined);
 
-        const partCorner = partEditorState?.cornerData.find(item => item.cornerPosition === cornerPosition)?.partCorner;
+        const data = partEditorState?.cornerData.find(item => item.cornerPosition === cornerPosition);
 
-        if (partCorner) {
-            switch (partCorner.type) {
+        if (data?.type) {
+            switch (data?.type) {
                 case PartCornerType.ROUNDED:
-                    setRadius((partCorner as PartCornerRounded).radius);
+                    setRadius(data.radius);
                     break;
                 case PartCornerType.STRAIGHT:
                     setIndex(PartCornerType.STRAIGHT);
-                    setCornerDimensions((partCorner as PartCornerStraight).dimensions);
+                    setCornerDimensions(data.dimensions);
                     break;
             }
         }
@@ -92,16 +92,8 @@ const CornerDialog = ({cornerPosition, showDialog, setShowDialog}: {
                                     };
                                 }
 
-                                const dimensions = partEditorState?.boardDimensionsData.find(item => item.boardPosition === BoardPosition.TOP)?.dimensions;
-                                if (dimensions) {
-                                    const min = Math.min(dimensions.x, dimensions.y);
-                                    if (radius > min) {
-                                        return {
-                                            valid: false,
-                                            message: `${commonResourceState?.resource?.partEditor.cornerDialog.radiusInvalid} ${min}`
-                                        };
-                                    }
-                                }
+                                // TODO validate
+
                                 return {valid: true};
                             }}
                             min="0"
@@ -125,15 +117,8 @@ const CornerDialog = ({cornerPosition, showDialog, setShowDialog}: {
                                     };
                                 }
 
-                                const dimensions = partEditorState?.boardDimensionsData.find(item => item.boardPosition === BoardPosition.TOP)?.dimensions;
-                                if (dimensions) {
-                                    if (cornerDimensions.x > dimensions.x || cornerDimensions.y > dimensions.y) {
-                                        return {
-                                            valid: false,
-                                            message: `${commonResourceState?.resource?.partEditor.cornerDialog.cornerDimensionsInvalid} [x:${dimensions.x},y:${dimensions.y}]`
-                                        };
-                                    }
-                                }
+                                // TODO validate
+
                                 return {valid: true};
                             }}
                         />
@@ -146,19 +131,14 @@ const CornerDialog = ({cornerPosition, showDialog, setShowDialog}: {
                             onClick={() => {
                                 switch (index) {
                                     case PartCornerType.ROUNDED: {
-                                        const rounded: PartCornerRounded = {
-                                            type: PartCornerType.ROUNDED,
-                                            radius: radius || -1
-                                        }
-                                        partEditorState?.setPartCorner(cornerPosition, rounded);
+                                        partEditorState?.setCornerRadius(cornerPosition, radius || -1);
                                         break;
                                     }
                                     case PartCornerType.STRAIGHT: {
-                                        const straight: PartCornerStraight = {
-                                            type: PartCornerType.STRAIGHT,
-                                            dimensions: cornerDimensions || {x: -1, y: -1}
-                                        }
-                                        partEditorState?.setPartCorner(cornerPosition, straight);
+                                        partEditorState?.setCornerDimensions(cornerPosition, cornerDimensions || {
+                                            x: -1,
+                                            y: -1
+                                        });
                                         break;
                                     }
                                 }

@@ -24,7 +24,7 @@ const BoardDimensionValue = (
 
     useEffect(() => {
         let value = '';
-        const dimensions = partEditorState?.boardDimensionsData.find(item => item.boardPosition === boardPosition)?.dimensions;
+        const dimensions = partEditorState?.boardData.find(item => item.boardPosition === boardPosition)?.dimensions;
         if (dimensions) {
             if (boardDimension === BoardDimension.X) {
                 value = `${dimensions.x}`;
@@ -33,7 +33,7 @@ const BoardDimensionValue = (
             }
         }
         setText(`${partEditorState?.getDimensionName(boardDimension)} ${value} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`);
-    }, [boardPosition, boardDimension, partEditorState?.boardDimensionsData]);
+    }, [boardPosition, boardDimension, partEditorState?.boardData]);
 
     return (
         <div

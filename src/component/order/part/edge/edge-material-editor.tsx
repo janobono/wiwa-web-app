@@ -26,8 +26,8 @@ const EdgeMaterialEditor = (
     const [showDialog, setShowDialog] = useState(false);
 
     useEffect(() => {
-        setEdge(partEditorState?.edgeMaterialData.find(item => item.edgePosition === edgePosition)?.edge);
-    }, [edgePosition, partEditorState?.edgeMaterialData]);
+        setEdge(partEditorState?.edgeData.find(item => item.edgePosition === edgePosition)?.edge);
+    }, [edgePosition, partEditorState?.edgeData]);
 
     return (
         <>
@@ -48,11 +48,11 @@ const EdgeMaterialEditor = (
                             onClick={() => {
                                 dialogState?.showDialog({
                                     type: DialogType.YES_NO,
-                                    title: `${commonResourceState?.resource?.partEditor.deleteEdgeMaterialQuestionTitle} ${partEditorState?.getEdgeName(edgePosition)}`,
-                                    message: commonResourceState?.resource?.partEditor.deleteEdgeMaterialQuestionMessage,
+                                    title: `${commonResourceState?.resource?.partEditor.deleteEdgeQuestionTitle} ${partEditorState?.getEdgeName(edgePosition)}`,
+                                    message: commonResourceState?.resource?.partEditor.deleteEdgeQuestionMessage,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
-                                            partEditorState?.setEdgeMaterial(edgePosition, undefined);
+                                            partEditorState?.deleteEdge(edgePosition);
                                         }
                                     }
                                 });
@@ -66,7 +66,8 @@ const EdgeMaterialEditor = (
 
             <EdgeProvider>
                 <EdgeMaterialDialog
-                    edgePosition={edgePosition}
+                    edge={edge}
+                    setEdge={(edge) => partEditorState?.setEdge(edgePosition, edge)}
                     showDialog={showDialog}
                     setShowDialog={setShowDialog}
                 />

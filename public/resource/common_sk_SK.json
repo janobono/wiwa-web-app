@@ -254,17 +254,18 @@
     "next": "Nasledujúca"
   },
   "partEditor": {
+    "boardDimensionsDialogTitle": "Rozmery",
+    "boardMaterialDialogTitle": "Zvoľte dosku",
+    "cornerDimensions": "Upraviť rozmery",
+    "cornerEdge": "Upraviť hranu",
+    "deleteCornerQuestionTitle": "Zamazať roh",
+    "deleteCornerQuestionMessage": "Naozaj si želáte zmazať roh?",
+    "deleteEdgeQuestionTitle": "Zamazať hranu",
+    "deleteEdgeQuestionMessage": "Naozaj si želáte zmazať hranu?",
+    "edgeMaterialDialogTitle": "Zvoľte hranu",
     "partLabel": "Typ dielca",
     "valuePlaceholder": "Zadajte hodnotu",
     "valueRequired": "sa vyžaduje",
-    "deleteCornerQuestionTitle": "Zamazať roh",
-    "deleteCornerQuestionMessage": "Naozaj si želáte zmazať roh?",
-    "deleteBoardMaterialQuestionTitle": "Zamazať materiál",
-    "deleteBoardMaterialQuestionMessage": "Naozaj si želáte zmazať materiál?",
-    "boardMaterialDialogTitle": "Materiál",
-    "deleteBoardDimensionsQuestionTitle": "Zamazať rozmery",
-    "deleteBoardDimensionsQuestionMessage": "Naozaj si želáte zmazať rozmery?",
-    "boardDimensionsDialogTitle": "Rozmery",
     "corner": {
       "none": "Žiadny",
       "rounded": "Zaoblený",
@@ -280,8 +281,7 @@
       "cornerDimensionsLabel": "Rozmery",
       "cornerDimensionsPlaceholderX": "Zadajte x",
       "cornerDimensionsPlaceholderY": "Zadajte y",
-      "cornerDimensionsRequired": "Vyžadujú sa rozmery",
-      "cornerDimensionsInvalid": "Rozmery musia byť menšie ako"
+      "cornerDimensionsRequired": "Vyžadujú sa rozmery"
     },
     "part": {
       "basic": "Základný",

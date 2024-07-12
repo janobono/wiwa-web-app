@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import { PartEditorContext } from '../part-editor-provider';
 import BaseDialog from '../../../dialog/base-dialog';
 import WiwaButton from '../../../ui/wiwa-button';
-import { BoardPosition } from '../../../../api/model/application';
 import { CommonResourceContext, DialogContext } from '../../../../context';
 import { Board, BoardField } from '../../../../api/model/board';
 import { getBoardImagePath } from '../../../../api/controller/ui';
@@ -13,33 +11,24 @@ import { BoardContext } from '../../../board/board-provider.tsx';
 import BoardTable from '../../../board/board-table.tsx';
 import WiwaPageable from '../../../ui/wiwa-pageable.tsx';
 
-const BoardMaterialDialog = ({boardPosition, showDialog, setShowDialog}: {
-    boardPosition: BoardPosition,
+const BoardMaterialDialog = ({board, setBoard, showDialog, setShowDialog}: {
+    board?: Board,
+    setBoard: (board: Board) => void,
     showDialog: boolean,
     setShowDialog: (showDialog: boolean) => void
 }) => {
     const boardState = useContext(BoardContext);
-    const partEditorState = useContext(PartEditorContext);
     const dialogState = useContext(DialogContext);
     const commonResourceState = useContext(CommonResourceContext);
 
-    const [board, setBoard] = useState<Board>();
-
     useEffect(() => {
         boardState?.getBoards().then();
-        boardState?.setSelected(undefined);
-        setBoard(partEditorState?.boardMaterialData.find(item => item.boardPosition === boardPosition)?.board);
+        boardState?.setSelected(board);
     }, [showDialog]);
-
-    useEffect(() => {
-        if (boardState?.selected) {
-            setBoard(boardState?.selected);
-        }
-    }, [boardState?.selected]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <BaseDialog
-            id={`part-editor-board-material-dialog-${boardPosition}`}
+            id="part-editor-board-material-dialog"
             maxWidth={true}
             showDialog={showDialog}
             closeHandler={() => setShowDialog(false)}
@@ -47,7 +36,7 @@ const BoardMaterialDialog = ({boardPosition, showDialog, setShowDialog}: {
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {`${commonResourceState?.resource?.partEditor.boardMaterialDialogTitle} ${partEditorState?.getBoardName(boardPosition)}`}
+                        {commonResourceState?.resource?.partEditor.boardMaterialDialogTitle}
                     </div>
                     <BoardSearchCriteriaForm searchHandler={(criteria) => boardState?.setCriteria(criteria)}/>
 
@@ -75,17 +64,20 @@ const BoardMaterialDialog = ({boardPosition, showDialog, setShowDialog}: {
                     <div className="flex flex-row gap-2 items-center">
                         <img
                             className="flex-none w-24 h-24 object-scale-down object-center"
-                            src={getBoardImagePath(board ? board.id : -1)}
+                            src={getBoardImagePath(boardState?.selected ? boardState.selected.id : -1)}
                             alt="Board image"
                         />
-                        <span className="text-xs">{board ? `${board.code} ${board.name}` : ''}</span>
+                        <span
+                            className="text-xs">{boardState?.selected ? `${boardState.selected.code} ${boardState.selected.name}` : ''}</span>
                     </div>
                     <div className="join">
                         <WiwaButton
                             className="btn-primary join-item"
-                            disabled={board === undefined}
+                            disabled={boardState?.selected === undefined}
                             onClick={() => {
-                                partEditorState?.setBoardMaterial(boardPosition, board);
+                                if (boardState?.selected) {
+                                    setBoard(boardState?.selected);
+                                }
                                 setShowDialog(false);
                             }}
                         >{commonResourceState?.resource?.imageDialog.ok}

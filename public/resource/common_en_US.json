@@ -254,17 +254,18 @@
     "previous": "Previous"
   },
   "partEditor": {
+    "boardMaterialDialogTitle": "Select board",
+    "boardDimensionsDialogTitle": "Dimensions",
+    "cornerDimensions": "Edit dimensions",
+    "cornerEdge": "Edit edge",
+    "deleteCornerQuestionTitle": "Delete corner",
+    "deleteCornerQuestionMessage": "Do you really want to delete corner?",
+    "deleteEdgeQuestionTitle": "Delete edge",
+    "deleteEdgeQuestionMessage": "Do you really want to delete edge?",
+    "edgeMaterialDialogTitle": "Select edge",
     "partLabel": "Part type",
     "valuePlaceholder": "Enter value",
     "valueRequired": "is required",
-    "deleteCornerQuestionTitle": "Delete corner",
-    "deleteCornerQuestionMessage": "Do you really want to delete corner?",
-    "deleteBoardMaterialQuestionTitle": "Delete board material",
-    "deleteBoardMaterialQuestionMessage": "Do you really want to delete board material?",
-    "boardMaterialDialogTitle": "Board material",
-    "deleteBoardDimensionsQuestionTitle": "Delete dimensions",
-    "deleteBoardDimensionsQuestionMessage": "Do you really want to delete dimensions?",
-    "boardDimensionsDialogTitle": "Dimensions",
     "corner": {
       "none": "None",
       "rounded": "Rounded",
@@ -280,8 +281,7 @@
       "cornerDimensionsLabel": "Dimensions",
       "cornerDimensionsPlaceholderX": "Enter x",
       "cornerDimensionsPlaceholderY": "Enter y",
-      "cornerDimensionsRequired": "Dimensions are required",
-      "cornerDimensionsInvalid": "Dimensions must be less than"
+      "cornerDimensionsRequired": "Dimensions are required"
     },
     "part": {
       "basic": "Basic",

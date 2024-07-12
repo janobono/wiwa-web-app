@@ -24,12 +24,12 @@ const BoardMaterialValue = (
     useEffect(() => {
         setText(undefined);
         setBoardId(-1);
-        const board = partEditorState?.boardMaterialData.find(item => item.boardPosition === boardPosition)?.board;
+        const board = partEditorState?.boardData.find(item => item.boardPosition === boardPosition)?.board;
         if (board) {
             setText(`${board.code} ${board.name}`);
             setBoardId(board.id);
         }
-    }, [boardPosition, partEditorState?.boardMaterialData]);
+    }, [boardPosition, partEditorState?.boardData]);
 
     return (
         <div className="flex flex-col gap-2 items-center">

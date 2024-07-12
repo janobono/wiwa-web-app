@@ -4,10 +4,10 @@ import { createPortal } from 'react-dom';
 import { PartEditorContext } from '../part-editor-provider';
 import BaseDialog from '../../../dialog/base-dialog';
 import WiwaButton from '../../../ui/wiwa-button';
+import WiwaFormDimensions from '../../../ui/wiwa-form-dimensions';
 import { Dimensions } from '../../../../api/model';
 import { BoardDimension, BoardPosition, UnitId } from '../../../../api/model/application';
 import { CommonResourceContext, DialogContext } from '../../../../context';
-import WiwaFormDimensions from '../../../ui/wiwa-form-dimensions.tsx';
 
 const BoardDimensionsDialog = ({boardPosition, showDialog, setShowDialog}: {
     boardPosition: BoardPosition,
@@ -22,7 +22,7 @@ const BoardDimensionsDialog = ({boardPosition, showDialog, setShowDialog}: {
     const [dimensionsValid, setDimensionsValid] = useState(false);
 
     useEffect(() => {
-        setDimensions(partEditorState?.boardDimensionsData.find(item => item.boardPosition === boardPosition)?.dimensions);
+        setDimensions(partEditorState?.boardData.find(item => item.boardPosition === boardPosition)?.dimensions);
     }, [showDialog]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
@@ -61,7 +61,9 @@ const BoardDimensionsDialog = ({boardPosition, showDialog, setShowDialog}: {
                             className="btn-primary join-item"
                             disabled={!dimensionsValid}
                             onClick={() => {
-                                partEditorState?.setBoardDimensions(boardPosition, dimensions);
+                                if (dimensions) {
+                                    partEditorState?.setBoardDimensions(boardPosition, dimensions);
+                                }
                                 setShowDialog(false);
                             }}
                         >{commonResourceState?.resource?.imageDialog.ok}

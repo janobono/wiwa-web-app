@@ -10,10 +10,7 @@ const PartBasicEditor = () => {
             <div className="overflow-auto">
                 <div className="grid grid-cols-3 min-w-max">
                     <div className="flex flex-row items-end justify-end p-5 border">
-                        <div className="flex flex-row gap-5">
-                            <EdgeMaterialEditor edgePosition={EdgePosition.A1B1}/>
-                            <CornerEditor cornerPosition={CornerPosition.A1B1}/>
-                        </div>
+                        <CornerEditor cornerPosition={CornerPosition.A1B1}/>
                     </div>
 
                     <div className="flex flex-row justify-center p-5 border">
@@ -24,10 +21,7 @@ const PartBasicEditor = () => {
                     </div>
 
                     <div className="flex flex-row items-end justify-start p-5 border">
-                        <div className="flex flex-row gap-5">
-                            <CornerEditor cornerPosition={CornerPosition.A1B2}/>
-                            <EdgeMaterialEditor edgePosition={EdgePosition.A1B2}/>
-                        </div>
+                        <CornerEditor cornerPosition={CornerPosition.A1B2}/>
                     </div>
 
                     <div className="flex flex-row justify-end items-center p-5 border">
@@ -46,10 +40,7 @@ const PartBasicEditor = () => {
                     </div>
 
                     <div className="flex flex-row items-start justify-end p-5 border">
-                        <div className="flex flex-row gap-5">
-                            <EdgeMaterialEditor edgePosition={EdgePosition.A2B1}/>
-                            <CornerEditor cornerPosition={CornerPosition.A2B1}/>
-                        </div>
+                        <CornerEditor cornerPosition={CornerPosition.A2B1}/>
                     </div>
 
                     <div className="flex flex-row justify-center items-start p-5 border">
@@ -57,10 +48,7 @@ const PartBasicEditor = () => {
                     </div>
 
                     <div className="flex flex-row items-start justify-start p-5 border">
-                        <div className="flex flex-row gap-5">
-                            <CornerEditor cornerPosition={CornerPosition.A2B2}/>
-                            <EdgeMaterialEditor edgePosition={EdgePosition.A2B2}/>
-                        </div>
+                        <CornerEditor cornerPosition={CornerPosition.A2B2}/>
                     </div>
                 </div>
             </div>

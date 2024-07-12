@@ -29,15 +29,15 @@ const EdgeMaterialValue = (
     useEffect(() => {
         setText(undefined);
         setEdgeId(-1);
-        const edge = partEditorState?.edgeMaterialData.find(item => item.edgePosition === edgePosition)?.edge;
+        const edge = partEditorState?.edgeData.find(item => item.edgePosition === edgePosition)?.edge;
         if (edge) {
             setText(`${edge.code} ${edge.name}`);
             setEdgeId(edge.id);
         }
-    }, [edgePosition, partEditorState?.edgeMaterialData]);
+    }, [edgePosition, partEditorState?.edgeData]);
 
     return (
-        <div className="flex flex-col gap-2 items-center">
+        <div className="flex flex-col gap-2 items-center justify-center">
             <div
                 className={twMerge(`flex gap-2 items-center ${row ? 'flex-row' : 'flex-col'}`)}
             >
@@ -59,9 +59,9 @@ const EdgeMaterialValue = (
                         <ArrowRight size={28}/>
                 }
                 <img
-                    className={twMerge(`flex-none object-scale-down object-center ${row ? 'w-16 h-7' : 'rotate-90 w-7 h-16'}`)}
+                    className={'flex-none object-scale-down object-center w-16 h-7'}
                     src={getEdgeImagePath(edgeId)}
-                    alt="Board image"
+                    alt="Edge image"
                 />
                 <span className="text-xs">{text}</span>
             </div>

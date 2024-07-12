@@ -256,20 +256,18 @@ export interface ResourceCommon {
         previous: string
     },
     partEditor: {
+        boardDimensionsDialogTitle: string,
+        boardMaterialDialogTitle: string,
+        cornerDimensions: string,
+        cornerEdge: string,
+        deleteCornerQuestionTitle: string,
+        deleteCornerQuestionMessage: string,
+        deleteEdgeQuestionTitle: string,
+        deleteEdgeQuestionMessage: string,
+        edgeMaterialDialogTitle: string,
         partLabel: string,
         valuePlaceholder: string,
         valueRequired: string,
-        deleteCornerQuestionTitle: string,
-        deleteCornerQuestionMessage: string,
-        deleteBoardMaterialQuestionTitle: string,
-        deleteBoardMaterialQuestionMessage: string,
-        boardMaterialDialogTitle: string,
-        deleteEdgeMaterialQuestionTitle: string,
-        deleteEdgeMaterialQuestionMessage: string,
-        edgeMaterialDialogTitle: string,
-        deleteBoardDimensionsQuestionTitle: string,
-        deleteBoardDimensionsQuestionMessage: string,
-        boardDimensionsDialogTitle: string,
         corner: {
             rounded: string,
             straight: string
@@ -283,8 +281,7 @@ export interface ResourceCommon {
             cornerDimensionsLabel: string,
             cornerDimensionsPlaceholderX: string,
             cornerDimensionsPlaceholderY: string,
-            cornerDimensionsRequired: string,
-            cornerDimensionsInvalid: string
+            cornerDimensionsRequired: string
         },
         part: {
             basic: string,
