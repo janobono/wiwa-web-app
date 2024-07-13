@@ -1,19 +1,20 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import BaseDialog from '../../../dialog/base-dialog';
-import WiwaButton from '../../../ui/wiwa-button';
-import { CommonResourceContext, DialogContext } from '../../../../context';
-import { Board, BoardField } from '../../../../api/model/board';
-import { getBoardImagePath } from '../../../../api/controller/ui';
-import BoardSearchCriteriaForm from '../../../board/board-search-criteria-form.tsx';
-import { BoardContext } from '../../../board/board-provider.tsx';
-import BoardTable from '../../../board/board-table.tsx';
-import WiwaPageable from '../../../ui/wiwa-pageable.tsx';
+import { BoardContext } from '../../board/board-provider';
+import BoardSearchCriteriaForm from '../../board/board-search-criteria-form';
+import BoardTable from '../../board/board-table';
+import BaseDialog from '../../dialog/base-dialog';
+import WiwaButton from '../../ui/wiwa-button';
+import WiwaPageable from '../../ui/wiwa-pageable';
+import { getBoardImagePath } from '../../../api/controller/ui';
+import { Board, BoardField } from '../../../api/model/board';
+import { CommonResourceContext, DialogContext } from '../../../context';
 
-const BoardMaterialDialog = ({board, setBoard, showDialog, setShowDialog}: {
-    board?: Board,
-    setBoard: (board: Board) => void,
+const BoardDialog = ({title, data, setData, showDialog, setShowDialog}: {
+    title?: string,
+    data?: Board,
+    setData: (board: Board) => void,
     showDialog: boolean,
     setShowDialog: (showDialog: boolean) => void
 }) => {
@@ -21,14 +22,21 @@ const BoardMaterialDialog = ({board, setBoard, showDialog, setShowDialog}: {
     const dialogState = useContext(DialogContext);
     const commonResourceState = useContext(CommonResourceContext);
 
+    const [titleText, setTitleText] = useState('');
+
     useEffect(() => {
+        if (title) {
+            setTitleText(`${commonResourceState?.resource?.partEditor.boardDialog.title} ${title}`);
+        } else {
+            setTitleText(commonResourceState?.resource?.partEditor.boardDialog.title || '');
+        }
         boardState?.getBoards().then();
-        boardState?.setSelected(board);
-    }, [showDialog]);
+        boardState?.setSelected(data);
+    }, [title, data, showDialog]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <BaseDialog
-            id="part-editor-board-material-dialog"
+            id="part-editor-board-dialog"
             maxWidth={true}
             showDialog={showDialog}
             closeHandler={() => setShowDialog(false)}
@@ -36,7 +44,7 @@ const BoardMaterialDialog = ({board, setBoard, showDialog, setShowDialog}: {
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {commonResourceState?.resource?.partEditor.boardMaterialDialogTitle}
+                        {titleText}
                     </div>
                     <BoardSearchCriteriaForm searchHandler={(criteria) => boardState?.setCriteria(criteria)}/>
 
@@ -76,7 +84,7 @@ const BoardMaterialDialog = ({board, setBoard, showDialog, setShowDialog}: {
                             disabled={boardState?.selected === undefined}
                             onClick={() => {
                                 if (boardState?.selected) {
-                                    setBoard(boardState?.selected);
+                                    setData(boardState?.selected);
                                 }
                                 setShowDialog(false);
                             }}
@@ -93,4 +101,4 @@ const BoardMaterialDialog = ({board, setBoard, showDialog, setShowDialog}: {
         </BaseDialog>, dialogState.modalRoot))
 }
 
-export default BoardMaterialDialog;
+export default BoardDialog;

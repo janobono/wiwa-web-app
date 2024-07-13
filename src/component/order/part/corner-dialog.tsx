@@ -1,67 +1,75 @@
 import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { PartEditorContext } from '../part-editor-provider';
-import BaseDialog from '../../../dialog/base-dialog';
-import WiwaButton from '../../../ui/wiwa-button';
-import WiwaFormInputInteger from '../../../ui/wiwa-form-input-integer';
-import WiwaFormDimensions from '../../../ui/wiwa-form-dimensions';
-import WiwaSelect from '../../../ui/wiwa-select';
-import { Dimensions } from '../../../../api/model';
-import { CornerPosition, UnitId } from '../../../../api/model/application';
-import { PartCornerType } from '../../../../api/model/order/part';
-import { CommonResourceContext, DialogContext } from '../../../../context';
+import BaseDialog from '../../dialog/base-dialog';
+import WiwaButton from '../../ui/wiwa-button';
+import WiwaFormInputInteger from '../../ui/wiwa-form-input-integer';
+import WiwaFormDimensions from '../../ui/wiwa-form-dimensions';
+import WiwaSelect from '../../ui/wiwa-select';
+import { Dimensions } from '../../../api/model';
+import { UnitId } from '../../../api/model/application';
+import { PartCornerType } from '../../../api/model/order/part';
+import { CommonResourceContext, DialogContext } from '../../../context';
 
-const CornerDialog = ({cornerPosition, showDialog, setShowDialog}: {
-    cornerPosition: CornerPosition,
-    showDialog: boolean,
-    setShowDialog: (showDialog: boolean) => void
-}) => {
-    const partEditorState = useContext(PartEditorContext);
+const CornerDialog = (
+    {
+        title,
+        dimensionsData,
+        setDimensionsData,
+        radiusData,
+        setRadiusData,
+        showDialog,
+        setShowDialog
+    }: {
+        title?: string,
+        dimensionsData?: Dimensions,
+        setDimensionsData: (data: Dimensions) => void,
+        radiusData?: number,
+        setRadiusData: (data: number) => void,
+        showDialog: boolean,
+        setShowDialog: (showDialog: boolean) => void
+    }
+) => {
     const dialogState = useContext(DialogContext);
     const commonResourceState = useContext(CommonResourceContext);
+
+    const [titleText, setTitleText] = useState('');
 
     const [index, setIndex] = useState<string>(PartCornerType.ROUNDED);
 
     const [radius, setRadius] = useState<number>();
     const [radiusValid, setRadiusValid] = useState(false);
 
-    const [cornerDimensions, setCornerDimensions] = useState<Dimensions>();
-    const [cornerDimensionsValid, setCornerDimensionsValid] = useState(false);
+    const [dimensions, setDimensions] = useState<Dimensions>();
+    const [dimensionsValid, setDimensionsValid] = useState(false);
 
     const [formValid, setFormValid] = useState(false);
 
     useEffect(() => {
-        setIndex(PartCornerType.ROUNDED);
-        setRadius(undefined);
-        setCornerDimensions(undefined);
-
-        const data = partEditorState?.cornerData.find(item => item.cornerPosition === cornerPosition);
-
-        if (data?.type) {
-            switch (data?.type) {
-                case PartCornerType.ROUNDED:
-                    setRadius(data.radius);
-                    break;
-                case PartCornerType.STRAIGHT:
-                    setIndex(PartCornerType.STRAIGHT);
-                    setCornerDimensions(data.dimensions);
-                    break;
-            }
+        if (title) {
+            setTitleText(`${commonResourceState?.resource?.partEditor.cornerDialog.title} ${title}`);
+        } else {
+            setTitleText(commonResourceState?.resource?.partEditor.cornerDialog.title || '');
         }
-    }, [showDialog]);
+        setIndex(dimensionsData === undefined ? PartCornerType.ROUNDED : PartCornerType.STRAIGHT);
+        setRadius(radiusData);
+        setDimensions(dimensionsData);
+    }, [title, dimensionsData, radiusData, showDialog]);
 
     useEffect(() => {
-        setFormValid((index === PartCornerType.ROUNDED && radiusValid) || (index === PartCornerType.STRAIGHT && cornerDimensionsValid));
-    }, [index, radiusValid, cornerDimensionsValid]);
+        setFormValid((index === PartCornerType.ROUNDED && radiusValid) || (index === PartCornerType.STRAIGHT && dimensionsValid));
+    }, [index, radiusValid, dimensionsValid]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
-        <BaseDialog id={`part-editor-corner-dialog-${cornerPosition}`} showDialog={showDialog}
-                    closeHandler={() => setShowDialog(false)}>
+        <BaseDialog
+            id="part-editor-corner-dialog"
+            showDialog={showDialog}
+            closeHandler={() => setShowDialog(false)}
+        >
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {`${commonResourceState?.resource?.partEditor.cornerDialog.title} ${partEditorState?.getCornerName(cornerPosition)}`}
+                        {titleText}
                     </div>
 
                     <WiwaSelect
@@ -106,11 +114,11 @@ const CornerDialog = ({cornerPosition, showDialog, setShowDialog}: {
                             required={true}
                             placeholderX={commonResourceState?.resource?.partEditor.cornerDialog.cornerDimensionsPlaceholderX}
                             placeholderY={commonResourceState?.resource?.partEditor.cornerDialog.cornerDimensionsPlaceholderY}
-                            value={cornerDimensions}
-                            setValue={setCornerDimensions}
-                            setValid={setCornerDimensionsValid}
+                            value={dimensions}
+                            setValue={setDimensions}
+                            setValid={setDimensionsValid}
                             validate={() => {
-                                if (cornerDimensions === undefined) {
+                                if (dimensions === undefined) {
                                     return {
                                         valid: false,
                                         message: commonResourceState?.resource?.partEditor.cornerDialog.cornerDimensionsRequired
@@ -131,14 +139,15 @@ const CornerDialog = ({cornerPosition, showDialog, setShowDialog}: {
                             onClick={() => {
                                 switch (index) {
                                     case PartCornerType.ROUNDED: {
-                                        partEditorState?.setCornerRadius(cornerPosition, radius || -1);
+                                        if (radius) {
+                                            setRadiusData(radius);
+                                        }
                                         break;
                                     }
                                     case PartCornerType.STRAIGHT: {
-                                        partEditorState?.setCornerDimensions(cornerPosition, cornerDimensions || {
-                                            x: -1,
-                                            y: -1
-                                        });
+                                        if (dimensions) {
+                                            setDimensionsData(dimensions);
+                                        }
                                         break;
                                     }
                                 }

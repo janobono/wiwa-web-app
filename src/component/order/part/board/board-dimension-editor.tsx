@@ -2,7 +2,8 @@ import { useContext, useState } from 'react';
 import { Edit } from 'react-feather';
 
 import BoardDimensionValue from './board-dimension-value';
-import BoardDimensionsDialog from './board-dimensions-dialog';
+import DimensionsDialog from '../dimensions-dialog';
+import { PartEditorContext } from '../part-editor-provider';
 import WiwaButton from '../../../ui/wiwa-button';
 import { BoardDimension, BoardPosition } from '../../../../api/model/application';
 import { CommonResourceContext } from '../../../../context';
@@ -16,6 +17,7 @@ const BoardDimensionEditor = (
         boardDimension: BoardDimension
     }
 ) => {
+    const partEditorState = useContext(PartEditorContext);
     const commonResourceState = useContext(CommonResourceContext);
 
     const [showDialog, setShowDialog] = useState(false);
@@ -32,8 +34,10 @@ const BoardDimensionEditor = (
                 </WiwaButton>
             </BoardDimensionValue>
 
-            <BoardDimensionsDialog
-                boardPosition={boardPosition}
+            <DimensionsDialog
+                title={partEditorState?.getBoardName(boardPosition)}
+                data={partEditorState?.boardData.find(item => item.boardPosition === boardPosition)?.dimensions}
+                setData={(data) => partEditorState?.setBoardDimensions([boardPosition], data)}
                 showDialog={showDialog}
                 setShowDialog={setShowDialog}
             />

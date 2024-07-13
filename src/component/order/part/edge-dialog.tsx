@@ -1,19 +1,20 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import BaseDialog from '../../../dialog/base-dialog';
-import { EdgeContext } from '../../../edge/edge-provider';
-import EdgeSearchCriteriaForm from '../../../edge/edge-search-criteria-form';
-import EdgeTable from '../../../edge/edge-table';
-import WiwaButton from '../../../ui/wiwa-button';
-import WiwaPageable from '../../../ui/wiwa-pageable';
-import { getEdgeImagePath } from '../../../../api/controller/ui';
-import { Edge, EdgeField } from '../../../../api/model/edge';
-import { CommonResourceContext, DialogContext } from '../../../../context';
+import BaseDialog from '../../dialog/base-dialog';
+import { EdgeContext } from '../../edge/edge-provider';
+import EdgeSearchCriteriaForm from '../../edge/edge-search-criteria-form';
+import EdgeTable from '../../edge/edge-table';
+import WiwaButton from '../../ui/wiwa-button';
+import WiwaPageable from '../../ui/wiwa-pageable';
+import { getEdgeImagePath } from '../../../api/controller/ui';
+import { Edge, EdgeField } from '../../../api/model/edge';
+import { CommonResourceContext, DialogContext } from '../../../context';
 
-const EdgeMaterialDialog = ({edge, setEdge, showDialog, setShowDialog}: {
-    edge?: Edge,
-    setEdge: (edge: Edge) => void,
+const EdgeDialog = ({title, data, setData, showDialog, setShowDialog}: {
+    title?: string,
+    data?: Edge,
+    setData: (edge: Edge) => void,
     showDialog: boolean,
     setShowDialog: (showDialog: boolean) => void
 }) => {
@@ -21,14 +22,21 @@ const EdgeMaterialDialog = ({edge, setEdge, showDialog, setShowDialog}: {
     const dialogState = useContext(DialogContext);
     const commonResourceState = useContext(CommonResourceContext);
 
+    const [titleText, setTitleText] = useState('');
+
     useEffect(() => {
+        if (title) {
+            setTitleText(`${commonResourceState?.resource?.partEditor.edgeDialog.title} ${title}`);
+        } else {
+            setTitleText(commonResourceState?.resource?.partEditor.edgeDialog.title || '');
+        }
         edgeState?.getEdges().then();
-        edgeState?.setSelected(edge);
-    }, [edge, showDialog]);
+        edgeState?.setSelected(data);
+    }, [data, showDialog]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <BaseDialog
-            id="part-editor-edge-material-dialog"
+            id="part-editor-edge-dialog"
             maxWidth={true}
             showDialog={showDialog}
             closeHandler={() => setShowDialog(false)}
@@ -36,7 +44,7 @@ const EdgeMaterialDialog = ({edge, setEdge, showDialog, setShowDialog}: {
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {commonResourceState?.resource?.partEditor.edgeMaterialDialogTitle}
+                        {titleText}
                     </div>
                     <EdgeSearchCriteriaForm searchHandler={(criteria) => edgeState?.setCriteria(criteria)}/>
 
@@ -77,7 +85,7 @@ const EdgeMaterialDialog = ({edge, setEdge, showDialog, setShowDialog}: {
                             disabled={edgeState?.selected === undefined}
                             onClick={() => {
                                 if (edgeState?.selected) {
-                                    setEdge(edgeState?.selected);
+                                    setData(edgeState?.selected);
                                 }
                                 setShowDialog(false);
                             }}
@@ -94,4 +102,4 @@ const EdgeMaterialDialog = ({edge, setEdge, showDialog, setShowDialog}: {
         </BaseDialog>, dialogState.modalRoot))
 }
 
-export default EdgeMaterialDialog;
+export default EdgeDialog;

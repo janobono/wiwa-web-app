@@ -3,8 +3,7 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'react-feather';
 import { twMerge } from 'tailwind-merge';
 
 import { PartEditorContext } from '../part-editor-provider';
-import { BoardDimension, BoardPosition, UnitId } from '../../../../api/model/application';
-import { CommonResourceContext } from '../../../../context';
+import { BoardDimension, BoardPosition } from '../../../../api/model/application';
 
 const BoardDimensionValue = (
     {
@@ -18,7 +17,6 @@ const BoardDimensionValue = (
     }
 ) => {
     const partEditorState = useContext(PartEditorContext);
-    const commonResourceState = useContext(CommonResourceContext);
 
     const [text, setText] = useState<string>();
 
@@ -32,7 +30,7 @@ const BoardDimensionValue = (
                 value = `${dimensions.y}`;
             }
         }
-        setText(`${partEditorState?.getDimensionName(boardDimension)} ${value} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`);
+        setText(`${partEditorState?.getDimensionName(boardDimension)} ${value} ${partEditorState?.lengthSign}`);
     }, [boardPosition, boardDimension, partEditorState?.boardData]);
 
     return (

@@ -254,20 +254,35 @@
     "next": "Nasledujúca"
   },
   "partEditor": {
-    "boardDimensionsDialogTitle": "Rozmery",
-    "boardMaterialDialogTitle": "Zvoľte dosku",
-    "cornerDimensions": "Upraviť rozmery",
-    "cornerEdge": "Upraviť hranu",
-    "deleteCornerQuestionTitle": "Zamazať roh",
-    "deleteCornerQuestionMessage": "Naozaj si želáte zmazať roh?",
-    "deleteEdgeQuestionTitle": "Zamazať hranu",
-    "deleteEdgeQuestionMessage": "Naozaj si želáte zmazať hranu?",
-    "edgeMaterialDialogTitle": "Zvoľte hranu",
     "partLabel": "Typ dielca",
-    "valuePlaceholder": "Zadajte hodnotu",
-    "valueRequired": "sa vyžaduje",
+    "rotate": "Orientácia",
+    "actions": {
+      "cornerDimensions": "Upraviť rozmery",
+      "cornerEdge": "Upraviť hranu",
+      "editAllEdges": "Upraviť všetky hrany"
+    },
+    "boardDialog": {
+      "title": "Zvoľte dosku"
+    },
+    "deleteCornerDialog": {
+      "title": "Zamazať roh",
+      "message": "Naozaj si želáte zmazať roh?"
+    },
+    "deleteEdgeDialog": {
+      "title": "Zamazať hranu",
+      "message": "Naozaj si želáte zmazať hranu?"
+    },
+    "dimensionsDialog": {
+      "title": "Rozmery",
+      "label": "Rozmery",
+      "placeholderX": "Zadajte x",
+      "placeholderY": "Zadajte y",
+      "required": "Rozmery sa vyžadujú"
+    },
+    "edgeDialog": {
+      "title": "Zvoľte hranu"
+    },
     "corner": {
-      "none": "Žiadny",
       "rounded": "Zaoblený",
       "straight": "Priamy"
     },
@@ -277,11 +292,15 @@
       "radiusLabel": "Polomer",
       "radiusPlaceholder": "Zadajte polomer",
       "radiusRequired": "Vyžaduje sa polomer",
-      "radiusInvalid": "Polomer musí byť menší ako",
       "cornerDimensionsLabel": "Rozmery",
       "cornerDimensionsPlaceholderX": "Zadajte x",
       "cornerDimensionsPlaceholderY": "Zadajte y",
       "cornerDimensionsRequired": "Vyžadujú sa rozmery"
+    },
+    "info": {
+      "boards": "Dosky",
+      "corners": "Rohy",
+      "edges": "Hrany"
     },
     "part": {
       "basic": "Základný",

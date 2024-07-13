@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { Edit, Trash } from 'react-feather';
 
-import EdgeMaterialDialog from './edge-material-dialog';
-import EdgeMaterialValue from './edge-material-value';
+import EdgeValue from './edge-value.tsx';
+import EdgeDialog from '../edge-dialog';
 import { PartEditorContext } from '../part-editor-provider';
 import EdgeProvider from '../../../edge/edge-provider';
 import WiwaButton from '../../../ui/wiwa-button';
@@ -11,7 +11,7 @@ import { Edge } from '../../../../api/model/edge';
 import { CommonResourceContext, DialogContext } from '../../../../context';
 import { DialogAnswer, DialogType } from '../../../../context/model/dialog';
 
-const EdgeMaterialEditor = (
+const EdgeEditor = (
     {
         edgePosition
     }: {
@@ -32,7 +32,7 @@ const EdgeMaterialEditor = (
     return (
         <>
             <div className="flex flex-row gap-2 items-center">
-                <EdgeMaterialValue edgePosition={edgePosition}>
+                <EdgeValue edgePosition={edgePosition}>
                     <div className="join">
                         <WiwaButton
                             title={commonResourceState?.resource?.action.edit}
@@ -48,11 +48,11 @@ const EdgeMaterialEditor = (
                             onClick={() => {
                                 dialogState?.showDialog({
                                     type: DialogType.YES_NO,
-                                    title: `${commonResourceState?.resource?.partEditor.deleteEdgeQuestionTitle} ${partEditorState?.getEdgeName(edgePosition)}`,
-                                    message: commonResourceState?.resource?.partEditor.deleteEdgeQuestionMessage,
+                                    title: `${commonResourceState?.resource?.partEditor.deleteEdgeDialog.title} ${partEditorState?.getEdgeName(edgePosition)}`,
+                                    message: commonResourceState?.resource?.partEditor.deleteEdgeDialog.message,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
-                                            partEditorState?.deleteEdge(edgePosition);
+                                            partEditorState?.deleteEdge([edgePosition]);
                                         }
                                     }
                                 });
@@ -61,13 +61,14 @@ const EdgeMaterialEditor = (
                             <Trash size={12}/>
                         </WiwaButton>
                     </div>
-                </EdgeMaterialValue>
+                </EdgeValue>
             </div>
 
             <EdgeProvider>
-                <EdgeMaterialDialog
-                    edge={edge}
-                    setEdge={(edge) => partEditorState?.setEdge(edgePosition, edge)}
+                <EdgeDialog
+                    title={partEditorState?.getEdgeName(edgePosition)}
+                    data={edge}
+                    setData={(data) => partEditorState?.setEdge([edgePosition], data)}
                     showDialog={showDialog}
                     setShowDialog={setShowDialog}
                 />
@@ -76,4 +77,4 @@ const EdgeMaterialEditor = (
     )
 }
 
-export default EdgeMaterialEditor;
+export default EdgeEditor;

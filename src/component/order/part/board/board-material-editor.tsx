@@ -2,12 +2,12 @@ import { useContext, useState } from 'react';
 import { Edit } from 'react-feather';
 
 import BoardMaterialValue from './board-material-value';
-import BoardMaterialDialog from './board-material-dialog';
+import BoardDialog from '../board-dialog';
 import { PartEditorContext } from '../part-editor-provider';
+import BoardProvider from '../../../board/board-provider';
 import WiwaButton from '../../../ui/wiwa-button';
 import { BoardPosition } from '../../../../api/model/application';
 import { CommonResourceContext } from '../../../../context';
-import BoardProvider from '../../../board/board-provider.tsx';
 
 const BoardMaterialEditor = (
     {
@@ -36,9 +36,10 @@ const BoardMaterialEditor = (
             </BoardMaterialValue>
 
             <BoardProvider>
-                <BoardMaterialDialog
-                    board={partEditorState?.boardData.find(item => item.boardPosition === boardPosition)?.board}
-                    setBoard={(board) => partEditorState?.setBoard(boardPosition, board)}
+                <BoardDialog
+                    title={partEditorState?.getBoardName(boardPosition)}
+                    data={partEditorState?.boardData.find(item => item.boardPosition === boardPosition)?.board}
+                    setData={(data) => partEditorState?.setBoard([boardPosition], data)}
                     showDialog={showDialog}
                     setShowDialog={setShowDialog}
                 />

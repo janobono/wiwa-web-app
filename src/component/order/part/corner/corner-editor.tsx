@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { Edit, Image, Trash } from 'react-feather';
 
-import CornerDialog from './corner-dialog';
 import CornerValue from './corner-value';
+import CornerDialog from '../corner-dialog';
+import EdgeDialog from '../edge-dialog';
 import { CornerData, PartEditorContext } from '../part-editor-provider';
-import EdgeMaterialDialog from '../edge/edge-material-dialog';
 import EdgeProvider from '../../../edge/edge-provider';
 import WiwaButton from '../../../ui/wiwa-button';
 import { CornerPosition } from '../../../../api/model/application';
@@ -36,14 +36,14 @@ const CornerEditor = (
                 <CornerValue cornerPosition={cornerPosition}>
                     <div className="join">
                         <WiwaButton
-                            title={commonResourceState?.resource?.partEditor.cornerDimensions}
+                            title={commonResourceState?.resource?.partEditor.actions.cornerDimensions}
                             className="btn-primary btn-xs join-item"
                             onClick={() => setShowDimensionsDialog(true)}
                         >
                             <Edit size={12}/>
                         </WiwaButton>
                         <WiwaButton
-                            title={commonResourceState?.resource?.partEditor.cornerEdge}
+                            title={commonResourceState?.resource?.partEditor.actions.cornerEdge}
                             className="btn-secondary btn-xs join-item"
                             onClick={() => setShowEdgeDialog(true)}
                         >
@@ -56,11 +56,11 @@ const CornerEditor = (
                             onClick={() => {
                                 dialogState?.showDialog({
                                     type: DialogType.YES_NO,
-                                    title: `${commonResourceState?.resource?.partEditor.deleteCornerQuestionTitle} ${partEditorState?.getCornerName(cornerPosition)}`,
-                                    message: commonResourceState?.resource?.partEditor.deleteCornerQuestionMessage,
+                                    title: `${commonResourceState?.resource?.partEditor.deleteCornerDialog.title} ${partEditorState?.getCornerName(cornerPosition)}`,
+                                    message: commonResourceState?.resource?.partEditor.deleteCornerDialog.message,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
-                                            partEditorState?.deleteCorner(cornerPosition);
+                                            partEditorState?.deleteCorner([cornerPosition]);
                                         }
                                     }
                                 });
@@ -73,14 +73,19 @@ const CornerEditor = (
             </div>
 
             <CornerDialog
-                cornerPosition={cornerPosition}
+                title={partEditorState?.getCornerName(cornerPosition)}
+                dimensionsData={partEditorState?.cornerData.find(item => item.cornerPosition === cornerPosition)?.dimensions}
+                setDimensionsData={(data) => partEditorState?.setCornerDimensions([cornerPosition], data)}
+                radiusData={partEditorState?.cornerData.find(item => item.cornerPosition === cornerPosition)?.radius}
+                setRadiusData={(data) => partEditorState?.setCornerRadius([cornerPosition], data)}
                 showDialog={showDimensionsDialog}
                 setShowDialog={setShowDimensionsDialog}
             />
             <EdgeProvider>
-                <EdgeMaterialDialog
-                    edge={partEditorState?.cornerData.find(item => item.cornerPosition === cornerPosition)?.edge}
-                    setEdge={(edge) => partEditorState?.setCornerEdge(cornerPosition, edge)}
+                <EdgeDialog
+                    title={partEditorState?.getCornerName(cornerPosition)}
+                    data={partEditorState?.cornerData.find(item => item.cornerPosition === cornerPosition)?.edge}
+                    setData={(data) => partEditorState?.setCornerEdge([cornerPosition], data)}
                     showDialog={showEdgeDialog}
                     setShowDialog={setShowEdgeDialog}
                 />

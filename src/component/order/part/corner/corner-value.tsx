@@ -2,10 +2,9 @@ import { ReactNode, useContext, useEffect, useState } from 'react';
 import { Circle, Octagon, Square } from 'react-feather';
 
 import { PartEditorContext } from '../part-editor-provider';
-import { CornerPosition, UnitId } from '../../../../api/model/application';
+import { CornerPosition } from '../../../../api/model/application';
 import { PartCornerType } from '../../../../api/model/order/part';
 import { getEdgeImagePath } from '../../../../api/controller/ui';
-import { CommonResourceContext } from '../../../../context';
 
 const CornerValue = (
     {
@@ -17,7 +16,6 @@ const CornerValue = (
     }
 ) => {
     const partEditorState = useContext(PartEditorContext);
-    const commonResourceState = useContext(CommonResourceContext);
 
     const [type, setType] = useState('NONE');
     const [text, setText] = useState('');
@@ -32,10 +30,10 @@ const CornerValue = (
         if (data) {
             setType(data.type || 'NONE');
             if (data.radius) {
-                setText(`${partEditorState?.getCornerName(cornerPosition)} r ${data.radius} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`);
+                setText(`${partEditorState?.getCornerName(cornerPosition)} r ${data.radius} ${partEditorState?.lengthSign}`);
             }
             if (data.dimensions) {
-                setText(`${partEditorState?.getCornerName(cornerPosition)} ${data.dimensions.x}x${data.dimensions.y} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`);
+                setText(`${partEditorState?.getCornerName(cornerPosition)} ${data.dimensions.x}x${data.dimensions.y} ${partEditorState?.lengthSign}`);
             }
             setEdgeId(data.edge ? data.edge.id : -1);
         }
@@ -46,11 +44,13 @@ const CornerValue = (
             <div className="flex flex-row gap-2 items-center justify-center">
                 {[CornerPosition.A1B1, CornerPosition.A2B1].includes(cornerPosition) &&
                     <>
-                        <img
-                            className="flex-none object-scale-down object-center w-16 h-7"
-                            src={getEdgeImagePath(edgeId)}
-                            alt="Edge image"
-                        />
+                        {edgeId !== -1 &&
+                            <img
+                                className="flex-none object-scale-down object-center w-16 h-7"
+                                src={getEdgeImagePath(edgeId)}
+                                alt="Edge image"
+                            />
+                        }
                         <span className="text-xs">{text}</span>
                     </>
                 }
@@ -60,11 +60,13 @@ const CornerValue = (
                 {[CornerPosition.A1B2, CornerPosition.A2B2].includes(cornerPosition) &&
                     <>
                         <span className="text-xs">{text}</span>
-                        <img
-                            className="flex-none object-scale-down object-center w-16 h-7"
-                            src={getEdgeImagePath(edgeId)}
-                            alt="Edge image"
-                        />
+                        {edgeId !== -1 &&
+                            <img
+                                className="flex-none object-scale-down object-center w-16 h-7"
+                                src={getEdgeImagePath(edgeId)}
+                                alt="Edge image"
+                            />
+                        }
                     </>
                 }
             </div>

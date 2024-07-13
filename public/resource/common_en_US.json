@@ -254,20 +254,35 @@
     "previous": "Previous"
   },
   "partEditor": {
-    "boardMaterialDialogTitle": "Select board",
-    "boardDimensionsDialogTitle": "Dimensions",
-    "cornerDimensions": "Edit dimensions",
-    "cornerEdge": "Edit edge",
-    "deleteCornerQuestionTitle": "Delete corner",
-    "deleteCornerQuestionMessage": "Do you really want to delete corner?",
-    "deleteEdgeQuestionTitle": "Delete edge",
-    "deleteEdgeQuestionMessage": "Do you really want to delete edge?",
-    "edgeMaterialDialogTitle": "Select edge",
     "partLabel": "Part type",
-    "valuePlaceholder": "Enter value",
-    "valueRequired": "is required",
+    "rotate": "Rotate",
+    "actions": {
+      "cornerDimensions": "Edit dimensions",
+      "cornerEdge": "Edit edge",
+      "editAllEdges": "Edit all edges"
+    },
+    "boardDialog": {
+      "title": "Select board"
+    },
+    "deleteCornerDialog": {
+      "title": "Delete corner",
+      "message": "Do you really want to delete corner?"
+    },
+    "deleteEdgeDialog": {
+      "title": "Delete edge",
+      "message": "Do you really want to delete edge?"
+    },
+    "dimensionsDialog": {
+      "title": "Dimensions",
+      "label": "Dimensions",
+      "placeholderX": "Enter value",
+      "placeholderY": "Enter value",
+      "required": "Dimensions are required"
+    },
+    "edgeDialog": {
+      "title": "Select edge"
+    },
     "corner": {
-      "none": "None",
       "rounded": "Rounded",
       "straight": "Straight"
     },
@@ -277,11 +292,15 @@
       "radiusLabel": "Radius",
       "radiusPlaceholder": "Enter radius",
       "radiusRequired": "Radius is required",
-      "radiusInvalid": "Radius must be less than",
       "cornerDimensionsLabel": "Dimensions",
       "cornerDimensionsPlaceholderX": "Enter x",
       "cornerDimensionsPlaceholderY": "Enter y",
       "cornerDimensionsRequired": "Dimensions are required"
+    },
+    "info": {
+      "boards": "Boards",
+      "corners": "Corners",
+      "edges": "Edges"
     },
     "part": {
       "basic": "Basic",

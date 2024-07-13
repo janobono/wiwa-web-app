@@ -6,7 +6,7 @@ import { PartEditorContext } from '../part-editor-provider';
 import { getEdgeImagePath } from '../../../../api/controller/ui';
 import { EdgePosition } from '../../../../api/model/application';
 
-const EdgeMaterialValue = (
+const EdgeValue = (
     {
         edgePosition,
         children
@@ -58,11 +58,13 @@ const EdgeMaterialValue = (
                         :
                         <ArrowRight size={28}/>
                 }
-                <img
-                    className={'flex-none object-scale-down object-center w-16 h-7'}
-                    src={getEdgeImagePath(edgeId)}
-                    alt="Edge image"
-                />
+                {edgeId !== -1 &&
+                    <img
+                        className={'flex-none object-scale-down object-center w-16 h-7'}
+                        src={getEdgeImagePath(edgeId)}
+                        alt="Edge image"
+                    />
+                }
                 <span className="text-xs">{text}</span>
             </div>
             {children}
@@ -70,4 +72,4 @@ const EdgeMaterialValue = (
     )
 }
 
-export default EdgeMaterialValue;
+export default EdgeValue;

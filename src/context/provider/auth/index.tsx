@@ -75,6 +75,8 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
 
         if (authToken !== undefined && accessExpired) {
             localStorage.removeItem(ACCESS_TOKEN);
+            setAuthToken({...authToken, accessToken: ''});
+            setAuthUser(undefined);
         }
 
         if (authToken !== undefined && refreshExpired) {
@@ -93,7 +95,7 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
     }
 
     const decodeAccessToken = (accessToken?: string): JwtPayload | undefined => {
-        let jwtPayload;
+        let jwtPayload = undefined;
         if (accessToken) {
             jwtPayload = jwtDecode<JwtPayload>(accessToken);
             if (isJwtPayloadExpired(jwtPayload)) {

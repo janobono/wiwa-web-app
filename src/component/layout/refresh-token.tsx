@@ -10,7 +10,7 @@ const RefreshToken = () => {
 
     useEffect(() => {
         if (authState) {
-            setShow(authState.accessExpired && !authState.refreshExpired && authState?.authToken !== undefined);
+            setShow(authState.accessExpired && !authState.refreshExpired);
         } else {
             setShow(false);
         }

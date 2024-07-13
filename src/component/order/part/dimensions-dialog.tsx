@@ -1,44 +1,53 @@
 import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { PartEditorContext } from '../part-editor-provider';
-import BaseDialog from '../../../dialog/base-dialog';
-import WiwaButton from '../../../ui/wiwa-button';
-import WiwaFormDimensions from '../../../ui/wiwa-form-dimensions';
-import { Dimensions } from '../../../../api/model';
-import { BoardDimension, BoardPosition, UnitId } from '../../../../api/model/application';
-import { CommonResourceContext, DialogContext } from '../../../../context';
+import BaseDialog from '../../dialog/base-dialog';
+import WiwaButton from '../../ui/wiwa-button';
+import WiwaFormDimensions from '../../ui/wiwa-form-dimensions';
+import { Dimensions } from '../../../api/model';
+import { UnitId } from '../../../api/model/application';
+import { CommonResourceContext, DialogContext } from '../../../context';
 
-const BoardDimensionsDialog = ({boardPosition, showDialog, setShowDialog}: {
-    boardPosition: BoardPosition,
+const DimensionsDialog = ({title, data, setData, showDialog, setShowDialog}: {
+    title?: string,
+    data?: Dimensions,
+    setData: (data: Dimensions) => void,
     showDialog: boolean,
     setShowDialog: (showDialog: boolean) => void
 }) => {
-    const partEditorState = useContext(PartEditorContext);
     const dialogState = useContext(DialogContext);
     const commonResourceState = useContext(CommonResourceContext);
 
+    const [titleText, setTitleText] = useState('');
     const [dimensions, setDimensions] = useState<Dimensions>();
     const [dimensionsValid, setDimensionsValid] = useState(false);
 
     useEffect(() => {
-        setDimensions(partEditorState?.boardData.find(item => item.boardPosition === boardPosition)?.dimensions);
-    }, [showDialog]);
+        if (title) {
+            setTitleText(`${commonResourceState?.resource?.partEditor.dimensionsDialog.title} ${title}`);
+        } else {
+            setTitleText(commonResourceState?.resource?.partEditor.dimensionsDialog.title || '');
+        }
+        setDimensions(data);
+    }, [title, data, showDialog]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
-        <BaseDialog id={`part-editor-board-dimensions-dialog-${boardPosition}`} showDialog={showDialog}
-                    closeHandler={() => setShowDialog(false)}>
+        <BaseDialog
+            id="part-editor-dimensions-dialog"
+            showDialog={showDialog}
+            closeHandler={() => setShowDialog(false)}
+        >
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {`${commonResourceState?.resource?.partEditor.boardDimensionsDialogTitle} ${partEditorState?.getBoardName(boardPosition)}`}
+                        {titleText}
                     </div>
 
                     <WiwaFormDimensions
-                        label={`${partEditorState?.getBoardName(boardPosition)} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`}
+                        label={`${commonResourceState?.resource?.partEditor.dimensionsDialog.label} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`}
                         required={true}
-                        placeholderX={`${commonResourceState?.resource?.partEditor.valuePlaceholder} ${partEditorState?.getDimensionName(BoardDimension.X)}`}
-                        placeholderY={`${commonResourceState?.resource?.partEditor.valuePlaceholder} ${partEditorState?.getDimensionName(BoardDimension.Y)}`}
+                        placeholderX={commonResourceState?.resource?.partEditor.dimensionsDialog.placeholderX}
+                        placeholderY={commonResourceState?.resource?.partEditor.dimensionsDialog.placeholderY}
                         value={dimensions}
                         setValue={setDimensions}
                         setValid={setDimensionsValid}
@@ -46,12 +55,9 @@ const BoardDimensionsDialog = ({boardPosition, showDialog, setShowDialog}: {
                             if (dimensions === undefined) {
                                 return {
                                     valid: false,
-                                    message: `${partEditorState?.getBoardName(boardPosition)} ${commonResourceState?.resource?.partEditor.valueRequired}`
+                                    message: commonResourceState?.resource?.partEditor.dimensionsDialog.required
                                 };
                             }
-
-                            // TODO other validations
-
                             return {valid: true};
                         }}
                     />
@@ -62,7 +68,7 @@ const BoardDimensionsDialog = ({boardPosition, showDialog, setShowDialog}: {
                             disabled={!dimensionsValid}
                             onClick={() => {
                                 if (dimensions) {
-                                    partEditorState?.setBoardDimensions(boardPosition, dimensions);
+                                    setData(dimensions);
                                 }
                                 setShowDialog(false);
                             }}
@@ -79,4 +85,4 @@ const BoardDimensionsDialog = ({boardPosition, showDialog, setShowDialog}: {
         </BaseDialog>, dialogState.modalRoot))
 }
 
-export default BoardDimensionsDialog;
+export default DimensionsDialog;
