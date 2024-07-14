@@ -4,8 +4,9 @@ import PartEditor from './part/part-editor';
 import WiwaFormInputInteger from '../ui/wiwa-form-input-integer';
 import WiwaFormInputString from '../ui/wiwa-form-input-string';
 import WiwaButton from '../ui/wiwa-button';
+import WiwaSelect from '../ui/wiwa-select';
 import { UnitId } from '../../api/model/application';
-import { Part } from '../../api/model/order/part';
+import { Part, PartType } from '../../api/model/order/part';
 import { OrderItem, OrderItemChange } from '../../api/model/order';
 import { CommonResourceContext } from '../../context';
 
@@ -21,6 +22,8 @@ const OrderItemEditor = (
     }
 ) => {
     const commonResourceState = useContext(CommonResourceContext);
+
+    const [partType, setPartType] = useState<PartType>(PartType.BASIC);
 
     const [quantitySign, setQuantitySign] = useState<string>();
 
@@ -72,6 +75,29 @@ const OrderItemEditor = (
     return (
         <>
             <div className="flex flex-col md:flex-row gap-5 w-full">
+                <div className="form-control w-full">
+                    <label className="label">
+                        <span className="label-text">{commonResourceState?.resource?.orderItemEditor.partLabel}</span>
+                    </label>
+                    <WiwaSelect
+                        value={partType}
+                        onChange={event => setPartType(event.currentTarget.value as PartType)}
+                    >
+                        <option value={PartType.BASIC}>
+                            {commonResourceState?.resource?.orderItemEditor.part.basic}
+                        </option>
+                        <option value={PartType.DUPLICATED_BASIC}>
+                            {commonResourceState?.resource?.orderItemEditor.part.duplicatedBasic}
+                        </option>
+                        <option value={PartType.DUPLICATED_FRAME}>
+                            {commonResourceState?.resource?.orderItemEditor.part.duplicatedFrame}
+                        </option>
+                        <option value={PartType.FRAME}>
+                            {commonResourceState?.resource?.orderItemEditor.part.frame}
+                        </option>
+                    </WiwaSelect>
+                </div>
+
                 <WiwaFormInputString
                     label={commonResourceState?.resource?.orderItemEditor.nameLabel}
                     required={true}
@@ -118,6 +144,8 @@ const OrderItemEditor = (
             </div>
             <hr/>
             <PartEditor
+                partType={partType}
+                setPartType={setPartType}
                 part={part}
                 setPart={setPart}
                 valid={partValid}

@@ -27,11 +27,11 @@ const EdgeValue = (
     }, [edgePosition]);
 
     useEffect(() => {
-        setText(undefined);
+        setText(partEditorState?.getEdgeName(edgePosition));
         setEdgeId(-1);
         const edge = partEditorState?.edgeData.find(item => item.edgePosition === edgePosition)?.edge;
         if (edge) {
-            setText(`${edge.code} ${edge.name}`);
+            setText(`${partEditorState?.getEdgeName(edgePosition)} ${edge.code} ${edge.name}`);
             setEdgeId(edge.id);
         }
     }, [edgePosition, partEditorState?.edgeData]);

@@ -30,7 +30,7 @@ const BoardDimensionValue = (
                 value = `${dimensions.y}`;
             }
         }
-        setText(`${partEditorState?.getDimensionName(boardDimension)} ${value} ${partEditorState?.lengthSign}`);
+        setText(`${partEditorState?.getBoardName(boardPosition)} ${partEditorState?.getDimensionName(boardDimension)} ${value} ${partEditorState?.lengthSign}`);
     }, [boardPosition, boardDimension, partEditorState?.boardData]);
 
     return (

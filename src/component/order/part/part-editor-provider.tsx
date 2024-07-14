@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Part, PartCornerType } from '../../../api/model/order/part';
+import { Part, PartCornerType, PartType } from '../../../api/model/order/part';
 import { Dimensions, Entry } from '../../../api/model';
 import {
     BoardDimension,
@@ -36,6 +36,8 @@ export interface CornerData {
 }
 
 export interface PartEditorState {
+    partType: PartType,
+    setPartType: (partType: PartType) => void,
     part?: Part,
     setPart: (part: Part) => void,
     valid: boolean,
@@ -47,8 +49,6 @@ export interface PartEditorState {
     getBoardName: (boardPosition: BoardPosition) => string,
     getEdgeName: (edgePosition: EdgePosition) => string,
     getCornerName: (cornerPosition: CornerPosition) => string,
-    partType?: string,
-    setPartType: (partType?: string) => void,
     rotate: boolean,
     setRotate: (rotate: boolean) => void,
     boardData: BoardData[],
@@ -69,12 +69,16 @@ export const PartEditorContext = createContext<PartEditorState | undefined>(unde
 
 const PartEditorProvider = (
     {
+        partType,
+        setPartType,
         part,
         setPart,
         valid,
         setValid,
         children
     }: {
+        partType: PartType,
+        setPartType: (partType: PartType) => void,
         part?: Part,
         setPart: (part: Part) => void,
         valid: boolean,
@@ -89,8 +93,6 @@ const PartEditorProvider = (
     const [orderProperties, setOrderProperties] = useState<OrderProperties>();
     const [manufactureProperties, setManufactureProperties] = useState<ManufactureProperties>();
     const [lengthSign, setLengthSign] = useState<string>();
-
-    const [partType, setPartType] = useState<string>();
 
     const [rotate, setRotate] = useState(false);
 
@@ -117,14 +119,33 @@ const PartEditorProvider = (
     }, []);
 
     useEffect(() => {
-        if (part) {
+        if (part?.type) {
             setPartType(part.type);
-            // TODO
-        } else {
-            setPartType(undefined);
-            // TODO
         }
     }, [part]);
+
+    useEffect(() => {
+        setRotate(false);
+        setBoardDataValue([]);
+        setEdgeDataValue([]);
+        setCornerDataValue([]);
+        setErrorMessages([]);
+
+        switch (partType) {
+            case PartType.BASIC:
+                // TODO
+                break;
+            case PartType.DUPLICATED_BASIC:
+                // TODO
+                break;
+            case PartType.DUPLICATED_FRAME:
+                // TODO
+                break;
+            case PartType.FRAME:
+                // TODO
+                break;
+        }
+    }, [partType]);
 
     const getEntryValue = (key: string, entries?: Entry[]) => {
         return entries?.find(entry => entry.key === key)?.value || '';
@@ -271,6 +292,8 @@ const PartEditorProvider = (
         <PartEditorContext.Provider
             value={
                 {
+                    partType,
+                    setPartType,
                     part,
                     setPart,
                     valid,
@@ -282,8 +305,6 @@ const PartEditorProvider = (
                     getBoardName,
                     getEdgeName,
                     getCornerName,
-                    partType,
-                    setPartType,
                     rotate,
                     setRotate,
                     boardData,

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Edit, Trash } from 'react-feather';
+import { Image, Trash } from 'react-feather';
 
 import EdgeValue from './edge-value.tsx';
 import EdgeDialog from '../edge-dialog';
@@ -35,11 +35,11 @@ const EdgeEditor = (
                 <EdgeValue edgePosition={edgePosition}>
                     <div className="join">
                         <WiwaButton
-                            title={commonResourceState?.resource?.action.edit}
-                            className="btn-primary btn-xs join-item"
+                            title={commonResourceState?.resource?.partEditor.actions.editEdge}
+                            className="btn-secondary btn-xs join-item"
                             onClick={() => setShowDialog(true)}
                         >
-                            <Edit size={12}/>
+                            <Image size={12}/>
                         </WiwaButton>
                         <WiwaButton
                             disabled={edge === undefined}

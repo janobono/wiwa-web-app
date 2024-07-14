@@ -22,11 +22,11 @@ const BoardMaterialValue = (
     const [boardId, setBoardId] = useState(-1);
 
     useEffect(() => {
-        setText(undefined);
+        setText(partEditorState?.getBoardName(boardPosition));
         setBoardId(-1);
         const board = partEditorState?.boardData.find(item => item.boardPosition === boardPosition)?.board;
         if (board) {
-            setText(`${board.code} ${board.name}`);
+            setText(`${partEditorState?.getBoardName(boardPosition)} ${board.code} ${board.name}`);
             setBoardId(board.id);
         }
     }, [boardPosition, partEditorState?.boardData]);

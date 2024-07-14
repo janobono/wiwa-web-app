@@ -200,11 +200,18 @@
     "nameLabel": "Názov",
     "namePlaceholder": "Zadajte názov",
     "nameRequired": "Vyžaduje sa názov",
+    "partLabel": "Typ dielca",
     "quantityLabel": "Množstvo",
     "quantityPlaceholder": "Zadajte množstvo",
     "quantityRequired": "Vyžaduje sa množstvo",
     "descriptionLabel": "Popis",
-    "descriptionPlaceholder": "Zadajte popis"
+    "descriptionPlaceholder": "Zadajte popis",
+    "part": {
+      "basic": "Základný",
+      "duplicatedBasic": "Zdvojený základný",
+      "duplicatedFrame": "Zdvojený rám",
+      "frame": "Rám"
+    }
   },
   "orderItemTable": {
     "id": "Id",
@@ -254,12 +261,15 @@
     "next": "Nasledujúca"
   },
   "partEditor": {
-    "partLabel": "Typ dielca",
-    "rotate": "Orientácia",
+    "boardOrientation": "Orientácia dosky",
+    "rotate": "Otáčať",
     "actions": {
-      "cornerDimensions": "Upraviť rozmery",
-      "cornerEdge": "Upraviť hranu",
-      "editAllEdges": "Upraviť všetky hrany"
+      "editBoard": "Upraviť dosku",
+      "editDimensions": "Upraviť rozmery",
+      "editEdge": "Upraviť hranu",
+      "editAllBoards": "Upraviť dosky",
+      "editAllCornerDimensions": "Upraviť rozmery rohov",
+      "editAllEdges": "Upraviť hrany"
     },
     "boardDialog": {
       "title": "Zvoľte dosku"
@@ -301,12 +311,6 @@
       "boards": "Dosky",
       "corners": "Rohy",
       "edges": "Hrany"
-    },
-    "part": {
-      "basic": "Základný",
-      "duplicatedBasic": "Zdvojený základný",
-      "duplicatedFrame": "Zdvojený rám",
-      "frame": "Rám"
     }
   },
   "refreshToken": {

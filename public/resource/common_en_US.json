@@ -200,11 +200,18 @@
     "nameLabel": "Name",
     "namePlaceholder": "Enter name",
     "nameRequired": "Name is required",
+    "partLabel": "Part type",
     "quantityLabel": "Quantity",
     "quantityPlaceholder": "Enter quantity",
     "quantityRequired": "Quantity is required",
     "descriptionLabel": "Description",
-    "descriptionPlaceholder": "Enter description"
+    "descriptionPlaceholder": "Enter description",
+    "part": {
+      "basic": "Basic",
+      "duplicatedBasic": "Duplicated basic",
+      "duplicatedFrame": "Duplicated frame",
+      "frame": "Frame"
+    }
   },
   "orderItemTable": {
     "id": "Id",
@@ -254,12 +261,15 @@
     "previous": "Previous"
   },
   "partEditor": {
-    "partLabel": "Part type",
+    "boardOrientation": "Board orientation",
     "rotate": "Rotate",
     "actions": {
-      "cornerDimensions": "Edit dimensions",
-      "cornerEdge": "Edit edge",
-      "editAllEdges": "Edit all edges"
+      "editBoard": "Edit board",
+      "editDimensions": "Edit dimensions",
+      "editEdge": "Edit edge",
+      "editAllBoards": "Edit boards",
+      "editAllCornerDimensions": "Edit corners dimensions",
+      "editAllEdges": "Edit edges"
     },
     "boardDialog": {
       "title": "Select board"
@@ -301,12 +311,6 @@
       "boards": "Boards",
       "corners": "Corners",
       "edges": "Edges"
-    },
-    "part": {
-      "basic": "Basic",
-      "duplicatedBasic": "Duplicated basic",
-      "duplicatedFrame": "Duplicated frame",
-      "frame": "Frame"
     }
   },
   "refreshToken": {

@@ -202,11 +202,18 @@ export interface ResourceCommon {
         nameLabel: string,
         namePlaceholder: string,
         nameRequired: string,
+        partLabel: string,
         quantityLabel: string,
         quantityPlaceholder: string,
         quantityRequired: string,
         descriptionLabel: string,
-        descriptionPlaceholder: string
+        descriptionPlaceholder: string,
+        part: {
+            basic: string,
+            duplicatedBasic: string,
+            duplicatedFrame: string,
+            frame: string
+        }
     },
     orderItemTable: {
         id: string,
@@ -256,11 +263,14 @@ export interface ResourceCommon {
         previous: string
     },
     partEditor: {
-        partLabel: string,
+        boardOrientation: string,
         rotate: string,
         actions: {
-            cornerDimensions: string,
-            cornerEdge: string,
+            editBoard: string,
+            editDimensions: string,
+            editEdge: string,
+            editAllBoards: string,
+            editAllCornerDimensions: string,
             editAllEdges: string
         },
         boardDialog: {
@@ -303,12 +313,6 @@ export interface ResourceCommon {
             boards: string,
             corners: string,
             edges: string
-        },
-        part: {
-            basic: string,
-            duplicatedBasic: string,
-            duplicatedFrame: string,
-            frame: string
         }
     },
     refreshToken: {

@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Edit } from 'react-feather';
+import { Image } from 'react-feather';
 
 import BoardMaterialValue from './board-material-value';
 import BoardDialog from '../board-dialog';
@@ -27,11 +27,11 @@ const BoardMaterialEditor = (
         <>
             <BoardMaterialValue boardPosition={boardPosition} rotate={rotate}>
                 <WiwaButton
-                    title={commonResourceState?.resource?.action.edit}
+                    title={commonResourceState?.resource?.partEditor.actions.editBoard}
                     className="btn-primary btn-xs join-item"
                     onClick={() => setShowDialog(true)}
                 >
-                    <Edit size={12}/>
+                    <Image size={12}/>
                 </WiwaButton>
             </BoardMaterialValue>
 

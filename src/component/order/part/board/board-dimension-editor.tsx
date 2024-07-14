@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Edit } from 'react-feather';
+import { ArrowLeft, ArrowRight } from 'react-feather';
 
 import BoardDimensionValue from './board-dimension-value';
 import DimensionsDialog from '../dimensions-dialog';
@@ -11,9 +11,11 @@ import { CommonResourceContext } from '../../../../context';
 const BoardDimensionEditor = (
     {
         boardPosition,
+        shadowBoardPositions = [],
         boardDimension
     }: {
         boardPosition: BoardPosition,
+        shadowBoardPositions?: BoardPosition[],
         boardDimension: BoardDimension
     }
 ) => {
@@ -26,18 +28,21 @@ const BoardDimensionEditor = (
         <>
             <BoardDimensionValue boardPosition={boardPosition} boardDimension={boardDimension}>
                 <WiwaButton
-                    title={commonResourceState?.resource?.action.edit}
+                    title={commonResourceState?.resource?.partEditor.actions.editDimensions}
                     className="btn-primary btn-xs join-item"
                     onClick={() => setShowDialog(true)}
                 >
-                    <Edit size={12}/>
+                    <div className="grid grid-cols-2">
+                        <ArrowLeft size={12}/>
+                        <ArrowRight size={12}/>
+                    </div>
                 </WiwaButton>
             </BoardDimensionValue>
 
             <DimensionsDialog
                 title={partEditorState?.getBoardName(boardPosition)}
                 data={partEditorState?.boardData.find(item => item.boardPosition === boardPosition)?.dimensions}
-                setData={(data) => partEditorState?.setBoardDimensions([boardPosition], data)}
+                setData={(data) => partEditorState?.setBoardDimensions([boardPosition, ...shadowBoardPositions], data)}
                 showDialog={showDialog}
                 setShowDialog={setShowDialog}
             />

@@ -35,7 +35,7 @@ export enum FrameType {
 }
 
 export interface Part {
-    type: string
+    type: PartType
 }
 
 export interface PartBasic extends Part {

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Edit, Image, Trash } from 'react-feather';
+import { ArrowLeft, ArrowRight, Image, Trash } from 'react-feather';
 
 import CornerValue from './corner-value';
 import CornerDialog from '../corner-dialog';
@@ -36,14 +36,17 @@ const CornerEditor = (
                 <CornerValue cornerPosition={cornerPosition}>
                     <div className="join">
                         <WiwaButton
-                            title={commonResourceState?.resource?.partEditor.actions.cornerDimensions}
-                            className="btn-primary btn-xs join-item"
+                            title={commonResourceState?.resource?.partEditor.actions.editDimensions}
+                            className="btn-secondary btn-xs join-item"
                             onClick={() => setShowDimensionsDialog(true)}
                         >
-                            <Edit size={12}/>
+                            <div className="grid grid-cols-2">
+                                <ArrowLeft size={12}/>
+                                <ArrowRight size={12}/>
+                            </div>
                         </WiwaButton>
                         <WiwaButton
-                            title={commonResourceState?.resource?.partEditor.actions.cornerEdge}
+                            title={commonResourceState?.resource?.partEditor.actions.editEdge}
                             className="btn-secondary btn-xs join-item"
                             onClick={() => setShowEdgeDialog(true)}
                         >
