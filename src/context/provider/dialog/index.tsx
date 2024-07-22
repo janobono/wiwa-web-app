@@ -48,7 +48,7 @@ const DialogProvider = ({children}: { children: ReactNode }) => {
                                 </h1>
                             }
                             {data?.message &&
-                                <p className="text-sm md:text-base text-center py-5">
+                                <p className="text-sm text-center py-5">
                                     {data.message}
                                 </p>
                             }

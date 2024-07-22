@@ -261,7 +261,7 @@
     "next": "Nasledujúca"
   },
   "partEditor": {
-    "boardOrientation": "Orientácia dosky",
+    "boardOrientation": "Orientácia štruktúry",
     "rotate": "Otáčať",
     "actions": {
       "editBoard": "Upraviť dosku",
@@ -269,28 +269,12 @@
       "editEdge": "Upraviť hranu",
       "editAllBoards": "Upraviť dosky",
       "editAllCornerDimensions": "Upraviť rozmery rohov",
-      "editAllEdges": "Upraviť hrany"
+      "editAllEdges": "Upraviť hrany",
+      "editFrameDimensions": "Upraviť rozmery rámu",
+      "editFrameWidth": "Upraviť šírku rámu"
     },
     "boardDialog": {
       "title": "Zvoľte dosku"
-    },
-    "deleteCornerDialog": {
-      "title": "Zamazať roh",
-      "message": "Naozaj si želáte zmazať roh?"
-    },
-    "deleteEdgeDialog": {
-      "title": "Zamazať hranu",
-      "message": "Naozaj si želáte zmazať hranu?"
-    },
-    "dimensionsDialog": {
-      "title": "Rozmery",
-      "label": "Rozmery",
-      "placeholderX": "Zadajte x",
-      "placeholderY": "Zadajte y",
-      "required": "Rozmery sa vyžadujú"
-    },
-    "edgeDialog": {
-      "title": "Zvoľte hranu"
     },
     "corner": {
       "rounded": "Zaoblený",
@@ -306,6 +290,35 @@
       "cornerDimensionsPlaceholderX": "Zadajte x",
       "cornerDimensionsPlaceholderY": "Zadajte y",
       "cornerDimensionsRequired": "Vyžadujú sa rozmery"
+    },
+    "deleteCornerDialog": {
+      "title": "Zamazať roh",
+      "message": "Naozaj si želáte zmazať roh?"
+    },
+    "deleteEdgeDialog": {
+      "title": "Zamazať hranu",
+      "message": "Naozaj si želáte zmazať hranu?"
+    },
+    "dimensionDialog": {
+      "title": "Rozmer",
+      "label": "Hodnota",
+      "placeholder": "Zadajte hodnotu",
+      "required": "Hodnota sa vyžaduje"
+    },
+    "dimensionsDialog": {
+      "title": "Rozmery",
+      "label": "Rozmery",
+      "placeholderX": "Zadajte x",
+      "placeholderY": "Zadajte y",
+      "required": "Rozmery sa vyžadujú"
+    },
+    "edgeDialog": {
+      "title": "Zvoľte hranu"
+    },
+    "frameType": {
+      "horizontal": "Horizontálny",
+      "horizontalLong": "Horizontálny dĺžka",
+      "horizontalShort": "Horizontálny šírka"
     },
     "info": {
       "boards": "Dosky",

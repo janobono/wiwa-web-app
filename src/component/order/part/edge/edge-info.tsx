@@ -1,15 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { EdgeData, PartEditorContext } from '../part-editor-provider';
+import { EdgeData } from '../part-editor-provider';
 
-const EdgeInfo = ({edgeData}: { edgeData: EdgeData }) => {
-    const partEditorState = useContext(PartEditorContext);
-
+const EdgeInfo = ({name, data}: { name: string, data: EdgeData }) => {
     const [text, setText] = useState<string>();
 
     useEffect(() => {
-        setText(`${partEditorState?.getEdgeName(edgeData.edgePosition)}: ${edgeData.edge.code} ${edgeData.edge.name}`);
-    }, [edgeData]);
+        setText(`${name}: ${data.edge.code} ${data.edge.name}`);
+    }, [name, data]);
 
     return (
         <span>{text}</span>

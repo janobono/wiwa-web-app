@@ -1,17 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { BoardData, PartEditorContext } from '../part-editor-provider';
+import { BoardData } from '../part-editor-provider';
+import { UnitId } from '../../../../api/model/application';
+import { CommonResourceContext } from '../../../../context';
 
-const BoardInfo = ({boardData}: { boardData: BoardData }) => {
-    const partEditorState = useContext(PartEditorContext);
+const BoardInfo = ({name, data}: { name: string, data: BoardData }) => {
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [text, setText] = useState<string>();
 
     useEffect(() => {
-        const boardText = boardData.board ? `${boardData.board.code} ${boardData.board.name}` : '';
-        const boardDimensions = boardData.dimensions ? `${boardData.dimensions.x}x${boardData.dimensions.y} ${partEditorState?.lengthSign}` : '';
-        setText(`${partEditorState?.getBoardName(boardData.boardPosition)}: ${boardText} ${boardDimensions}`);
-    }, [boardData]);
+        const boardText = data.board ? `${data.board.code} ${data.board.name}` : '';
+        const boardDimensions = data.dimensions ? `${data.dimensions.x}x${data.dimensions.y} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]` : '';
+        setText(`${name}: ${boardText} ${boardDimensions}`);
+    }, [name, data]);
 
     return (
         <span>{text}</span>

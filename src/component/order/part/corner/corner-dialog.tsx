@@ -1,19 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import BaseDialog from '../../dialog/base-dialog';
-import WiwaButton from '../../ui/wiwa-button';
-import WiwaFormInputInteger from '../../ui/wiwa-form-input-integer';
-import WiwaFormDimensions from '../../ui/wiwa-form-dimensions';
-import WiwaSelect from '../../ui/wiwa-select';
-import { Dimensions } from '../../../api/model';
-import { UnitId } from '../../../api/model/application';
-import { PartCornerType } from '../../../api/model/order/part';
-import { CommonResourceContext, DialogContext } from '../../../context';
+import BaseDialog from '../../../dialog/base-dialog';
+import WiwaButton from '../../../ui/wiwa-button';
+import WiwaFormInputInteger from '../../../ui/wiwa-form-input-integer';
+import WiwaFormDimensions from '../../../ui/wiwa-form-dimensions';
+import WiwaSelect from '../../../ui/wiwa-select';
+import { Dimensions } from '../../../../api/model';
+import { UnitId } from '../../../../api/model/application';
+import { PartCornerType } from '../../../../api/model/order/part';
+import { CommonResourceContext, DialogContext } from '../../../../context';
 
 const CornerDialog = (
     {
-        title,
+        name,
         dimensionsData,
         setDimensionsData,
         radiusData,
@@ -21,7 +21,7 @@ const CornerDialog = (
         showDialog,
         setShowDialog
     }: {
-        title?: string,
+        name?: string,
         dimensionsData?: Dimensions,
         setDimensionsData: (data: Dimensions) => void,
         radiusData?: number,
@@ -33,7 +33,7 @@ const CornerDialog = (
     const dialogState = useContext(DialogContext);
     const commonResourceState = useContext(CommonResourceContext);
 
-    const [titleText, setTitleText] = useState('');
+    const [title, setTitle] = useState('');
 
     const [index, setIndex] = useState<string>(PartCornerType.ROUNDED);
 
@@ -46,15 +46,15 @@ const CornerDialog = (
     const [formValid, setFormValid] = useState(false);
 
     useEffect(() => {
-        if (title) {
-            setTitleText(`${commonResourceState?.resource?.partEditor.cornerDialog.title} ${title}`);
+        if (name) {
+            setTitle(`${commonResourceState?.resource?.partEditor.cornerDialog.title} ${name}`);
         } else {
-            setTitleText(commonResourceState?.resource?.partEditor.cornerDialog.title || '');
+            setTitle(commonResourceState?.resource?.partEditor.cornerDialog.title || '');
         }
         setIndex(dimensionsData === undefined ? PartCornerType.ROUNDED : PartCornerType.STRAIGHT);
         setRadius(radiusData);
         setDimensions(dimensionsData);
-    }, [title, dimensionsData, radiusData, showDialog]);
+    }, [name, dimensionsData, radiusData, showDialog]);
 
     useEffect(() => {
         setFormValid((index === PartCornerType.ROUNDED && radiusValid) || (index === PartCornerType.STRAIGHT && dimensionsValid));
@@ -69,7 +69,7 @@ const CornerDialog = (
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {titleText}
+                        {title}
                     </div>
 
                     <WiwaSelect

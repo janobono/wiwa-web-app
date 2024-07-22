@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import BaseDialog from '../../dialog/base-dialog';
-import WiwaButton from '../../ui/wiwa-button';
-import WiwaFormDimensions from '../../ui/wiwa-form-dimensions';
-import { Dimensions } from '../../../api/model';
-import { UnitId } from '../../../api/model/application';
-import { CommonResourceContext, DialogContext } from '../../../context';
+import BaseDialog from '../../../dialog/base-dialog';
+import WiwaButton from '../../../ui/wiwa-button';
+import WiwaFormDimensions from '../../../ui/wiwa-form-dimensions';
+import { Dimensions } from '../../../../api/model';
+import { UnitId } from '../../../../api/model/application';
+import { CommonResourceContext, DialogContext } from '../../../../context';
 
-const DimensionsDialog = ({title, data, setData, showDialog, setShowDialog}: {
-    title?: string,
+const BoardDimensionsDialog = ({name, data, setData, showDialog, setShowDialog}: {
+    name?: string,
     data?: Dimensions,
     setData: (data: Dimensions) => void,
     showDialog: boolean,
@@ -18,18 +18,18 @@ const DimensionsDialog = ({title, data, setData, showDialog, setShowDialog}: {
     const dialogState = useContext(DialogContext);
     const commonResourceState = useContext(CommonResourceContext);
 
-    const [titleText, setTitleText] = useState('');
+    const [title, setTitle] = useState('');
     const [dimensions, setDimensions] = useState<Dimensions>();
     const [dimensionsValid, setDimensionsValid] = useState(false);
 
     useEffect(() => {
-        if (title) {
-            setTitleText(`${commonResourceState?.resource?.partEditor.dimensionsDialog.title} ${title}`);
+        if (name) {
+            setTitle(`${commonResourceState?.resource?.partEditor.dimensionsDialog.title} ${name}`);
         } else {
-            setTitleText(commonResourceState?.resource?.partEditor.dimensionsDialog.title || '');
+            setTitle(commonResourceState?.resource?.partEditor.dimensionsDialog.title || '');
         }
         setDimensions(data);
-    }, [title, data, showDialog]);
+    }, [name, data, showDialog]);
 
     return (!dialogState?.modalRoot ? null : createPortal(
         <BaseDialog
@@ -40,7 +40,7 @@ const DimensionsDialog = ({title, data, setData, showDialog, setShowDialog}: {
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {titleText}
+                        {title}
                     </div>
 
                     <WiwaFormDimensions
@@ -85,4 +85,4 @@ const DimensionsDialog = ({title, data, setData, showDialog, setShowDialog}: {
         </BaseDialog>, dialogState.modalRoot))
 }
 
-export default DimensionsDialog;
+export default BoardDimensionsDialog;

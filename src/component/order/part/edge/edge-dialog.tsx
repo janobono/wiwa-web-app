@@ -1,20 +1,20 @@
 import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import BaseDialog from '../../dialog/base-dialog';
-import { EdgeContext } from '../../edge/edge-provider';
-import EdgeSearchCriteriaForm from '../../edge/edge-search-criteria-form';
-import EdgeTable from '../../edge/edge-table';
-import WiwaButton from '../../ui/wiwa-button';
-import WiwaPageable from '../../ui/wiwa-pageable';
-import { getEdgeImagePath } from '../../../api/controller/ui';
-import { Edge, EdgeField } from '../../../api/model/edge';
-import { CommonResourceContext, DialogContext } from '../../../context';
+import BaseDialog from '../../../dialog/base-dialog';
+import { EdgeContext } from '../../../edge/edge-provider';
+import EdgeSearchCriteriaForm from '../../../edge/edge-search-criteria-form';
+import EdgeTable from '../../../edge/edge-table';
+import WiwaButton from '../../../ui/wiwa-button';
+import WiwaPageable from '../../../ui/wiwa-pageable';
+import { getEdgeImagePath } from '../../../../api/controller/ui';
+import { Edge, EdgeField } from '../../../../api/model/edge';
+import { CommonResourceContext, DialogContext } from '../../../../context';
 
-const EdgeDialog = ({title, data, setData, showDialog, setShowDialog}: {
-    title?: string,
+const EdgeDialog = ({name, data, setData, showDialog, setShowDialog}: {
+    name?: string,
     data?: Edge,
-    setData: (edge: Edge) => void,
+    setData: (data: Edge) => void,
     showDialog: boolean,
     setShowDialog: (showDialog: boolean) => void
 }) => {
@@ -22,13 +22,13 @@ const EdgeDialog = ({title, data, setData, showDialog, setShowDialog}: {
     const dialogState = useContext(DialogContext);
     const commonResourceState = useContext(CommonResourceContext);
 
-    const [titleText, setTitleText] = useState('');
+    const [title, setTitle] = useState('');
 
     useEffect(() => {
-        if (title) {
-            setTitleText(`${commonResourceState?.resource?.partEditor.edgeDialog.title} ${title}`);
+        if (name) {
+            setTitle(`${commonResourceState?.resource?.partEditor.edgeDialog.title} ${name}`);
         } else {
-            setTitleText(commonResourceState?.resource?.partEditor.edgeDialog.title || '');
+            setTitle(commonResourceState?.resource?.partEditor.edgeDialog.title || '');
         }
         edgeState?.getEdges().then();
         edgeState?.setSelected(data);
@@ -44,7 +44,7 @@ const EdgeDialog = ({title, data, setData, showDialog, setShowDialog}: {
             <div className="container p-5 mx-auto">
                 <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-lg md:text-xl font-bold text-center">
-                        {titleText}
+                        {title}
                     </div>
                     <EdgeSearchCriteriaForm searchHandler={(criteria) => edgeState?.setCriteria(criteria)}/>
 

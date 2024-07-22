@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Part, PartCornerType, PartType } from '../../../api/model/order/part';
+import { FrameType, Part, PartCornerType, PartType } from '../../../api/model/order/part';
 import { Dimensions, Entry } from '../../../api/model';
 import {
     BoardDimension,
@@ -7,12 +7,11 @@ import {
     CornerPosition,
     EdgePosition,
     ManufactureProperties,
-    OrderProperties,
-    UnitId
+    OrderProperties
 } from '../../../api/model/application';
 import { getOrderProperties } from '../../../api/controller/ui';
 import { getManufactureProperties } from '../../../api/controller/config';
-import { AuthContext, CommonResourceContext, ErrorContext } from '../../../context';
+import { AuthContext, ErrorContext } from '../../../context';
 import { Board } from '../../../api/model/board';
 import { Edge } from '../../../api/model/edge';
 
@@ -44,24 +43,25 @@ export interface PartEditorState {
     setValid: (valid: boolean) => void,
     setOrderProperties: (orderProperties?: OrderProperties) => void,
     setManufactureProperties: (manufactureProperties?: ManufactureProperties) => void,
-    lengthSign?: string,
     getDimensionName: (boardDimension: BoardDimension) => string,
     getBoardName: (boardPosition: BoardPosition) => string,
     getEdgeName: (edgePosition: EdgePosition) => string,
     getCornerName: (cornerPosition: CornerPosition) => string,
     rotate: boolean,
     setRotate: (rotate: boolean) => void,
+    frameType: FrameType,
+    setFrameType: (frameType: FrameType) => void,
     boardData: BoardData[],
-    setBoard: (boardPositions: BoardPosition[], board: Board) => void,
-    setBoardDimensions: (boardPositions: BoardPosition[], dimensions: Dimensions) => void,
+    setBoard: (boardPosition: BoardPosition, board: Board) => void,
+    setBoardDimensions: (boardPosition: BoardPosition, dimensions: Dimensions) => void,
     edgeData: EdgeData[],
-    setEdge: (edgePositions: EdgePosition[], edge: Edge) => void,
-    deleteEdge: (edgePosition: EdgePosition[]) => void,
+    setEdge: (edgePosition: EdgePosition, edge: Edge) => void,
+    deleteEdge: (edgePosition: EdgePosition) => void,
     cornerData: CornerData[],
-    setCornerRadius: (cornerPositions: CornerPosition[], radius: number) => void,
-    setCornerDimensions: (cornerPositions: CornerPosition[], dimensions: Dimensions) => void,
-    setCornerEdge: (cornerPositions: CornerPosition[], edge: Edge) => void,
-    deleteCorner: (cornerPositions: CornerPosition[]) => void,
+    setCornerRadius: (cornerPosition: CornerPosition, radius: number) => void,
+    setCornerDimensions: (cornerPosition: CornerPosition, dimensions: Dimensions) => void,
+    setCornerEdge: (cornerPosition: CornerPosition, edge: Edge) => void,
+    deleteCorner: (cornerPosition: CornerPosition) => void,
     errorMessages: string[]
 }
 
@@ -88,17 +88,16 @@ const PartEditorProvider = (
 ) => {
     const authState = useContext(AuthContext);
     const errorState = useContext(ErrorContext);
-    const commonResourceState = useContext(CommonResourceContext);
 
     const [orderProperties, setOrderProperties] = useState<OrderProperties>();
     const [manufactureProperties, setManufactureProperties] = useState<ManufactureProperties>();
-    const [lengthSign, setLengthSign] = useState<string>();
 
     const [rotate, setRotate] = useState(false);
+    const [frameType, setFrameType] = useState(FrameType.HORIZONTAL);
 
-    const [boardData, setBoardDataValue] = useState<BoardData[]>([]);
-    const [edgeData, setEdgeDataValue] = useState<EdgeData[]>([]);
-    const [cornerData, setCornerDataValue] = useState<CornerData[]>([]);
+    const [boardData, setBoardData] = useState<BoardData[]>([]);
+    const [edgeData, setEdgeData] = useState<EdgeData[]>([]);
+    const [cornerData, setCornerData] = useState<CornerData[]>([]);
 
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
@@ -115,7 +114,6 @@ const PartEditorProvider = (
             }
             errorState?.addError(response.error);
         });
-        setLengthSign(`[${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`);
     }, []);
 
     useEffect(() => {
@@ -126,9 +124,9 @@ const PartEditorProvider = (
 
     useEffect(() => {
         setRotate(false);
-        setBoardDataValue([]);
-        setEdgeDataValue([]);
-        setCornerDataValue([]);
+        setBoardData([]);
+        setEdgeData([]);
+        setCornerData([]);
         setErrorMessages([]);
 
         switch (partType) {
@@ -167,21 +165,9 @@ const PartEditorProvider = (
         return getEntryValue(cornerPosition, orderProperties?.corners);
     }
 
-    const setBoardData = (data: BoardData[]) => {
-        setBoardDataValue(data.sort((d1, d2) => d1.boardPosition > d2.boardPosition ? 1 : -1));
-    }
-
-    const setEdgeData = (data: EdgeData[]) => {
-        setEdgeDataValue(data.sort((d1, d2) => d1.edgePosition > d2.edgePosition ? 1 : -1));
-    }
-
-    const setCornerData = (data: CornerData[]) => {
-        setCornerDataValue(data.sort((d1, d2) => d1.cornerPosition > d2.cornerPosition ? 1 : -1));
-    }
-
-    const setBoard = (boardPositions: BoardPosition[], board: Board) => {
-        const newData = [...boardData];
-        boardPositions.forEach(boardPosition => {
+    const setBoard = (boardPosition: BoardPosition, board: Board) => {
+        setBoardData(previousData => {
+            const newData = [...previousData];
             const index = newData.findIndex(item => item.boardPosition === boardPosition);
             if (index !== -1) {
                 const data = {...newData[index], board};
@@ -190,13 +176,13 @@ const PartEditorProvider = (
             } else {
                 newData.push({boardPosition, board});
             }
+            return newData.sort((d1, d2) => d1.boardPosition > d2.boardPosition ? 1 : -1);
         });
-        setBoardData(newData);
     }
 
-    const setBoardDimensions = (boardPositions: BoardPosition[], dimensions: Dimensions) => {
-        const newData = [...boardData];
-        boardPositions.forEach(boardPosition => {
+    const setBoardDimensions = (boardPosition: BoardPosition, dimensions: Dimensions) => {
+        setBoardData(previousData => {
+            const newData = [...previousData];
             const index = newData.findIndex(item => item.boardPosition === boardPosition);
             if (index !== -1) {
                 const data = {...newData[index], dimensions};
@@ -205,36 +191,36 @@ const PartEditorProvider = (
             } else {
                 newData.push({boardPosition, dimensions});
             }
+            return newData.sort((d1, d2) => d1.boardPosition > d2.boardPosition ? 1 : -1);
         });
-        setBoardData(newData);
     }
 
-    const setEdge = (edgePositions: EdgePosition[], edge: Edge) => {
-        const newData = [...edgeData];
-        edgePositions.forEach(edgePosition => {
+    const setEdge = (edgePosition: EdgePosition, edge: Edge) => {
+        setEdgeData(previousData => {
+            const newData = [...previousData];
             const index = newData.findIndex(item => item.edgePosition === edgePosition);
             if (index !== -1) {
                 newData.splice(index, 1);
             }
             newData.push({edgePosition, edge});
+            return newData.sort((d1, d2) => d1.edgePosition > d2.edgePosition ? 1 : -1);
         });
-        setEdgeData(newData);
     }
 
-    const deleteEdge = (edgePositions: EdgePosition[]) => {
-        const newData = [...edgeData];
-        edgePositions.forEach(edgePosition => {
+    const deleteEdge = (edgePosition: EdgePosition) => {
+        setEdgeData(previousData => {
+            const newData = [...previousData];
             const index = newData.findIndex(item => item.edgePosition === edgePosition);
             if (index !== -1) {
                 newData.splice(index, 1);
             }
+            return newData;
         });
-        setEdgeData(newData);
     }
 
-    const setCornerRadius = (cornerPositions: CornerPosition[], radius: number) => {
-        const newData = [...cornerData];
-        cornerPositions.forEach(cornerPosition => {
+    const setCornerRadius = (cornerPosition: CornerPosition, radius: number) => {
+        setCornerData(previousData => {
+            const newData = [...previousData];
             const index = newData.findIndex(item => item.cornerPosition === cornerPosition);
             if (index !== -1) {
                 const data = {...newData[index], type: PartCornerType.ROUNDED, radius, dimensions: undefined};
@@ -243,13 +229,13 @@ const PartEditorProvider = (
             } else {
                 newData.push({cornerPosition, type: PartCornerType.ROUNDED, radius});
             }
+            return newData.sort((d1, d2) => d1.cornerPosition > d2.cornerPosition ? 1 : -1);
         });
-        setCornerData(newData);
     }
 
-    const setCornerDimensions = (cornerPositions: CornerPosition[], dimensions: Dimensions) => {
-        const newData = [...cornerData];
-        cornerPositions.forEach(cornerPosition => {
+    const setCornerDimensions = (cornerPosition: CornerPosition, dimensions: Dimensions) => {
+        setCornerData(previousData => {
+            const newData = [...previousData];
             const index = newData.findIndex(item => item.cornerPosition === cornerPosition);
             if (index !== -1) {
                 const data = {...newData[index], type: PartCornerType.STRAIGHT, dimensions, radius: undefined};
@@ -258,13 +244,13 @@ const PartEditorProvider = (
             } else {
                 newData.push({cornerPosition, type: PartCornerType.STRAIGHT, dimensions});
             }
+            return newData.sort((d1, d2) => d1.cornerPosition > d2.cornerPosition ? 1 : -1);
         });
-        setCornerData(newData);
     }
 
-    const setCornerEdge = (cornerPositions: CornerPosition[], edge: Edge) => {
-        const newData = [...cornerData];
-        cornerPositions.forEach(cornerPosition => {
+    const setCornerEdge = (cornerPosition: CornerPosition, edge: Edge) => {
+        setCornerData(previousData => {
+            const newData = [...previousData];
             const index = newData.findIndex(item => item.cornerPosition === cornerPosition);
             if (index !== -1) {
                 const data = {...newData[index], edge};
@@ -273,19 +259,19 @@ const PartEditorProvider = (
             } else {
                 newData.push({cornerPosition, edge});
             }
+            return newData.sort((d1, d2) => d1.cornerPosition > d2.cornerPosition ? 1 : -1);
         });
-        setCornerData(newData);
     }
 
-    const deleteCorner = (cornerPositions: CornerPosition[]) => {
-        const newData = [...cornerData];
-        cornerPositions.forEach(cornerPosition => {
+    const deleteCorner = (cornerPosition: CornerPosition) => {
+        setCornerData(previousData => {
+            const newData = [...previousData];
             const index = newData.findIndex(item => item.cornerPosition === cornerPosition);
             if (index !== -1) {
                 newData.splice(index, 1);
             }
+            return newData;
         });
-        setCornerData(newData);
     }
 
     return (
@@ -300,13 +286,14 @@ const PartEditorProvider = (
                     setValid,
                     setOrderProperties,
                     setManufactureProperties,
-                    lengthSign,
                     getDimensionName,
                     getBoardName,
                     getEdgeName,
                     getCornerName,
                     rotate,
                     setRotate,
+                    frameType,
+                    setFrameType,
                     boardData,
                     setBoard,
                     setBoardDimensions,

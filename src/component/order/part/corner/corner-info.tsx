@@ -1,24 +1,26 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { CornerData, PartEditorContext } from '../part-editor-provider';
+import { CornerData } from '../part-editor-provider';
 import { PartCornerType } from '../../../../api/model/order/part';
+import { CommonResourceContext } from '../../../../context';
+import { UnitId } from '../../../../api/model/application';
 
-const CornerInfo = ({cornerData}: { cornerData: CornerData }) => {
-    const partEditorState = useContext(PartEditorContext);
+const CornerInfo = ({name, data}: { name: string, data: CornerData }) => {
+    const commonResourceState = useContext(CommonResourceContext);
 
     const [text, setText] = useState<string>();
 
     useEffect(() => {
-        const cornerEdge = cornerData.edge ? `${cornerData.edge.code} ${cornerData.edge.name}` : '';
+        const cornerEdge = data.edge ? `${data.edge.code} ${data.edge.name}` : '';
         let edgeDimensions = '';
-        if (cornerData.type === PartCornerType.ROUNDED) {
-            edgeDimensions = cornerData.radius ? `r ${cornerData.radius} ${partEditorState?.lengthSign}` : '';
+        if (data.type === PartCornerType.ROUNDED) {
+            edgeDimensions = data.radius ? `r ${data.radius} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]` : '';
         }
-        if (cornerData.type === PartCornerType.STRAIGHT) {
-            edgeDimensions = cornerData.dimensions ? `${cornerData.dimensions.x}x${cornerData.dimensions.y} ${partEditorState?.lengthSign}` : '';
+        if (data.type === PartCornerType.STRAIGHT) {
+            edgeDimensions = data.dimensions ? `${data.dimensions.x}x${data.dimensions.y} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]` : '';
         }
-        setText(`${partEditorState?.getCornerName(cornerData.cornerPosition)}: ${cornerEdge} ${edgeDimensions}`);
-    }, [cornerData]);
+        setText(`${name}: ${cornerEdge} ${edgeDimensions}`);
+    }, [name, data, commonResourceState]);
 
     return (
         <span>{text}</span>

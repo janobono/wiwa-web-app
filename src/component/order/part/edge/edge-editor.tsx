@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Image, Trash } from 'react-feather';
 
-import EdgeValue from './edge-value.tsx';
-import EdgeDialog from '../edge-dialog';
-import { PartEditorContext } from '../part-editor-provider';
+import EdgeDialog from './edge-dialog';
+import EdgeValue from './edge-value';
+import { EdgeData } from '../part-editor-provider';
 import EdgeProvider from '../../../edge/edge-provider';
 import WiwaButton from '../../../ui/wiwa-button';
 import { EdgePosition } from '../../../../api/model/application';
@@ -13,26 +13,32 @@ import { DialogAnswer, DialogType } from '../../../../context/model/dialog';
 
 const EdgeEditor = (
     {
-        edgePosition
+        position,
+        name,
+        data,
+        setEdge,
+        deleteEdge
     }: {
-        edgePosition: EdgePosition
+        position: EdgePosition,
+        name?: string,
+        data?: EdgeData,
+        setEdge: (position: EdgePosition, data: Edge) => void,
+        deleteEdge: (position: EdgePosition) => void
     }
 ) => {
     const dialogState = useContext(DialogContext);
-    const partEditorState = useContext(PartEditorContext)
     const commonResourceState = useContext(CommonResourceContext);
 
-    const [edge, setEdge] = useState<Edge>();
     const [showDialog, setShowDialog] = useState(false);
-
-    useEffect(() => {
-        setEdge(partEditorState?.edgeData.find(item => item.edgePosition === edgePosition)?.edge);
-    }, [edgePosition, partEditorState?.edgeData]);
 
     return (
         <>
             <div className="flex flex-row gap-2 items-center">
-                <EdgeValue edgePosition={edgePosition}>
+                <EdgeValue
+                    position={position}
+                    name={name}
+                    data={data}
+                >
                     <div className="join">
                         <WiwaButton
                             title={commonResourceState?.resource?.partEditor.actions.editEdge}
@@ -42,17 +48,17 @@ const EdgeEditor = (
                             <Image size={12}/>
                         </WiwaButton>
                         <WiwaButton
-                            disabled={edge === undefined}
+                            disabled={data === undefined}
                             title={commonResourceState?.resource?.action.delete}
                             className="btn-accent btn-xs join-item"
                             onClick={() => {
                                 dialogState?.showDialog({
                                     type: DialogType.YES_NO,
-                                    title: `${commonResourceState?.resource?.partEditor.deleteEdgeDialog.title} ${partEditorState?.getEdgeName(edgePosition)}`,
+                                    title: `${commonResourceState?.resource?.partEditor.deleteEdgeDialog.title} ${name}`,
                                     message: commonResourceState?.resource?.partEditor.deleteEdgeDialog.message,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
-                                            partEditorState?.deleteEdge([edgePosition]);
+                                            deleteEdge(position);
                                         }
                                     }
                                 });
@@ -66,9 +72,9 @@ const EdgeEditor = (
 
             <EdgeProvider>
                 <EdgeDialog
-                    title={partEditorState?.getEdgeName(edgePosition)}
-                    data={edge}
-                    setData={(data) => partEditorState?.setEdge([edgePosition], data)}
+                    name={name}
+                    data={data?.edge}
+                    setData={(data) => setEdge(position, data)}
                     showDialog={showDialog}
                     setShowDialog={setShowDialog}
                 />

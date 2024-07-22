@@ -261,7 +261,7 @@
     "previous": "Previous"
   },
   "partEditor": {
-    "boardOrientation": "Board orientation",
+    "boardOrientation": "Structure orientation",
     "rotate": "Rotate",
     "actions": {
       "editBoard": "Edit board",
@@ -269,28 +269,12 @@
       "editEdge": "Edit edge",
       "editAllBoards": "Edit boards",
       "editAllCornerDimensions": "Edit corners dimensions",
-      "editAllEdges": "Edit edges"
+      "editAllEdges": "Edit edges",
+      "editFrameDimensions": "Edit frame dimensions",
+      "editFrameWidth": "Edit frame width"
     },
     "boardDialog": {
       "title": "Select board"
-    },
-    "deleteCornerDialog": {
-      "title": "Delete corner",
-      "message": "Do you really want to delete corner?"
-    },
-    "deleteEdgeDialog": {
-      "title": "Delete edge",
-      "message": "Do you really want to delete edge?"
-    },
-    "dimensionsDialog": {
-      "title": "Dimensions",
-      "label": "Dimensions",
-      "placeholderX": "Enter value",
-      "placeholderY": "Enter value",
-      "required": "Dimensions are required"
-    },
-    "edgeDialog": {
-      "title": "Select edge"
     },
     "corner": {
       "rounded": "Rounded",
@@ -306,6 +290,35 @@
       "cornerDimensionsPlaceholderX": "Enter x",
       "cornerDimensionsPlaceholderY": "Enter y",
       "cornerDimensionsRequired": "Dimensions are required"
+    },
+    "deleteCornerDialog": {
+      "title": "Delete corner",
+      "message": "Do you really want to delete corner?"
+    },
+    "deleteEdgeDialog": {
+      "title": "Delete edge",
+      "message": "Do you really want to delete edge?"
+    },
+    "dimensionDialog": {
+      "title": "Dimension",
+      "label": "value",
+      "placeholder": "Enter value",
+      "required": "Value is required"
+    },
+    "dimensionsDialog": {
+      "title": "Dimensions",
+      "label": "Dimensions",
+      "placeholderX": "Enter value",
+      "placeholderY": "Enter value",
+      "required": "Dimensions are required"
+    },
+    "edgeDialog": {
+      "title": "Select edge"
+    },
+    "frameType": {
+      "horizontal": "Horizontal",
+      "horizontalLong": "Horizontal long",
+      "horizontalShort": "Horizontal short"
     },
     "info": {
       "boards": "Boards",

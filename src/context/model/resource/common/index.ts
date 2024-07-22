@@ -272,6 +272,8 @@ export interface ResourceCommon {
             editAllBoards: string,
             editAllCornerDimensions: string,
             editAllEdges: string
+            editFrameDimensions: string,
+            editFrameWidth: string
         },
         boardDialog: {
             title: string
@@ -284,6 +286,12 @@ export interface ResourceCommon {
             title: string,
             message: string
         },
+        dimensionDialog: {
+            title: string,
+            label: string,
+            placeholder: string,
+            required: string
+        },
         dimensionsDialog: {
             title: string,
             label: string,
@@ -293,6 +301,11 @@ export interface ResourceCommon {
         },
         edgeDialog: {
             title: string
+        },
+        frameType: {
+            horizontal: string,
+            horizontalLong: string,
+            horizontalShort: string
         },
         corner: {
             rounded: string,
