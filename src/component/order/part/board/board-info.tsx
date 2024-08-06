@@ -1,19 +1,20 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { BoardData } from '../part-editor-provider';
+import { Dimensions } from '../../../../api/model';
 import { UnitId } from '../../../../api/model/application';
+import { Board } from '../../../../api/model/board';
 import { CommonResourceContext } from '../../../../context';
 
-const BoardInfo = ({name, data}: { name: string, data: BoardData }) => {
+const BoardInfo = ({name, board, dimensions}: { name?: string, board?: Board, dimensions?: Dimensions }) => {
     const commonResourceState = useContext(CommonResourceContext);
 
     const [text, setText] = useState<string>();
 
     useEffect(() => {
-        const boardText = data.board ? `${data.board.code} ${data.board.name}` : '';
-        const boardDimensions = data.dimensions ? `${data.dimensions.x}x${data.dimensions.y} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]` : '';
+        const boardText = board ? `${board.code} ${board.name}` : '';
+        const boardDimensions = dimensions ? `${dimensions.x}x${dimensions.y} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]` : '';
         setText(`${name}: ${boardText} ${boardDimensions}`);
-    }, [name, data]);
+    }, [name, board, dimensions]);
 
     return (
         <span>{text}</span>

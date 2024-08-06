@@ -1,9 +1,10 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { ChevronsRight, ChevronsUp } from 'react-feather';
 
-import { BoardData } from '../part-editor-provider';
 import { getBoardImagePath } from '../../../../api/controller/ui';
+import { Dimensions } from '../../../../api/model';
 import { UnitId } from '../../../../api/model/application';
+import { Board } from '../../../../api/model/board';
 import { CommonResourceContext } from '../../../../context';
 
 const BoardValue = (
@@ -11,13 +12,15 @@ const BoardValue = (
         structure,
         rotate,
         name,
-        data,
+        board,
+        dimensions,
         children
     }: {
         structure: boolean,
         rotate: boolean,
         name?: string,
-        data?: BoardData,
+        board?: Board,
+        dimensions?: Dimensions,
         children?: ReactNode
     }
 ) => {
@@ -32,15 +35,15 @@ const BoardValue = (
         setDimensionsInfo(`[${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`);
         setBoardId(-1);
 
-        if (data?.board) {
-            setBoardInfo(`${name} ${data.board.code} ${data.board.name}`);
-            setBoardId(data.board.id);
+        if (board) {
+            setBoardInfo(`${name} ${board.code} ${board.name}`);
+            setBoardId(board.id);
         }
 
-        if (data?.dimensions) {
-            setDimensionsInfo(`${data.dimensions.x}x${data.dimensions.y} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`);
+        if (dimensions) {
+            setDimensionsInfo(`${dimensions.x}x${dimensions.y} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]`);
         }
-    }, [name, data]);
+    }, [name, board, dimensions]);
 
     return (
         <div className="flex flex-col items-center tooltip tooltip-primary gap-1"
@@ -57,11 +60,13 @@ const BoardValue = (
                     </>
                 }
             </div>
-            <img
-                className={'flex-none object-scale-down object-center h-14 w-28'}
-                src={getBoardImagePath(boardId)}
-                alt="Board image"
-            />
+            {boardId !== -1 &&
+                <img
+                    className={'flex-none object-scale-down object-center h-14 w-28'}
+                    src={getBoardImagePath(boardId)}
+                    alt="Board image"
+                />
+            }
             {children}
         </div>
     )

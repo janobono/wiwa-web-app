@@ -26,7 +26,7 @@ const PartGrid = (
     }: BoardEditorProperties
 ) => {
     return (
-        <div className="grid grid-cols-3 gap-5 p-10 border-4 border-black w-full">
+        <div className="grid grid-cols-3 gap-5 p-10 border-2 border-black w-full">
             <div className="flex flex-row items-center justify-center">{cornerA1B1}</div>
             <div className="flex flex-row items-center justify-center">{edgeA1}</div>
             <div className="flex flex-row items-center justify-center">{cornerA1B2}</div>

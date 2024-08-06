@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowRight, Image, Trash } from 'react-feather';
 import CornerValue from './corner-value';
 import CornerDialog from '../corner/corner-dialog';
 import EdgeDialog from '../edge/edge-dialog';
-import { CornerData } from '../part-editor-provider';
 import EdgeProvider from '../../../edge/edge-provider';
 import WiwaButton from '../../../ui/wiwa-button';
 import { CornerPosition } from '../../../../api/model/application';
@@ -12,12 +11,16 @@ import { CommonResourceContext, DialogContext } from '../../../../context';
 import { DialogAnswer, DialogType } from '../../../../context/model/dialog';
 import { Edge } from '../../../../api/model/edge';
 import { Dimensions } from '../../../../api/model';
+import { PartCornerType } from '../../../../api/model/order/part';
 
 const CornerEditor = (
     {
         position,
         name,
-        data,
+        type,
+        radius,
+        dimensions,
+        edge,
         setCornerDimensions,
         setCornerEdge,
         setCornerRadius,
@@ -25,11 +28,14 @@ const CornerEditor = (
     }: {
         position: CornerPosition,
         name?: string,
-        data?: CornerData,
-        setCornerDimensions: (position: CornerPosition, data: Dimensions) => void,
-        setCornerEdge: (position: CornerPosition, data: Edge) => void,
-        setCornerRadius: (position: CornerPosition, data: number) => void,
-        deleteCorner: (position: CornerPosition) => void
+        type?: PartCornerType,
+        radius?: number,
+        dimensions?: Dimensions,
+        edge?: Edge,
+        setCornerDimensions: (data: Dimensions) => void,
+        setCornerEdge: (data: Edge) => void,
+        setCornerRadius: (data: number) => void,
+        deleteCorner: () => void
     }
 ) => {
     const dialogState = useContext(DialogContext);
@@ -44,7 +50,10 @@ const CornerEditor = (
                 <CornerValue
                     position={position}
                     name={name}
-                    data={data}
+                    type={type}
+                    radius={radius}
+                    dimensions={dimensions}
+                    edge={edge}
                 >
                     <div className="join">
                         <WiwaButton
@@ -65,7 +74,7 @@ const CornerEditor = (
                             <Image size={12}/>
                         </WiwaButton>
                         <WiwaButton
-                            disabled={data === undefined}
+                            disabled={type === undefined}
                             title={commonResourceState?.resource?.action.delete}
                             className="btn-accent btn-xs join-item"
                             onClick={() => {
@@ -75,7 +84,7 @@ const CornerEditor = (
                                     message: commonResourceState?.resource?.partEditor.deleteCornerDialog.message,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
-                                            deleteCorner(position);
+                                            deleteCorner();
                                         }
                                     }
                                 });
@@ -89,18 +98,18 @@ const CornerEditor = (
 
             <CornerDialog
                 name={name}
-                dimensionsData={data?.dimensions}
-                setDimensionsData={(data) => setCornerDimensions(position, data)}
-                radiusData={data?.radius}
-                setRadiusData={(data) => setCornerRadius(position, data)}
+                dimensionsData={dimensions}
+                setDimensionsData={(data) => setCornerDimensions(data)}
+                radiusData={radius}
+                setRadiusData={(data) => setCornerRadius(data)}
                 showDialog={showDimensionsDialog}
                 setShowDialog={setShowDimensionsDialog}
             />
             <EdgeProvider>
                 <EdgeDialog
                     name={name}
-                    data={data?.edge}
-                    setData={(data) => setCornerEdge(position, data)}
+                    data={edge}
+                    setData={(data) => setCornerEdge(data)}
                     showDialog={showEdgeDialog}
                     setShowDialog={setShowEdgeDialog}
                 />

@@ -1,20 +1,20 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'react-feather';
 
-import { EdgeData } from '../part-editor-provider';
 import { getEdgeImagePath } from '../../../../api/controller/ui';
 import { EdgePosition } from '../../../../api/model/application';
+import { Edge } from '../../../../api/model/edge';
 
 const EdgeValue = (
     {
         position,
         name,
-        data,
+        edge,
         children
     }: {
         position: EdgePosition,
         name?: string,
-        data?: EdgeData,
+        edge?: Edge,
         children?: ReactNode
     }
 ) => {
@@ -24,12 +24,11 @@ const EdgeValue = (
     useEffect(() => {
         setText(name);
         setEdgeId(-1);
-        const edge = data?.edge;
         if (edge) {
             setText(`${name} ${edge.code} ${edge.name}`);
             setEdgeId(edge.id);
         }
-    }, [name, data]);
+    }, [name, edge]);
 
     return (
         <div className="flex flex-col items-center justify-center tooltip tooltip-secondary gap-1" data-tip={text}>

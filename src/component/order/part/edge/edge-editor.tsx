@@ -3,7 +3,6 @@ import { Image, Trash } from 'react-feather';
 
 import EdgeDialog from './edge-dialog';
 import EdgeValue from './edge-value';
-import { EdgeData } from '../part-editor-provider';
 import EdgeProvider from '../../../edge/edge-provider';
 import WiwaButton from '../../../ui/wiwa-button';
 import { EdgePosition } from '../../../../api/model/application';
@@ -15,15 +14,15 @@ const EdgeEditor = (
     {
         position,
         name,
-        data,
+        edge,
         setEdge,
         deleteEdge
     }: {
         position: EdgePosition,
         name?: string,
-        data?: EdgeData,
-        setEdge: (position: EdgePosition, data: Edge) => void,
-        deleteEdge: (position: EdgePosition) => void
+        edge?: Edge,
+        setEdge: (data: Edge) => void,
+        deleteEdge: () => void
     }
 ) => {
     const dialogState = useContext(DialogContext);
@@ -37,7 +36,7 @@ const EdgeEditor = (
                 <EdgeValue
                     position={position}
                     name={name}
-                    data={data}
+                    edge={edge}
                 >
                     <div className="join">
                         <WiwaButton
@@ -48,7 +47,7 @@ const EdgeEditor = (
                             <Image size={12}/>
                         </WiwaButton>
                         <WiwaButton
-                            disabled={data === undefined}
+                            disabled={edge === undefined}
                             title={commonResourceState?.resource?.action.delete}
                             className="btn-accent btn-xs join-item"
                             onClick={() => {
@@ -58,7 +57,7 @@ const EdgeEditor = (
                                     message: commonResourceState?.resource?.partEditor.deleteEdgeDialog.message,
                                     callback: (answer: DialogAnswer) => {
                                         if (answer === DialogAnswer.YES) {
-                                            deleteEdge(position);
+                                            deleteEdge();
                                         }
                                     }
                                 });
@@ -73,8 +72,8 @@ const EdgeEditor = (
             <EdgeProvider>
                 <EdgeDialog
                     name={name}
-                    data={data?.edge}
-                    setData={(data) => setEdge(position, data)}
+                    data={edge}
+                    setData={(data) => setEdge(data)}
                     showDialog={showDialog}
                     setShowDialog={setShowDialog}
                 />

@@ -8,16 +8,8 @@ export enum PartCornerType {
 export interface PartCorner {
     type: PartCornerType,
     edgeId?: number,
-}
-
-export interface PartCornerRounded extends PartCorner {
-    type: PartCornerType.ROUNDED,
-    radius: number
-}
-
-export interface PartCornerStraight extends PartCorner {
-    type: PartCornerType.STRAIGHT,
-    dimensions: Dimensions
+    radius?: number,
+    dimensions?: Dimensions
 }
 
 export enum PartType {
@@ -29,7 +21,6 @@ export enum PartType {
 
 export enum FrameType {
     HORIZONTAL = 'HORIZONTAL',
-    VERTICAL = 'VERTICAL',
     HORIZONTAL_LONG = 'HORIZONTAL_LONG',
     HORIZONTAL_SHORT = 'HORIZONTAL_SHORT'
 }
@@ -91,7 +82,7 @@ export interface PartDuplicatedFrame extends Part {
     dimensionsA2?: Dimensions,
     dimensionsB1?: Dimensions,
     dimensionsB2?: Dimensions,
-    cornerA1B1?: Dimensions,
+    cornerA1B1?: PartCorner,
     cornerA1B2?: PartCorner,
     cornerA2B1?: PartCorner,
     cornerA2B2?: PartCorner

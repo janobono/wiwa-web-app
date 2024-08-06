@@ -4,11 +4,9 @@ import { ArrowLeft, ArrowRight, Image } from 'react-feather';
 import BoardDialog from './board-dialog';
 import BoardDimensionsDialog from './board-dimensions-dialog';
 import BoardValue from './board-value';
-import { BoardData } from '../part-editor-provider';
 import BoardProvider from '../../../board/board-provider';
 import WiwaButton from '../../../ui/wiwa-button';
 import { Dimensions } from '../../../../api/model';
-import { BoardPosition } from '../../../../api/model/application';
 import { Board } from '../../../../api/model/board';
 import { CommonResourceContext } from '../../../../context';
 
@@ -16,19 +14,19 @@ const BoardEditor = (
     {
         structure,
         rotate,
-        position,
         name,
-        data,
+        board,
+        dimensions,
         setBoard,
         setDimensions
     }: {
         structure: boolean,
         rotate: boolean,
-        position: BoardPosition,
         name?: string,
-        data?: BoardData,
-        setBoard: (position: BoardPosition, data: Board) => void,
-        setDimensions: (position: BoardPosition, dimensions: Dimensions) => void
+        board?: Board,
+        dimensions?: Dimensions,
+        setBoard: (data: Board) => void,
+        setDimensions: (dimensions: Dimensions) => void
     }
 ) => {
     const commonResourceState = useContext(CommonResourceContext);
@@ -43,7 +41,8 @@ const BoardEditor = (
                     structure={structure}
                     rotate={rotate}
                     name={name}
-                    data={data}
+                    board={board}
+                    dimensions={dimensions}
                 >
                     <div className="join">
                         <WiwaButton
@@ -69,16 +68,16 @@ const BoardEditor = (
 
             <BoardDimensionsDialog
                 name={name}
-                data={data?.dimensions}
-                setData={(data) => setDimensions(position, data)}
+                data={dimensions}
+                setData={(data) => setDimensions(data)}
                 showDialog={showDimensionsDialog}
                 setShowDialog={setShowDimensionsDialog}
             />
             <BoardProvider>
                 <BoardDialog
                     name={name}
-                    data={data?.board}
-                    setData={(data) => setBoard(position, data)}
+                    data={board}
+                    setData={(data) => setBoard(data)}
                     showDialog={showBoardDialog}
                     setShowDialog={setShowBoardDialog}
                 />

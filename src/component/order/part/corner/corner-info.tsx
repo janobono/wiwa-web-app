@@ -1,26 +1,41 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { CornerData } from '../part-editor-provider';
+import { Dimensions } from '../../../../api/model';
+import { UnitId } from '../../../../api/model/application';
+import { Edge } from '../../../../api/model/edge';
 import { PartCornerType } from '../../../../api/model/order/part';
 import { CommonResourceContext } from '../../../../context';
-import { UnitId } from '../../../../api/model/application';
 
-const CornerInfo = ({name, data}: { name: string, data: CornerData }) => {
+const CornerInfo = (
+    {
+        name,
+        type,
+        radius,
+        dimensions,
+        edge
+    }: {
+        name?: string,
+        type?: PartCornerType,
+        radius?: number,
+        dimensions?: Dimensions,
+        edge?: Edge
+    }
+) => {
     const commonResourceState = useContext(CommonResourceContext);
 
     const [text, setText] = useState<string>();
 
     useEffect(() => {
-        const cornerEdge = data.edge ? `${data.edge.code} ${data.edge.name}` : '';
+        const cornerEdge = edge ? `${edge.code} ${edge.name}` : '';
         let edgeDimensions = '';
-        if (data.type === PartCornerType.ROUNDED) {
-            edgeDimensions = data.radius ? `r ${data.radius} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]` : '';
+        if (type === PartCornerType.ROUNDED) {
+            edgeDimensions = radius ? `r ${radius} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]` : '';
         }
-        if (data.type === PartCornerType.STRAIGHT) {
-            edgeDimensions = data.dimensions ? `${data.dimensions.x}x${data.dimensions.y} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]` : '';
+        if (type === PartCornerType.STRAIGHT) {
+            edgeDimensions = dimensions ? `${dimensions.x}x${dimensions.y} [${commonResourceState?.getUnit(UnitId.MILLIMETER)}]` : '';
         }
         setText(`${name}: ${cornerEdge} ${edgeDimensions}`);
-    }, [name, data, commonResourceState]);
+    }, [name, type, radius, dimensions, edge, commonResourceState]);
 
     return (
         <span>{text}</span>

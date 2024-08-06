@@ -5,33 +5,56 @@ import BoardInfo from './board/board-info';
 import CornerInfo from './corner/corner-info';
 import EdgeInfo from './edge/edge-info';
 import { CommonResourceContext } from '../../../context';
+import { BoardData, CornerData, EdgeData } from './index.ts';
 
-const PartEditorInfo = () => {
+const PartEditorInfo = (
+    {
+        boards,
+        edges,
+        corners,
+        errorMessages
+    }: {
+        boards?: BoardData[],
+        edges?: EdgeData[],
+        corners?: CornerData[],
+        errorMessages?: string[]
+    }
+) => {
     const partEditorState = useContext(PartEditorContext);
     const commonResourceState = useContext(CommonResourceContext);
 
     return (
         <>
-            {(partEditorState?.boardData.length || 0) > 0 &&
-                <span className="font-bold">{commonResourceState?.resource?.partEditor.info.boards}</span>}
-            {partEditorState?.boardData.map(data =>
-                <BoardInfo name={partEditorState?.getBoardName(data.boardPosition)} data={data}/>)
-            }
+            <span className="font-bold">{commonResourceState?.resource?.partEditor.info.boards}</span>
+            {boards?.map(data =>
+                <BoardInfo
+                    name={partEditorState?.getBoardName(data.boardPosition)}
+                    board={data.board}
+                    dimensions={data.dimensions}
+                />
+            )}
 
-            {(partEditorState?.edgeData.length || 0) > 0 &&
-                <span className="font-bold">{commonResourceState?.resource?.partEditor.info.edges}</span>}
-            {partEditorState?.edgeData.map(data =>
-                <EdgeInfo name={partEditorState?.getEdgeName(data.edgePosition)} data={data}/>)
-            }
+            <span className="font-bold">{commonResourceState?.resource?.partEditor.info.edges}</span>
+            {edges?.map(data =>
+                <EdgeInfo
+                    name={partEditorState?.getEdgeName(data.edgePosition)}
+                    edge={data.edge}
+                />
+            )}
 
-            {(partEditorState?.cornerData.length || 0) > 0 &&
-                <span className="font-bold">{commonResourceState?.resource?.partEditor.info.corners}</span>}
-            {partEditorState?.cornerData.map(data =>
-                <CornerInfo name={partEditorState?.getCornerName(data.cornerPosition)} data={data}/>)
-            }
+            <span className="font-bold">{commonResourceState?.resource?.partEditor.info.corners}</span>
+            {corners?.map(data =>
+                <CornerInfo
+                    name={partEditorState?.getCornerName(data.cornerPosition)}
+                    type={data.type}
+                    radius={data.radius}
+                    dimensions={data.dimensions}
+                    edge={data.edge}
+                />
+            )}
 
             <>
-                {partEditorState?.errorMessages.map(data => <span className="label-text-alt text-error">{data}</span>)}
+                {errorMessages?.map(data => <span className="label-text-alt text-error">{data}</span>)}
             </>
         </>
     )

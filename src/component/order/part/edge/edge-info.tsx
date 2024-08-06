@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { EdgeData } from '../part-editor-provider';
+import { Edge } from '../../../../api/model/edge';
 
-const EdgeInfo = ({name, data}: { name: string, data: EdgeData }) => {
+const EdgeInfo = ({name, edge}: { name?: string, edge?: Edge }) => {
     const [text, setText] = useState<string>();
 
     useEffect(() => {
-        setText(`${name}: ${data.edge.code} ${data.edge.name}`);
-    }, [name, data]);
+        if (edge) {
+            setText(`${name}: ${edge.code} ${edge.name}`);
+        }
+    }, [name, edge]);
 
     return (
         <span>{text}</span>

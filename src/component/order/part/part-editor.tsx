@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 
-import PartBasicEditor from './part-basic-editor';
 import PartEditorProvider, { PartEditorContext } from './part-editor-provider';
-import PartDuplicatedBasicEditor from './part-duplicated-basic-editor';
-import PartDuplicatedFrameEditor from './part-duplicated-frame-editor';
-import PartFrameEditor from './part-frame-editor';
+import PartBasicEditor from './part-basic/part-basic-editor';
+import PartDuplicatedBasicEditor from './part-duplicated-basic/part-duplicated-basic-editor';
+import PartDuplicatedFrameEditor from './part-duplicated-frame/part-duplicated-frame-editor';
+import PartFrameEditor from './part-frame/part-frame-editor';
 import { Part, PartType } from '../../../api/model/order/part';
 
 const PartEditor = (
